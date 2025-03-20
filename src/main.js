@@ -57,21 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadTime = performance.now();
   console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
 
-  // Регистрация сервис-воркера для офлайн-функциональности (если нужно)
-  if ('serviceWorker' in navigator && import.meta.env.PROD) {
-    window.addEventListener('load', () => {
-      // Правильный базовый путь для GitHub Pages
-      const base = import.meta.env.DEV ? '/' : '/R36S_CONSOLE_STORE_JS/';
-      navigator.serviceWorker
-        .register(`${base}service-worker.js`)
-        .then(registration => {
-          console.log('ServiceWorker зарегистрирован:', registration);
-        })
-        .catch(error => {
-          console.error('Ошибка регистрации ServiceWorker:', error);
-        });
-    });
-  }
+  // Удалена регистрация service-worker
 });
 
 // Обработка ошибок на уровне window
