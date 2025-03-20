@@ -2,8 +2,8 @@ import { defineConfig } from 'vite';
 import { globSync } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
-import SortCss from 'postcss-sort-media-queries';
 import path from 'path';
+import sortMediaQueries from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
   const htmlFiles = globSync('./src/*.html').map(file =>
@@ -20,9 +20,7 @@ export default defineConfig(({ command }) => {
       rollupOptions: {
         input: Object.fromEntries(
           htmlFiles.map(file => [
-            // убираем расширение .html из имени чанка
             file.replace(/\.html$/, ''),
-            // полный путь к HTML файлу
             path.resolve(__dirname, 'src', file),
           ])
         ),
@@ -49,20 +47,15 @@ export default defineConfig(({ command }) => {
       outDir: '../dist',
       emptyOutDir: true,
     },
-    plugins: [
-      injectHTML(),
-      FullReload(['./src/**/**.html']),
-      {
-        name: 'postcss-sort-media-queries',
-        enforce: 'post',
-        transform(code, id) {
-          if (id.endsWith('.css')) {
-            return SortCss({
-              sort: 'mobile-first',
-            })(code);
-          }
-        },
+    css: {
+      postcss: {
+        plugins: [
+          sortMediaQueries({
+            sort: 'mobile-first',
+          }),
+        ],
       },
-    ],
+    },
+    plugins: [injectHTML(), FullReload(['./src/**/**.html'])],
   };
 });
