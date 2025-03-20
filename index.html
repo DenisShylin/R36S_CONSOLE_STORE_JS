@@ -5,8 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="./icons/browser.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script type="module" crossorigin src="/R36S_CONSOLE_STORE_JS/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-CDNUXDjg.css">
+    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-BmlYArzL.css">
   </head>
   <body>
     <main>
@@ -34,7 +40,7 @@
     <div class="hero__overlay"></div>
   </div>
 
-  <div class="hero__container">
+  <div class="hero__container container">
     <div class="hero__content-wrapper">
       <div class="hero__image">
         <div class="hero__image-wrapper">
@@ -42,12 +48,12 @@
           <picture>
             <source
               media="(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)"
-              srcset="/R36S_CONSOLE_STORE_JS/img/hero/herou1_1x_.png"
+              srcset="./img/hero/herou1_1x_.png"
               type="image/png"
             />
             <img
-              src="/R36S_CONSOLE_STORE_JS/img/hero/herou1_2x_.png"
-              srcset="/R36S_CONSOLE_STORE_JS/img/hero/herou1_1x_.png 1x, /R36S_CONSOLE_STORE_JS/img/hero/herou1_2x_.png 2x"
+              src="./img/hero/herou1_2x_.png"
+              srcset="./img/hero/herou1_1x_.png 1x, ./img/hero/herou1_2x_.png 2x"
               alt="R36S Handheld Game Console - Retro Gaming Device with 15000+ Games"
               class="hero__console-img"
               width="600"
@@ -149,6 +155,7 @@
     itemprop="aggregateRating"
     itemscope
     itemtype="http://schema.org/AggregateRating"
+    class="visually-hidden"
   >
     <meta itemprop="ratingValue" content="4.8" />
     <meta itemprop="reviewCount" content="120" />
