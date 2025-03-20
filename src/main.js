@@ -10,6 +10,9 @@ import { initHero } from './js/hero.js';
 
 console.log('Main.js инициализирован');
 
+// Хранение функций очистки для компонентов
+let cleanupFunctions = [];
+
 // Вспомогательная функция для определения поддержки браузером
 function checkBrowserCompatibility() {
   // Проверка поддержки IntersectionObserver (для анимаций при скролле)
@@ -43,21 +46,45 @@ function checkBrowserCompatibility() {
   };
 }
 
+// Глобальная функция очистки
+function globalCleanup() {
+  try {
+    // Вызываем все функции очистки
+    cleanupFunctions.forEach(cleanupFn => {
+      if (typeof cleanupFn === 'function') {
+        cleanupFn();
+      }
+    });
+    // Очищаем массив
+    cleanupFunctions = [];
+  } catch (error) {
+    console.warn('Error during global cleanup:', error);
+  }
+}
+
 // Инициализация страницы после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM загружен');
 
-  // Проверка совместимости браузера
-  const compatibility = checkBrowserCompatibility();
+  try {
+    // Проверка совместимости браузера
+    const compatibility = checkBrowserCompatibility();
 
-  // Инициализация компонентов
-  initHero();
+    // Инициализация компонентов и сохранение функций очистки
+    const heroCleanup = initHero();
+    if (typeof heroCleanup === 'function') {
+      cleanupFunctions.push(heroCleanup);
+    }
 
-  // Добавим информацию о загрузке страницы в консоль для отладки
-  const loadTime = performance.now();
-  console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
+    // Добавим информацию о загрузке страницы в консоль для отладки
+    const loadTime = performance.now();
+    console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
 
-  // Удалена регистрация service-worker
+    // Регистрируем обработчик для очистки при закрытии/перезагрузке
+    window.addEventListener('beforeunload', globalCleanup);
+  } catch (error) {
+    console.error('Ошибка при инициализации страницы:', error);
+  }
 });
 
 // Обработка ошибок на уровне window
@@ -72,6 +99,14 @@ window.onerror = function (message, source, lineno, colno, error) {
   return false; // Пусть браузер также показывает ошибки в консоли
 };
 
+// Обработка непойманных промисов
+window.addEventListener('unhandledrejection', function (event) {
+  console.warn(
+    'Непойманное отклонение промиса (unhandled promise rejection):',
+    event.reason
+  );
+});
+
 // Экспорт версии приложения для отладки
 window.appVersion = {
   version: '1.0.0',
@@ -79,5 +114,12 @@ window.appVersion = {
   environment: import.meta.env.MODE,
   basePath: import.meta.env.DEV ? '/' : '/R36S_CONSOLE_STORE_JS/',
 };
+
+// Регистрация обработчика cleanup при выгрузке модуля (для hot-reload)
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    globalCleanup();
+  });
+}
 
 console.log('Main.js выполнение завершено');

@@ -7,7 +7,7 @@
 /**
  * Initializes the Hero section on the page.
  * Sets up images, handles load events, configures responsiveness and animations.
- * @returns {void}
+ * @returns {Function} Cleanup function to remove event listeners and observers
  */
 export function initHero() {
   console.log('Hero section initialized');
@@ -61,12 +61,16 @@ export function initHero() {
         console.error('Error setting fallback image:', error);
       }
 
-      heroSection?.classList.add('hero--loaded'); // Still show the section
+      if (heroSection) {
+        heroSection.classList.add('hero--loaded'); // Still show the section
+      }
     };
 
     heroImage.onload = () => {
       console.log('Hero image loaded successfully');
-      heroSection?.classList.add('hero--loaded');
+      if (heroSection) {
+        heroSection.classList.add('hero--loaded');
+      }
     };
 
     // Add decoding attribute for better performance
@@ -75,7 +79,9 @@ export function initHero() {
     // If the image is already loaded (from cache)
     if (heroImage.complete) {
       console.log('Hero image already loaded (from cache)');
-      heroSection?.classList.add('hero--loaded');
+      if (heroSection) {
+        heroSection.classList.add('hero--loaded');
+      }
     }
   }
 
@@ -109,22 +115,41 @@ export function initHero() {
     // Удаляем предыдущий observer если он существует
     if (contentObserver) {
       contentObserver.disconnect();
+      contentObserver = null;
     }
 
-    contentObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-            // Отключаем наблюдение после анимации
-            contentObserver.unobserve(entry.target);
+    try {
+      contentObserver = new IntersectionObserver(
+        entries => {
+          try {
+            entries.forEach(entry => {
+              // Проверяем, что элемент всё еще присутствует в DOM
+              if (
+                entry.isIntersecting &&
+                entry.target &&
+                entry.target.isConnected
+              ) {
+                entry.target.classList.add('animate-in');
+                // Отключаем наблюдение после анимации
+                if (contentObserver) {
+                  contentObserver.unobserve(entry.target);
+                }
+              }
+            });
+          } catch (err) {
+            console.warn('Error in IntersectionObserver callback:', err);
           }
-        });
-      },
-      { threshold: 0.1 }
-    );
+        },
+        { threshold: 0.1 }
+      );
 
-    contentObserver.observe(heroContent);
+      // Проверяем, существует ли элемент перед наблюдением
+      if (heroContent && heroContent.isConnected) {
+        contentObserver.observe(heroContent);
+      }
+    } catch (error) {
+      console.warn('Error setting up IntersectionObserver:', error);
+    }
   }
 
   /**
@@ -209,22 +234,30 @@ export function initHero() {
    * @private
    */
   function cleanup() {
-    // Отключаем IntersectionObserver
-    if (contentObserver) {
-      contentObserver.disconnect();
-      contentObserver = null;
-    }
+    try {
+      // Отключаем IntersectionObserver
+      if (contentObserver) {
+        contentObserver.disconnect();
+        contentObserver = null;
+      }
 
-    // Удаляем слушатель событий resize
-    window.removeEventListener('resize', adjustForViewport);
+      // Удаляем слушатель событий resize
+      window.removeEventListener('resize', adjustForViewport);
 
-    // Удаляем обработчики кнопок
-    if (buyButton) {
-      buyButton.removeEventListener('click', handleBuyButtonClick);
-    }
+      // Удаляем обработчики кнопок
+      if (buyButton) {
+        buyButton.removeEventListener('click', handleBuyButtonClick);
+      }
 
-    if (moreDetailsButton) {
-      moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
+      if (moreDetailsButton) {
+        moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
+      }
+
+      // Удаляем обработчик unload
+      window.removeEventListener('unload', cleanup);
+      window.removeEventListener('beforeunload', cleanup);
+    } catch (error) {
+      console.warn('Error during cleanup:', error);
     }
   }
 
@@ -238,9 +271,10 @@ export function initHero() {
   window.removeEventListener('resize', adjustForViewport); // Удаляем предыдущие
   window.addEventListener('resize', adjustForViewport);
 
-  // Добавляем обработчик для очистки при уничтожении секции
+  // Используем более надежный способ для очистки - beforeunload вместо unload
   if (typeof window !== 'undefined') {
-    window.addEventListener('unload', cleanup);
+    window.removeEventListener('beforeunload', cleanup); // Удаляем предыдущий
+    window.addEventListener('beforeunload', cleanup);
   }
 
   // Возвращаем функцию очистки

@@ -1,28 +1,49 @@
-/* Styles for Mobile devices */
+/* container.css */
+/* Базовые стили для всех размеров экрана */
 .container {
+  width: 100%;
   min-width: 320px;
-  max-width: 375px;
+  /* Минимальная ширина для мобильных */
   margin: 0 auto;
   padding: 0 16px;
+  box-sizing: border-box;
+  /* Чтобы padding не добавлял ширину */
 }
 
-/* Адаптация hero__container для мобильных */
-@media (max-width: 480px) {
-  .hero__container {
-    padding: 60px 16px;
+/* Стили для мобильных устройств (320-374px) - гумовая верстка */
+@media screen and (max-width: 374px) {
+  .container {
+    max-width: 100%;
   }
 }
 
-/* Styles for Tablet devices */
-@media only screen and (min-width: 768px) {
+/* Стили для мобильных устройств (375-767px) - адаптивная верстка */
+@media screen and (min-width: 375px) {
+  .container {
+    max-width: 375px;
+  }
+}
+
+/* Стили для планшетов (768-1279px) */
+@media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
+    padding: 0 32px;
+    /* Увеличиваем горизонтальные отступы */
   }
 }
 
-/* Styles for Desktop devices */
-@media only screen and (min-width: 1200px) {
+/* Стили для десктопа (1280px и больше) */
+@media screen and (min-width: 1280px) {
   .container {
-    max-width: 1200px;
+    max-width: 1280px;
+    padding: 0 16px;
+  }
+}
+
+/* Для больших экранов */
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
   }
 }
