@@ -90,12 +90,12 @@
 
 .about__cards {
     display: grid;
+    margin: 0 auto;
     grid-template-columns: 1fr;
     gap: 20px;
     perspective: 1000px;
-    width: 100%;
     box-sizing: border-box;
-    max-width: 100%;
+    max-width: 90%;
 }
 
 .about-card {
@@ -107,8 +107,10 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transform-style: preserve-3d;
-    aspect-ratio: auto;
-    /* Отменяем квадратные пропорции */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 480px;
 }
 
 .card-blur {
@@ -144,6 +146,10 @@
     z-index: 2;
     box-sizing: border-box;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-start;
 }
 
 .about-card__icon-wrapper {
@@ -210,6 +216,8 @@
     flex-direction: column;
     gap: 4px;
     transition: all 0.3s ease;
+    margin-top: auto;
+    margin-bottom: 20px;
 }
 
 .about-card:hover .about-card__stats {
@@ -411,6 +419,10 @@
     .about__cards {
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
+    }
+
+    .about-card {
+        min-height: 450px;
     }
 
     .about__label {
