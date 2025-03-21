@@ -3,7 +3,6 @@ import { globSync } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
 import path from 'path';
-import { resolve } from 'path';
 import sortMediaQueries from 'postcss-sort-media-queries';
 
 export default defineConfig(({ command }) => {
@@ -16,23 +15,8 @@ export default defineConfig(({ command }) => {
       [command === 'serve' ? 'global' : '_global']: {},
     },
     root: 'src',
-    // Публичная директория относительно корня проекта, не корня src
-    publicDir: resolve(__dirname, './public'),
-
-    // Включаем различные типы ресурсов
-    assetsInclude: [
-      '**/*.MP4',
-      '**/*.mp4',
-      '**/*.webm',
-      '**/*.gif',
-      '**/*.ico',
-      '**/*.png',
-      '**/*.jpg',
-      '**/*.jpeg',
-      '**/*.svg',
-      '**/*.html', // Включаем HTML-фрагменты
-    ],
-
+    // Явно указываем папку public как источник статических файлов
+    publicDir: '../public',
     build: {
       sourcemap: true,
       rollupOptions: {
@@ -75,29 +59,19 @@ export default defineConfig(({ command }) => {
       },
     },
     plugins: [injectHTML(), FullReload(['./src/**/**.html'])],
-
     // Добавляем разрешение для проблемных импортов
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
-        // Добавляем алиасы для доступа к ресурсам
-        '/video': resolve(__dirname, './public/video'),
-        '/img': resolve(__dirname, './public/img'),
       },
     },
-
     // Настройка сервера разработки
     server: {
-      port: 5173,
-      open: true,
-      host: true,
       watch: {
         usePolling: true,
       },
-      // Разрешаем доступ к файлам вне корневой директории src
-      fs: {
-        allow: ['.', '..'],
-      },
+      // Автоматически открываем браузер при запуске
+      open: true,
       // Опция для обработки 404 ошибок в режиме разработки
       historyApiFallback: true,
     },
