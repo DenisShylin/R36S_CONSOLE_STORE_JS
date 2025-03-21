@@ -2,11 +2,14 @@
 // Импорт всех стилей
 import './css/styles.css';
 import './css/hero.css';
-// Другие стили при необходимости
+// Импорт стилей для секции About и ModalAbout
+import './css/about.css';
+import './css/modalabout.css';
 
 // Импорт компонентов
 import { initHero } from './js/hero.js';
-// Другие компоненты при необходимости
+// Импорт компонента About
+import { initAbout } from './js/about.js';
 
 console.log('Main.js инициализирован');
 
@@ -74,6 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroCleanup = initHero();
     if (typeof heroCleanup === 'function') {
       cleanupFunctions.push(heroCleanup);
+    }
+
+    // Инициализация секции About
+    const aboutCleanup = initAbout();
+    if (typeof aboutCleanup === 'function') {
+      cleanupFunctions.push(aboutCleanup);
     }
 
     // Добавим информацию о загрузке страницы в консоль для отладки
