@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="./icons/browser.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
-    <link rel="stylesheet" href="./css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,16 +15,375 @@
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+    <script type="module" crossorigin src="/R36S_CONSOLE_STORE_JS/index.js"></script>
+    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-CkTeHqON.css">
   </head>
   <body>
     <main>
       <!-- Loads the specified .html file -->
     </main>
 
-    <load src="./partials/footer.html" />
-    <load src="./partials/hero.html" />
-    <load src="./partials/about.html" />
+    <footer class="footer">
+  <div class="container">
+    <p class="footer-desc">
+      Made with ✨ by
+      <a
+        class="footer-link"
+        href="https://goit.global/ua/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GoIT team
+      </a>
+    </p>
+  </div>
+</footer>
 
-    <script type="module" src="./main.js"></script>
+    <section class="hero" itemscope itemtype="http://schema.org/Product">
+  <div class="hero__background">
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__container container">
+    <div class="hero__content-wrapper">
+      <div class="hero__image">
+        <div class="hero__image-wrapper">
+          <div class="hero__image-glow"></div>
+          <picture>
+            <source
+              media="(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)"
+              srcset="./img/hero/herou1_1x_.png"
+              type="image/png"
+            />
+            <img
+              src="./img/hero/herou1_2x_.png"
+              srcset="./img/hero/herou1_1x_.png 1x, ./img/hero/herou1_2x_.png 2x"
+              alt="R36S Handheld Game Console - Retro Gaming Device with 15000+ Games"
+              class="hero__console-img"
+              width="600"
+              height="400"
+              loading="eager"
+              decoding="async"
+              itemprop="image"
+            />
+          </picture>
+        </div>
+      </div>
+
+      <div class="hero__title">
+        <h1 itemprop="name">
+          <span class="hero__title-line">R36S</span>
+          <span class="hero__title-line">HANDHELD</span>
+          <span class="hero__title-line">GAME CONSOLE</span>
+        </h1>
+      </div>
+
+      <div class="hero__content">
+        <meta itemprop="brand" content="R36S" />
+        <meta itemprop="category" content="Handheld Game Console" />
+        <meta itemprop="sku" content="R36S-RETRO-CONSOLE" />
+        <meta itemprop="mpn" content="R36S-2024" />
+        <meta itemprop="productID" content="R36S-2024" />
+        <meta itemprop="releaseDate" content="2024-01-01" />
+
+        <p
+          class="hero__description hero__description--desktop"
+          itemprop="description"
+        >
+          R36S Handheld Game Console opens the door to the exciting world of
+          retro gaming, offering an impressive collection of over 15,000
+          legendary games from different eras and platforms. Dive into a
+          universe of gaming nostalgia with the R36S Retro Handheld Console!
+        </p>
+        <p
+          class="hero__description hero__description--mobile"
+          itemprop="description"
+        >
+          R36S Handheld Game Console - Gaming legends in the palm of your hand.
+          15,000+ retro games in one portable device.
+        </p>
+
+        <div
+          class="hero__pricing"
+          itemprop="offers"
+          itemscope
+          itemtype="http://schema.org/Offer"
+        >
+          <meta itemprop="priceCurrency" content="USD" />
+          <meta
+            itemprop="itemCondition"
+            content="http://schema.org/NewCondition"
+          />
+          <meta itemprop="availability" content="http://schema.org/InStock" />
+          <meta
+            itemprop="url"
+            content="https://www.aliexpress.com/item/1005007171465465.html"
+          />
+          <meta itemprop="priceValidUntil" content="2025-12-31" />
+          <link itemprop="url" href="https://www.yourdomain.com/r36s-console" />
+
+          <div class="hero__price-wrapper">
+            <span class="hero__original-price">US $108.06</span>
+            <span class="hero__current-price" itemprop="price" content="35.48">
+              $35.48
+              <span style="font-size: 24px">US</span>
+            </span>
+          </div>
+          <span class="hero__discount-badge">-68%</span>
+        </div>
+
+        <div class="hero__buttons">
+          <button
+            class="hero__button hero__button--primary"
+            id="buy-button"
+            aria-label="Buy R36S Handheld Game Console with discount"
+          >
+            <span class="hero__button-pulse"></span>
+            <span class="hero__button-text">Shop With Discount</span>
+            <span class="hero__button-shine"></span>
+          </button>
+          <button
+            id="more-details-button"
+            class="hero__button hero__button--secondary"
+            aria-label="View more details about R36S Handheld Game Console"
+          >
+            More details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add aggregate rating schema -->
+  <div
+    itemprop="aggregateRating"
+    itemscope
+    itemtype="http://schema.org/AggregateRating"
+    class="visually-hidden"
+  >
+    <meta itemprop="ratingValue" content="4.8" />
+    <meta itemprop="reviewCount" content="120" />
+  </div>
+
+  <!-- Hidden SEO information (but no breadcrumbs) -->
+  <div class="visually-hidden">
+    <h2>Buy R36S Handheld Game Console - Portable Retro Gaming Device</h2>
+    <h3>R36S Portable Gaming System with 15000+ Classic Games</h3>
+    <h4>Best Retro Handheld Console R36S with High Performance</h4>
+  </div>
+</section>
+
+    <section
+  class="about"
+  id="features-r36s"
+  itemscope
+  itemtype="http://schema.org/ItemList"
+>
+  <meta itemprop="itemListOrder" content="Unordered" />
+  <meta itemprop="numberOfItems" content="6" />
+  <div class="about__container">
+    <div class="about__header">
+      <div class="about__labels">
+        <span class="about__label">Functionality</span>
+        <span class="about__label about__label--outline">R36S</span>
+      </div>
+      <h2 class="about__title" itemprop="name">
+        <span class="about__title-highlight">R36S</span>
+        <span class="about__title-rest">Handheld Game Console Features</span>
+      </h2>
+      <p class="about__subtitle" itemprop="description">
+        Discover the world of 15,000+ retro games with R36S - portable gaming
+        technology featuring long battery life, customizable settings, and
+        vibrant display.
+      </p>
+    </div>
+
+    <div class="about__cards">
+      <!-- Card 1: Game Collection -->
+      <div
+        class="about-card"
+        data-id="1"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="http://schema.org/ListItem"
+      >
+        <meta itemprop="position" content="1" />
+        <div class="card-blur"></div>
+        <div class="card-glow"></div>
+        <div
+          class="about-card__content"
+          itemprop="item"
+          itemscope
+          itemtype="http://schema.org/Thing"
+        >
+          <div class="about-card__icon-wrapper">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="about-card__icon"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <line x1="6" y1="12" x2="10" y2="12"></line>
+              <line x1="8" y1="10" x2="8" y2="14"></line>
+              <line x1="15" y1="13" x2="15.01" y2="13"></line>
+              <line x1="18" y1="11" x2="18.01" y2="11"></line>
+              <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+            </svg>
+          </div>
+          <h3 class="about-card__title" itemprop="name">
+            Retro Game Collection
+          </h3>
+          <p class="about-card__description" itemprop="description">
+            Get into the game with the R36S portable gaming console featuring
+            15,000+ classic retro games from multiple platforms.
+          </p>
+          <div class="about-card__stats">
+            <span class="about-card__number">15K+</span>
+            <span class="about-card__detail">classic games</span>
+          </div>
+          <button
+            class="about-card__button"
+            data-feature-id="1"
+            aria-label="Learn more about R36S game collection"
+          >
+            <span class="button-text">More details</span>
+            <span class="button-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="card-indicator"></div>
+      </div>
+
+      <!-- Card 2: Display -->
+      <div
+        class="about-card"
+        data-id="2"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="http://schema.org/ListItem"
+      >
+        <meta itemprop="position" content="2" />
+        <div class="card-blur"></div>
+        <div class="card-glow"></div>
+        <div
+          class="about-card__content"
+          itemprop="item"
+          itemscope
+          itemtype="http://schema.org/Thing"
+        >
+          <div class="about-card__icon-wrapper">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="about-card__icon"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3 class="about-card__title" itemprop="name">
+            Vibrant Display Technologies
+          </h3>
+          <p class="about-card__description" itemprop="description">
+            Enjoy vivid games on the R36S 3.5" IPS LCD display with crisp
+            640x480 resolution for immersive retro gaming.
+          </p>
+          <div class="about-card__stats">
+            <span class="about-card__number">3.5"</span>
+            <span class="about-card__detail">IPS display</span>
+          </div>
+          <button
+            class="about-card__button"
+            data-feature-id="2"
+            aria-label="Learn more about R36S display features"
+          >
+            <span class="button-text">More details</span>
+            <span class="button-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="card-indicator"></div>
+      </div>
+
+      <!-- Дополнительные карточки будут добавлены через JavaScript -->
+    </div>
+  </div>
+
+  <!-- Дополнительная SEO-информация скрытая для пользователей -->
+  <div class="visually-hidden">
+    <h3>R36S Handheld Game Console Specifications</h3>
+    <ul>
+      <li>Over 15,000 retro games from different platforms</li>
+      <li>3.5-inch IPS LCD display with 640x480 resolution</li>
+      <li>7-8 hours battery life with 3200 mAh capacity</li>
+      <li>Available in 10+ color variations</li>
+      <li>30+ customizable settings for optimal gaming experience</li>
+      <li>Ultra-portable design for gaming on the go</li>
+    </ul>
+    <h4>Best R36S Portable Retro Gaming Console</h4>
+    <p>
+      The R36S handheld game console is the perfect portable gaming device for
+      retro gaming enthusiasts, featuring a vast library of classic games,
+      vibrant display, long battery life, and customizable settings.
+    </p>
+  </div>
+
+  <!-- Встроенная микроразметка для рейтинга -->
+  <div
+    itemprop="aggregateRating"
+    itemscope
+    itemtype="http://schema.org/AggregateRating"
+    class="visually-hidden"
+  >
+    <meta itemprop="ratingValue" content="4.8" />
+    <meta itemprop="reviewCount" content="1250" />
+    <meta itemprop="bestRating" content="5" />
+    <meta itemprop="worstRating" content="1" />
+  </div>
+</section>
+
+
   </body>
 </html>
