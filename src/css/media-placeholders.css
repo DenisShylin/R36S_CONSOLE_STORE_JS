@@ -29,8 +29,10 @@
     animation: spin 1s linear infinite;
 }
 
+/* Изменен класс hidden с display:none на opacity для лучшей работы с анимациями */
 .hidden {
-    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 @keyframes spin {
@@ -64,4 +66,21 @@
     100% {
         background-position: -100% 0;
     }
+}
+
+/* Дополнительные стили для изображений и видео */
+.modal-about-image,
+.modal-about-video {
+    transition: opacity 0.3s ease;
+}
+
+/* Стиль для сообщения об ошибке загрузки медиа */
+.modal-about-video-error,
+.modal-about-image-error {
+    background-color: #ff3333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin: 10px auto;
 }

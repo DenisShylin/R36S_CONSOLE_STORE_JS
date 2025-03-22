@@ -250,49 +250,38 @@ Never compromise between portability and performance - the R36S delivers both in
     },
   ];
 
-  // Функция для предзагрузки медиаресурсов
+  // Функция для предзагрузки медиаресурсов (улучшенная версия)
   function preloadResource(url) {
-    // Проверяем, был ли ресурс уже предзагружен
-    if (preloadedResources.has(url)) {
-      return; // Если ресурс уже был предзагружен, пропускаем
-    }
+    try {
+      // Проверяем, был ли ресурс уже предзагружен
+      if (preloadedResources.has(url)) {
+        return; // Если ресурс уже был предзагружен, пропускаем
+      }
 
-    // Отмечаем ресурс как предзагруженный
-    preloadedResources.add(url);
+      // Отмечаем ресурс как предзагруженный
+      preloadedResources.add(url);
+      console.log('Предзагрузка ресурса:', url);
 
-    // Определяем тип ресурса по расширению
-    const fileExtension = url.split('.').pop().toLowerCase();
+      // Определяем тип ресурса по расширению
+      const fileExtension = url.split('.').pop().toLowerCase();
 
-    if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
-      // Предзагрузка видео
-      console.log('Предзагрузка видео:', url);
-      const preloadLink = document.createElement('link');
-      preloadLink.rel = 'preload';
-      preloadLink.href = url;
-      preloadLink.as = 'video';
-      preloadLink.type = `video/${fileExtension}`;
-      document.head.appendChild(preloadLink);
+      // Используем API fetch для предзагрузки ресурсов без добавления элементов в DOM
+      fetch(url, { method: 'HEAD' }).catch(err =>
+        console.log('Предзагрузка проверка доступности:', url)
+      );
 
-      // Дополнительно создаем скрытый элемент video для загрузки метаданных
-      const videoElement = document.createElement('video');
-      videoElement.style.display = 'none';
-      videoElement.preload = 'metadata';
-      videoElement.src = url;
-      videoElement.muted = true;
-
-      // Удаляем элемент после загрузки метаданных
-      videoElement.addEventListener('loadedmetadata', () => {
-        if (document.body.contains(videoElement)) {
-          document.body.removeChild(videoElement);
-        }
-      });
-
-      document.body.appendChild(videoElement);
-    } else if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fileExtension)) {
-      // Предзагрузка изображения
-      console.log('Предзагрузка изображения:', url);
-      const img = new Image();
-      img.src = url;
+      // Дополнительно используем стандартные объекты для предзагрузки
+      if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fileExtension)) {
+        const img = new Image();
+        img.src = url;
+      } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+        // Для видео лучше использовать fetch, а не создавать элементы
+        fetch(url, { method: 'GET', headers: { Range: 'bytes=0-1000' } }).catch(
+          err => console.log('Предзагрузка диапазона видео:', url)
+        );
+      }
+    } catch (error) {
+      console.error('Ошибка при предзагрузке ресурса:', url, error);
     }
   }
 
@@ -366,10 +355,26 @@ Never compromise between portability and performance - the R36S delivers both in
 
     // Создаем модальное окно если оно еще не создано
     if (!modalInstance) {
+      console.log('Создание нового модального окна');
       modalInstance = createModalAbout(document.body);
     }
 
+    // Предзагрузка ресурсов перед открытием модального окна
+    console.log('Подготовка ресурсов для модального окна');
+    if (feature.videoUrl) {
+      preloadResource(feature.videoUrl);
+    }
+    if (feature.imageUrl) {
+      preloadResource(feature.imageUrl);
+    }
+    if (feature.colorImages && Array.isArray(feature.colorImages)) {
+      feature.colorImages.forEach(imgUrl => {
+        preloadResource(imgUrl);
+      });
+    }
+
     // Открываем модальное окно
+    console.log('Открытие модального окна для:', feature.title);
     modalInstance.open(feature);
   }
 
@@ -439,17 +444,6 @@ Never compromise between portability and performance - the R36S delivers both in
       modalInstance.destroy();
       modalInstance = null;
     }
-
-    // Очищаем ссылки предварительной загрузки
-    document.querySelectorAll('link[rel="preload"]').forEach(link => {
-      if (
-        link.href &&
-        (link.href.includes('/video/about/') ||
-          link.href.includes('/img/about/'))
-      ) {
-        link.remove();
-      }
-    });
 
     // Очищаем множество предзагруженных ресурсов
     preloadedResources.clear();
