@@ -1,3 +1,4 @@
+// modalabout.js;
 // Фабричная функция для создания модального окна
 export function createModalAbout(parentElement) {
   let modalElement = null;

@@ -1,5 +1,5 @@
 /* Стили для плейсхолдеров медиа-контента */
-/* .media-placeholder {
+.media-placeholder {
     width: 100%;
     background: #0F172A;
     border-radius: 14px;
@@ -64,4 +64,4 @@
     100% {
         background-position: -100% 0;
     }
-} */
+}

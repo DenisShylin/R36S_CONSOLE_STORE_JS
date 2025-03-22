@@ -30,6 +30,9 @@ export function initAbout() {
   let selectedFeature = null;
   let modalInstance = null;
 
+  // Отслеживаем уже предзагруженные ресурсы для избежания повторных запросов
+  const preloadedResources = new Set();
+
   // Данные функций - с URL к медиафайлам
   const features = [
     {
@@ -247,6 +250,52 @@ Never compromise between portability and performance - the R36S delivers both in
     },
   ];
 
+  // Функция для предзагрузки медиаресурсов
+  function preloadResource(url) {
+    // Проверяем, был ли ресурс уже предзагружен
+    if (preloadedResources.has(url)) {
+      return; // Если ресурс уже был предзагружен, пропускаем
+    }
+
+    // Отмечаем ресурс как предзагруженный
+    preloadedResources.add(url);
+
+    // Определяем тип ресурса по расширению
+    const fileExtension = url.split('.').pop().toLowerCase();
+
+    if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
+      // Предзагрузка видео
+      console.log('Предзагрузка видео:', url);
+      const preloadLink = document.createElement('link');
+      preloadLink.rel = 'preload';
+      preloadLink.href = url;
+      preloadLink.as = 'video';
+      preloadLink.type = `video/${fileExtension}`;
+      document.head.appendChild(preloadLink);
+
+      // Дополнительно создаем скрытый элемент video для загрузки метаданных
+      const videoElement = document.createElement('video');
+      videoElement.style.display = 'none';
+      videoElement.preload = 'metadata';
+      videoElement.src = url;
+      videoElement.muted = true;
+
+      // Удаляем элемент после загрузки метаданных
+      videoElement.addEventListener('loadedmetadata', () => {
+        if (document.body.contains(videoElement)) {
+          document.body.removeChild(videoElement);
+        }
+      });
+
+      document.body.appendChild(videoElement);
+    } else if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fileExtension)) {
+      // Предзагрузка изображения
+      console.log('Предзагрузка изображения:', url);
+      const img = new Image();
+      img.src = url;
+    }
+  }
+
   // Рендерим карточки
   function renderCards() {
     cardsContainer.innerHTML = features
@@ -333,6 +382,29 @@ Never compromise between portability and performance - the R36S delivers both in
       card.addEventListener('mouseenter', () => {
         activeCard = parseInt(card.dataset.id);
         card.classList.add('active');
+
+        // Предзагрузка медиаресурсов при наведении на карточку
+        const featureId = parseInt(card.dataset.id);
+        const feature = features.find(f => f.id === featureId);
+
+        if (feature) {
+          // Предзагружаем видео
+          if (feature.videoUrl) {
+            preloadResource(feature.videoUrl);
+          }
+
+          // Предзагружаем изображение
+          if (feature.imageUrl) {
+            preloadResource(feature.imageUrl);
+          }
+
+          // Предзагружаем цветовые варианты
+          if (feature.colorImages && Array.isArray(feature.colorImages)) {
+            feature.colorImages.forEach(imgUrl => {
+              preloadResource(imgUrl);
+            });
+          }
+        }
       });
 
       card.addEventListener('mouseleave', () => {
@@ -367,6 +439,20 @@ Never compromise between portability and performance - the R36S delivers both in
       modalInstance.destroy();
       modalInstance = null;
     }
+
+    // Очищаем ссылки предварительной загрузки
+    document.querySelectorAll('link[rel="preload"]').forEach(link => {
+      if (
+        link.href &&
+        (link.href.includes('/video/about/') ||
+          link.href.includes('/img/about/'))
+      ) {
+        link.remove();
+      }
+    });
+
+    // Очищаем множество предзагруженных ресурсов
+    preloadedResources.clear();
   }
 
   // Инициализация секции
@@ -375,6 +461,18 @@ Never compromise between portability and performance - the R36S delivers both in
     renderCards();
     console.log('Устанавливаем обработчики событий...');
     setupCardEvents();
+
+    // Предзагрузка критически важных ресурсов (первые несколько элементов)
+    console.log('Предзагрузка критически важных ресурсов...');
+    features.slice(0, 3).forEach(feature => {
+      if (feature.videoUrl) {
+        preloadResource(feature.videoUrl);
+      }
+      if (feature.imageUrl) {
+        preloadResource(feature.imageUrl);
+      }
+    });
+
     console.log('Инициализация About завершена успешно');
   } catch (error) {
     console.error('Ошибка при инициализации About:', error);
