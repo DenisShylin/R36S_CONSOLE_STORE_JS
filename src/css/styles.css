@@ -9,6 +9,7 @@
 @import url('./base.css');
 @import url('./container.css');
 @import url('./animations.css');
+/* @import url('./media-placeholders.css'); */
 
 /* Sections style */
 @import url('./hero.css');

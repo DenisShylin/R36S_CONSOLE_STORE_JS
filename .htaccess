@@ -1,0 +1,30 @@
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Кэширование изображений на 1 месяц
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  
+  # Кэширование видео на 1 неделю
+  ExpiresByType video/mp4 "access plus 1 week"
+  ExpiresByType video/webm "access plus 1 week"
+  
+  # Кэширование CSS и JavaScript на 1 неделю
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Включение GZIP-сжатия
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>

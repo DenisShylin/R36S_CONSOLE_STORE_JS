@@ -1,0 +1,67 @@
+/* Стили для плейсхолдеров медиа-контента */
+/* .media-placeholder {
+    width: 100%;
+    background: #0F172A;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 7px 27px rgba(0, 0, 0, 0.2);
+}
+
+.media-placeholder[data-type="video"] {
+    aspect-ratio: 16/9;
+    max-height: calc(85vh - 82px - 52px);
+}
+
+.media-placeholder[data-type="image"] {
+    aspect-ratio: 1;
+}
+
+.placeholder-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(96, 165, 250, 0.3);
+    border-top: 3px solid #3B82F6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.media-placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            rgba(15, 23, 42, 0.6),
+            rgba(37, 99, 235, 0.1),
+            rgba(15, 23, 42, 0.6));
+    background-size: 200% 100%;
+    animation: pulse 1.5s linear infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+} */
