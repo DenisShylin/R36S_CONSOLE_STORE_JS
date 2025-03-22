@@ -7,8 +7,14 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
     box-shadow: 0 7px 27px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease;
 }
 
 .media-placeholder[data-type="video"] {
@@ -33,6 +39,8 @@
 .hidden {
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
+    /* Предотвращаем взаимодействие с скрытыми элементами */
 }
 
 @keyframes spin {
@@ -56,16 +64,6 @@
             rgba(15, 23, 42, 0.6));
     background-size: 200% 100%;
     animation: pulse 1.5s linear infinite;
-}
-
-@keyframes pulse {
-    0% {
-        background-position: 100% 0;
-    }
-
-    100% {
-        background-position: -100% 0;
-    }
 }
 
 /* Дополнительные стили для изображений и видео */

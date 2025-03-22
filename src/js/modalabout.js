@@ -45,17 +45,34 @@ export function createModalAbout(parentElement) {
   function renderMedia() {
     if (!feature) return '';
 
+    // Используем таймер для отложенного отображения плейсхолдеров
+    const placeholderId = `placeholder-${Date.now()}`;
+
+    // Вместо того чтобы сразу показывать плейсхолдер, создаём скрытый плейсхолдер,
+    // который будет показан только если загрузка займёт больше времени
+    const createDelayedPlaceholder = type => `
+      <div id="${placeholderId}" class="media-placeholder hidden" data-type="${type}">
+        <div class="placeholder-spinner"></div>
+      </div>
+      <script>
+        setTimeout(() => {
+          const placeholder = document.getElementById('${placeholderId}');
+          if (placeholder && placeholder.classList.contains('hidden')) {
+            placeholder.classList.remove('hidden');
+          }
+        }, 300); // Показываем плейсхолдер только если загрузка занимает больше 300мс
+      </script>
+    `;
+
     // Обработка карусели цветов
     if (feature.title === 'Extensive color selection' && feature.colorImages) {
       return `
-        <div class="media-placeholder" data-type="image">
-          <div class="placeholder-spinner"></div>
-        </div>
+        ${createDelayedPlaceholder('image')}
         <img
           src="${feature.colorImages[currentImageIndex]}"
           alt="R36S Color Variant ${currentImageIndex + 1}"
-          class="modal-about-image hidden"
-          loading="lazy"
+          class="modal-about-image"
+          loading="eager"
           width="400" 
           height="400"
         />
@@ -65,16 +82,14 @@ export function createModalAbout(parentElement) {
     // Обработка видео
     if (feature.videoUrl) {
       return `
-        <div class="media-placeholder" data-type="video">
-          <div class="placeholder-spinner"></div>
-        </div>
+        ${createDelayedPlaceholder('video')}
         <video
-          class="modal-about-video hidden"
+          class="modal-about-video"
           autoplay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           width="640" 
           height="360"
           poster="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+VmlkZW8gLSAke2ZlYXR1cmUuaW1hZ2VBbHR9PC90ZXh0Pjwvc3ZnPg=="
@@ -88,16 +103,14 @@ export function createModalAbout(parentElement) {
     // Обработка статичного изображения (включая GIF)
     return feature.imageUrl
       ? `
-      <div class="media-placeholder" data-type="image">
-        <div class="placeholder-spinner"></div>
-      </div>
+      ${createDelayedPlaceholder('image')}
       <img
         src="${feature.imageUrl}${
           feature.imageUrl.includes('.gif') ? '?' + new Date().getTime() : ''
         }"
         alt="${feature.imageAlt || 'Feature image'}"
-        class="modal-about-image hidden"
-        loading="lazy"
+        class="modal-about-image"
+        loading="eager"
         width="400" 
         height="400"
       />
@@ -119,28 +132,55 @@ export function createModalAbout(parentElement) {
 
       // Настройка нового интервала для смены изображений
       colorImagesInterval = setInterval(() => {
-        currentImageIndex =
+        // Вычисляем следующий индекс
+        const nextIndex =
           currentImageIndex === feature.colorImages.length - 1
             ? 0
             : currentImageIndex + 1;
 
-        // Обновление источника изображения
-        const imageElement = modalElement.querySelector('.modal-about-image');
-        if (imageElement) {
-          // Добавляем временную метку для GIF, чтобы избежать кеширования
-          const timestamp = new Date().getTime();
-          const newSrc = feature.colorImages[currentImageIndex].includes('.gif')
-            ? `${feature.colorImages[currentImageIndex]}?${timestamp}`
-            : feature.colorImages[currentImageIndex];
+        // Предзагружаем следующее изображение перед сменой
+        const preloadImg = new Image();
+        const timestamp = new Date().getTime();
+        const nextSrc = feature.colorImages[nextIndex].includes('.gif')
+          ? `${feature.colorImages[nextIndex]}?${timestamp}`
+          : feature.colorImages[nextIndex];
 
-          // Сначала добавляем класс hidden
-          imageElement.classList.add('hidden');
+        preloadImg.onload = () => {
+          currentImageIndex = nextIndex;
 
-          // Обновляем источник и alt текст
-          imageElement.src = newSrc;
-          imageElement.alt = `R36S Color Variant ${currentImageIndex + 1}`;
-        }
-      }, 1000);
+          // Обновление источника изображения
+          const imageElement = modalElement.querySelector('.modal-about-image');
+          if (imageElement) {
+            // Временно добавляем плейсхолдер только если изображение не кешировано
+            const needsPlaceholder =
+              !preloadImg.complete || preloadImg.naturalWidth === 0;
+
+            // Создаем плейсхолдер если нужно
+            if (needsPlaceholder) {
+              const placeholderId = `color-placeholder-${Date.now()}`;
+              const placeholder = document.createElement('div');
+              placeholder.id = placeholderId;
+              placeholder.className = 'media-placeholder';
+              placeholder.setAttribute('data-type', 'image');
+              placeholder.innerHTML = '<div class="placeholder-spinner"></div>';
+
+              // Вставляем плейсхолдер перед изображением
+              if (imageElement.parentNode) {
+                imageElement.parentNode.insertBefore(placeholder, imageElement);
+              }
+            }
+
+            // Обновляем источник и alt текст
+            imageElement.src = nextSrc;
+            imageElement.alt = `R36S Color Variant ${nextIndex + 1}`;
+
+            // После установки источника изображения, обработчик onload удалит плейсхолдер
+          }
+        };
+
+        // Начинаем загрузку следующего изображения
+        preloadImg.src = nextSrc;
+      }, 3000); // Увеличиваем интервал до 3 секунд для лучшего UX
     }
   }
 
@@ -154,12 +194,10 @@ export function createModalAbout(parentElement) {
       console.log('Найдено изображений:', images.length);
 
       images.forEach((img, index) => {
-        console.log(`Настройка обработчика для изображения ${index}`);
-
         // Если изображение уже загружено (например, из кеша)
         if (img.complete && img.naturalWidth !== 0) {
           console.log(`Изображение ${index} уже загружено из кеша`);
-          img.classList.remove('hidden');
+          // Скрываем плейсхолдер, так как изображение уже загружено
           const placeholder = img.previousElementSibling;
           if (
             placeholder &&
@@ -170,8 +208,7 @@ export function createModalAbout(parentElement) {
         } else {
           // Добавляем обработчик для события загрузки
           img.addEventListener('load', function () {
-            console.log('Изображение загружено:', this.src);
-            this.classList.remove('hidden');
+            // Скрываем плейсхолдер после загрузки изображения
             const placeholder = this.previousElementSibling;
             if (
               placeholder &&
@@ -187,7 +224,7 @@ export function createModalAbout(parentElement) {
             // Показываем плейсхолдер ошибки вместо изображения
             this.src =
               'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmMzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+RXJyb3IgbG9hZGluZyBpbWFnZTwvdGV4dD48L3N2Zz4=';
-            this.classList.remove('hidden');
+            // Скрываем плейсхолдер загрузки при ошибке
             const placeholder = this.previousElementSibling;
             if (
               placeholder &&
@@ -204,13 +241,11 @@ export function createModalAbout(parentElement) {
       console.log('Найдено видео:', videos.length);
 
       videos.forEach((video, index) => {
-        console.log(`Настройка обработчика для видео ${index}`);
-
         // Проверяем, если видео уже готово к воспроизведению
         if (video.readyState >= 2) {
           // HAVE_CURRENT_DATA или выше
           console.log(`Видео ${index} уже загружено из кеша`);
-          video.classList.remove('hidden');
+          // Скрываем плейсхолдер, так как видео уже загружено
           const placeholder = video.previousElementSibling;
           if (
             placeholder &&
@@ -221,14 +256,30 @@ export function createModalAbout(parentElement) {
         } else {
           // Добавляем обработчик для события загрузки данных видео
           video.addEventListener('loadeddata', function () {
-            console.log('Видео загружено:', this.querySelector('source')?.src);
-            this.classList.remove('hidden');
+            // Скрываем плейсхолдер после загрузки видео
             const placeholder = this.previousElementSibling;
             if (
               placeholder &&
               placeholder.classList.contains('media-placeholder')
             ) {
               placeholder.remove();
+            }
+          });
+
+          // Добавляем обработчик для события timeupdate (начало воспроизведения)
+          video.addEventListener('timeupdate', function () {
+            // Проверяем только при первом воспроизведении
+            if (this.currentTime > 0 && !this._timeUpdateHandled) {
+              this._timeUpdateHandled = true; // Флаг, чтобы обработать только раз
+
+              // Скрываем плейсхолдер при начале воспроизведения
+              const placeholder = this.previousElementSibling;
+              if (
+                placeholder &&
+                placeholder.classList.contains('media-placeholder')
+              ) {
+                placeholder.remove();
+              }
             }
           });
 
@@ -246,6 +297,7 @@ export function createModalAbout(parentElement) {
               'background-color: #ff3333; color: white; padding: 20px; text-align: center; border-radius: 8px;';
 
             this.parentNode.replaceChild(errorPlaceholder, this);
+            // Скрываем плейсхолдер загрузки при ошибке
             const placeholder = errorPlaceholder.previousElementSibling;
             if (
               placeholder &&
