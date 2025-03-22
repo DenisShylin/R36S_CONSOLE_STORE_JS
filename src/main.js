@@ -1,14 +1,9 @@
 // main.js - Точка входа в приложение
 // Импорт всех стилей
 import './css/styles.css';
-import './css/hero.css';
-// Импорт стилей для секции About и ModalAbout
-import './css/about.css';
-import './css/modalabout.css';
 
-// Импорт компонентов
+// Импорт компонентов js
 import { initHero } from './js/hero.js';
-// Импорт компонента About
 import { initAbout } from './js/about.js';
 
 console.log('Main.js инициализирован');
