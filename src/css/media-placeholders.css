@@ -1,5 +1,5 @@
 /* Стили для плейсхолдеров медиа-контента */
-.media-placeholder {
+/* .media-placeholder {
     width: 100%;
     background: #0F172A;
     border-radius: 14px;
@@ -33,16 +33,16 @@
     border-top: 3px solid #3B82F6;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
+} */
 
 /* Изменен класс hidden с display:none на opacity для лучшей работы с анимациями */
-.hidden {
+/* .hidden {
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-    /* Предотвращаем взаимодействие с скрытыми элементами */
-}
-
+    
+} */
+/* 
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -51,10 +51,10 @@
     100% {
         transform: rotate(360deg);
     }
-}
+} */
 
 
-.media-placeholder::before {
+/* .media-placeholder::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -64,16 +64,16 @@
             rgba(15, 23, 42, 0.6));
     background-size: 200% 100%;
     animation: pulse 1.5s linear infinite;
-}
+} */
 
 /* Дополнительные стили для изображений и видео */
-.modal-about-image,
+/* .modal-about-image,
 .modal-about-video {
     transition: opacity 0.3s ease;
-}
+} */
 
 /* Стиль для сообщения об ошибке загрузки медиа */
-.modal-about-video-error,
+/* .modal-about-video-error,
 .modal-about-image-error {
     background-color: #ff3333;
     color: white;
@@ -81,4 +81,4 @@
     text-align: center;
     border-radius: 8px;
     margin: 10px auto;
-}
+} */

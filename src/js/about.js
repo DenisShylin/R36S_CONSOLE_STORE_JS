@@ -1,3 +1,4 @@
+// about.js;
 // Импорт модального окна
 import { createModalAbout } from './modalabout.js';
 
@@ -29,9 +30,6 @@ export function initAbout() {
   let mousePosition = { x: 0, y: 0 };
   let selectedFeature = null;
   let modalInstance = null;
-
-  // Отслеживаем уже предзагруженные ресурсы для избежания повторных запросов
-  const preloadedResources = new Set();
 
   // Данные функций - с URL к медиафайлам
   const features = [
@@ -250,41 +248,6 @@ Never compromise between portability and performance - the R36S delivers both in
     },
   ];
 
-  // Функция для предзагрузки медиаресурсов (улучшенная версия)
-  function preloadResource(url) {
-    try {
-      // Проверяем, был ли ресурс уже предзагружен
-      if (preloadedResources.has(url)) {
-        return; // Если ресурс уже был предзагружен, пропускаем
-      }
-
-      // Отмечаем ресурс как предзагруженный
-      preloadedResources.add(url);
-      console.log('Предзагрузка ресурса:', url);
-
-      // Определяем тип ресурса по расширению
-      const fileExtension = url.split('.').pop().toLowerCase();
-
-      // Используем API fetch для предзагрузки ресурсов без добавления элементов в DOM
-      fetch(url, { method: 'HEAD' }).catch(err =>
-        console.log('Предзагрузка проверка доступности:', url)
-      );
-
-      // Дополнительно используем стандартные объекты для предзагрузки
-      if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fileExtension)) {
-        const img = new Image();
-        img.src = url;
-      } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
-        // Для видео лучше использовать fetch, а не создавать элементы
-        fetch(url, { method: 'GET', headers: { Range: 'bytes=0-1000' } }).catch(
-          err => console.log('Предзагрузка диапазона видео:', url)
-        );
-      }
-    } catch (error) {
-      console.error('Ошибка при предзагрузке ресурса:', url, error);
-    }
-  }
-
   // Рендерим карточки
   function renderCards() {
     cardsContainer.innerHTML = features
@@ -355,26 +318,10 @@ Never compromise between portability and performance - the R36S delivers both in
 
     // Создаем модальное окно если оно еще не создано
     if (!modalInstance) {
-      console.log('Создание нового модального окна');
       modalInstance = createModalAbout(document.body);
     }
 
-    // Предзагрузка ресурсов перед открытием модального окна
-    console.log('Подготовка ресурсов для модального окна');
-    if (feature.videoUrl) {
-      preloadResource(feature.videoUrl);
-    }
-    if (feature.imageUrl) {
-      preloadResource(feature.imageUrl);
-    }
-    if (feature.colorImages && Array.isArray(feature.colorImages)) {
-      feature.colorImages.forEach(imgUrl => {
-        preloadResource(imgUrl);
-      });
-    }
-
     // Открываем модальное окно
-    console.log('Открытие модального окна для:', feature.title);
     modalInstance.open(feature);
   }
 
@@ -387,29 +334,6 @@ Never compromise between portability and performance - the R36S delivers both in
       card.addEventListener('mouseenter', () => {
         activeCard = parseInt(card.dataset.id);
         card.classList.add('active');
-
-        // Предзагрузка медиаресурсов при наведении на карточку
-        const featureId = parseInt(card.dataset.id);
-        const feature = features.find(f => f.id === featureId);
-
-        if (feature) {
-          // Предзагружаем видео
-          if (feature.videoUrl) {
-            preloadResource(feature.videoUrl);
-          }
-
-          // Предзагружаем изображение
-          if (feature.imageUrl) {
-            preloadResource(feature.imageUrl);
-          }
-
-          // Предзагружаем цветовые варианты
-          if (feature.colorImages && Array.isArray(feature.colorImages)) {
-            feature.colorImages.forEach(imgUrl => {
-              preloadResource(imgUrl);
-            });
-          }
-        }
       });
 
       card.addEventListener('mouseleave', () => {
@@ -444,9 +368,6 @@ Never compromise between portability and performance - the R36S delivers both in
       modalInstance.destroy();
       modalInstance = null;
     }
-
-    // Очищаем множество предзагруженных ресурсов
-    preloadedResources.clear();
   }
 
   // Инициализация секции
@@ -455,18 +376,6 @@ Never compromise between portability and performance - the R36S delivers both in
     renderCards();
     console.log('Устанавливаем обработчики событий...');
     setupCardEvents();
-
-    // Предзагрузка критически важных ресурсов (первые несколько элементов)
-    console.log('Предзагрузка критически важных ресурсов...');
-    features.slice(0, 3).forEach(feature => {
-      if (feature.videoUrl) {
-        preloadResource(feature.videoUrl);
-      }
-      if (feature.imageUrl) {
-        preloadResource(feature.imageUrl);
-      }
-    });
-
     console.log('Инициализация About завершена успешно');
   } catch (error) {
     console.error('Ошибка при инициализации About:', error);
