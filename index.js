@@ -1,16 +1,21 @@
-(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))l(r);new MutationObserver(r=>{for(const c of r)if(c.type==="childList")for(const p of c.addedNodes)p.tagName==="LINK"&&p.rel==="modulepreload"&&l(p)}).observe(document,{childList:!0,subtree:!0});function e(r){const c={};return r.integrity&&(c.integrity=r.integrity),r.referrerPolicy&&(c.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?c.credentials="include":r.crossOrigin==="anonymous"?c.credentials="omit":c.credentials="same-origin",c}function l(r){if(r.ep)return;r.ep=!0;const c=e(r);fetch(r.href,c)}})();function E(){console.log("Hero section initialized");const a=document.querySelector(".hero"),o=document.querySelector(".hero__console-img"),e=document.querySelector(".hero__content"),l=document.querySelector(".hero__description--desktop"),r=document.querySelector(".hero__description--mobile"),c=document.querySelector(".hero__pricing"),p=document.getElementById("buy-button"),g=document.getElementById("more-details-button");let m=null;function b(){if(!o){console.error("Hero image element not found");return}console.log("Setting up hero image"),o.onerror=()=>{console.error("Failed to load hero image:",o.src);try{const t=o.getAttribute("srcset");if(t){const u=t.split(",");if(u&&u.length>0){const f=u[0].split(" ")[0];console.log("Using fallback image:",f),o.src=f}}}catch(t){console.error("Error setting fallback image:",t)}a&&a.classList.add("hero--loaded")},o.onload=()=>{console.log("Hero image loaded successfully"),a&&a.classList.add("hero--loaded")},o.decoding="async",o.complete&&(console.log("Hero image already loaded (from cache)"),a&&a.classList.add("hero--loaded"))}function v(){const t=window.innerWidth>992;l&&r&&c&&(t?(l.style.display="block",r.style.display="none"):(l.style.display="none",r.style.display="block"))}function n(){if(e){m&&(m.disconnect(),m=null);try{m=new IntersectionObserver(t=>{try{t.forEach(u=>{u.isIntersecting&&u.target&&u.target.isConnected&&(u.target.classList.add("animate-in"),m&&m.unobserve(u.target))})}catch(u){console.warn("Error in IntersectionObserver callback:",u)}},{threshold:.1}),e&&e.isConnected&&m.observe(e)}catch(t){console.warn("Error setting up IntersectionObserver:",t)}}}function i(){p&&(p.removeEventListener("click",d),p.addEventListener("click",d)),g&&(g.removeEventListener("click",s),g.addEventListener("click",s))}function d(){try{window.open("https://www.aliexpress.com/item/1005007171465465.html","_blank","noopener,noreferrer")}catch(t){console.error("Error opening product link:",t)}}function s(t){t.preventDefault();const u=document.getElementById("features"),f=document.querySelector(".header");if(u&&f)try{const y=f.offsetHeight,I=u.getBoundingClientRect().top,S=window.scrollY||window.pageYOffset,x=I+S-y;window.scrollTo({top:x,behavior:"smooth"}),window.history.replaceState(null,"",`${window.location.pathname}#features`)}catch(y){console.error("Error scrolling to features:",y),window.location.hash="features"}}function h(){try{m&&(m.disconnect(),m=null),window.removeEventListener("resize",v),p&&p.removeEventListener("click",d),g&&g.removeEventListener("click",s),window.removeEventListener("unload",h),window.removeEventListener("beforeunload",h)}catch(t){console.warn("Error during cleanup:",t)}}return b(),v(),n(),i(),window.removeEventListener("resize",v),window.addEventListener("resize",v),typeof window<"u"&&(window.removeEventListener("beforeunload",h),window.addEventListener("beforeunload",h)),h}function _(a){let o=null,e=null,l=!1,r=0,c=null;(()=>{document.getElementById("modal-about-styles")||console.log("Проверка стилей модального окна")})();function g(t){t.key==="Escape"&&l&&s()}function m(){const t=document.createElement("div");return t.className="modal-about-overlay",t.setAttribute("role","dialog"),t.setAttribute("aria-modal","true"),t.setAttribute("tabindex","-1"),t.style.display="none",t.addEventListener("click",s),a.appendChild(t),t}function b(){return e?e.title==="Extensive color selection"&&e.colorImages?`
+(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const n of document.querySelectorAll('link[rel="modulepreload"]'))c(n);new MutationObserver(n=>{for(const a of n)if(a.type==="childList")for(const v of a.addedNodes)v.tagName==="LINK"&&v.rel==="modulepreload"&&c(v)}).observe(document,{childList:!0,subtree:!0});function e(n){const a={};return n.integrity&&(a.integrity=n.integrity),n.referrerPolicy&&(a.referrerPolicy=n.referrerPolicy),n.crossOrigin==="use-credentials"?a.credentials="include":n.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function c(n){if(n.ep)return;n.ep=!0;const a=e(n);fetch(n.href,a)}})();function _(){console.log("Hero section initialized");const s=document.querySelector(".hero"),o=document.querySelector(".hero__console-img"),e=document.querySelector(".hero__content"),c=document.querySelector(".hero__description--desktop"),n=document.querySelector(".hero__description--mobile"),a=document.querySelector(".hero__pricing"),v=document.getElementById("buy-button"),y=document.getElementById("more-details-button");let h=null;function E(){if(!o){console.error("Hero image element not found");return}console.log("Setting up hero image"),o.onerror=()=>{console.error("Failed to load hero image:",o.src);try{const p=o.getAttribute("srcset");if(p){const t=p.split(",");if(t&&t.length>0){const f=t[0].split(" ")[0];console.log("Using fallback image:",f),o.src=f}}}catch(p){console.error("Error setting fallback image:",p)}s&&s.classList.add("hero--loaded")},o.onload=()=>{console.log("Hero image loaded successfully"),s&&s.classList.add("hero--loaded")},o.decoding="async",o.complete&&(console.log("Hero image already loaded (from cache)"),s&&s.classList.add("hero--loaded"))}function w(){const p=window.innerWidth>992;c&&n&&a&&(p?(c.style.display="block",n.style.display="none"):(c.style.display="none",n.style.display="block"))}function i(){if(e){h&&(h.disconnect(),h=null);try{h=new IntersectionObserver(p=>{try{p.forEach(t=>{t.isIntersecting&&t.target&&t.target.isConnected&&(t.target.classList.add("animate-in"),h&&h.unobserve(t.target))})}catch(t){console.warn("Error in IntersectionObserver callback:",t)}},{threshold:.1}),e&&e.isConnected&&h.observe(e)}catch(p){console.warn("Error setting up IntersectionObserver:",p)}}}function r(){v&&(v.removeEventListener("click",d),v.addEventListener("click",d)),y&&(y.removeEventListener("click",m),y.addEventListener("click",m))}function d(){try{window.open("https://www.aliexpress.com/item/1005007171465465.html","_blank","noopener,noreferrer")}catch(p){console.error("Error opening product link:",p)}}function m(p){p.preventDefault();const t=document.getElementById("features"),f=document.querySelector(".header");if(t&&f)try{const u=f.offsetHeight,b=t.getBoundingClientRect().top,l=window.scrollY||window.pageYOffset,S=b+l-u;window.scrollTo({top:S,behavior:"smooth"}),window.history.replaceState(null,"",`${window.location.pathname}#features`)}catch(u){console.error("Error scrolling to features:",u),window.location.hash="features"}}function g(){try{h&&(h.disconnect(),h=null),window.removeEventListener("resize",w),v&&v.removeEventListener("click",d),y&&y.removeEventListener("click",m),window.removeEventListener("unload",g),window.removeEventListener("beforeunload",g)}catch(p){console.warn("Error during cleanup:",p)}}return E(),w(),i(),r(),window.removeEventListener("resize",w),window.addEventListener("resize",w),typeof window<"u"&&(window.removeEventListener("beforeunload",g),window.addEventListener("beforeunload",g)),g}function L(s){let o=null,e=null,c=!1,n=0,a=null;(()=>{document.getElementById("modal-about-styles")||console.log("Проверка стилей модального окна")})();function y(t){t.key==="Escape"&&c&&g()}function h(){const t=document.createElement("div");return t.className="modal-about-overlay",t.setAttribute("role","dialog"),t.setAttribute("aria-modal","true"),t.setAttribute("tabindex","-1"),t.style.display="none",t.addEventListener("click",g),s.appendChild(t),t}function E(){return e?e.title==="Extensive color selection"&&e.colorImages?`
+        <div class="media-placeholder" data-type="image">
+          <div class="placeholder-spinner"></div>
+        </div>
         <img
-          src="${e.colorImages[r]}"
-          alt="R36S Color Variant ${r+1}"
-          class="modal-about-image"
+          src="${e.colorImages[n]}"
+          alt="R36S Color Variant ${n+1}"
+          class="modal-about-image hidden"
           loading="lazy"
           width="400" 
           height="400"
-          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Q29sb3IgVmFyaWFudCBJbWFnZTwvdGV4dD48L3N2Zz4=';"
         />
       `:e.videoUrl?`
+        <div class="media-placeholder" data-type="video">
+          <div class="placeholder-spinner"></div>
+        </div>
         <video
-          class="modal-about-video"
+          class="modal-about-video hidden"
           autoplay
           muted
           loop
@@ -24,25 +29,27 @@
           <p>Your browser does not support HTML5 video.</p>
         </video>
       `:e.imageUrl?`
+      <div class="media-placeholder" data-type="image">
+        <div class="placeholder-spinner"></div>
+      </div>
       <img
-        src="${e.imageUrl}"
+        src="${e.imageUrl}${e.imageUrl.includes(".gif")?"?"+new Date().getTime():""}"
         alt="${e.imageAlt||"Feature image"}"
-        class="modal-about-image"
+        class="modal-about-image hidden"
         loading="lazy"
         width="400" 
         height="400"
-        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW1hZ2UgLSAke2ZlYXR1cmUuaW1hZ2VBbHR9PC90ZXh0Pjwvc3ZnPg==';"
       />
     `:`
       <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
         ${e.imageAlt||"Feature Image"}
       </div>
-    `:""}function v(){(e==null?void 0:e.title)==="Extensive color selection"&&e.colorImages&&(c&&clearInterval(c),c=setInterval(()=>{r=r===e.colorImages.length-1?0:r+1;const t=o.querySelector(".modal-about-image");t&&(t.src=e.colorImages[r],t.alt=`R36S Color Variant ${r+1}`)},1e3))}function n(){if(!o||!e)return;const t={"@context":"https://schema.org","@type":"ItemPage",mainEntity:{"@type":"Product",name:"R36S Handheld Game Console",description:e.fullDescription,image:e.imageUrl||(e.colorImages?e.colorImages[0]:""),offers:{"@type":"Offer",price:"35.48",priceCurrency:"USD",url:"https://www.aliexpress.com/item/1005007171465465.html"},category:"Video Game Console",feature:e.title}};e.id===1&&(t.mainEntity.faqPage={"@type":"FAQPage",mainEntity:[{"@type":"Question",name:"How many games are included in the R36S console?",acceptedAnswer:{"@type":"Answer",text:"The R36S console includes over 15,000 classic retro games from various platforms."}}]});const u=`
+    `:""}function w(){(e==null?void 0:e.title)==="Extensive color selection"&&e.colorImages&&(a&&clearInterval(a),a=setInterval(()=>{n=n===e.colorImages.length-1?0:n+1;const t=o.querySelector(".modal-about-image");if(t){const f=new Date().getTime(),u=e.colorImages[n].includes(".gif")?`${e.colorImages[n]}?${f}`:e.colorImages[n];t.classList.add("hidden"),t.src=u,t.alt=`R36S Color Variant ${n+1}`}},1e3))}function i(){console.log("Настройка обработчиков медиафайлов");try{const t=o.querySelectorAll(".modal-about-image");console.log("Найдено изображений:",t.length),t.forEach((u,b)=>{if(console.log(`Настройка обработчика для изображения ${b}`),u.complete&&u.naturalWidth!==0){console.log(`Изображение ${b} уже загружено из кеша`),u.classList.remove("hidden");const l=u.previousElementSibling;l&&l.classList.contains("media-placeholder")&&l.remove()}else u.addEventListener("load",function(){console.log("Изображение загружено:",this.src),this.classList.remove("hidden");const l=this.previousElementSibling;l&&l.classList.contains("media-placeholder")&&l.remove()}),u.addEventListener("error",function(){console.error("Ошибка загрузки изображения:",this.src),this.src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmMzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+RXJyb3IgbG9hZGluZyBpbWFnZTwvdGV4dD48L3N2Zz4=",this.classList.remove("hidden");const l=this.previousElementSibling;l&&l.classList.contains("media-placeholder")&&l.remove()})});const f=o.querySelectorAll(".modal-about-video");console.log("Найдено видео:",f.length),f.forEach((u,b)=>{if(console.log(`Настройка обработчика для видео ${b}`),u.readyState>=2){console.log(`Видео ${b} уже загружено из кеша`),u.classList.remove("hidden");const l=u.previousElementSibling;l&&l.classList.contains("media-placeholder")&&l.remove()}else u.addEventListener("loadeddata",function(){var S;console.log("Видео загружено:",(S=this.querySelector("source"))==null?void 0:S.src),this.classList.remove("hidden");const l=this.previousElementSibling;l&&l.classList.contains("media-placeholder")&&l.remove()}),u.addEventListener("error",function(){var x;console.error("Ошибка загрузки видео:",(x=this.querySelector("source"))==null?void 0:x.src);const l=document.createElement("div");l.className="modal-about-video-error",l.innerHTML="Error loading video",l.style.cssText="background-color: #ff3333; color: white; padding: 20px; text-align: center; border-radius: 8px;",this.parentNode.replaceChild(l,this);const S=l.previousElementSibling;S&&S.classList.contains("media-placeholder")&&S.remove()})})}catch(t){console.error("Ошибка при настройке обработчиков медиафайлов:",t)}}function r(){if(!o||!e)return;const t={"@context":"https://schema.org","@type":"ItemPage",mainEntity:{"@type":"Product",name:"R36S Handheld Game Console",description:e.fullDescription,image:e.imageUrl||(e.colorImages?e.colorImages[0]:""),offers:{"@type":"Offer",price:"35.48",priceCurrency:"USD",url:"https://www.aliexpress.com/item/1005007171465465.html"},category:"Video Game Console",feature:e.title}};e.id===1&&(t.mainEntity.faqPage={"@type":"FAQPage",mainEntity:[{"@type":"Question",name:"How many games are included in the R36S console?",acceptedAnswer:{"@type":"Answer",text:"The R36S console includes over 15,000 classic retro games from various platforms."}}]});const f=`
         <script type="application/ld+json">
           ${JSON.stringify(t)}
         <\/script>
       `;o.innerHTML=`
-        ${u}
+        ${f}
         <div class="modal-about-content" itemscope itemtype="https://schema.org/Product">
           <meta itemprop="name" content="R36S Handheld Game Console" />
           <meta itemprop="description" content="${e.title} for R36S console" />
@@ -74,7 +81,7 @@
 
           <div class="modal-about-body">
             <div class="modal-about-media-container" itemprop="image">
-              ${b()}
+              ${E()}
             </div>
             
             <div class="modal-about-content-container">
@@ -108,7 +115,7 @@
             </div>
           </div>
         </div>
-      `;const f=o.querySelector(".modal-about-close");f&&f.addEventListener("click",s);const y=o.querySelector(".modal-about-content");y&&y.addEventListener("click",I=>I.stopPropagation())}function i(t){e=t,o||(o=m()),n();const u=window.location.href,f=new URL(u);return f.searchParams.set("feature",e.id),window.history.pushState({featureId:e.id},"",f),o.style.display="flex",l=!0,o.focus(),window.addEventListener("keydown",g),document.body.style.overflow="hidden",v(),window.addEventListener("popstate",d),{close:s}}function d(t){l&&(!t.state||!t.state.featureId)&&s()}function s(){if(!l||!o)return;l=!1,o.style.display="none",window.removeEventListener("keydown",g),window.removeEventListener("popstate",d),document.body.style.overflow="visible",c&&(clearInterval(c),c=null);const t=new URL(window.location.href);t.searchParams.delete("feature"),window.history.pushState({},"",t)}function h(){s(),o&&a.contains(o)&&a.removeChild(o),o=null,e=null}return{open:i,close:s,destroy:h}}const L="/R36S_CONSOLE_STORE_JS/video/about/video_1_.gif",C="/R36S_CONSOLE_STORE_JS/video/about/video_2_.gif",k="/R36S_CONSOLE_STORE_JS/img/about/Untitled_1_1x.jpg",R="/R36S_CONSOLE_STORE_JS/img/about/Untitled_2_1x.jpg",O="/R36S_CONSOLE_STORE_JS/img/about/Untitled_3_1x.jpg",A="/R36S_CONSOLE_STORE_JS/img/about/Untitled_4_1x.jpg",Z="/R36S_CONSOLE_STORE_JS/video/about/video_3_batrey_.mp4",B="/R36S_CONSOLE_STORE_JS/video/about/video_6_.mp4",M="/R36S_CONSOLE_STORE_JS/video/about/video_5_option_.mp4";function j(){console.log("Инициализация секции About");const a=document.querySelector(".about__cards");if(!a)return console.error("Контейнер для карточек не найден"),null;let o={x:0,y:0},e=null;const l=new Set,r=[{id:1,icon:`
+      `;const u=o.querySelector(".modal-about-close");u&&u.addEventListener("click",g);const b=o.querySelector(".modal-about-content");b&&b.addEventListener("click",l=>l.stopPropagation()),i()}function d(t){console.log("Открытие модального окна для:",t.title),e=t,o||(console.log("Создание нового модального элемента"),o=h()),console.log("Обновление содержимого модального окна"),r();const f=window.location.href,u=new URL(f);return u.searchParams.set("feature",e.id),window.history.pushState({featureId:e.id},"",u),o.style.display="flex",c=!0,o.focus(),window.addEventListener("keydown",y),document.body.style.overflow="hidden",w(),window.addEventListener("popstate",m),{close:g}}function m(t){c&&(!t.state||!t.state.featureId)&&g()}function g(){if(!c||!o)return;console.log("Закрытие модального окна"),c=!1,o.style.display="none",window.removeEventListener("keydown",y),window.removeEventListener("popstate",m),document.body.style.overflow="visible",a&&(console.log("Очистка интервала смены изображений"),clearInterval(a),a=null);const t=new URL(window.location.href);t.searchParams.delete("feature"),window.history.pushState({},"",t)}function p(){g(),o&&s.contains(o)&&s.removeChild(o),o=null,e=null}return{open:d,close:g,destroy:p}}const C="/R36S_CONSOLE_STORE_JS/video/about/video_1_.gif",k="/R36S_CONSOLE_STORE_JS/video/about/video_2_.gif",R="/R36S_CONSOLE_STORE_JS/img/about/Untitled_1_1x.jpg",O="/R36S_CONSOLE_STORE_JS/img/about/Untitled_2_1x.jpg",A="/R36S_CONSOLE_STORE_JS/img/about/Untitled_3_1x.jpg",U="/R36S_CONSOLE_STORE_JS/img/about/Untitled_4_1x.jpg",M="/R36S_CONSOLE_STORE_JS/video/about/video_3_batrey_.mp4",B="/R36S_CONSOLE_STORE_JS/video/about/video_6_.mp4",D="/R36S_CONSOLE_STORE_JS/video/about/video_5_option_.mp4";function P(){console.log("Инициализация секции About");const s=document.querySelector(".about__cards");if(!s)return console.error("Контейнер для карточек не найден"),null;let o={x:0,y:0},e=null;const c=new Set,n=[{id:1,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -131,7 +138,7 @@ The collection includes:
 • Classic arcade games from the 80s and 90s
 • Complete libraries of NES, SNES, Sega and other consoles
 • Exclusive ports and rare releases
-• Optimized versions for modern hardware`,imageUrl:L,imageAlt:"Коллекция ретро-игр"},{id:2,icon:`
+• Optimized versions for modern hardware`,imageUrl:C,imageAlt:"Коллекция ретро-игр"},{id:2,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -153,7 +160,7 @@ The collection includes:
 • Wide viewing angles
 • Anti-glare coating
 • Energy-efficient backlight
-• Scratch-resistant surface`,imageUrl:C,imageAlt:"Display Technologies"},{id:3,icon:`
+• Scratch-resistant surface`,imageUrl:k,imageAlt:"Display Technologies"},{id:3,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -177,7 +184,7 @@ Key features:
 - Portable design
 - Uninterrupted entertainment
 
-Take your gaming anywhere – play more, charge less.`,videoUrl:Z,imageAlt:"Battery Life"},{id:4,icon:`
+Take your gaming anywhere – play more, charge less.`,videoUrl:M,imageAlt:"Battery Life"},{id:4,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -202,7 +209,7 @@ Available Colors:
 - Mesmerizing Purple
 - Dynamic Red
 - Pure White
-- Radiant Yellow ...`,colorImages:[k,R,O,A],imageAlt:"R36S Color Variants"},{id:5,icon:`
+- Radiant Yellow ...`,colorImages:[R,O,A,U],imageAlt:"R36S Color Variants"},{id:5,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -228,7 +235,7 @@ Available Colors:
 - Low latency connection for seamless gameplay
 - Expandable storage support
 - Quick system updates
-- User-friendly interface`,videoUrl:M,imageAlt:"R36S Settings"},{id:6,icon:`
+- User-friendly interface`,videoUrl:D,imageAlt:"R36S Settings"},{id:6,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -252,19 +259,19 @@ Features:
 • Ergonomic grip for extended gaming sessions
 • Quick startup for instant gaming access
 
-Never compromise between portability and performance - the R36S delivers both in a perfectly portable package.`,videoUrl:B,imageAlt:"R36S Portability"}];function c(n){if(l.has(n))return;l.add(n);const i=n.split(".").pop().toLowerCase();if(["mp4","webm","ogg"].includes(i)){console.log("Предзагрузка видео:",n);const d=document.createElement("link");d.rel="preload",d.href=n,d.as="video",d.type=`video/${i}`,document.head.appendChild(d);const s=document.createElement("video");s.style.display="none",s.preload="metadata",s.src=n,s.muted=!0,s.addEventListener("loadedmetadata",()=>{document.body.contains(s)&&document.body.removeChild(s)}),document.body.appendChild(s)}else if(["jpg","jpeg","png","webp","gif"].includes(i)){console.log("Предзагрузка изображения:",n);const d=new Image;d.src=n}}function p(){a.innerHTML=r.map(n=>`
-      <div class="about-card" data-id="${n.id}">
+Never compromise between portability and performance - the R36S delivers both in a perfectly portable package.`,videoUrl:B,imageAlt:"R36S Portability"}];function a(i){try{if(c.has(i))return;c.add(i),console.log("Предзагрузка ресурса:",i);const r=i.split(".").pop().toLowerCase();if(fetch(i,{method:"HEAD"}).catch(d=>console.log("Предзагрузка проверка доступности:",i)),["jpg","jpeg","png","webp","gif"].includes(r)){const d=new Image;d.src=i}else["mp4","webm","ogg"].includes(r)&&fetch(i,{method:"GET",headers:{Range:"bytes=0-1000"}}).catch(d=>console.log("Предзагрузка диапазона видео:",i))}catch(r){console.error("Ошибка при предзагрузке ресурса:",i,r)}}function v(){s.innerHTML=n.map(i=>`
+      <div class="about-card" data-id="${i.id}">
         <div class="card-blur"></div>
         <div class="card-glow"></div>
         <div class="about-card__content">
-          <div class="about-card__icon-wrapper">${n.icon}</div>
-          <h3 class="about-card__title">${n.title}</h3>
-          <p class="about-card__description">${n.description}</p>
+          <div class="about-card__icon-wrapper">${i.icon}</div>
+          <h3 class="about-card__title">${i.title}</h3>
+          <p class="about-card__description">${i.description}</p>
           <div class="about-card__stats">
-            <span class="about-card__number">${n.number}</span>
-            <span class="about-card__detail">${n.detail}</span>
+            <span class="about-card__number">${i.number}</span>
+            <span class="about-card__detail">${i.detail}</span>
           </div>
-          <button class="about-card__button" data-feature-id="${n.id}">
+          <button class="about-card__button" data-feature-id="${i.id}">
             <span class="button-text">More details</span>
             <span class="button-icon">
               <svg
@@ -286,5 +293,5 @@ Never compromise between portability and performance - the R36S delivers both in
         </div>
         <div class="card-indicator"></div>
       </div>
-    `).join("")}function g(n){const i=n.currentTarget,d=i.getBoundingClientRect();o={x:n.clientX-d.left,y:n.clientY-d.top},i.style.setProperty("--mouse-x",`${o.x}px`),i.style.setProperty("--mouse-y",`${o.y}px`)}function m(n){const i=parseInt(n.currentTarget.dataset.featureId);console.log("Клик по кнопке карточки ID:",i);const d=r.find(s=>s.id===i);if(!d){console.error("Данные для карточки не найдены");return}e||(e=_(document.body)),e.open(d)}function b(){document.querySelectorAll(".about-card").forEach(i=>{i.addEventListener("mouseenter",()=>{parseInt(i.dataset.id),i.classList.add("active");const d=parseInt(i.dataset.id),s=r.find(h=>h.id===d);s&&(s.videoUrl&&c(s.videoUrl),s.imageUrl&&c(s.imageUrl),s.colorImages&&Array.isArray(s.colorImages)&&s.colorImages.forEach(h=>{c(h)}))}),i.addEventListener("mouseleave",()=>{i.classList.remove("active")}),i.addEventListener("mousemove",g)}),document.querySelectorAll(".about-card__button").forEach(i=>{i.addEventListener("click",m)})}function v(){document.querySelectorAll(".about-card").forEach(i=>{i.removeEventListener("mouseenter",()=>{}),i.removeEventListener("mouseleave",()=>{}),i.removeEventListener("mousemove",g)}),document.querySelectorAll(".about-card__button").forEach(i=>{i.removeEventListener("click",m)}),e&&(e.destroy(),e=null),document.querySelectorAll('link[rel="preload"]').forEach(i=>{i.href&&(i.href.includes("/video/about/")||i.href.includes("/img/about/"))&&i.remove()}),l.clear()}try{console.log("Рендерим карточки..."),p(),console.log("Устанавливаем обработчики событий..."),b(),console.log("Предзагрузка критически важных ресурсов..."),r.slice(0,3).forEach(n=>{n.videoUrl&&c(n.videoUrl),n.imageUrl&&c(n.imageUrl)}),console.log("Инициализация About завершена успешно")}catch(n){console.error("Ошибка при инициализации About:",n)}return function(){console.log("Очистка секции About"),v()}}console.log("Main.js инициализирован");let w=[];function P(){const a="IntersectionObserver"in window,o=function(){const l=document.createElement("div");return l.style.display="flex",l.style.display==="flex"}(),e=function(){const l=document.createElement("div");return l.style.display="grid",l.style.display==="grid"}();return console.log("Поддержка браузера:"),console.log("- IntersectionObserver:",a),console.log("- Flexbox:",o),console.log("- CSS Grid:",e),a||document.body.classList.add("no-intersection-observer"),o||document.body.classList.add("no-flexbox"),e||document.body.classList.add("no-grid"),{hasIntersectionObserver:a,hasFlexbox:o,hasGrid:e}}function U(){try{w.forEach(a=>{typeof a=="function"&&a()}),w=[]}catch(a){console.warn("Error during global cleanup:",a)}}document.addEventListener("DOMContentLoaded",()=>{console.log("DOM загружен");try{const a=P(),o=E();typeof o=="function"&&w.push(o);const e=j();typeof e=="function"&&w.push(e);const l=performance.now();console.log(`Страница загружена за ${l.toFixed(2)}ms`),window.addEventListener("beforeunload",U)}catch(a){console.error("Ошибка при инициализации страницы:",a)}});window.onerror=function(a,o,e,l,r){return console.error("Глобальная ошибка:",{message:a,source:o,lineno:e,colno:l,error:r}),!1};window.addEventListener("unhandledrejection",function(a){console.warn("Непойманное отклонение промиса (unhandled promise rejection):",a.reason)});window.appVersion={version:"1.0.0",buildDate:new Date().toISOString(),environment:"production",basePath:"/R36S_CONSOLE_STORE_JS/"};console.log("Main.js выполнение завершено");
+    `).join("")}function y(i){const r=i.currentTarget,d=r.getBoundingClientRect();o={x:i.clientX-d.left,y:i.clientY-d.top},r.style.setProperty("--mouse-x",`${o.x}px`),r.style.setProperty("--mouse-y",`${o.y}px`)}function h(i){const r=parseInt(i.currentTarget.dataset.featureId);console.log("Клик по кнопке карточки ID:",r);const d=n.find(m=>m.id===r);if(!d){console.error("Данные для карточки не найдены");return}e||(console.log("Создание нового модального окна"),e=L(document.body)),console.log("Подготовка ресурсов для модального окна"),d.videoUrl&&a(d.videoUrl),d.imageUrl&&a(d.imageUrl),d.colorImages&&Array.isArray(d.colorImages)&&d.colorImages.forEach(m=>{a(m)}),console.log("Открытие модального окна для:",d.title),e.open(d)}function E(){document.querySelectorAll(".about-card").forEach(r=>{r.addEventListener("mouseenter",()=>{parseInt(r.dataset.id),r.classList.add("active");const d=parseInt(r.dataset.id),m=n.find(g=>g.id===d);m&&(m.videoUrl&&a(m.videoUrl),m.imageUrl&&a(m.imageUrl),m.colorImages&&Array.isArray(m.colorImages)&&m.colorImages.forEach(g=>{a(g)}))}),r.addEventListener("mouseleave",()=>{r.classList.remove("active")}),r.addEventListener("mousemove",y)}),document.querySelectorAll(".about-card__button").forEach(r=>{r.addEventListener("click",h)})}function w(){document.querySelectorAll(".about-card").forEach(r=>{r.removeEventListener("mouseenter",()=>{}),r.removeEventListener("mouseleave",()=>{}),r.removeEventListener("mousemove",y)}),document.querySelectorAll(".about-card__button").forEach(r=>{r.removeEventListener("click",h)}),e&&(e.destroy(),e=null),c.clear()}try{console.log("Рендерим карточки..."),v(),console.log("Устанавливаем обработчики событий..."),E(),console.log("Предзагрузка критически важных ресурсов..."),n.slice(0,3).forEach(i=>{i.videoUrl&&a(i.videoUrl),i.imageUrl&&a(i.imageUrl)}),console.log("Инициализация About завершена успешно")}catch(i){console.error("Ошибка при инициализации About:",i)}return function(){console.log("Очистка секции About"),w()}}console.log("Main.js инициализирован");let I=[];function j(){const s="IntersectionObserver"in window,o=function(){const c=document.createElement("div");return c.style.display="flex",c.style.display==="flex"}(),e=function(){const c=document.createElement("div");return c.style.display="grid",c.style.display==="grid"}();return console.log("Поддержка браузера:"),console.log("- IntersectionObserver:",s),console.log("- Flexbox:",o),console.log("- CSS Grid:",e),s||document.body.classList.add("no-intersection-observer"),o||document.body.classList.add("no-flexbox"),e||document.body.classList.add("no-grid"),{hasIntersectionObserver:s,hasFlexbox:o,hasGrid:e}}function Z(){try{I.forEach(s=>{typeof s=="function"&&s()}),I=[]}catch(s){console.warn("Error during global cleanup:",s)}}document.addEventListener("DOMContentLoaded",()=>{console.log("DOM загружен");try{const s=j(),o=_();typeof o=="function"&&I.push(o);const e=P();typeof e=="function"&&I.push(e);const c=performance.now();console.log(`Страница загружена за ${c.toFixed(2)}ms`),window.addEventListener("beforeunload",Z)}catch(s){console.error("Ошибка при инициализации страницы:",s)}});window.onerror=function(s,o,e,c,n){return console.error("Глобальная ошибка:",{message:s,source:o,lineno:e,colno:c,error:n}),!1};window.addEventListener("unhandledrejection",function(s){console.warn("Непойманное отклонение промиса (unhandled promise rejection):",s.reason)});window.appVersion={version:"1.0.0",buildDate:new Date().toISOString(),environment:"production",basePath:"/R36S_CONSOLE_STORE_JS/"};console.log("Main.js выполнение завершено");
 //# sourceMappingURL=index.js.map
