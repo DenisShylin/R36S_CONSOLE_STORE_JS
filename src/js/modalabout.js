@@ -271,18 +271,22 @@ export function createModalAbout(parentElement) {
   function open(featureData) {
     feature = featureData;
     // Предзагрузка медиа файла для открываемой функции
-    if (feature.videoUrl) {
-      const preloadLink = document.createElement('link');
-      preloadLink.rel = 'preload';
-      preloadLink.href = feature.videoUrl;
-      preloadLink.as = 'video';
-      preloadLink.type = 'video/mp4';
-      document.head.appendChild(preloadLink);
-    } else if (feature.imageUrl) {
+    if (feature.imageUrl) {
       const preloadLink = document.createElement('link');
       preloadLink.rel = 'preload';
       preloadLink.href = feature.imageUrl;
       preloadLink.as = 'image';
+      // Добавьте атрибут type для изображений
+      if (
+        feature.imageUrl.endsWith('.jpg') ||
+        feature.imageUrl.endsWith('.jpeg')
+      ) {
+        preloadLink.type = 'image/jpeg';
+      } else if (feature.imageUrl.endsWith('.png')) {
+        preloadLink.type = 'image/png';
+      } else if (feature.imageUrl.endsWith('.gif')) {
+        preloadLink.type = 'image/gif';
+      }
       document.head.appendChild(preloadLink);
     }
     if (!modalElement) {
