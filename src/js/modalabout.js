@@ -7,6 +7,32 @@ export function createModalAbout(parentElement) {
   let currentImageIndex = 0;
   let colorImagesInterval = null;
 
+  // Получаем базовый путь приложения (для корректных путей на GitHub Pages)
+  const basePath = window.appVersion?.basePath || '/';
+
+  // Функция для безопасного кодирования строк в base64 (включая Unicode)
+  function safeBase64Encode(str) {
+    // Сначала преобразуем Unicode-строку в UTF-8
+    const utf8Str = encodeURIComponent(str).replace(
+      /%([0-9A-F]{2})/g,
+      (_, p1) => String.fromCharCode('0x' + p1)
+    );
+    // Затем конвертируем в base64
+    return btoa(utf8Str);
+  }
+
+  // Плейсхолдер для изображений (только ASCII символы)
+  const imagePlaceholderSvg =
+    '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#333"/><text x="50%" y="50%" font-size="24" text-anchor="middle" alignment-baseline="middle" fill="#fff">Image</text></svg>';
+
+  // Плейсхолдер для видео (только ASCII символы)
+  const videoPlaceholderSvg =
+    '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#333"/><text x="50%" y="50%" font-size="24" text-anchor="middle" alignment-baseline="middle" fill="#fff">Loading Video...</text></svg>';
+
+  // Кодируем плейсхолдеры с помощью нашей безопасной функции
+  const encodedImagePlaceholder = safeBase64Encode(imagePlaceholderSvg);
+  const encodedVideoPlaceholder = safeBase64Encode(videoPlaceholderSvg);
+
   // Добавляем базовые стили для модального окна
   const addStyles = () => {
     const styleId = 'modal-about-styles';
@@ -42,63 +68,103 @@ export function createModalAbout(parentElement) {
     return modalDiv;
   }
 
+  // Предзагрузка изображения
+  function preloadImage(url) {
+    if (!url) return Promise.reject(new Error('URL not provided'));
+
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+      img.src = url.startsWith('/') ? `${basePath}${url.slice(1)}` : url;
+    });
+  }
+
   // Рендер медиа-контента (изображение, видео или карусель)
   function renderMedia() {
     if (!feature) return '';
 
     // Обработка карусели цветов
-    if (feature.title === 'Extensive color selection' && feature.colorImages) {
+    if (
+      feature.title === 'Extensive color selection' &&
+      Array.isArray(feature.colorImages) &&
+      feature.colorImages.length > 0
+    ) {
+      // Предзагрузка первого изображения
+      if (feature.colorImages[0]) {
+        preloadImage(feature.colorImages[0]).catch(err =>
+          console.warn('Error preloading image:', err)
+        );
+      }
+
+      const imageUrl = feature.colorImages[currentImageIndex] || '';
+      const formattedUrl = imageUrl.startsWith('/')
+        ? `${basePath}${imageUrl.slice(1)}`
+        : imageUrl;
+
       return `
         <img
-          src="${feature.colorImages[currentImageIndex]}"
+          src="${formattedUrl}"
           alt="R36S Color Variant ${currentImageIndex + 1}"
           class="modal-about-image"
           loading="lazy"
           width="400" 
           height="400"
-          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Q29sb3IgVmFyaWFudCBJbWFnZTwvdGV4dD48L3N2Zz4=';"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,${encodedImagePlaceholder}';"
         />
       `;
     }
 
     // Обработка видео
     if (feature.videoUrl) {
-      // Создаем SVG для плейсхолдера без использования шаблонных строк внутри
-      const placeholderSvg = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#333"/><text x="50%" y="50%" font-size="24" text-anchor="middle" alignment-baseline="middle" fill="#fff">Loading Video...</text></svg>`;
-      const encodedSvg = btoa(placeholderSvg);
+      const videoUrl = feature.videoUrl.startsWith('/')
+        ? `${basePath}${feature.videoUrl.slice(1)}`
+        : feature.videoUrl;
 
       return `
-    <video
-      class="modal-about-video"
-      autoplay
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      width="640" 
-      height="360"
-      poster="data:image/svg+xml;base64,${encodedSvg}"
-    >
-      <source src="${feature.videoUrl}" type="video/mp4" />
-      <p>Your browser does not support HTML5 video.</p>
-    </video>
-  `;
+        <video
+          class="modal-about-video"
+          autoplay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          width="640" 
+          height="360"
+          poster="data:image/svg+xml;base64,${encodedVideoPlaceholder}"
+        >
+          <source src="${videoUrl}" type="video/mp4" />
+          <p>Your browser does not support HTML5 video.</p>
+        </video>
+      `;
     }
 
     // Обработка статичного изображения
-    return feature.imageUrl
-      ? `
-      <img
-        src="${feature.imageUrl}"
-        alt="${feature.imageAlt || 'Feature image'}"
-        class="modal-about-image"
-        loading="lazy"
-        width="400" 
-        height="400"
-        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW1hZ2UgLSAke2ZlYXR1cmUuaW1hZ2VBbHR9PC90ZXh0Pjwvc3ZnPg==';"
-      />
-    `
-      : `
+    if (feature.imageUrl) {
+      const imageUrl = feature.imageUrl.startsWith('/')
+        ? `${basePath}${feature.imageUrl.slice(1)}`
+        : feature.imageUrl;
+
+      // Предзагрузка изображения
+      preloadImage(imageUrl).catch(err =>
+        console.warn('Error preloading image:', err)
+      );
+
+      return `
+        <img
+          src="${imageUrl}"
+          alt="${feature.imageAlt || 'Feature image'}"
+          class="modal-about-image"
+          loading="lazy"
+          width="400" 
+          height="400"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,${encodedImagePlaceholder}';"
+        />
+      `;
+    }
+
+    // Плейсхолдер если нет медиа-контента
+    return `
       <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
         ${feature.imageAlt || 'Feature Image'}
       </div>
@@ -107,34 +173,50 @@ export function createModalAbout(parentElement) {
 
   // Настройка автоматической смены изображений цветов
   function setupColorImagesRotation() {
-    if (feature?.title === 'Extensive color selection' && feature.colorImages) {
+    if (
+      feature?.title === 'Extensive color selection' &&
+      Array.isArray(feature.colorImages) &&
+      feature.colorImages.length > 0
+    ) {
       // Очистка существующего интервала
       if (colorImagesInterval) {
         clearInterval(colorImagesInterval);
+        colorImagesInterval = null;
       }
 
       // Настройка нового интервала для смены изображений
       colorImagesInterval = setInterval(() => {
+        // Безопасная смена индекса с проверкой массива
         currentImageIndex =
-          currentImageIndex === feature.colorImages.length - 1
-            ? 0
-            : currentImageIndex + 1;
+          (currentImageIndex + 1) % feature.colorImages.length;
 
         // Обновление источника изображения
-        const imageElement = modalElement.querySelector('.modal-about-image');
-        if (imageElement) {
-          imageElement.src = feature.colorImages[currentImageIndex];
+        const imageElement = modalElement?.querySelector('.modal-about-image');
+        if (imageElement && feature.colorImages[currentImageIndex]) {
+          const imageUrl = feature.colorImages[currentImageIndex];
+          const formattedUrl = imageUrl.startsWith('/')
+            ? `${basePath}${imageUrl.slice(1)}`
+            : imageUrl;
+
+          // Предзагрузка следующего изображения
+          const nextIndex =
+            (currentImageIndex + 1) % feature.colorImages.length;
+          if (feature.colorImages[nextIndex]) {
+            preloadImage(feature.colorImages[nextIndex]).catch(() => {});
+          }
+
+          imageElement.src = formattedUrl;
           imageElement.alt = `R36S Color Variant ${currentImageIndex + 1}`;
         }
       }, 1000);
     }
   }
 
-  // Обновление содержимого модального окна с добавлением структурированных данных
-  function updateModalContent() {
-    if (!modalElement || !feature) return;
+  // Генерация структурированных данных для JSON-LD
+  function generateStructuredData(feature) {
+    if (!feature) return null;
 
-    // Создаем структурированные данные для текущей функции
+    // Базовый объект структурированных данных
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'ItemPage',
@@ -174,12 +256,22 @@ export function createModalAbout(parentElement) {
       };
     }
 
+    return structuredData;
+  }
+
+  // Обновление содержимого модального окна с добавлением структурированных данных
+  function updateModalContent() {
+    if (!modalElement || !feature) return;
+
+    // Создаем структурированные данные для текущей функции
+    const structuredData = generateStructuredData(feature);
+
     // JSON-LD для структурированных данных
-    const structuredDataScript = `
-        <script type="application/ld+json">
-          ${JSON.stringify(structuredData)}
-        </script>
-      `;
+    const structuredDataScript = structuredData
+      ? `<script type="application/ld+json">${JSON.stringify(
+          structuredData
+        )}</script>`
+      : '';
 
     modalElement.innerHTML = `
         ${structuredDataScript}
@@ -252,12 +344,15 @@ export function createModalAbout(parentElement) {
             </div>
           </div>
         </div>
-      `;
+    `;
 
     // Настройка кнопки закрытия
     const closeButton = modalElement.querySelector('.modal-about-close');
     if (closeButton) {
-      closeButton.addEventListener('click', close);
+      closeButton.addEventListener('click', event => {
+        event.stopPropagation();
+        close();
+      });
     }
 
     // Обработка всплытия событий для контента модального окна
@@ -270,25 +365,15 @@ export function createModalAbout(parentElement) {
   // Открытие модального окна с поддержкой истории браузера
   function open(featureData) {
     feature = featureData;
-    // Предзагрузка медиа файла для открываемой функции
-    if (feature.imageUrl) {
-      const preloadLink = document.createElement('link');
-      preloadLink.rel = 'preload';
-      preloadLink.href = feature.imageUrl;
-      preloadLink.as = 'image';
-      // Добавьте атрибут type для изображений
-      if (
-        feature.imageUrl.endsWith('.jpg') ||
-        feature.imageUrl.endsWith('.jpeg')
-      ) {
-        preloadLink.type = 'image/jpeg';
-      } else if (feature.imageUrl.endsWith('.png')) {
-        preloadLink.type = 'image/png';
-      } else if (feature.imageUrl.endsWith('.gif')) {
-        preloadLink.type = 'image/gif';
-      }
-      document.head.appendChild(preloadLink);
+
+    if (!feature) {
+      console.error(
+        'Не удалось открыть модальное окно: данные функции не предоставлены'
+      );
+      return { close };
     }
+
+    // Создаем модальный элемент если его еще нет
     if (!modalElement) {
       modalElement = createModalElement();
     }
@@ -300,16 +385,30 @@ export function createModalAbout(parentElement) {
     const currentUrl = window.location.href;
 
     // Добавляем параметр в URL для поддержки истории
-    const newUrl = new URL(currentUrl);
-    newUrl.searchParams.set('feature', feature.id);
-    window.history.pushState({ featureId: feature.id }, '', newUrl);
+    try {
+      const newUrl = new URL(currentUrl);
+      newUrl.searchParams.set('feature', feature.id);
+      window.history.pushState({ featureId: feature.id }, '', newUrl);
+    } catch (error) {
+      console.warn('Ошибка при обновлении URL:', error);
+    }
 
     // Отображение модального окна
-    modalElement.style.display = 'flex';
-    isOpen = true;
+    requestAnimationFrame(() => {
+      if (modalElement) {
+        modalElement.style.display = 'flex';
 
-    // Фокус на модальном окне для клавиатурной навигации
-    modalElement.focus();
+        // Добавляем класс для анимации появления
+        setTimeout(() => {
+          modalElement.classList.add('active');
+        }, 10);
+
+        isOpen = true;
+
+        // Фокус на модальном окне для клавиатурной навигации
+        modalElement.focus();
+      }
+    });
 
     // Добавление обработчиков событий
     window.addEventListener('keydown', handleEscPress);
@@ -335,36 +434,51 @@ export function createModalAbout(parentElement) {
   function close() {
     if (!isOpen || !modalElement) return;
 
-    isOpen = false;
-    modalElement.style.display = 'none';
+    // Удаление класса активности для анимации
+    modalElement.classList.remove('active');
 
-    // Удаление обработчиков событий
-    window.removeEventListener('keydown', handleEscPress);
-    window.removeEventListener('popstate', handlePopState);
-    document.body.style.overflow = 'visible';
+    // Задержка перед скрытием модального окна для анимации
+    setTimeout(() => {
+      isOpen = false;
+      if (modalElement) {
+        modalElement.style.display = 'none';
+      }
 
-    // Очистка интервала смены изображений
-    if (colorImagesInterval) {
-      clearInterval(colorImagesInterval);
-      colorImagesInterval = null;
-    }
+      // Удаление обработчиков событий
+      window.removeEventListener('keydown', handleEscPress);
+      window.removeEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'visible';
 
-    // Удаляем параметр из URL
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.delete('feature');
-    window.history.pushState({}, '', currentUrl);
+      // Очистка интервала смены изображений
+      if (colorImagesInterval) {
+        clearInterval(colorImagesInterval);
+        colorImagesInterval = null;
+      }
+
+      // Удаляем параметр из URL
+      try {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.delete('feature');
+        window.history.pushState({}, '', currentUrl);
+      } catch (error) {
+        console.warn('Ошибка при обновлении URL:', error);
+      }
+    }, 300); // 300ms для анимации закрытия
   }
 
   // Уничтожение и очистка модального окна
   function destroy() {
     close();
 
-    if (modalElement && parentElement.contains(modalElement)) {
-      parentElement.removeChild(modalElement);
-    }
+    // Удаляем элемент модального окна после задержки (для анимации)
+    setTimeout(() => {
+      if (modalElement && parentElement.contains(modalElement)) {
+        parentElement.removeChild(modalElement);
+      }
 
-    modalElement = null;
-    feature = null;
+      modalElement = null;
+      feature = null;
+    }, 350);
   }
 
   // Возвращаем публичные методы
@@ -375,5 +489,5 @@ export function createModalAbout(parentElement) {
   };
 }
 
-// Экспорт по умолчанию для поддержки импорта
+// Экспорт функции
 export default { createModalAbout };
