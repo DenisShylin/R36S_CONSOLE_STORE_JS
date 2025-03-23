@@ -63,22 +63,26 @@ export function createModalAbout(parentElement) {
 
     // Обработка видео
     if (feature.videoUrl) {
+      // Создаем SVG для плейсхолдера без использования шаблонных строк внутри
+      const placeholderSvg = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#333"/><text x="50%" y="50%" font-size="24" text-anchor="middle" alignment-baseline="middle" fill="#fff">Loading Video...</text></svg>`;
+      const encodedSvg = btoa(placeholderSvg);
+
       return `
-        <video
-          class="modal-about-video"
-          autoplay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          width="640" 
-          height="360"
-          poster="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+VmlkZW8gLSAke2ZlYXR1cmUuaW1hZ2VBbHR9PC90ZXh0Pjwvc3ZnPg=="
-        >
-          <source src="${feature.videoUrl}" type="video/mp4" />
-          <p>Your browser does not support HTML5 video.</p>
-        </video>
-      `;
+    <video
+      class="modal-about-video"
+      autoplay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      width="640" 
+      height="360"
+      poster="data:image/svg+xml;base64,${encodedSvg}"
+    >
+      <source src="${feature.videoUrl}" type="video/mp4" />
+      <p>Your browser does not support HTML5 video.</p>
+    </video>
+  `;
     }
 
     // Обработка статичного изображения
@@ -266,7 +270,21 @@ export function createModalAbout(parentElement) {
   // Открытие модального окна с поддержкой истории браузера
   function open(featureData) {
     feature = featureData;
-
+    // Предзагрузка медиа файла для открываемой функции
+    if (feature.videoUrl) {
+      const preloadLink = document.createElement('link');
+      preloadLink.rel = 'preload';
+      preloadLink.href = feature.videoUrl;
+      preloadLink.as = 'video';
+      preloadLink.type = 'video/mp4';
+      document.head.appendChild(preloadLink);
+    } else if (feature.imageUrl) {
+      const preloadLink = document.createElement('link');
+      preloadLink.rel = 'preload';
+      preloadLink.href = feature.imageUrl;
+      preloadLink.as = 'image';
+      document.head.appendChild(preloadLink);
+    }
     if (!modalElement) {
       modalElement = createModalElement();
     }
