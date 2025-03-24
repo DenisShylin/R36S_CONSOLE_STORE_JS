@@ -28,6 +28,7 @@ body {
   transform: translateY(0);
 }
 
+
 .header.scrolled {
   background: rgba(18, 25, 48, 0.95);
   backdrop-filter: blur(10px);

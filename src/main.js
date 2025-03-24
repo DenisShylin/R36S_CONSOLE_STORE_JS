@@ -7,8 +7,13 @@ import { initHeader } from './js/header.js';
 import { initMobileMenu } from './js/mobilemenu.js';
 import { initHero } from './js/hero.js';
 import { initAbout } from './js/about.js';
+import { initFeatures } from './js/features.js';
 
 console.log('Main.js инициализирован');
+
+// Хранение функций очистки для компонентов
+let cleanupFunctions = [];
+
 // Добавить инициализацию в событие DOMContentLoaded
 const headerCleanup = initHeader();
 if (typeof headerCleanup === 'function') {
@@ -19,8 +24,6 @@ const mobileMenuCleanup = initMobileMenu();
 if (typeof mobileMenuCleanup === 'function') {
   cleanupFunctions.push(mobileMenuCleanup);
 }
-// Хранение функций очистки для компонентов
-let cleanupFunctions = [];
 
 // Вспомогательная функция для определения поддержки браузером
 function checkBrowserCompatibility() {
@@ -89,6 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const aboutCleanup = initAbout();
     if (typeof aboutCleanup === 'function') {
       cleanupFunctions.push(aboutCleanup);
+    }
+
+    // Инициализация секции Features
+    const featuresCleanup = initFeatures();
+    if (typeof featuresCleanup === 'function') {
+      cleanupFunctions.push(featuresCleanup);
     }
 
     // Добавим информацию о загрузке страницы в консоль для отладки

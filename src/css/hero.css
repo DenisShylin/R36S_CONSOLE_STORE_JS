@@ -62,7 +62,7 @@
         grid-template-columns: 1fr;
         gap: 5px;
         text-align: center;
-        /* margin-top: 20px; */
+        margin-top: 20px;
     }
 
     /* Базовые стили для мобильной версии */
