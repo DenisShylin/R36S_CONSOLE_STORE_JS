@@ -3,11 +3,22 @@
 import './css/styles.css';
 
 // Импорт компонентов js
+import { initHeader } from './js/header.js';
+import { initMobileMenu } from './js/mobilemenu.js';
 import { initHero } from './js/hero.js';
 import { initAbout } from './js/about.js';
 
 console.log('Main.js инициализирован');
+// Добавить инициализацию в событие DOMContentLoaded
+const headerCleanup = initHeader();
+if (typeof headerCleanup === 'function') {
+  cleanupFunctions.push(headerCleanup);
+}
 
+const mobileMenuCleanup = initMobileMenu();
+if (typeof mobileMenuCleanup === 'function') {
+  cleanupFunctions.push(mobileMenuCleanup);
+}
 // Хранение функций очистки для компонентов
 let cleanupFunctions = [];
 

@@ -26,6 +26,7 @@
 }
 
 .about__labels {
+
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -33,6 +34,7 @@
 }
 
 .about__label {
+    font-family: 'Orbitron', sans-serif;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -45,6 +47,7 @@
 }
 
 .about__label--outline {
+
     background: transparent;
     border: 1px solid rgba(37, 99, 235, 0.3);
 }
