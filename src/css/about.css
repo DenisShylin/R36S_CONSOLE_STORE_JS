@@ -99,26 +99,38 @@
 }
 
 .about-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(15, 23, 42, 0.7);
+    /* Темно-синий фон с прозрачностью */
     border-radius: 24px;
     position: relative;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transform-style: preserve-3d;
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 480px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Добавляем запасной фон для устройств, не поддерживающих backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+    .about-card {
+        background: rgba(15, 23, 42, 0.9);
+    }
 }
 
 .card-blur {
     position: absolute;
     inset: 1px;
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(5px);
+    background: rgba(15, 23, 42, 0.6);
+    /* Более темный оттенок синего */
     border-radius: 24px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .card-glow {
@@ -150,6 +162,8 @@
     flex-direction: column;
     flex: 1;
     justify-content: flex-start;
+    color: #fff;
+    /* Обеспечиваем видимость текста */
 }
 
 .about-card__icon-wrapper {
@@ -354,6 +368,18 @@
     transform: translateX(-50%) scale(1.2);
     opacity: 1;
     box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
+}
+
+/* Для iOS Safari, который иногда имеет проблемы с backdrop-filter */
+@supports (-webkit-touch-callout: none) {
+    .about-card {
+        background: rgba(15, 23, 42, 0.9);
+        /* Более плотный фон для iOS */
+    }
+
+    .card-blur {
+        background: rgba(15, 23, 42, 0.8);
+    }
 }
 
 /* Адаптивная мобильная версия (375-767px) */
