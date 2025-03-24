@@ -3,16 +3,16 @@
 import { createModalAbout } from './modalabout.js';
 
 // Прямые импорты медиафайлов с адаптированными путями
-import displayControls from '/img/about/video_1_.gif';
-import videoGif from '/img/about/video_2_.gif';
+import displayControls from '/video/about/video_1_.gif';
+import videoGif from '/video/about/video_2_.gif';
 import untitled1 from '/img/about/Untitled_1_1x.jpg';
 import untitled2 from '/img/about/Untitled_2_1x.jpg';
 import untitled3 from '/img/about/Untitled_3_1x.jpg';
 import untitled4 from '/img/about/Untitled_4_1x.jpg';
 
-import videoBattery from '/img/about/video_3_batrey_.gif';
-import videoModa6 from '/img/about/video_6_.gif';
-import videoOption2 from '/img/about/video_4_.gif';
+import videoBattery from '/video/about/video_3_batrey_.mp4';
+import videoModa6 from '/video/about/video_6_.mp4';
+import videoOption2 from '/video/about/video_4_.mp4';
 
 // Функция инициализации секции About
 export function initAbout() {
@@ -121,17 +121,13 @@ The collection includes:
       description: 'Enjoy up to 7-8 hours of continuous gaming with the R36S.',
       number: '7-8',
       detail: 'hours of play',
-      fullDescription: `**Powerful 3200 mAh Battery**
+      fullDescription: `Powerful 3200 mAh Battery
 
 Experience up to 7-8 hours of extended gaming with the R36S. The high-capacity 3200 mAh battery powers its crisp 3.5-inch IPS display (640x480 resolution), delivering an immersive gaming experience without frequent charging.
 
 Key features:
 - Long-lasting gameplay 
-- Full-screen IPS display
-- Portable design
-- Uninterrupted entertainment
-
-Take your gaming anywhere – play more, charge less.`,
+- Full-screen IPS display`,
       videoUrl: videoBattery,
       imageAlt: 'Battery Life',
     },
@@ -158,16 +154,12 @@ Take your gaming anywhere – play more, charge less.`,
       number: '10+',
       detail: 'COLORS',
       fullDescription: `Experience the R36S Collection:
-
 The R36S console delivers 12+ captivating color variations in 2024, including our signature Midnight Black and eye-catching Galactic Purple. Each R36S model features recycled plastic finish and scratch-resistant coating.
 
 Available Colors:
 - Classic Black
 - Vibrant Orange
-- Mesmerizing Purple
-- Dynamic Red
-- Pure White
-- Radiant Yellow ...`,
+- Mesmerizing Purple ...`,
       colorImages: [untitled1, untitled2, untitled3, untitled4],
       imageAlt: 'R36S Color Variants',
     },
@@ -194,7 +186,6 @@ Available Colors:
       number: '30+',
       detail: 'settings',
       fullDescription: `Features & Connectivity:
-
 - Connect to external displays via OTG for large-screen gaming
 - Compatible with modern gaming controllers and gamepads
 - Multi-language interface support
@@ -202,10 +193,7 @@ Available Colors:
 - Advanced display settings with adjustable brightness and contrast
 - Audio optimization with multiple sound profiles
 - Screen mirroring capability
-- Low latency connection for seamless gameplay
-- Expandable storage support
-- Quick system updates
-- User-friendly interface`,
+- Low latency connection for seamless gameplay`,
       videoUrl: videoOption2,
       imageAlt: 'R36S Settings',
     },
@@ -239,9 +227,7 @@ Features:
 • Pocket-sized dimensions for ultimate portability
 • Rugged construction for daily carry
 • Ergonomic grip for extended gaming sessions
-• Quick startup for instant gaming access
-
-Never compromise between portability and performance - the R36S delivers both in a perfectly portable package.`,
+• Quick startup for instant gaming access`,
       videoUrl: videoModa6,
       imageAlt: 'R36S Portability',
     },

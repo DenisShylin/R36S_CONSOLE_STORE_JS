@@ -58,7 +58,6 @@
 
 .modal-about-close:before {
     content: none;
-
 }
 
 .modal-about-header {
@@ -97,6 +96,9 @@
 .modal-about-media-container {
     width: 50%;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-about-content-container {
@@ -130,19 +132,47 @@
 .modal-about-image,
 .modal-about-video {
     width: 100%;
+    max-width: 400px;
+    height: 400px;
     border-radius: 14px;
     box-shadow: 0 7px 27px rgba(0, 0, 0, 0.2);
-    aspect-ratio: 1;
     object-fit: cover;
     background-color: #0F172A;
     /* Цвет фона для загрузки */
 }
 
 .modal-about-video {
-    aspect-ratio: 16/9;
-    max-height: calc(85vh - 82px - 52px);
     object-fit: contain;
     background-color: #000;
+}
+
+.gif-container {
+    width: 100%;
+    max-width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gif-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+/* Скрываем элементы управления видео */
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+    display: none !important;
 }
 
 .modal-about-stats {
@@ -302,6 +332,14 @@
         width: 100%;
     }
 
+    .modal-about-image,
+    .modal-about-video,
+    .gif-container {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+
     .modal-about-content-container {
         overflow-y: visible;
         max-height: none;
@@ -330,11 +368,6 @@
     .modal-about-button {
         min-width: 213px;
         max-width: 255px;
-    }
-
-    .modal-about-video {
-        aspect-ratio: 16/9;
-        max-height: none;
     }
 }
 
