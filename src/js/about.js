@@ -310,9 +310,37 @@ Features:
     modalInstance.open(feature);
   }
 
+  // Вспомогательная функция debounce для оптимизации обработки resize
+  function debounce(func, wait) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(context, args);
+      }, wait);
+    };
+  }
+
+  // Функция очистки обработчиков событий карточек
+  function cleanupCardEvents() {
+    const cards = document.querySelectorAll('.about-card');
+    cards.forEach(card => {
+      card.removeEventListener('mouseenter', () => {});
+      card.removeEventListener('mouseleave', () => {});
+      card.removeEventListener('mousemove', handleMouseMove);
+      card.removeEventListener('click', () => {}); // Удаляем обработчик клика
+    });
+    document.querySelectorAll('.about-card__button').forEach(button => {
+      button.removeEventListener('click', handleButtonClick);
+    });
+  }
+
   // Установка обработчиков событий для карточек
   function setupCardEvents() {
     const cards = document.querySelectorAll('.about-card');
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
     cards.forEach(card => {
       // Обработчики для эффекта свечения
@@ -327,27 +355,60 @@ Features:
       });
 
       card.addEventListener('mousemove', handleMouseMove);
+
+      // Добавляем обработчик клика по всей карточке только для десктопа
+      if (!isMobile) {
+        card.addEventListener('click', e => {
+          // Обрабатываем клик только если это не клик по кнопке
+          if (!e.target.closest('.about-card__button')) {
+            const featureId = parseInt(card.dataset.id);
+            console.log('Клик по карточке ID:', featureId);
+            const feature = features.find(f => f.id === featureId);
+            if (!feature) {
+              console.error('Данные для карточки не найдены');
+              return;
+            }
+            // Создаем модальное окно если оно еще не создано
+            if (!modalInstance) {
+              modalInstance = createModalAbout(document.body);
+            }
+            // Открываем модальное окно
+            modalInstance.open(feature);
+          }
+        });
+      }
     });
 
-    // Прямой обработчик для кнопок
+    // Прямой обработчик для кнопок (работает на всех устройствах)
     document.querySelectorAll('.about-card__button').forEach(button => {
       button.addEventListener('click', handleButtonClick);
     });
+
+    // Добавляем обработчик изменения размера окна
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        // Проверяем, изменился ли тип устройства
+        const wasDesktop = !isMobile;
+        const isDesktopNow = !window.matchMedia('(max-width: 768px)').matches;
+
+        // Если тип устройства изменился, переустанавливаем обработчики
+        if (wasDesktop !== isDesktopNow) {
+          // Удаляем старые обработчики
+          cleanupCardEvents();
+          // Устанавливаем новые
+          setupCardEvents();
+        }
+      }, 250)
+    ); // Задержка в 250 мс для предотвращения множественных вызовов
   }
 
-  // Очистка обработчиков событий
+  // Очистка всех обработчиков событий
   function cleanupEvents() {
-    const cards = document.querySelectorAll('.about-card');
+    cleanupCardEvents();
 
-    cards.forEach(card => {
-      card.removeEventListener('mouseenter', () => {});
-      card.removeEventListener('mouseleave', () => {});
-      card.removeEventListener('mousemove', handleMouseMove);
-    });
-
-    document.querySelectorAll('.about-card__button').forEach(button => {
-      button.removeEventListener('click', handleButtonClick);
-    });
+    // Удаляем обработчик resize
+    window.removeEventListener('resize', debounce);
 
     if (modalInstance) {
       modalInstance.destroy();

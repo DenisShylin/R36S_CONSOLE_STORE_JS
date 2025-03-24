@@ -98,6 +98,7 @@
     max-width: 90%;
 }
 
+/* Базовые стили для карточек */
 .about-card {
     background: rgba(15, 23, 42, 0.7);
     /* Темно-синий фон с прозрачностью */
@@ -114,6 +115,20 @@
     height: 100%;
     min-height: 480px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Курсор pointer только для десктопа */
+@media (min-width: 769px) {
+    .about-card {
+        cursor: pointer;
+    }
+}
+
+/* Для мобильных устройств сохраняем обычный курсор */
+@media (max-width: 768px) {
+    .about-card {
+        cursor: default;
+    }
 }
 
 /* Добавляем запасной фон для устройств, не поддерживающих backdrop-filter */
@@ -143,6 +158,7 @@
     transition: opacity 0.5s;
 }
 
+/* Эффект при наведении */
 .about-card:hover {
     transform: translateY(-8px) scale(1.02);
     border-color: rgba(96, 165, 250, 0.2);
@@ -150,6 +166,26 @@
 
 .about-card:hover .card-glow {
     opacity: 1;
+}
+
+/* Визуальный признак кликабельности - только для десктопа */
+@media (min-width: 769px) {
+    .about-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: transparent;
+        border-radius: 24px;
+        z-index: 1;
+        pointer-events: none;
+        /* Чтобы не блокировать события */
+        transition: background-color 0.3s ease;
+    }
+
+    .about-card:active::after {
+        background-color: rgba(255, 255, 255, 0.05);
+        /* Эффект при нажатии */
+    }
 }
 
 .about-card__content {
@@ -255,7 +291,7 @@
     letter-spacing: 1px;
 }
 
-/* Стили для кнопки */
+/* Стили для кнопки внутри карточки - кнопка должна выглядеть кликабельной на всех устройствах */
 .about-card__button {
     margin-top: 20px;
     background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
@@ -272,6 +308,8 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    z-index: 10;
+    /* Чтобы кнопка была кликабельна отдельно */
 }
 
 .about-card__button::before {
@@ -294,6 +332,19 @@
 
 .about-card__button:hover::before {
     opacity: 1;
+}
+
+/* Специальные стили для мобильных устройств - делаем кнопку более заметной */
+@media (max-width: 768px) {
+    .about-card__button {
+        box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        font-weight: 600;
+    }
+
+    .about-card__button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    }
 }
 
 .button-text {
