@@ -63,25 +63,16 @@ export function createModalAbout(parentElement) {
 
     // Обработка видео
     if (feature.videoUrl) {
-      // Создаем SVG для плейсхолдера без использования шаблонных строк внутри
-      const placeholderSvg = `<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#333"/><text x="50%" y="50%" font-size="24" text-anchor="middle" alignment-baseline="middle" fill="#fff">Loading Video...</text></svg>`;
-      const encodedSvg = btoa(placeholderSvg);
-
       return `
-    <video
-      class="modal-about-video"
-      autoplay
-      muted
-      loop
-      playsInline
-      preload="metadata"
+    <img
+      src="${feature.videoUrl}"
+      alt="${feature.imageAlt || 'Feature animation'}"
+      class="modal-about-image modal-about-gif"
       width="640" 
       height="360"
-      poster="data:image/svg+xml;base64,${encodedSvg}"
-    >
-      <source src="${feature.videoUrl}" type="video/mp4" />
-      <p>Your browser does not support HTML5 video.</p>
-    </video>
+      loading="lazy"
+      onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+R0lGIEFuaW1hdGlvbjwvdGV4dD48L3N2Zz4=';"
+    />
   `;
     }
 

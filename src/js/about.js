@@ -11,9 +11,9 @@ import untitled3 from '/img/about/Untitled_3_1x.jpg';
 import untitled4 from '/img/about/Untitled_4_1x.jpg';
 
 // Import videos с адаптированными путями и названиями
-import videoBattery from '/video/about/video_3_batrey_.mp4';
-import videoModa6 from '/video/about/video_6_.mp4';
-import videoOption2 from '/video/about/video_5_option_.mp4';
+import videoBattery from '/video/about/video_3_batrey_.gif';
+import videoModa6 from '/video/about/video_3_.webp';
+import videoOption2 from '/video/about/video_4_.gif';
 
 // Функция инициализации секции About
 export function initAbout() {
