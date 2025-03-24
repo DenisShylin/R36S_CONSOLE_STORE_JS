@@ -8,6 +8,7 @@ import { initMobileMenu } from './js/mobilemenu.js';
 import { initHero } from './js/hero.js';
 import { initAbout } from './js/about.js';
 import { initFeatures } from './js/features.js';
+import { initCategories } from './js/categories.js';
 
 console.log('Main.js инициализирован');
 
@@ -98,6 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const featuresCleanup = initFeatures();
     if (typeof featuresCleanup === 'function') {
       cleanupFunctions.push(featuresCleanup);
+    }
+
+    // Инициализация секции Categories
+    const categoriesCleanup = initCategories();
+    if (typeof categoriesCleanup === 'function') {
+      cleanupFunctions.push(categoriesCleanup);
     }
 
     // Добавим информацию о загрузке страницы в консоль для отладки
