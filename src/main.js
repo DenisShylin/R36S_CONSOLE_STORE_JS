@@ -9,6 +9,7 @@ import { initHero } from './js/hero.js';
 import { initAbout } from './js/about.js';
 import { initFeatures } from './js/features.js';
 import { initCategories } from './js/categories.js';
+import { initArticles } from './js/articles.js'; // Добавляем импорт Articles
 
 console.log('Main.js инициализирован');
 
@@ -105,6 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoriesCleanup = initCategories();
     if (typeof categoriesCleanup === 'function') {
       cleanupFunctions.push(categoriesCleanup);
+    }
+
+    // Инициализация секции Articles
+    const articlesCleanup = initArticles();
+    if (typeof articlesCleanup === 'function') {
+      cleanupFunctions.push(articlesCleanup);
     }
 
     // Добавим информацию о загрузке страницы в консоль для отладки
