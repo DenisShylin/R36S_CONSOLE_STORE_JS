@@ -1,7 +1,7 @@
 // Contact.js - Скрипт для секции Contact
 
 // Импортируем иконки (предполагаем, что у вас есть отдельный файл для иконок)
-// import { renderIcon } from '../../components/Icons/Icons.js';
+import { renderIcon } from './iconscontact.js';
 
 // Инициализация секции Contact
 export function initContact() {

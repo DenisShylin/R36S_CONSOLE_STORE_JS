@@ -9,7 +9,9 @@ import { initHero } from './js/hero.js';
 import { initAbout } from './js/about.js';
 import { initFeatures } from './js/features.js';
 import { initCategories } from './js/categories.js';
-import { initArticles } from './js/articles.js'; // Добавляем импорт Articles
+import { initArticles } from './js/articles.js';
+import { initContact } from './js/contact.js';
+import { initIcons } from './js/iconscontact.js'; // Добавляем импорт иконок
 
 console.log('Main.js инициализирован');
 
@@ -81,6 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM загружен');
 
   try {
+    // Инициализация иконок до других компонентов
+    initIcons(); // Добавляем инициализацию иконок
+
     // Проверка совместимости браузера
     const compatibility = checkBrowserCompatibility();
 
@@ -113,7 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof articlesCleanup === 'function') {
       cleanupFunctions.push(articlesCleanup);
     }
-
+    // Инициализация секции Contact
+    const contactCleanup = initContact();
+    if (typeof contactCleanup === 'function') {
+      cleanupFunctions.push(contactCleanup);
+    }
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
     console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
