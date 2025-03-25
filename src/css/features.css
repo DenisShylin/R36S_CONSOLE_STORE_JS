@@ -13,10 +13,12 @@ html {
     background-color: #0F172A;
     background-image: radial-gradient(at 50% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%);
     color: #fff;
-    padding: 100px 0;
+    padding: 60px 0;
     overflow: hidden;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
+    min-width: 320px;
+    /* Минимальная ширина для предотвращения переполнения */
 }
 
 /* Специальные стили для части "R36S" в заголовке */
@@ -40,15 +42,23 @@ html {
     transform: scale(1);
     transition: transform 0.6s ease;
     will-change: transform;
+    max-width: 100%;
+    /* Гарантируем, что изображение не выходит за пределы контейнера */
 }
 
 .features__image-wrapper {
     border-radius: 20px;
     overflow: hidden;
     transform-style: preserve-3d;
-    transform: perspective(1000px) rotateY(-15deg);
+    transform: perspective(1000px) rotateY(0);
     transition: transform 0.6s ease;
     background-color: transparent;
+    max-width: 100%;
+    margin: 0 auto;
+    aspect-ratio: 16/9;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* Стили для лейблов выровненных по левому краю */
@@ -61,18 +71,22 @@ html {
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 60px;
+    grid-template-columns: 1fr;
+    gap: 40px;
     align-items: center;
+    text-align: center;
+    min-width: 280px;
+    /* Добавляем минимальную ширину с учетом отступов */
+    box-sizing: border-box;
+    /* Учитываем padding в общей ширине */
 }
 
 .features__content {
-    max-width: 580px;
+    max-width: 100%;
 }
 
 .features__subtitle {
     display: inline-block;
-
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -83,8 +97,7 @@ html {
 }
 
 .features__title {
-
-    font-size: 42px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 30px;
@@ -94,7 +107,7 @@ html {
 
 .features__description {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.7;
     margin-bottom: 40px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -110,15 +123,17 @@ html {
 
 .features__buttons {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
 }
 
 /* Обновленные стили кнопок */
 .features__button {
-
-    padding: 16px 32px;
+    width: 100%;
+    padding: 12px 24px;
     border-radius: 8px;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
@@ -135,7 +150,6 @@ html {
     background-size: 400% 400%;
     color: #ffffff;
     border: none;
-    padding: 18px 36px;
     animation: gradientShift 8s ease infinite;
     box-shadow: 0 8px 24px rgba(255, 51, 102, 0.3);
     transform: scale(1);
@@ -151,13 +165,14 @@ html {
 }
 
 .features__button-secondary {
+    width: 100%;
     background: rgba(255, 255, 255, 0.05);
     color: #ffffff;
     border: 2px solid rgba(255, 255, 255, 0.3);
     text-decoration: none;
-    padding: 16px 32px;
+    padding: 12px 24px;
     border-radius: 8px;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
@@ -191,25 +206,6 @@ html {
     text-align: center;
     width: 100%;
     margin-bottom: 40px
-}
-
-.features__image-wrapper {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transform: perspective(1000px) rotateY(-15deg);
-    transition: transform 0.6s ease;
-    aspect-ratio: 16/9;
-    width: 100%;
-}
-
-.features__image-wrapper:hover {
-    transform: perspective(1000px) rotateY(-5deg);
-}
-
-.features__image-wrapper:hover .features__console-img {
-    transform: scale(1.05);
 }
 
 .features__console-img {
@@ -301,102 +297,84 @@ html {
     }
 }
 
-@media (max-width: 1280px) {
-    .features__container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-    }
-
-    .features__content {
-        max-width: 100%;
-    }
-
+/* Мобильные устройства от 375px */
+@media screen and (min-width: 375px) {
     .features__title {
-        font-size: 36px;
-    }
-
-    .features__image-wrapper {
-        transform: perspective(1000px) rotateY(0);
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .features__buttons {
-        justify-content: center;
-        gap: 16px;
-    }
-
-    .features__button,
-    .features__button-secondary {
-        padding: 14px 28px;
-        font-size: 16px;
-    }
-}
-
-
-/* Медиа запросы */
-@media (max-width: 992px) {
-    .features__container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-    }
-
-    .features__content {
-        max-width: 100%;
-    }
-
-    .features__title {
-        font-size: 36px;
-    }
-
-    .features__image-wrapper {
-        transform: perspective(1000px) rotateY(0);
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .features__buttons {
-        justify-content: center;
-        gap: 16px;
-    }
-
-    .features__button,
-    .features__button-secondary {
-        padding: 14px 28px;
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 768px) {
-    .features__image-wrapper {
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .features {
-        padding: 60px 0;
-    }
-
-    .features__title {
-        font-size: 28px;
+        font-size: 32px;
     }
 
     .features__description {
-        font-size: 14px;
-    }
-
-    .features__buttons {
-        flex-direction: column;
-        gap: 12px;
+        font-size: 15px;
     }
 
     .features__button,
     .features__button-secondary {
-        width: 100%;
-        padding: 12px 24px;
-        font-size: 15px;
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+}
+
+/* Планшеты от 768px */
+@media screen and (min-width: 768px) {
+    .features {
+        padding: 80px 0;
+    }
+
+    .features__title {
+        font-size: 36px;
+    }
+
+    .features__buttons {
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .features__button,
+    .features__button-secondary {
+        width: auto;
+    }
+}
+
+/* Десктоп от 1280px */
+@media screen and (min-width: 1280px) {
+    .features {
+        padding: 100px 0;
+    }
+
+    .features__container {
+        grid-template-columns: 0.8fr 1.2fr;
+        text-align: left;
+        gap: 60px;
+    }
+
+    .features__content {
+        max-width: 580px;
+    }
+
+    .features__title {
+        font-size: 42px;
+    }
+
+    .features__description {
+        font-size: 16px;
+    }
+
+    .features__buttons {
+        justify-content: flex-start;
+    }
+
+    .features__image-wrapper {
+        transform: perspective(1000px) rotateY(-15deg);
+    }
+
+    .features__image-wrapper:hover {
+        transform: perspective(1000px) rotateY(-5deg);
+    }
+}
+
+/* Большие десктопные экраны от 1440px */
+@media screen and (min-width: 1440px) {
+    .features__container {
+        max-width: 1400px;
     }
 }

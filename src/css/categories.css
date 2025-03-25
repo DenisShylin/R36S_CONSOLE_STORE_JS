@@ -2,14 +2,20 @@
     background-color: #0F172A;
     background-image: radial-gradient(at 50% 50%, rgba(37, 99, 235, 0.1) 0px, transparent 50%);
     color: #fff;
-    padding: 120px 0;
+    padding: 60px 0;
     overflow: hidden;
+    min-width: 320px;
+    /* Минимальная ширина для предотвращения переполнения */
 }
 
 .categories__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    min-width: 280px;
+    /* Учитываем отступы */
+    box-sizing: border-box;
+    /* Учитываем padding в общей ширине */
 }
 
 .categories__content {
@@ -25,7 +31,7 @@
 
 .categories__info {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .categories__labels {
@@ -33,6 +39,8 @@
     gap: 12px;
     justify-content: center;
     margin-bottom: 24px;
+    flex-wrap: wrap;
+    /* Добавляем перенос на мобильных */
 }
 
 .categories__label {
@@ -52,7 +60,7 @@
 }
 
 .categories__title {
-    font-size: 48px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 20px;
@@ -80,7 +88,7 @@
 }
 
 .categories__description {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6;
     color: #94A3B8;
     max-width: 600px;
@@ -97,7 +105,7 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    border-radius: 24px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     transform: perspective(1000px) rotateX(5deg);
@@ -198,7 +206,9 @@
     width: 100%;
     display: block;
     object-fit: cover;
-    border-radius: 24px;
+    border-radius: 16px;
+    max-width: 100%;
+    /* Гарантируем, что видео не выходит за пределы */
 }
 
 .categories__video-overlay {
@@ -222,13 +232,15 @@
 .categories__video-stats {
     display: flex;
     justify-content: center;
-    gap: 60px;
-    padding: 20px;
+    gap: 20px;
+    padding: 15px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+    /* Добавляем перенос на мобильных */
 }
 
 .categories__stat {
@@ -239,21 +251,87 @@
 }
 
 .categories__stat-number {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
     color: #60A5FA;
     line-height: 1;
 }
 
 .categories__stat-label {
-    font-size: 14px;
+    font-size: 12px;
     color: #94A3B8;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Медиа запросы */
-@media (max-width: 768px) {
+/* Анимация градиента для заголовка */
+@keyframes gradientTextAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Стили для малых экранов (меньше 320px) */
+@media screen and (max-width: 320px) {
+    .categories__label {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .categories__title {
+        font-size: 24px;
+    }
+
+    .categories__description {
+        font-size: 14px;
+    }
+
+    .categories {
+        padding: 40px 0;
+    }
+
+    .categories__video-stats {
+        gap: 15px;
+    }
+
+    .categories__stat-number {
+        font-size: 20px;
+    }
+}
+
+/* Мобильные устройства от 375px */
+@media screen and (min-width: 375px) {
+    .categories__title {
+        font-size: 32px;
+    }
+
+    .categories__description {
+        font-size: 16px;
+    }
+
+    .categories__label {
+        font-size: 14px;
+    }
+
+    .categories__stat-number {
+        font-size: 28px;
+    }
+
+    .categories__stat-label {
+        font-size: 13px;
+    }
+}
+
+/* Планшеты от 768px */
+@media screen and (min-width: 768px) {
     .categories {
         padding: 80px 0;
     }
@@ -268,33 +346,64 @@
 
     .categories__video-stats {
         gap: 30px;
-        flex-wrap: wrap;
-    }
-
-    .categories__stat-number {
-        font-size: 28px;
-    }
-}
-
-@media (max-width: 480px) {
-    .categories__title {
-        font-size: 28px;
     }
 
     .categories__video-container {
-        border-radius: 16px;
+        border-radius: 20px;
+    }
+
+    .categories__video {
+        border-radius: 20px;
+    }
+
+    .categories__info {
+        margin-bottom: 50px;
+    }
+}
+
+/* Десктоп от 1280px */
+@media screen and (min-width: 1280px) {
+    .categories {
+        padding: 120px 0;
+    }
+
+    .categories__title {
+        font-size: 48px;
+    }
+
+    .categories__description {
+        font-size: 18px;
+    }
+
+    .categories__video-container {
+        border-radius: 24px;
+    }
+
+    .categories__video {
+        border-radius: 24px;
     }
 
     .categories__video-stats {
-        padding: 15px;
-        gap: 20px;
+        gap: 60px;
+        padding: 20px;
     }
 
     .categories__stat-number {
-        font-size: 24px;
+        font-size: 32px;
     }
 
     .categories__stat-label {
-        font-size: 12px;
+        font-size: 14px;
+    }
+
+    .categories__info {
+        margin-bottom: 60px;
+    }
+}
+
+/* Большие десктопные экраны от 1440px */
+@media screen and (min-width: 1440px) {
+    .categories__container {
+        max-width: 1400px;
     }
 }
