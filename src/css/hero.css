@@ -11,6 +11,7 @@
         font-family: 'Noto Sans', sans-serif;
         min-width: 320px;
         padding-top: 90px;
+        padding-bottom: 50px;
         /* Добавляем минимальную ширину */
     }
 
@@ -63,7 +64,7 @@
         grid-template-columns: 1fr;
         gap: 5px;
         text-align: center;
-        margin-top: 20px;
+
     }
 
     /* Базовые стили для мобильной версии */
@@ -508,6 +509,10 @@
     /* Планшетная версия (768-1279px) */
     @media screen and (min-width: 768px) {
 
+        .hero__content-wrapper {
+            margin-top: 20px;
+        }
+
         .hero__title-line:nth-child(2),
         .hero__title-line:nth-child(3) {
             font-size: 38px;
@@ -581,7 +586,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px 40px;
             text-align: left;
-            margin-top: 0;
+            margin-top: 20px;
         }
 
         .hero__title {

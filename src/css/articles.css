@@ -327,7 +327,7 @@
 .articles__seo-content {
     background: rgba(15, 23, 42, 0.5);
     border-radius: 16px;
-    padding: 20px;
+    padding: 2px;
 }
 
 .articles__faq-title {
@@ -392,6 +392,7 @@
 .accordion__header {
     padding: 15px;
     display: flex;
+    gap: 2px;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
@@ -568,6 +569,7 @@
 
 /* Мобильные устройства от 375px */
 @media screen and (min-width: 375px) {
+
     .articles__heading {
         font-size: 32px;
         margin-bottom: 30px;
