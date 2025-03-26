@@ -11,7 +11,8 @@ import { initFeatures } from './js/features.js';
 import { initCategories } from './js/categories.js';
 import { initArticles } from './js/articles.js';
 import { initContact } from './js/contact.js';
-import { initIcons } from './js/iconscontact.js'; // Добавляем импорт иконок
+import { initIcons } from './js/iconscontact.js';
+import { initReviews } from './js/reviews.js';
 
 console.log('Main.js инициализирован');
 
@@ -123,6 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof contactCleanup === 'function') {
       cleanupFunctions.push(contactCleanup);
     }
+
+    // Инициализация секции Reviews
+    const reviewsCleanup = initReviews();
+    if (typeof reviewsCleanup === 'function') {
+      cleanupFunctions.push(reviewsCleanup);
+    }
+
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
     console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
