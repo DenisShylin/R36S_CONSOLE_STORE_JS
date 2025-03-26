@@ -60,7 +60,7 @@ export function initProducts() {
   const sections = [
     {
       id: 'getting-started',
-      title: 'Getting Started',
+      title: 'Start Guide',
       content: {
         text: `Please be aware that this tutorial does not apply to K36 devices or clones marketed as R36S. For additional information about your hardware, please refer to the comprehensive R36S Wiki Page.
 
@@ -83,7 +83,7 @@ To identify which version of the R36S you have, use the quick identification too
     },
     {
       id: 'original-backup',
-      title: 'Creating Original Firmware Backup',
+      title: 'Backup Original',
       content: {
         text: `This step can be critical in your modification journey. Having a complete backup of the stock firmware ensures you can restore your device if anything goes wrong during the flashing process, or if you want to revert to the original state later.`,
         subsections: [
@@ -109,7 +109,7 @@ To identify which version of the R36S you have, use the quick identification too
     },
     {
       id: 'custom-installation',
-      title: 'Installing Custom Firmware',
+      title: 'Install Custom',
       content: {
         text: `As mentioned previously, one of your first priorities should be obtaining a quality brand-name SD card. The cards included with the R36S are typically unreliable. It's not a question of if they will fail, but when.
 
@@ -169,7 +169,7 @@ Single vs. Dual Card Configuration – The R36S features two microSD card slots.
     },
     {
       id: 'firmware-options',
-      title: 'R36S Firmware Options',
+      title: 'Firmware Options',
       content: {
         text: `Several custom firmware options are available for the R36S. Here are the most popular choices:`,
         subsections: [
@@ -234,7 +234,7 @@ Installation guide:
     },
     {
       id: 'game-setup',
-      title: 'Adding Games and BIOS Files',
+      title: 'Add Files',
       content: {
         text: `1. For dual-card setups, format your second card to FAT32 or exFAT (depending on your card capacity)
 
