@@ -13,6 +13,7 @@ import { initArticles } from './js/articles.js';
 import { initContact } from './js/contact.js';
 import { initIcons } from './js/iconscontact.js';
 import { initReviews } from './js/reviews.js';
+import { initProducts } from './js/products.js';
 
 console.log('Main.js инициализирован');
 
@@ -130,7 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof reviewsCleanup === 'function') {
       cleanupFunctions.push(reviewsCleanup);
     }
-
+    // Инициализация секции Products
+    const productsCleanup = initProducts();
+    if (typeof productsCleanup === 'function') {
+      cleanupFunctions.push(productsCleanup);
+    }
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
     console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
