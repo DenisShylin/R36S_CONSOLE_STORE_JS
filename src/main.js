@@ -14,6 +14,7 @@ import { initContact } from './js/contact.js';
 import { initIcons } from './js/iconscontact.js';
 import { initReviews } from './js/reviews.js';
 import { initProducts } from './js/products.js';
+import { initFooter } from './js/footer.js';
 
 console.log('Main.js инициализирован');
 
@@ -135,6 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const productsCleanup = initProducts();
     if (typeof productsCleanup === 'function') {
       cleanupFunctions.push(productsCleanup);
+    }
+    // Инициализация секции Footer
+    const footerCleanup = initFooter();
+    if (typeof footerCleanup === 'function') {
+      cleanupFunctions.push(footerCleanup);
     }
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
