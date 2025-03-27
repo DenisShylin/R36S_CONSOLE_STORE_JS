@@ -131,7 +131,28 @@
             </div>
           </div>
         </div>
-      `;const t=i.querySelector(".modal-about-close");t&&t.addEventListener("click",p);const d=i.querySelector(".modal-about-content");d&&d.addEventListener("click",h=>h.stopPropagation())}function S(r){e=r,i||(i=l()),w();const v=window.location.href,t=new URL(v);return t.searchParams.set("feature",e.id),window.history.pushState({featureId:e.id},"",t),i.style.display="flex",a=!0,i.focus(),window.addEventListener("keydown",m),document.body.style.overflow="hidden",f(),window.addEventListener("popstate",y),{close:p}}function y(r){a&&(!r.state||!r.state.featureId)&&p()}function p(){if(!a||!i)return;a=!1,i.style.display="none",window.removeEventListener("keydown",m),window.removeEventListener("popstate",y),document.body.style.overflow="visible",c&&(clearInterval(c),c=null);const r=new URL(window.location.href);r.searchParams.delete("feature"),window.history.pushState({},"",r)}function s(){p(),i&&n.contains(i)&&n.removeChild(i),i=null,e=null}return{open:S,close:p,destroy:s}}const j="/R36S_CONSOLE_STORE_JS/video/about/video_1_.webp",P="/R36S_CONSOLE_STORE_JS/video/about/video_2_.webp",$="/R36S_CONSOLE_STORE_JS/img/about/Untitled_1_1x.jpg",N="/R36S_CONSOLE_STORE_JS/img/about/Untitled_2_1x.jpg",U="/R36S_CONSOLE_STORE_JS/img/about/Untitled_3_1x.jpg",Z="/R36S_CONSOLE_STORE_JS/img/about/Untitled_4_1x.jpg",H="/R36S_CONSOLE_STORE_JS/video/about/video_3_batrey_.mp4",V="/R36S_CONSOLE_STORE_JS/video/about/video_6_.mp4",Y="/R36S_CONSOLE_STORE_JS/video/about/video_4_.mp4";let L=null;function J(){if(console.log("Начинаем предзагрузку изображений..."),[j,P,$,N].forEach(i=>{const e=new Image;e.src=i}),"HTMLVideoElement"in window){const i=document.createElement("video");i.preload="metadata",i.src=H}console.log("Предзагрузка изображений завершена")}function X(){console.log("Инициализация секции About"),J();const n=document.querySelector(".about__cards");if(!n)return console.error("Контейнер для карточек не найден"),null;let i={x:0,y:0};L||(console.log("Создаем модальное окно..."),L=W(document.body),console.log("Модальное окно создано"));let e=L;const o=[{id:1,icon:`
+      `;const t=i.querySelector(".modal-about-close");t&&t.addEventListener("click",p);const d=i.querySelector(".modal-about-content");d&&d.addEventListener("click",h=>h.stopPropagation())}function S(r){e=r,i||(i=l()),w();const v=window.location.href,t=new URL(v);return t.searchParams.set("feature",e.id),window.history.pushState({featureId:e.id},"",t),i.style.display="flex",a=!0,i.focus(),window.addEventListener("keydown",m),document.body.style.overflow="hidden",f(),window.addEventListener("popstate",y),{close:p}}function y(r){a&&(!r.state||!r.state.featureId)&&p()}function p(){if(!a||!i)return;a=!1,i.style.display="none",window.removeEventListener("keydown",m),window.removeEventListener("popstate",y),document.body.style.overflow="visible",c&&(clearInterval(c),c=null);const r=new URL(window.location.href);r.searchParams.delete("feature"),window.history.pushState({},"",r)}function s(){p(),i&&n.contains(i)&&n.removeChild(i),i=null,e=null}return{open:S,close:p,destroy:s}}const j="/R36S_CONSOLE_STORE_JS/video/about/video_1_.webp",P="/R36S_CONSOLE_STORE_JS/video/about/video_2_.webp",$="/R36S_CONSOLE_STORE_JS/img/about/Untitled_1_1x.jpg",N="/R36S_CONSOLE_STORE_JS/img/about/Untitled_2_1x.jpg",U="/R36S_CONSOLE_STORE_JS/img/about/Untitled_3_1x.jpg",Z="/R36S_CONSOLE_STORE_JS/img/about/Untitled_4_1x.jpg",H="/R36S_CONSOLE_STORE_JS/video/about/video_3_batrey_.mp4",V="/R36S_CONSOLE_STORE_JS/video/about/video_6_.mp4",Y="/R36S_CONSOLE_STORE_JS/video/about/video_4_.mp4";let L=null;function J(){if(console.log("Начинаем предзагрузку изображений..."),[j,P,$,N].forEach(i=>{const e=new Image;e.src=i}),"HTMLVideoElement"in window){const i=document.createElement("video");i.preload="metadata",i.src=H}console.log("Предзагрузка изображений завершена")}function X(){console.log("Инициализация секции About"),J();const n=document.querySelector(".about__cards");if(!n)return console.error("Контейнер для карточек не найден"),null;let i={x:0,y:0};L||(console.log("Создаем модальное окно..."),L=W(document.body),console.log("Модальное окно создано"));let e=L;const o=[{id:4,icon:`
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="about-card__icon"
+          width="44"
+          height="44"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+      `,title:"Extensive color selection",description:"Experience our wide selection of stunning console colors.",number:"10+",detail:"COLORS",fullDescription:`Experience the R36S Collection:
+The R36S console delivers 12+ captivating color variations in 2024, including our signature Midnight Black and eye-catching Galactic Purple. Each R36S model features recycled plastic finish and scratch-resistant coating.
+
+Available Colors:
+- Classic Black
+- Vibrant Orange
+- Mesmerizing Purple ...`,colorImages:[$,N,U,Z],imageAlt:"R36S Color Variants"},{id:1,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
@@ -196,28 +217,7 @@ Experience up to 7-8 hours of extended gaming with the R36S. The high-capacity 3
 
 Key features:
 - Long-lasting gameplay 
-- Full-screen IPS display`,videoUrl:H,imageAlt:"Battery Life"},{id:4,icon:`
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="about-card__icon"
-          width="44"
-          height="44"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="6"></circle>
-          <circle cx="12" cy="12" r="2"></circle>
-        </svg>
-      `,title:"Extensive color selection",description:"Experience our wide selection of stunning console colors.",number:"10+",detail:"COLORS",fullDescription:`Experience the R36S Collection:
-The R36S console delivers 12+ captivating color variations in 2024, including our signature Midnight Black and eye-catching Galactic Purple. Each R36S model features recycled plastic finish and scratch-resistant coating.
-
-Available Colors:
-- Classic Black
-- Vibrant Orange
-- Mesmerizing Purple ...`,colorImages:[$,N,U,Z],imageAlt:"R36S Color Variants"},{id:5,icon:`
+- Full-screen IPS display`,videoUrl:H,imageAlt:"Battery Life"},{id:5,icon:`
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="about-card__icon"
