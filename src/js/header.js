@@ -95,7 +95,7 @@ export function initHeader() {
       setTimeout(() => {
         const headerHeight = header.offsetHeight;
         const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.scrollY - headerHeight;
+        const offsetPosition = elementPosition + window.scrollY;
 
         window.scrollTo({
           top: offsetPosition,

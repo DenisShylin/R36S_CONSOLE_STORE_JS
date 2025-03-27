@@ -1,5 +1,3 @@
-// import './mobilemenu.css';
-
 export function initMobileMenu() {
   // Находим существующее мобильное меню
   const mobileMenu = document.querySelector('.mobile-menu');
