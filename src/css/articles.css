@@ -373,6 +373,7 @@
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .accordion__header {
@@ -388,20 +389,35 @@
 .articles__faq-question {
     font-size: 16px;
     font-weight: 600;
-    color: #60A5FA;
-    /* Стандартный светло-синий цвет вопроса */
+    color: #FFFFFF;
+    /* Белый цвет для лучшей читаемости */
     margin-bottom: 0;
     transition: color 0.3s ease;
-    /* Добавляем плавный переход цвета */
+    line-height: 1.4;
+    /* Улучшенная высота строки */
+    letter-spacing: 0.2px;
+    /* Небольшое увеличение межбуквенного расстояния */
 }
 
 .articles__faq-answer {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #94A3B8;
-    /* Стандартный серый цвет ответа */
+    font-size: 15px;
+    /* Немного увеличиваем размер */
+    line-height: 1.6;
+    /* Увеличенная высота строки для лучшей читаемости */
+    color: #CBD5E1;
+    /* Светло-серый цвет для базового текста */
     transition: color 0.3s ease;
-    /* Добавляем плавный переход цвета */
+    padding: 15px 0;
+    /* Добавляем отступы сверху и снизу для текста */
+    letter-spacing: 0.3px;
+    /* Увеличиваем межбуквенное расстояние */
+}
+
+/* Стили для текста параграфов в ответе */
+.articles__faq-answer p {
+    margin-bottom: 12px;
+    color: #E2E8F0;
+    /* Еще более светлый оттенок для текста параграфов */
 }
 
 /* Стили для открытого аккордеона */
@@ -409,6 +425,22 @@
     background: rgba(15, 23, 42, 0.8);
     background-clip: padding-box;
     /* Темный фон для активного элемента */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    /* Добавляем тень для визуального выделения */
+}
+
+/* Стили для выделенных элементов в ответе */
+.articles__faq-answer strong {
+    color: #90CAF9;
+    /* Светло-синий для strong */
+    font-weight: 600;
+    /* Менее жирный для лучшей читаемости */
+}
+
+.articles__faq-answer em {
+    color: #F9FAFB;
+    /* Светло-серый для em */
+    font-style: italic;
 }
 
 /* Вопрос становится темнее при открытии */
@@ -554,16 +586,17 @@
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
     padding: 0 15px;
+    background-color: rgba(15, 23, 42, 0.5);
 }
 
 .accordion__item.active .accordion__content {
     max-height: 1000px;
     transition: max-height 0.7s cubic-bezier(0.5, 0, 1, 0), padding 0.3s ease;
-    padding-bottom: 15px;
-    padding-top: 15px;
-    background-color: rgba(15, 23, 42, 0.3);
+    padding: 15px;
+    /* Равные отступы со всех сторон */
+    background-color: rgba(15, 23, 42, 0.5);
+    /* Более темный фон для лучшего контраста */
     background-clip: padding-box;
-    /* Слегка темный фон для контента */
 }
 
 @keyframes fadeIn {
@@ -813,8 +846,8 @@
     }
 
     .accordion__item.active .accordion__content {
-        padding-bottom: 20px;
-        padding-top: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
     }
 }
 
