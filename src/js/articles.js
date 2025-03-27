@@ -153,18 +153,12 @@ export function initArticles() {
   // Вызываем функцию добавления метатегов
   addMetaTags();
 
-  // Инициализируем массив для хранения ссылок на элементы статей для анимации
-  const articleElements = [];
-
   // Создаем статьи и добавляем их в контейнер с улучшенной семантической разметкой
   articles.forEach(article => {
     const articleElement = document.createElement('article');
     articleElement.className = 'article';
     articleElement.id = `article-${article.id}`;
     articleElement.dataset.articleId = article.id;
-    articleElement.style.opacity = '0';
-    articleElement.style.transform = 'translateY(20px)';
-    articleElement.style.transition = 'all 0.6s ease-out';
 
     // Добавляем микроразметку Schema.org для статьи
     articleElement.setAttribute('itemscope', '');
@@ -253,109 +247,7 @@ export function initArticles() {
     articleElement.appendChild(articleFooter);
 
     articlesGrid.appendChild(articleElement);
-    articleElements.push(articleElement);
   });
-
-  // Инициализируем IntersectionObserver для анимации появления статей
-  const setupAnimations = () => {
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = 1;
-              entry.target.style.transform = 'translateY(0)';
-              // Отключаем наблюдение после появления элемента
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-        }
-      );
-
-      // Начинаем наблюдение за каждой статьей
-      articleElements.forEach(article => {
-        observer.observe(article);
-      });
-    } else {
-      // Запасной вариант для браузеров без поддержки IntersectionObserver
-      articleElements.forEach(article => {
-        article.style.opacity = 1;
-        article.style.transform = 'translateY(0)';
-      });
-      console.warn(
-        'IntersectionObserver не поддерживается. Анимация появления отключена.'
-      );
-    }
-  };
-
-  // Добавляем хлебные крошки для SEO
-  const addBreadcrumbs = () => {
-    const breadcrumbsContainer = document.createElement('nav');
-    breadcrumbsContainer.className = 'articles__breadcrumbs';
-    breadcrumbsContainer.setAttribute('aria-label', 'Breadcrumbs');
-
-    // Добавляем микроразметку Schema.org для хлебных крошек
-    breadcrumbsContainer.setAttribute('itemscope', '');
-    breadcrumbsContainer.setAttribute(
-      'itemtype',
-      'https://schema.org/BreadcrumbList'
-    );
-
-    const breadcrumbsList = document.createElement('ol');
-    breadcrumbsList.className = 'breadcrumbs__list';
-
-    // Домашняя страница
-    const homeCrumb = document.createElement('li');
-    homeCrumb.className = 'breadcrumbs__item';
-    homeCrumb.setAttribute('itemprop', 'itemListElement');
-    homeCrumb.setAttribute('itemscope', '');
-    homeCrumb.setAttribute('itemtype', 'https://schema.org/ListItem');
-
-    const homeLink = document.createElement('span');
-    homeLink.className = 'breadcrumbs__link';
-    homeLink.setAttribute('itemprop', 'item');
-    homeLink.innerHTML = '<span itemprop="name">Home</span>';
-    homeCrumb.appendChild(homeLink);
-
-    const homePosition = document.createElement('meta');
-    homePosition.setAttribute('itemprop', 'position');
-    homePosition.content = '1';
-    homeCrumb.appendChild(homePosition);
-
-    // Текущая страница (R36S)
-    const currentCrumb = document.createElement('li');
-    currentCrumb.className = 'breadcrumbs__item';
-    currentCrumb.setAttribute('itemprop', 'itemListElement');
-    currentCrumb.setAttribute('itemscope', '');
-    currentCrumb.setAttribute('itemtype', 'https://schema.org/ListItem');
-
-    const currentSpan = document.createElement('span');
-    currentSpan.className = 'breadcrumbs__current';
-    currentSpan.setAttribute('itemprop', 'name');
-    currentSpan.textContent = 'R36S Gaming Console';
-    currentCrumb.appendChild(currentSpan);
-
-    const currentPosition = document.createElement('meta');
-    currentPosition.setAttribute('itemprop', 'position');
-    currentPosition.content = '2';
-    currentCrumb.appendChild(currentPosition);
-
-    // Добавляем элементы в список
-    breadcrumbsList.appendChild(homeCrumb);
-    breadcrumbsList.appendChild(currentCrumb);
-    breadcrumbsContainer.appendChild(breadcrumbsList);
-
-    // Добавляем хлебные крошки перед сеткой статей
-    articlesSection
-      .querySelector('.articles__container')
-      .insertBefore(breadcrumbsContainer, articlesGrid);
-  };
-
-  // Вызываем функцию добавления хлебных крошек
-  addBreadcrumbs();
 
   // Добавляем заголовок секции для SEO
   const addSectionHeading = () => {
@@ -363,22 +255,21 @@ export function initArticles() {
     sectionHeading.className = 'articles__heading';
     sectionHeading.textContent = 'R36S Gaming Console - Official Information';
 
-    // Добавляем заголовок перед хлебными крошками
+    // Добавляем заголовок в начало контейнера
     articlesSection
       .querySelector('.articles__container')
       .insertBefore(
         sectionHeading,
-        articlesSection.querySelector('.articles__breadcrumbs')
+        articlesSection.querySelector('.articles__grid')
       );
   };
 
   // Вызываем функцию добавления заголовка
   addSectionHeading();
+
   setTimeout(() => {
     initFaqAccordion();
   }, 500);
-  // Запускаем анимации с небольшой задержкой, чтобы DOM успел обработаться
-  setTimeout(setupAnimations, 100);
 
   setTimeout(() => {
     console.log('Проверка наличия элементов аккордеона перед инициализацией:');
