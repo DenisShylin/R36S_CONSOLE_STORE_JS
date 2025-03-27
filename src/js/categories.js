@@ -152,7 +152,8 @@ export function initCategories() {
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 20px;">
             <path d="M8 16l12-8-12-8v16z"></path>
           </svg>
-          <p style="margin: 0; font-size: 16px;">Видео временно недоступно</p>
+          <p style="margin: 0; font-size: 16px;">
+Video is temporarily unavailable</p>
         </div>
       </div>
     `;
@@ -198,15 +199,8 @@ export function initCategories() {
     }
   }
 
-  // Массив возможных путей к видео на основе подтвержденного рабочего пути
-  const videoPaths = [
-    // Подтвержденный рабочий путь
-    '/video/categories/video_categories_.mp4',
-    // Дополнительные пути на случай изменения окружения
-    '/public/video/categories/video_categories_.mp4',
-    '../video/categories/video_categories_.mp4',
-    'video_categories_.mp4',
-  ];
+  // Оставляем только основной путь к видео
+  const videoPath = '/video/categories/video_categories_.mp4';
 
   // Функция для проверки доступности видео по URL
   function checkVideoURL(url) {
@@ -236,17 +230,6 @@ export function initCategories() {
           resolve(false);
         });
     });
-  }
-
-  // Функция для последовательной проверки путей
-  async function findWorkingVideoPath() {
-    for (const path of videoPaths) {
-      const isAvailable = await checkVideoURL(path);
-      if (isAvailable) {
-        return path;
-      }
-    }
-    return null;
   }
 
   // Инициализация видео
@@ -347,31 +330,33 @@ export function initCategories() {
     // Обработчик ошибок загрузки видео
     videoElement.addEventListener('error', err => {
       console.error('Ошибка при загрузке видео:', err);
-      // Если ни один источник не сработал, покажем запасной вариант
+      // Проверяем основной путь
       if (!videoLoaded) {
-        findWorkingVideoPath().then(workingPath => {
-          if (workingPath) {
-            console.log('Найден работающий путь к видео:', workingPath);
-            setVideoSource(workingPath);
+        checkVideoURL(videoPath).then(isAvailable => {
+          if (isAvailable) {
+            console.log('Видео доступно по основному пути:', videoPath);
+            setVideoSource(videoPath);
           } else {
-            console.error('Ни один из путей к видео не работает');
+            console.error('Основной путь к видео не работает');
             createVideoFallback();
           }
         });
       }
     });
 
-    // Непосредственно пытаемся найти работающий путь к видео
+    // Непосредственно пытаемся проверить доступность видео
     setTimeout(() => {
-      // Если видео не загрузилось через 2 секунды, попробуем найти работающий путь
+      // Если видео не загрузилось через 2 секунды, проверяем основной путь
       if (!videoLoaded && !videoError) {
-        console.log('Видео не загрузилось автоматически, ищем работающий путь');
-        findWorkingVideoPath().then(workingPath => {
-          if (workingPath) {
-            console.log('Найден работающий путь к видео:', workingPath);
-            setVideoSource(workingPath);
+        console.log(
+          'Видео не загрузилось автоматически, проверяем основной путь'
+        );
+        checkVideoURL(videoPath).then(isAvailable => {
+          if (isAvailable) {
+            console.log('Видео доступно по основному пути:', videoPath);
+            setVideoSource(videoPath);
           } else {
-            console.error('Ни один из путей к видео не работает');
+            console.error('Основной путь к видео не работает');
             createVideoFallback();
           }
         });
