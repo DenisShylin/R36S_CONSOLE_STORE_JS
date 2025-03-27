@@ -52,8 +52,9 @@ export function initThemeToggle() {
 
     // Добавляем кнопку переключения в каждый блок с текстом
     blocks.forEach((block, index) => {
-      // Всегда используем стиль 1 (в углу блока), если не указано иное
-      const buttonStyle = 1; // Теперь всегда используем стиль 1 для единообразия
+      // Используем предпочтительный стиль, если указан, или циклически меняем стили
+      const buttonStyle =
+        preferredStyle !== undefined ? preferredStyle : index % 3;
 
       // Проверка, есть ли уже кнопка в блоке
       const existingButton = block.querySelector(
@@ -70,42 +71,132 @@ export function initThemeToggle() {
       const brightnessToggle = document.createElement('button');
       brightnessToggle.setAttribute('type', 'button'); // Добавляем type="button" чтобы избежать поведения по умолчанию
 
-      // Всегда используем стиль с кнопкой в углу
-      brightnessToggle.className = 'brightness-toggle brightness-toggle-corner';
+      switch (buttonStyle) {
+        case 0: // Стандартный вариант - рядом с заголовком
+          brightnessToggle.className = 'brightness-toggle';
 
-      // Добавляем SVG иконку лампочки
-      brightnessToggle.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
-          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-      `;
+          // Добавляем SVG иконку лампочки
+          brightnessToggle.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          `;
 
-      // Добавляем кнопку в блок статьи (она будет позиционироваться абсолютно)
-      block.appendChild(brightnessToggle);
+          // Находим заголовок блока для размещения кнопки рядом с ним
+          const titleElement = block.querySelector('.article__title');
+
+          if (titleElement) {
+            // Создаем контейнер для заголовка и кнопки
+            const titleContainer = document.createElement('div');
+            titleContainer.className = 'article__title-container';
+
+            // Копируем заголовок в контейнер
+            const clonedTitle = titleElement.cloneNode(true);
+            titleContainer.appendChild(clonedTitle);
+            titleContainer.appendChild(brightnessToggle);
+
+            // Заменяем оригинальный заголовок на контейнер с заголовком и кнопкой
+            titleElement.parentNode.replaceChild(titleContainer, titleElement);
+          } else {
+            // Если заголовок не найден, добавляем кнопку в начало блока
+            block.insertBefore(brightnessToggle, block.firstChild);
+          }
+          break;
+
+        case 1: // Вариант в углу блока
+          brightnessToggle.className =
+            'brightness-toggle brightness-toggle-corner';
+
+          // Добавляем SVG иконку лампочки
+          brightnessToggle.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          `;
+
+          // Добавляем кнопку в блок статьи (она будет позиционироваться абсолютно)
+          block.appendChild(brightnessToggle);
+          break;
+
+        case 2: // Вариант с текстовой подписью
+          brightnessToggle.className = 'brightness-toggle-with-label';
+
+          // Добавляем лейбл и иконку
+          brightnessToggle.innerHTML = `
+            <span class="brightness-toggle-label">Ярче</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          `;
+
+          // Находим заголовок блока для размещения кнопки рядом с ним
+          const titleEl = block.querySelector('.article__title');
+
+          if (titleEl) {
+            // Создаем контейнер для заголовка и кнопки
+            const titleContainer = document.createElement('div');
+            titleContainer.className = 'article__title-container';
+
+            // Копируем заголовок в контейнер
+            const clonedTitle = titleEl.cloneNode(true);
+            titleContainer.appendChild(clonedTitle);
+            titleContainer.appendChild(brightnessToggle);
+
+            // Заменяем оригинальный заголовок на контейнер с заголовком и кнопкой
+            titleEl.parentNode.replaceChild(titleContainer, titleEl);
+          } else {
+            // Если заголовок не найден, добавляем кнопку в начало блока
+            block.insertBefore(brightnessToggle, block.firstChild);
+          }
+          break;
+      }
 
       // Сохраняем кнопку в массив
       createdButtons.push(brightnessToggle);
     });
   }
 
-  // Добавляем переключатели в секцию Articles (с единым стилем - в правом верхнем углу)
+  // Добавляем переключатели в секцию Articles (с циклическими стилями как было раньше)
   if (articlesSection) {
     addTogglesToSection(articlesSection);
   }
 
-  // Добавляем переключатели в секцию R36S Official Website с тем же стилем
-  if (officialWebsiteSection) {
-    addTogglesToSection(officialWebsiteSection);
+  // Определяем, какой стиль используется в секции R36S Retro Gaming
+  let retroGamingStyle;
+  if (retroGamingSection) {
+    const retroGamingBlocks = retroGamingSection.querySelectorAll('.article');
+    if (retroGamingBlocks.length > 0) {
+      const retroButton = retroGamingBlocks[0].querySelector(
+        '.brightness-toggle, .brightness-toggle-corner, .brightness-toggle-with-label'
+      );
+
+      if (retroButton) {
+        // Определяем стиль по классам кнопки
+        if (retroButton.classList.contains('brightness-toggle-corner')) {
+          retroGamingStyle = 1;
+        } else if (
+          retroButton.classList.contains('brightness-toggle-with-label')
+        ) {
+          retroGamingStyle = 2;
+        } else {
+          retroGamingStyle = 0;
+        }
+        console.log(
+          `Обнаружен стиль кнопки в секции R36S Retro Gaming: ${retroGamingStyle}`
+        );
+      }
+    }
   }
 
-  // Для сохранения единого стиля также добавляем переключатели в секцию Retro Gaming
-  if (
-    retroGamingSection &&
-    retroGamingSection.querySelectorAll('.brightness-toggle-corner').length ===
-      0
-  ) {
-    addTogglesToSection(retroGamingSection);
+  // Добавляем переключатели в секцию R36S Official Website с тем же стилем, что и в Retro Gaming
+  if (officialWebsiteSection) {
+    addTogglesToSection(
+      officialWebsiteSection,
+      retroGamingStyle !== undefined ? retroGamingStyle : 1
+    );
   }
 
   // Добавляем отладочную информацию о созданных кнопках
@@ -261,15 +352,15 @@ export function initThemeToggle() {
       width: 36px;
       height: 36px;
       border-radius: 12px;
-      background: rgba(31, 78, 157, 0.75);
-      border: 1px solid rgba(96, 165, 250, 0.5);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.3);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2;
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 
-                  0 3px 6px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), 
+                  0 3px 6px rgba(0, 0, 0, 0.2);
       transition: all 0.25s ease;
       padding: 0;
       overflow: hidden;
@@ -286,18 +377,17 @@ export function initThemeToggle() {
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.4), transparent);
-      opacity: 0.8;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), transparent);
+      opacity: 0.5;
       transition: opacity 0.3s ease;
       border-radius: 12px;
     }
     
     .brightness-toggle:hover {
       transform: translateY(-2px);
-      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 
-                  0 4px 8px rgba(59, 130, 246, 0.5);
-      border-color: rgba(96, 165, 250, 0.7);
-      background: rgba(59, 130, 246, 0.8);
+      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.2), 
+                  0 4px 8px rgba(15, 23, 42, 0.3);
+      border-color: rgba(59, 130, 246, 0.5);
     }
     
     .brightness-toggle:active {
@@ -308,21 +398,20 @@ export function initThemeToggle() {
     .brightness-toggle__icon {
       width: 20px;
       height: 20px;
-      stroke: rgba(220, 235, 255, 0.95);
+      stroke: rgba(255, 255, 255, 0.8);
       transition: all 0.25s ease;
     }
     
     .brightness-toggle.active {
-      background: rgba(59, 130, 246, 0.8);
-      border-color: rgba(147, 197, 253, 0.6);
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(96, 165, 250, 0.4);
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1),
-                  0 3px 8px rgba(59, 130, 246, 0.45);
+                  0 3px 8px rgba(59, 130, 246, 0.25);
     }
     
     .brightness-toggle.active .brightness-toggle__icon {
       stroke: rgba(255, 255, 255, 1);
       transform: scale(1.1);
-      filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
     }
     
     /* Стили для изменения яркости текста */
@@ -366,8 +455,8 @@ export function initThemeToggle() {
     
     .brightness-toggle-corner {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       z-index: 5;
     }
     
@@ -389,8 +478,8 @@ export function initThemeToggle() {
       
       /* На мобильных устройствах можно переместить кнопку вниз под заголовок */
       .brightness-toggle-corner {
-        top: 15px;
-        right: 15px;
+        top: 10px;
+        right: 10px;
       }
     }
     
@@ -404,11 +493,7 @@ export function initThemeToggle() {
       .brightness-toggle__icon {
         width: 16px;
         height: 16px;
-      }
-      
-      .brightness-toggle-corner {
-        top: 10px;
-        right: 10px;
+        
       }
     }
     
@@ -417,36 +502,33 @@ export function initThemeToggle() {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(31, 78, 157, 0.75);
+      background: rgba(15, 23, 42, 0.4);
       padding: 4px 8px 4px 12px;
       border-radius: 24px;
-      border: 1px solid rgba(96, 165, 250, 0.5);
+      border: 1px solid rgba(59, 130, 246, 0.2);
       transition: all 0.25s ease;
       cursor: pointer;
       user-select: none;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     .brightness-toggle-with-label:hover {
-      background: rgba(59, 130, 246, 0.8);
-      border-color: rgba(96, 165, 250, 0.7);
-      transform: translateY(-1px);
+      background: rgba(15, 23, 42, 0.5);
+      border-color: rgba(59, 130, 246, 0.3);
     }
     
     .brightness-toggle-label {
       font-size: 12px;
-      color: rgba(220, 235, 255, 0.95);
+      color: rgba(255, 255, 255, 0.8);
       font-weight: 500;
     }
     
     .brightness-toggle-with-label.active {
-      background: rgba(59, 130, 246, 0.8);
-      border-color: rgba(147, 197, 253, 0.6);
-      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
     }
     
     .brightness-toggle-with-label.active .brightness-toggle-label {
-      color: rgba(255, 255, 255, 0.95);
+      color: rgba(255, 255, 255, 0.9);
     }
     
     /* Плавные переходы для текста */
