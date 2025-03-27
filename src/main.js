@@ -1,6 +1,7 @@
 // main.js - Точка входа в приложение
 // Импорт всех стилей
 import './css/styles.css';
+import './css/scroll-to-top.css'; // Импортируем стили для кнопки скролла вверх
 
 // Импорт компонентов js
 import { initHeader } from './js/header.js';
@@ -16,6 +17,7 @@ import { initIcons } from './js/iconscontact.js';
 import { initReviews } from './js/reviews.js';
 import { initProducts } from './js/products.js';
 import { initFooter } from './js/footer.js';
+import { initScrollToTop } from './js/scroll-to-top.js'; // Импортируем модуль кнопки скролла вверх
 
 console.log('Main.js инициализирован');
 
@@ -148,6 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof footerCleanup === 'function') {
       cleanupFunctions.push(footerCleanup);
     }
+
+    // Инициализация кнопки "скролл вверх"
+    const scrollToTopCleanup = initScrollToTop();
+    if (typeof scrollToTopCleanup === 'function') {
+      cleanupFunctions.push(scrollToTopCleanup);
+    }
+
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
     console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
