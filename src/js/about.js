@@ -97,38 +97,6 @@ export function initAbout() {
 
   const features = [
     {
-      id: 4, // Сохраняем оригинальный ID для совместимости с данными
-      icon: `
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="about-card__icon"
-          width="44"
-          height="44"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <circle cx="12" cy="12" r="6"></circle>
-          <circle cx="12" cy="12" r="2"></circle>
-        </svg>
-      `,
-      title: 'Extensive color selection',
-      description: 'Experience our wide selection of stunning console colors.',
-      number: '10+',
-      detail: 'COLORS',
-      fullDescription: `Experience the R36S Collection:
-The R36S console delivers 12+ captivating color variations in 2024, including our signature Midnight Black and eye-catching Galactic Purple. Each R36S model features recycled plastic finish and scratch-resistant coating.
-
-Available Colors:
-- Classic Black
-- Vibrant Orange
-- Mesmerizing Purple ...`,
-      colorImages: [untitled1, untitled2, untitled3, untitled4],
-      imageAlt: 'R36S Color Variants',
-    },
-    {
       id: 1,
       icon: `
         <svg
@@ -228,6 +196,38 @@ Key features:
 - Full-screen IPS display`,
       videoUrl: videoBattery,
       imageAlt: 'Battery Life',
+    },
+    {
+      id: 4,
+      icon: `
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="about-card__icon"
+          width="44"
+          height="44"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+      `,
+      title: 'Extensive color selection',
+      description: 'Experience our wide selection of stunning console colors.',
+      number: '10+',
+      detail: 'COLORS',
+      fullDescription: `Experience the R36S Collection:
+The R36S console delivers 12+ captivating color variations in 2024, including our signature Midnight Black and eye-catching Galactic Purple. Each R36S model features recycled plastic finish and scratch-resistant coating.
+
+Available Colors:
+- Classic Black
+- Vibrant Orange
+- Mesmerizing Purple ...`,
+      colorImages: [untitled1, untitled2, untitled3, untitled4],
+      imageAlt: 'R36S Color Variants',
     },
     {
       id: 5,
