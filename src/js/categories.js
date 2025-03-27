@@ -195,7 +195,23 @@ export function initCategories() {
         createVideoFallback();
       });
 
-      // Автоматическое воспроизведение удалено
+      // Автоматическое воспроизведение с задержкой
+      setTimeout(() => {
+        if (videoElement && !videoError) {
+          const playPromise = videoElement.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                console.log('Автовоспроизведение видео успешно');
+                isPlaying = true;
+                updatePlayButtonIcon();
+              })
+              .catch(err => {
+                console.warn('Не удалось автовоспроизвести видео:', err);
+              });
+          }
+        }
+      }, 1000);
     }
 
     // Назначаем обработчики событий для элементов управления
