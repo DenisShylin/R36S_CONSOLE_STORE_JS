@@ -75,10 +75,10 @@ export function initThemeToggle() {
         case 0: // Стандартный вариант - рядом с заголовком
           brightnessToggle.className = 'brightness-toggle';
 
-          // Добавляем SVG иконку лампочки
+          // Добавляем SVG иконку лампочки с фиксированным цветом
           brightnessToggle.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
-              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              <path fill="none" stroke="#3B82F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           `;
@@ -104,30 +104,49 @@ export function initThemeToggle() {
           }
           break;
 
-        case 1: // Вариант в углу блока
-          brightnessToggle.className =
-            'brightness-toggle brightness-toggle-corner';
+        case 1: // Вариант в углу блока - теперь с теми же стилями что и brightness-toggle
+          brightnessToggle.className = 'brightness-toggle';
 
-          // Добавляем SVG иконку лампочки
+          // Добавляем SVG иконку лампочки с фиксированным цветом
           brightnessToggle.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
-              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              <path fill="none" stroke="#3B82F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           `;
 
-          // Добавляем кнопку в блок статьи (она будет позиционироваться абсолютно)
-          block.appendChild(brightnessToggle);
+          // Находим заголовок блока для размещения кнопки рядом с ним
+          const titleElement2 = block.querySelector('.article__title');
+
+          if (titleElement2) {
+            // Создаем контейнер для заголовка и кнопки
+            const titleContainer = document.createElement('div');
+            titleContainer.className = 'article__title-container';
+
+            // Копируем заголовок в контейнер
+            const clonedTitle = titleElement2.cloneNode(true);
+            titleContainer.appendChild(clonedTitle);
+            titleContainer.appendChild(brightnessToggle);
+
+            // Заменяем оригинальный заголовок на контейнер с заголовком и кнопкой
+            titleElement2.parentNode.replaceChild(
+              titleContainer,
+              titleElement2
+            );
+          } else {
+            // Если заголовок не найден, добавляем кнопку в начало блока
+            block.insertBefore(brightnessToggle, block.firstChild);
+          }
           break;
 
         case 2: // Вариант с текстовой подписью
           brightnessToggle.className = 'brightness-toggle-with-label';
 
-          // Добавляем лейбл и иконку
+          // Добавляем лейбл и иконку с фиксированным цветом
           brightnessToggle.innerHTML = `
             <span class="brightness-toggle-label">Ярче</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="brightness-toggle__icon">
-              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              <path fill="none" stroke="#3B82F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           `;
@@ -368,6 +387,7 @@ export function initThemeToggle() {
       position: relative;
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
+      margin: 0; /* Добавляем сброс margin для всех кнопок */
     }
     
     .brightness-toggle:before {
@@ -398,9 +418,10 @@ export function initThemeToggle() {
     .brightness-toggle__icon {
       width: 20px;
       height: 20px;
-      stroke: rgba(255, 255, 255, 0.8);
       transition: all 0.25s ease;
     }
+    
+    /* Не используем stroke: currentColor, вместо этого в SVG задаём цвет напрямую */
     
     .brightness-toggle.active {
       background: rgba(59, 130, 246, 0.3);
@@ -410,7 +431,6 @@ export function initThemeToggle() {
     }
     
     .brightness-toggle.active .brightness-toggle__icon {
-      stroke: rgba(255, 255, 255, 1);
       transform: scale(1.1);
     }
     
@@ -448,16 +468,9 @@ export function initThemeToggle() {
       color: #FFFFFF;
     }
     
-    /* Создаем альтернативное положение кнопки - в правом верхнем углу блока статьи */
+    /* Задаем позиционирование для родительского элемента */
     .article {
       position: relative;
-    }
-    
-    .brightness-toggle-corner {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      z-index: 5;
     }
     
     /* Адаптивные стили для кнопки */
@@ -475,12 +488,6 @@ export function initThemeToggle() {
       .article__title-container {
         flex-wrap: wrap;
       }
-      
-      /* На мобильных устройствах можно переместить кнопку вниз под заголовок */
-      .brightness-toggle-corner {
-        top: 10px;
-        right: 10px;
-      }
     }
     
     @media (max-width: 480px) {
@@ -493,7 +500,6 @@ export function initThemeToggle() {
       .brightness-toggle__icon {
         width: 16px;
         height: 16px;
-        
       }
     }
     
@@ -509,6 +515,7 @@ export function initThemeToggle() {
       transition: all 0.25s ease;
       cursor: pointer;
       user-select: none;
+      margin: 0; /* Устанавливаем единообразные отступы */
     }
     
     .brightness-toggle-with-label:hover {
