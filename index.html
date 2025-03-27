@@ -34,7 +34,7 @@
     <!-- Main stylesheet (uncomment when needed) -->
     <!-- <link rel="stylesheet" href="./css/styles.css" /> -->
     <script type="module" crossorigin src="/R36S_CONSOLE_STORE_JS/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-Cv26YJ60.css">
+    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-CboGxfej.css">
   </head>
   <body>
     <main>
@@ -345,6 +345,85 @@
         <span class="r36s-gradient-text">R36S</span> Handheld Game Console
       </h2>
 
+      <!-- Видео для мобильной версии (перемещено сюда) -->
+      <div class="features__image-mobile">
+        <div class="features__image-wrapper">
+          <video
+            id="featuresVideoMobile"
+            class="features__console-img"
+            loop
+            muted
+            playsinline
+            autoplay
+            src="/R36S_CONSOLE_STORE_JS/video/features/video_features_.mp4"
+            poster="/R36S_CONSOLE_STORE_JS/img/features/products_8_2x.jpg"
+            aria-label="R36S Handheld Game Console demo video"
+            itemprop="video"
+          >
+            <track
+              kind="captions"
+              label="R36S Features"
+              src="/video/features/captions.vtt"
+            />
+            Your browser does not support the video tag. View the R36S Handheld
+            Game Console on our website.
+          </video>
+          <button
+            class="features__sound-toggle"
+            id="soundToggleButtonMobile"
+            aria-label="Enable sound for R36S demo video"
+          >
+            <!-- SVG иконка Volume X (звук выключен) -->
+            <svg
+              id="volumeOffIconMobile"
+              class="features__sound-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <path
+                d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"
+              ></path>
+              <path
+                d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"
+              ></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+
+            <!-- SVG иконка Volume 2 (звук включен) -->
+            <svg
+              id="volumeOnIconMobile"
+              class="features__sound-icon"
+              style="display: none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path
+                d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <div class="features__description" itemprop="description">
         <p>
           The R36S Handheld Game Console opens the door to the exciting world of
@@ -396,7 +475,8 @@
       </div>
     </div>
 
-    <div class="features__image">
+    <!-- Видео для десктопной версии (оставлено в исходном месте) -->
+    <div class="features__image-desktop">
       <div class="features__image-wrapper">
         <video
           id="featuresVideo"
@@ -473,81 +553,6 @@
         </button>
       </div>
     </div>
-  </div>
-
-  <!-- Дополнительная SEO-информация скрытая для пользователей -->
-  <div class="visually-hidden">
-    <h3>R36S Handheld Game Console Key Features</h3>
-    <ul
-      itemprop="additionalProperty"
-      itemscope
-      itemtype="http://schema.org/PropertyValue"
-    >
-      <li>
-        <meta itemprop="name" content="Display" /><meta
-          itemprop="value"
-          content="3.5-inch IPS Screen"
-        />3.5-inch IPS Screen with 640x480 resolution
-      </li>
-      <li>
-        <meta itemprop="name" content="Games" /><meta
-          itemprop="value"
-          content="15000+"
-        />15,000+ classic retro games collection
-      </li>
-      <li>
-        <meta itemprop="name" content="Battery" /><meta
-          itemprop="value"
-          content="7-8 hours"
-        />7-8 hours battery life with 3200mAh capacity
-      </li>
-      <li>
-        <meta itemprop="name" content="Colors" /><meta
-          itemprop="value"
-          content="10+"
-        />Available in 10+ color options
-      </li>
-      <li>
-        <meta itemprop="name" content="Settings" /><meta
-          itemprop="value"
-          content="Customizable"
-        />Fully customizable controls and settings
-      </li>
-      <li>
-        <meta itemprop="name" content="Portability" /><meta
-          itemprop="value"
-          content="Ultra-portable"
-        />Ultra-portable design for gaming on the go
-      </li>
-    </ul>
-
-    <h4>Best Portable Retro Gaming Experience with R36S</h4>
-    <p>
-      The R36S handheld game console brings retro gaming to life with modern
-      technology, offering unparalleled gaming nostalgia in a portable package.
-      Perfect for gamers who appreciate classic titles from multiple platforms
-      in one device.
-    </p>
-
-    <h4>R36S Technical Specifications</h4>
-    <p>
-      Screen: 3.5" IPS LCD (640x480) | Battery: 3200mAh (7-8 hours) | Storage:
-      Expandable | Emulation: Multi-platform support | Controls: Responsive
-      D-pad and buttons | Audio: Built-in speaker and headphone jack
-    </p>
-  </div>
-
-  <!-- Встроенная микроразметка для рейтинга -->
-  <div
-    itemprop="aggregateRating"
-    itemscope
-    itemtype="http://schema.org/AggregateRating"
-    class="visually-hidden"
-  >
-    <meta itemprop="ratingValue" content="4.7" />
-    <meta itemprop="reviewCount" content="1853" />
-    <meta itemprop="bestRating" content="5" />
-    <meta itemprop="worstRating" content="1" />
   </div>
 </section>
 
