@@ -16,16 +16,15 @@
     itemprop="contentUrl"
     content="/video/categories/video_categories_.mp4"
   />
-  <meta itemprop="embedUrl" content="/video/categories/video_categories_.mp4" />
   <link itemprop="url" href="https://r36s-store.com/gameplay-demonstration" />
 
   <div class="categories__container">
     <div class="categories__content">
       <div class="categories__info">
         <div class="categories__labels">
-          <span class="categories__label">Gameplay Demonstration</span>
+          <span class="categories__label">Demonstration</span>
           <span class="categories__label categories__label--outline">
-            Retro Gaming
+            R36S
           </span>
         </div>
         <h2 class="categories__title" itemprop="headline">
@@ -42,16 +41,7 @@
 
       <div class="categories__video-wrapper">
         <div class="categories__video-container">
-          <!-- Использование тега img в качестве плейсхолдера, пока видео не загрузится -->
-          <!-- <img
-            class="categories__video-placeholder"
-            src="/public/img/categories/products_9_2x.jpg"
-            alt="R36S Handheld Console Gameplay Preview"
-            style="display: none; width: 100%; border-radius: 24px"
-            itemprop="thumbnail"
-          /> -->
-
-          <!-- Видео с корректными путями -->
+          <!-- Видео без указания пути src в HTML (будет добавлен через JavaScript) -->
           <video
             class="categories__video"
             muted
@@ -59,11 +49,6 @@
             playsinline
             itemprop="video"
           >
-            <!-- Правильный путь к видео на основе структуры проекта -->
-            <source
-              src="/video/categories/video_categories_.mp4"
-              type="video/mp4"
-            />
             This video demonstrates the R36S handheld gaming console with
             3.5-inch IPS screen displaying classic retro games with enhanced
             graphics and smooth 60 FPS gameplay.
