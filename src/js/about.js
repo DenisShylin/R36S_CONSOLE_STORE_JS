@@ -14,8 +14,12 @@ import videoBattery from '/video/about/video_3_batrey_.mp4';
 import videoModa6 from '/video/about/video_6_.mp4';
 import videoOption2 from '/video/about/video_4_.mp4';
 
+// Глобальная переменная для хранения модального окна
+let globalModalInstance = null;
+
 // ОПТИМИЗАЦИЯ 1: Предзагрузка изображений для улучшения производительности
 function preloadImages() {
+  console.log('Начинаем предзагрузку изображений...');
   // Создаем массив изображений для предзагрузки
   const imagesToPreload = [
     displayControls, // Изображение первой карточки
@@ -36,6 +40,8 @@ function preloadImages() {
     videoPreload.preload = 'metadata';
     videoPreload.src = videoBattery;
   }
+
+  console.log('Предзагрузка изображений завершена');
 }
 
 // Функция инициализации секции About
@@ -57,9 +63,15 @@ export function initAbout() {
   let selectedFeature = null;
 
   // ОПТИМИЗАЦИЯ 3: Создаем модальное окно сразу при инициализации, а не при первом клике
-  let modalInstance = createModalAbout(document.body);
+  // Используем глобальную переменную для хранения модального окна
+  if (!globalModalInstance) {
+    console.log('Создаем модальное окно...');
+    globalModalInstance = createModalAbout(document.body);
+    console.log('Модальное окно создано');
+  }
 
-  // Данные функций - с URL к медиафайлам
+  let modalInstance = globalModalInstance;
+
   // ОПТИМИЗАЦИЯ 4: Выносим структурированные данные из основного потока
   const structuredData = {
     '@context': 'https://schema.org',
@@ -290,6 +302,7 @@ Features:
   // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
   // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
+    console.log('Начинаем рендеринг карточек...');
     // Очищаем контейнер перед добавлением карточек для предотвращения дублирования
     cardsContainer.innerHTML = '';
 
@@ -348,12 +361,19 @@ Features:
       console.warn(
         `Ошибка рендеринга: отрендерено ${renderedCards.length} карточек вместо ${features.length}`
       );
+    } else {
+      console.log('Рендеринг карточек успешно завершен');
     }
   }
 
   // Обработчик движения мыши (оптимизирован с использованием throttle)
   // ОПТИМИЗАЦИЯ 8: Используем throttle для уменьшения количества вызовов обработчика
   const handleMouseMove = throttle(function (e) {
+    // Проверка на существование события
+    if (!e || !e.currentTarget) {
+      return;
+    }
+
     const card = e.currentTarget;
 
     // Проверка на существование элемента перед получением его размеров
@@ -403,20 +423,29 @@ Features:
 
   // Обработчик клика на кнопку "More details"
   function handleButtonClick(e) {
-    e.stopPropagation(); // Останавливаем всплытие, чтобы избежать двойного открытия
-
-    const featureId = parseInt(e.currentTarget.dataset.featureId);
-    console.log('Клик по кнопке карточки ID:', featureId);
-
-    const feature = features.find(f => f.id === featureId);
-    if (!feature) {
-      console.error('Данные для карточки не найдены');
+    if (!e || !e.currentTarget) {
+      console.warn('handleButtonClick: событие или цель события не существует');
       return;
     }
 
-    // Открываем модальное окно (уже создано при инициализации)
-    if (modalInstance) {
-      modalInstance.open(feature);
+    e.stopPropagation(); // Останавливаем всплытие, чтобы избежать двойного открытия
+
+    try {
+      const featureId = parseInt(e.currentTarget.dataset.featureId);
+      console.log('Клик по кнопке карточки ID:', featureId);
+
+      const feature = features.find(f => f.id === featureId);
+      if (!feature) {
+        console.error('Данные для карточки не найдены');
+        return;
+      }
+
+      // Открываем модальное окно (уже создано при инициализации)
+      if (modalInstance) {
+        modalInstance.open(feature);
+      }
+    } catch (err) {
+      console.error('Ошибка при обработке клика по кнопке:', err);
     }
   }
 
@@ -435,22 +464,44 @@ Features:
 
   // Функция очистки обработчиков событий карточек
   function cleanupCardEvents() {
-    const cards = document.querySelectorAll('.about-card');
-    cards.forEach(card => {
-      card.removeEventListener('mouseenter', () => {});
-      card.removeEventListener('mouseleave', () => {});
-      card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('click', () => {});
-    });
-    document.querySelectorAll('.about-card__button').forEach(button => {
-      button.removeEventListener('click', handleButtonClick);
-    });
+    console.log('Очистка обработчиков событий карточек...');
+    try {
+      const cards = document.querySelectorAll('.about-card');
+      if (cards && cards.length > 0) {
+        cards.forEach(card => {
+          if (card) {
+            card.removeEventListener('mouseenter', () => {});
+            card.removeEventListener('mouseleave', () => {});
+            card.removeEventListener('mousemove', handleMouseMove);
+          }
+        });
+      }
+
+      const buttons = document.querySelectorAll('.about-card__button');
+      if (buttons && buttons.length > 0) {
+        buttons.forEach(button => {
+          if (button) {
+            button.removeEventListener('click', handleButtonClick);
+          }
+        });
+      }
+
+      if (cardsContainer) {
+        cardsContainer.removeEventListener('click', () => {});
+      }
+
+      console.log('Очистка обработчиков завершена');
+    } catch (err) {
+      console.error('Ошибка при очистке обработчиков событий:', err);
+    }
   }
 
   // ОПТИМИЗАЦИЯ 9: Асинхронная установка обработчиков событий для карточек
   function setupCardEvents() {
+    console.log('Настройка обработчиков событий для карточек...');
     // Используем DOMContentLoaded или timeout для уверенности, что DOM загружен
     const setupEvents = () => {
+      console.log('Проверяем наличие карточек для установки обработчиков...');
       const cards = document.querySelectorAll('.about-card');
       if (!cards || cards.length === 0) {
         console.warn('Не найдены карточки для установки обработчиков событий');
@@ -491,11 +542,13 @@ Features:
 
         // Используем делегирование событий для mouseenter/mouseleave
         card.addEventListener('mouseenter', function () {
+          if (!card) return;
           activeCard = parseInt(card.dataset.id);
           card.classList.add('active');
         });
 
         card.addEventListener('mouseleave', function () {
+          if (!card) return;
           activeCard = null;
           card.classList.remove('active');
         });
@@ -511,6 +564,7 @@ Features:
           if (!button) return; // Проверка на null
           button.addEventListener('click', handleButtonClick);
         });
+        console.log(`Установлены обработчики для ${buttons.length} кнопок`);
       } else {
         console.warn('Не найдены кнопки карточек');
       }
@@ -528,6 +582,8 @@ Features:
           }
         }, 250)
       );
+
+      console.log('Настройка обработчиков событий успешно завершена');
     };
 
     // Запускаем настройку событий, когда DOM гарантированно загружен
@@ -543,26 +599,27 @@ Features:
 
   // Очистка всех обработчиков событий
   function cleanupEvents() {
+    console.log('Очистка всех обработчиков событий...');
     cleanupCardEvents();
     window.removeEventListener('resize', debounce);
 
-    if (modalInstance) {
-      modalInstance.destroy();
-      modalInstance = null;
-    }
+    // Сохраняем модальное окно в глобальной переменной, но очищаем локальную ссылку
+    modalInstance = null;
+    console.log('Очистка обработчиков событий завершена');
   }
 
   // ОПТИМИЗАЦИЯ 11: Асинхронная инициализация для предотвращения блокировки основного потока
   function asyncInit() {
     // Возвращаем функцию очистки
     return function cleanup() {
-      console.log('Очистка секции About');
+      console.log('Запуск функции очистки секции About');
       cleanupEvents();
     };
   }
 
   // Инициализация секции
   try {
+    console.log('Начинаем инициализацию секции About...');
     console.log('Рендерим карточки...');
     renderCards();
     console.log('Устанавливаем обработчики событий...');
