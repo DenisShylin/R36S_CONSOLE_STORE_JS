@@ -31,6 +31,7 @@ export function initArticles() {
   }
 
   console.log('Инициализация секции Articles с SEO-оптимизацией');
+
   // Функция для обработки касаний на мобильных устройствах
   function initTouchEffects() {
     // Находим все элементы статей
@@ -38,18 +39,32 @@ export function initArticles() {
 
     // Добавляем обработчики событий для каждой статьи
     articles.forEach(article => {
-      // Обработчик начала касания
-      article.addEventListener('touchstart', function () {
-        // Добавляем класс touched для активации CSS эффектов
-        this.classList.add('touched');
+      // Обработчик начала касания - мгновенная реакция
+      article.addEventListener(
+        'touchstart',
+        function (e) {
+          // Добавляем класс touched для активации CSS эффектов
+          this.classList.add('touched');
+          // Предотвращаем задержки и стандартное поведение браузера
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      // Обработчик перемещения пальца по элементу
+      article.addEventListener('touchmove', function () {
+        // Сохраняем эффект и во время скроллинга
+        if (!this.classList.contains('touched')) {
+          this.classList.add('touched');
+        }
       });
 
-      // Обработчик завершения касания
+      // Обработчик завершения касания - более короткая задержка
       article.addEventListener('touchend', function () {
-        // Задержка перед удалением класса для лучшего UX
+        // Уменьшенная задержка перед удалением класса
         setTimeout(() => {
           this.classList.remove('touched');
-        }, 300); // 300мс задержка
+        }, 150); // Сокращена до 150мс для более быстрой реакции
       });
 
       // Обработчик отмены касания
@@ -57,10 +72,28 @@ export function initArticles() {
         this.classList.remove('touched');
       });
     });
+
+    // Добавляем обработчик для текстовых элементов внутри статей
+    const textElements = document.querySelectorAll(
+      '.article p, .article h1, .article h2, .article h3, .article li, .article span'
+    );
+    textElements.forEach(element => {
+      element.addEventListener(
+        'touchstart',
+        function (e) {
+          // Немедленно активируем эффект прикосновения
+          this.closest('.article')?.classList.add('touched');
+          // Предотвращаем стандартные задержки
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+    });
   }
 
   // Вызываем функцию после загрузки DOM
   document.addEventListener('DOMContentLoaded', initTouchEffects);
+
   const articles = [
     {
       id: 1,
