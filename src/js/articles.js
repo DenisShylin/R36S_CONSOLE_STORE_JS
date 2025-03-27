@@ -31,7 +31,36 @@ export function initArticles() {
   }
 
   console.log('Инициализация секции Articles с SEO-оптимизацией');
+  // Функция для обработки касаний на мобильных устройствах
+  function initTouchEffects() {
+    // Находим все элементы статей
+    const articles = document.querySelectorAll('.article');
 
+    // Добавляем обработчики событий для каждой статьи
+    articles.forEach(article => {
+      // Обработчик начала касания
+      article.addEventListener('touchstart', function () {
+        // Добавляем класс touched для активации CSS эффектов
+        this.classList.add('touched');
+      });
+
+      // Обработчик завершения касания
+      article.addEventListener('touchend', function () {
+        // Задержка перед удалением класса для лучшего UX
+        setTimeout(() => {
+          this.classList.remove('touched');
+        }, 300); // 300мс задержка
+      });
+
+      // Обработчик отмены касания
+      article.addEventListener('touchcancel', function () {
+        this.classList.remove('touched');
+      });
+    });
+  }
+
+  // Вызываем функцию после загрузки DOM
+  document.addEventListener('DOMContentLoaded', initTouchEffects);
   const articles = [
     {
       id: 1,

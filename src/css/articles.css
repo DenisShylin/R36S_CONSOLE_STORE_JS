@@ -599,6 +599,111 @@
     background-clip: padding-box;
 }
 
+/* Стили для поддержки касания на мобильных устройствах */
+
+/* Добавляем поддержку :active для мобильных устройств в дополнение к :hover */
+.article:hover .article__content,
+.article:active .article__content {
+    color: #FFFFFF;
+    /* Меняем цвет текста на белый при наведении и касании */
+}
+
+/* Аналогично для всех остальных эффектов hover, добавляем active */
+.article:hover .article__content strong,
+.article:active .article__content strong {
+    color: #90CAF9;
+    /* Светло-синий для strong при наведении и касании */
+}
+
+.article:hover .article__content em,
+.article:active .article__content em {
+    color: #FFFFFF;
+    /* Белый для em при наведении и касании */
+}
+
+.article:hover .article__content mark,
+.article:active .article__content mark {
+    color: #F8BBD0;
+    /* Светло-розовый для mark при наведении и касании */
+}
+
+.article:hover .article__title,
+.article:active .article__title {
+    background: linear-gradient(135deg, #fff 0%, #fff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.article:hover .article__subtitle,
+.article:active .article__subtitle {
+    color: #90CAF9;
+    /* Более яркий синий при наведении и касании */
+}
+
+.article:hover,
+.article:active {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(37, 99, 235, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Добавляем состояние :focus для поддержки навигации с клавиатуры */
+.article:focus-within {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(37, 99, 235, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    outline: none;
+    /* Убираем стандартное выделение */
+}
+
+.article:focus-within .article__content {
+    color: #FFFFFF;
+}
+
+.article:focus-within .article__content strong {
+    color: #90CAF9;
+}
+
+.article:focus-within .article__content em {
+    color: #FFFFFF;
+}
+
+.article:focus-within .article__content mark {
+    color: #F8BBD0;
+}
+
+/* Стили для улучшения взаимодействия на сенсорных устройствах */
+@media (hover: none) {
+
+    /* Эти стили применяются только на устройствах, где нет возможности hover */
+    .article {
+        cursor: pointer;
+        /* Показываем, что элемент интерактивный */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        /* Убираем стандартное выделение при касании на iOS */
+    }
+
+    /* Класс 'touched' будет добавляться через JavaScript при касании */
+    .article.touched .article__content {
+        color: #FFFFFF;
+    }
+
+    .article.touched .article__content strong {
+        color: #90CAF9;
+    }
+
+    .article.touched .article__content em {
+        color: #FFFFFF;
+    }
+
+    .article.touched .article__content mark {
+        color: #F8BBD0;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0.7;
