@@ -14,9 +14,36 @@ import videoBattery from '/video/about/video_3_batrey_.mp4';
 import videoModa6 from '/video/about/video_6_.mp4';
 import videoOption2 from '/video/about/video_4_.mp4';
 
+// ОПТИМИЗАЦИЯ 1: Предзагрузка изображений для улучшения производительности
+function preloadImages() {
+  // Создаем массив изображений для предзагрузки
+  const imagesToPreload = [
+    displayControls, // Изображение первой карточки
+    videoGif,
+    untitled1,
+    untitled2,
+  ];
+
+  // Запускаем предзагрузку изображений
+  imagesToPreload.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+
+  // Предзагрузка видео для первой карточки
+  if ('HTMLVideoElement' in window) {
+    const videoPreload = document.createElement('video');
+    videoPreload.preload = 'metadata';
+    videoPreload.src = videoBattery;
+  }
+}
+
 // Функция инициализации секции About
 export function initAbout() {
   console.log('Инициализация секции About');
+
+  // ОПТИМИЗАЦИЯ 2: Начинаем предзагрузку изображений сразу
+  preloadImages();
 
   // Получаем контейнер для карточек
   const cardsContainer = document.querySelector('.about__cards');
@@ -28,9 +55,34 @@ export function initAbout() {
   let activeCard = null;
   let mousePosition = { x: 0, y: 0 };
   let selectedFeature = null;
-  let modalInstance = null;
+
+  // ОПТИМИЗАЦИЯ 3: Создаем модальное окно сразу при инициализации, а не при первом клике
+  let modalInstance = createModalAbout(document.body);
 
   // Данные функций - с URL к медиафайлам
+  // ОПТИМИЗАЦИЯ 4: Выносим структурированные данные из основного потока
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemPage',
+    mainEntity: {
+      '@type': 'Product',
+      name: 'R36S Handheld Game Console',
+      faqPage: {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How many games are included in the R36S console?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The R36S console includes over 15,000 classic retro games from various platforms.',
+            },
+          },
+        ],
+      },
+    },
+  };
+
   const features = [
     {
       id: 1,
@@ -65,6 +117,8 @@ The collection includes:
 • Optimized versions for modern hardware`,
       imageUrl: displayControls,
       imageAlt: 'Коллекция ретро-игр',
+      // ОПТИМИЗАЦИЯ 5: Добавляем ссылку на предзагруженные структурированные данные
+      structuredData: structuredData,
     },
     {
       id: 2,
@@ -233,9 +287,14 @@ Features:
     },
   ];
 
-  // Рендерим карточки
+  // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
+  // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
-    cardsContainer.innerHTML = features
+    // Очищаем контейнер перед добавлением карточек для предотвращения дублирования
+    cardsContainer.innerHTML = '';
+
+    // Создаем HTML для всех 6 карточек
+    const cardsHTML = features
       .map(
         feature => `
       <div class="about-card" data-id="${feature.id}">
@@ -274,24 +333,78 @@ Features:
     `
       )
       .join('');
+
+    // Добавляем все карточки в контейнер
+    cardsContainer.innerHTML = cardsHTML;
+
+    // Проверка на количество карточек
+    const renderedCards = cardsContainer.querySelectorAll('.about-card');
+    console.log(
+      `Отрендерено ${renderedCards.length} карточек из ${features.length} необходимых`
+    );
+
+    // Проверяем, что отрендерено правильное количество карточек
+    if (renderedCards.length !== features.length) {
+      console.warn(
+        `Ошибка рендеринга: отрендерено ${renderedCards.length} карточек вместо ${features.length}`
+      );
+    }
   }
 
-  // Обработчик движения мыши
-  function handleMouseMove(e) {
+  // Обработчик движения мыши (оптимизирован с использованием throttle)
+  // ОПТИМИЗАЦИЯ 8: Используем throttle для уменьшения количества вызовов обработчика
+  const handleMouseMove = throttle(function (e) {
     const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
 
-    mousePosition = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+    // Проверка на существование элемента перед получением его размеров
+    if (!card || !card.getBoundingClientRect) {
+      console.warn(
+        'handleMouseMove: элемент карточки не существует или недоступен'
+      );
+      return;
+    }
+
+    try {
+      const rect = card.getBoundingClientRect();
+
+      mousePosition = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+
+      card.style.setProperty('--mouse-x', `${mousePosition.x}px`);
+      card.style.setProperty('--mouse-y', `${mousePosition.y}px`);
+    } catch (err) {
+      console.error('Ошибка при обработке движения мыши:', err);
+    }
+  }, 16); // 60fps (1000ms / 60 = ~16ms)
+
+  // Функция throttle для ограничения количества вызовов функции
+  function throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function () {
+      const context = this;
+      const args = arguments;
+      if (!lastRan) {
+        func.apply(context, args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function () {
+          if (Date.now() - lastRan >= limit) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
+      }
     };
-
-    card.style.setProperty('--mouse-x', `${mousePosition.x}px`);
-    card.style.setProperty('--mouse-y', `${mousePosition.y}px`);
   }
 
   // Обработчик клика на кнопку "More details"
   function handleButtonClick(e) {
+    e.stopPropagation(); // Останавливаем всплытие, чтобы избежать двойного открытия
+
     const featureId = parseInt(e.currentTarget.dataset.featureId);
     console.log('Клик по кнопке карточки ID:', featureId);
 
@@ -301,13 +414,10 @@ Features:
       return;
     }
 
-    // Создаем модальное окно если оно еще не создано
-    if (!modalInstance) {
-      modalInstance = createModalAbout(document.body);
+    // Открываем модальное окно (уже создано при инициализации)
+    if (modalInstance) {
+      modalInstance.open(feature);
     }
-
-    // Открываем модальное окно
-    modalInstance.open(feature);
   }
 
   // Вспомогательная функция debounce для оптимизации обработки resize
@@ -330,37 +440,36 @@ Features:
       card.removeEventListener('mouseenter', () => {});
       card.removeEventListener('mouseleave', () => {});
       card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('click', () => {}); // Удаляем обработчик клика
+      card.removeEventListener('click', () => {});
     });
     document.querySelectorAll('.about-card__button').forEach(button => {
       button.removeEventListener('click', handleButtonClick);
     });
   }
 
-  // Установка обработчиков событий для карточек
+  // ОПТИМИЗАЦИЯ 9: Асинхронная установка обработчиков событий для карточек
   function setupCardEvents() {
-    const cards = document.querySelectorAll('.about-card');
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    // Используем DOMContentLoaded или timeout для уверенности, что DOM загружен
+    const setupEvents = () => {
+      const cards = document.querySelectorAll('.about-card');
+      if (!cards || cards.length === 0) {
+        console.warn('Не найдены карточки для установки обработчиков событий');
+        // Попробуем снова через небольшую задержку
+        setTimeout(setupEvents, 200);
+        return;
+      }
 
-    cards.forEach(card => {
-      // Обработчики для эффекта свечения
-      card.addEventListener('mouseenter', () => {
-        activeCard = parseInt(card.dataset.id);
-        card.classList.add('active');
-      });
+      console.log(
+        `Устанавливаем обработчики событий для ${cards.length} карточек`
+      );
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-      card.addEventListener('mouseleave', () => {
-        activeCard = null;
-        card.classList.remove('active');
-      });
-
-      card.addEventListener('mousemove', handleMouseMove);
-
-      // Добавляем обработчик клика по всей карточке только для десктопа
-      if (!isMobile) {
-        card.addEventListener('click', e => {
-          // Обрабатываем клик только если это не клик по кнопке
-          if (!e.target.closest('.about-card__button')) {
+      // ОПТИМИЗАЦИЯ 10: Используем делегирование событий вместо множества обработчиков
+      // Устанавливаем один обработчик на контейнер для всех карточек
+      if (!isMobile && cardsContainer) {
+        cardsContainer.addEventListener('click', function (e) {
+          const card = e.target.closest('.about-card');
+          if (card && !e.target.closest('.about-card__button')) {
             const featureId = parseInt(card.dataset.id);
             console.log('Клик по карточке ID:', featureId);
             const feature = features.find(f => f.id === featureId);
@@ -368,52 +477,88 @@ Features:
               console.error('Данные для карточки не найдены');
               return;
             }
-            // Создаем модальное окно если оно еще не создано
-            if (!modalInstance) {
-              modalInstance = createModalAbout(document.body);
-            }
             // Открываем модальное окно
-            modalInstance.open(feature);
+            if (modalInstance) {
+              modalInstance.open(feature);
+            }
           }
         });
       }
-    });
 
-    // Прямой обработчик для кнопок (работает на всех устройствах)
-    document.querySelectorAll('.about-card__button').forEach(button => {
-      button.addEventListener('click', handleButtonClick);
-    });
+      // Добавляем обработчики для визуальных эффектов на карточках
+      cards.forEach(card => {
+        if (!card) return; // Проверка на null
 
-    // Добавляем обработчик изменения размера окна
-    window.addEventListener(
-      'resize',
-      debounce(() => {
-        // Проверяем, изменился ли тип устройства
-        const wasDesktop = !isMobile;
-        const isDesktopNow = !window.matchMedia('(max-width: 768px)').matches;
+        // Используем делегирование событий для mouseenter/mouseleave
+        card.addEventListener('mouseenter', function () {
+          activeCard = parseInt(card.dataset.id);
+          card.classList.add('active');
+        });
 
-        // Если тип устройства изменился, переустанавливаем обработчики
-        if (wasDesktop !== isDesktopNow) {
-          // Удаляем старые обработчики
-          cleanupCardEvents();
-          // Устанавливаем новые
-          setupCardEvents();
-        }
-      }, 250)
-    ); // Задержка в 250 мс для предотвращения множественных вызовов
+        card.addEventListener('mouseleave', function () {
+          activeCard = null;
+          card.classList.remove('active');
+        });
+
+        // Используем throttle для mousemove
+        card.addEventListener('mousemove', handleMouseMove);
+      });
+
+      // Оптимизированная обработка кликов по кнопкам
+      const buttons = document.querySelectorAll('.about-card__button');
+      if (buttons && buttons.length > 0) {
+        buttons.forEach(button => {
+          if (!button) return; // Проверка на null
+          button.addEventListener('click', handleButtonClick);
+        });
+      } else {
+        console.warn('Не найдены кнопки карточек');
+      }
+
+      // Оптимизированный обработчик изменения размера окна
+      window.addEventListener(
+        'resize',
+        debounce(() => {
+          const wasDesktop = !isMobile;
+          const isDesktopNow = !window.matchMedia('(max-width: 768px)').matches;
+
+          if (wasDesktop !== isDesktopNow) {
+            cleanupCardEvents();
+            setupCardEvents();
+          }
+        }, 250)
+      );
+    };
+
+    // Запускаем настройку событий, когда DOM гарантированно загружен
+    if (
+      document.readyState === 'complete' ||
+      document.readyState === 'interactive'
+    ) {
+      setTimeout(setupEvents, 10);
+    } else {
+      document.addEventListener('DOMContentLoaded', setupEvents);
+    }
   }
 
   // Очистка всех обработчиков событий
   function cleanupEvents() {
     cleanupCardEvents();
-
-    // Удаляем обработчик resize
     window.removeEventListener('resize', debounce);
 
     if (modalInstance) {
       modalInstance.destroy();
       modalInstance = null;
     }
+  }
+
+  // ОПТИМИЗАЦИЯ 11: Асинхронная инициализация для предотвращения блокировки основного потока
+  function asyncInit() {
+    // Возвращаем функцию очистки
+    return function cleanup() {
+      console.log('Очистка секции About');
+      cleanupEvents();
+    };
   }
 
   // Инициализация секции
@@ -423,15 +568,11 @@ Features:
     console.log('Устанавливаем обработчики событий...');
     setupCardEvents();
     console.log('Инициализация About завершена успешно');
+    return asyncInit();
   } catch (error) {
     console.error('Ошибка при инициализации About:', error);
+    return null;
   }
-
-  // Возвращаем функцию очистки
-  return function cleanup() {
-    console.log('Очистка секции About');
-    cleanupEvents();
-  };
 }
 
 // Экспортируем инициализатор по умолчанию для поддержки импорта
