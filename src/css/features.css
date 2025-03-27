@@ -196,13 +196,26 @@ html {
 }
 
 /* Стили для видео секции */
-.features__image {
+.features__image-mobile,
+.features__image-desktop {
     position: relative;
     opacity: 0;
     transform: translateX(50px);
     animation: slideIn 0.8s ease forwards;
     width: 100%;
     transform-style: preserve-3d;
+}
+
+/* Новые стили для управления видимостью мобильного и десктопного видео */
+.features__image-mobile {
+    display: block;
+    margin-bottom: 30px;
+    /* Отступ между видео и описанием */
+}
+
+.features__image-desktop {
+    display: none;
+    /* Скрываем десктопное видео по умолчанию */
 }
 
 .about__labels {
@@ -336,6 +349,12 @@ html {
     .features__button-secondary {
         width: auto;
     }
+
+    /* Ограничиваем размер видео на планшетах */
+    .features__image-mobile .features__image-wrapper {
+        max-width: 80%;
+        margin: 0 auto 30px;
+    }
 }
 
 /* Десктоп от 1280px */
@@ -364,6 +383,20 @@ html {
 
     .features__buttons {
         justify-content: flex-start;
+    }
+
+    /* Переключаем видимость мобильной и десктопной версий видео */
+    .features__image-mobile {
+        display: none;
+    }
+
+    .features__image-desktop {
+        display: block;
+    }
+
+    /* Сбрасываем ограничения размера, заданные для планшетов */
+    .features__image-mobile .features__image-wrapper {
+        max-width: 100%;
     }
 
     .features__image-wrapper {
