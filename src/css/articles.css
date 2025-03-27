@@ -962,32 +962,3 @@
         max-width: 1400px;
     }
 }
-
-/* Простое решение - отключение transition для мобильных устройств */
-
-/* Для мобильных устройств (до 767px) */
-@media screen and (max-width: 767px) {
-    .article {
-        transition: none;
-    }
-
-    .article * {
-        transition: none;
-    }
-
-    /* Дополнительные оптимизации для касаний */
-    .article {
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
-    }
-}
-
-/* Альтернативный вариант с использованием hover-медиазапроса */
-@media (hover: none) {
-
-    /* Этот медиазапрос сработает только на устройствах с сенсорным экраном без hover */
-    .article,
-    .article * {
-        transition: none;
-    }
-}

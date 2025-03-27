@@ -32,71 +32,10 @@ export function initArticles() {
 
   console.log('Инициализация секции Articles с SEO-оптимизацией');
 
-  // Функция для обработки касаний на мобильных устройствах
-  function initTouchEffects() {
-    // Находим все элементы статей
-    const articles = document.querySelectorAll('.article');
-
-    // Добавляем обработчики событий для каждой статьи
-    articles.forEach(article => {
-      // Обработчик начала касания - мгновенная реакция
-      article.addEventListener(
-        'touchstart',
-        function (e) {
-          // Добавляем класс touched для активации CSS эффектов
-          this.classList.add('touched');
-          // Предотвращаем задержки и стандартное поведение браузера
-          e.preventDefault();
-        },
-        { passive: false }
-      );
-
-      // Обработчик перемещения пальца по элементу
-      article.addEventListener('touchmove', function () {
-        // Сохраняем эффект и во время скроллинга
-        if (!this.classList.contains('touched')) {
-          this.classList.add('touched');
-        }
-      });
-
-      // Обработчик завершения касания - мгновенная реакция
-      article.addEventListener('touchend', function () {
-        // Мгновенно удаляем класс без задержки
-        this.classList.remove('touched');
-      });
-
-      // Обработчик отмены касания
-      article.addEventListener('touchcancel', function () {
-        this.classList.remove('touched');
-      });
-    });
-
-    // Добавляем обработчик для текстовых элементов внутри статей
-    const textElements = document.querySelectorAll(
-      '.article p, .article h1, .article h2, .article h3, .article li, .article span'
-    );
-    textElements.forEach(element => {
-      element.addEventListener(
-        'touchstart',
-        function (e) {
-          // Немедленно активируем эффект прикосновения
-          this.closest('.article')?.classList.add('touched');
-          // Предотвращаем стандартные задержки
-          e.preventDefault();
-        },
-        { passive: false }
-      );
-    });
-  }
-
-  // Вызываем функцию после загрузки DOM
-  document.addEventListener('DOMContentLoaded', initTouchEffects);
-
   const articles = [
     {
       id: 1,
-      title:
-        'R36S: The Ultimate Handheld Gaming Console for Retro Gaming Enthusiasts',
+      title: 'R36S Retro Gaming',
       sections: [
         {
           subtitle:
@@ -136,8 +75,7 @@ export function initArticles() {
     },
     {
       id: 2,
-      title:
-        'R36S Official Website - The Ultimate Gaming Experience at Your Fingertips',
+      title: 'R36S Official Website',
       sections: [
         {
           subtitle:

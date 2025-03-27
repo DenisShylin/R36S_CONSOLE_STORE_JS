@@ -10,6 +10,7 @@ import { initAbout } from './js/about.js';
 import { initFeatures } from './js/features.js';
 import { initCategories } from './js/categories.js';
 import { initArticles } from './js/articles.js';
+import { initThemeToggle } from './js/theme-toggle.js';
 import { initContact } from './js/contact.js';
 import { initIcons } from './js/iconscontact.js';
 import { initReviews } from './js/reviews.js';
@@ -120,6 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const articlesCleanup = initArticles();
     if (typeof articlesCleanup === 'function') {
       cleanupFunctions.push(articlesCleanup);
+    }
+    // В блоке initArticles или после
+    const themeToggleCleanup = initThemeToggle();
+    if (typeof themeToggleCleanup === 'function') {
+      cleanupFunctions.push(themeToggleCleanup);
     }
     // Инициализация секции Contact
     const contactCleanup = initContact();
