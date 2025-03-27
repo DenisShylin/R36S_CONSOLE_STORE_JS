@@ -1,4 +1,4 @@
-/* SEO-оптимизированные стили для секции Articles */
+/* SEO-оптимизированные стили для секции Articles с исправленными эффектами наведения */
 .articles {
     background-color: #0F172A;
     background-image:
@@ -10,7 +10,6 @@
     position: relative;
     overflow: hidden;
     min-width: 320px;
-    /* Минимальная ширина для предотвращения переполнения */
 }
 
 .articles__container {
@@ -20,9 +19,7 @@
     position: relative;
     z-index: 1;
     min-width: 280px;
-    /* Учитываем отступы */
     box-sizing: border-box;
-    /* Учитываем padding в общей ширине */
 }
 
 /* Стили для заголовка секции */
@@ -64,27 +61,19 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-/* Добавляем новые стили для изменения цвета текста при наведении */
-.article:hover .article__content {
+/* УДАЛЕНО: Стили подсветки текста при наведении, так как они конфликтуют с кнопкой переключения */
+/* .article:hover .article__content {
     color: #FFFFFF;
-    /* Меняем цвет текста на белый при наведении */
 }
-
-/* Меняем цвет выделенных элементов внутри текста при наведении */
 .article:hover .article__content strong {
     color: #90CAF9;
-    /* Светло-синий для strong при наведении */
 }
-
 .article:hover .article__content em {
     color: #FFFFFF;
-    /* Белый для em при наведении */
 }
-
 .article:hover .article__content mark {
     color: #F8BBD0;
-    /* Светло-розовый для mark при наведении */
-}
+} */
 
 /* Стили для заголовков и текста статей */
 .article__title {
@@ -114,7 +103,6 @@
 
 .article:hover .article__subtitle {
     color: #90CAF9;
-    /* Более яркий синий при наведении */
 }
 
 .article__content {
@@ -123,7 +111,6 @@
     color: #94A3B8;
     margin-bottom: 20px;
     transition: color 0.3s ease;
-    /* Добавляем плавный переход цвета */
 }
 
 .article__content p {
@@ -195,17 +182,17 @@
     transition: color 0.3s ease;
 }
 
-.article:hover .article__content ul li {
+/* УДАЛЕНО: .article:hover .article__content ul li {
     color: #FFFFFF;
-}
+} */
 
 .article__content ul li::marker {
     color: #60A5FA;
 }
 
-.article:hover .article__content ul li::marker {
+/* УДАЛЕНО: .article:hover .article__content ul li::marker {
     color: #90CAF9;
-}
+} */
 
 .article__highlight {
     background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
@@ -241,13 +228,47 @@
     transition: all 0.3s ease;
     text-align: center;
     width: 100%;
-    /* Для мобильных - полная ширина */
 }
 
 .article__cta:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+}
+
+/* ДОБАВЛЕНО: Стили для переключения яркости текста */
+/* Эти стили переопределяют hover эффекты и обеспечивают работу переключателя */
+.article.bright-text .article__content {
+    color: #FFFFFF;
+}
+
+.article.bright-text .article__content strong {
+    color: #90CAF9;
+}
+
+.article.bright-text .article__content em {
+    color: #FFFFFF;
+}
+
+.article.bright-text .article__content mark {
+    color: #F8BBD0;
+}
+
+.article.bright-text .article__content a {
+    color: #90CAF9;
+}
+
+.article.bright-text .article__content ul li {
+    color: #FFFFFF;
+}
+
+/* Яркий текст для FAQ */
+.articles.bright-text .articles__faq-answer {
+    color: #FFFFFF;
+}
+
+.articles.bright-text .articles__faq-answer p {
+    color: #FFFFFF;
 }
 
 /* Стили для связанных тем */
@@ -276,7 +297,6 @@
 
 .articles__related-list li {
     flex: 0 0 100%;
-    /* Для мобильных - полная ширина */
 }
 
 .articles__related-list a {
@@ -334,7 +354,6 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    /* Для мобильных - полная ширина */
 }
 
 .articles__cta-button:hover {
@@ -390,90 +409,65 @@
     font-size: 16px;
     font-weight: 600;
     color: #90CAF9;
-    /* Белый цвет для лучшей читаемости */
     margin-bottom: 0;
     transition: color 0.3s ease;
     line-height: 1.4;
-    /* Улучшенная высота строки */
     letter-spacing: 0.2px;
-    /* Небольшое увеличение межбуквенного расстояния */
 }
 
 .articles__faq-answer {
     font-size: 15px;
-    /* Немного увеличиваем размер */
     line-height: 1.6;
-    /* Увеличенная высота строки для лучшей читаемости */
     color: #CBD5E1;
-    /* Светло-серый цвет для базового текста */
     transition: color 0.3s ease;
     padding: 15px 0;
-    /* Добавляем отступы сверху и снизу для текста */
     letter-spacing: 0.3px;
-    /* Увеличиваем межбуквенное расстояние */
 }
 
-/* Стили для текста параграфов в ответе */
 .articles__faq-answer p {
     margin-bottom: 12px;
     color: #E2E8F0;
-    /* Еще более светлый оттенок для текста параграфов */
 }
 
 /* Стили для открытого аккордеона */
 .accordion__item.active {
     background: rgba(15, 23, 42, 0.8);
     background-clip: padding-box;
-    /* Темный фон для активного элемента */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    /* Добавляем тень для визуального выделения */
 }
 
-/* Стили для выделенных элементов в ответе */
 .articles__faq-answer strong {
     color: #90CAF9;
-    /* Светло-синий для strong */
     font-weight: 600;
-    /* Менее жирный для лучшей читаемости */
 }
 
 .articles__faq-answer em {
     color: #F9FAFB;
-    /* Светло-серый для em */
     font-style: italic;
 }
 
-/* Вопрос становится темнее при открытии */
 .accordion__item.active .articles__faq-question {
     color: #3B82F6;
-    /* Более темный синий цвет */
 }
 
-/* Текст ответа становится белым при открытии */
 .accordion__item.active .articles__faq-answer {
     color: #FFFFFF;
-    /* Белый цвет текста ответа */
 }
 
-/* Дополнительные стили для выделения элементов в ответе */
 .accordion__item.active .articles__faq-answer strong {
     color: #90CAF9;
-    /* Светло-синий для strong */
 }
 
 .accordion__item.active .articles__faq-answer em {
     color: #F9FAFB;
-    /* Светло-серый для em */
 }
 
-/* Стили для hover-эффекта (необязательно) */
 .accordion__item:hover:not(.active) {
     background: rgba(255, 255, 255, 0.03);
 }
 
 .accordion__item:hover:not(.active) .articles__faq-question {
     color: #60A5FA;
-    /* Более яркий синий при наведении */
 }
 
 .accordion__icon {
@@ -481,7 +475,6 @@
     transition: transform 0.3s ease;
 }
 
-/* Стили для открытого аккордеона */
 .accordion__item.active .accordion__header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -490,18 +483,11 @@
     background: rgba(96, 165, 250, 0.1);
 }
 
-/* Эффекты при наведении */
-/* .accordion__header:hover .articles__faq-question {
-    color: #fff;
-} */
-
-/* Плавное открытие/закрытие аккордеона */
 .accordion__item.active .accordion__content {
     animation: fadeIn 0.5s ease-out;
 }
 
 /* Стили для элегантных иконок аккордеона */
-/* Основные стили для кнопки */
 .accordion__toggle {
     background: transparent;
     border: none;
@@ -593,115 +579,18 @@
     max-height: 1000px;
     transition: max-height 0.7s cubic-bezier(0.5, 0, 1, 0), padding 0.3s ease;
     padding: 15px;
-    /* Равные отступы со всех сторон */
     background-color: rgba(15, 23, 42, 0.5);
-    /* Более темный фон для лучшего контраста */
     background-clip: padding-box;
 }
 
-/* Стили для поддержки касания на мобильных устройствах */
+/* УДАЛЕНА большая часть дублирующих стилей для отзывчивости на касание */
+/* ОСТАВЛЕНЫ только основные переходы при hover для интерфейса */
 
-/* Добавляем поддержку :active для мобильных устройств в дополнение к :hover */
-.article:hover .article__content,
-.article:active .article__content {
-    color: #FFFFFF;
-    /* Меняем цвет текста на белый при наведении и касании */
-}
-
-/* Аналогично для всех остальных эффектов hover, добавляем active */
-.article:hover .article__content strong,
-.article:active .article__content strong {
-    color: #90CAF9;
-    /* Светло-синий для strong при наведении и касании */
-}
-
-.article:hover .article__content em,
-.article:active .article__content em {
-    color: #FFFFFF;
-    /* Белый для em при наведении и касании */
-}
-
-.article:hover .article__content mark,
-.article:active .article__content mark {
-    color: #F8BBD0;
-    /* Светло-розовый для mark при наведении и касании */
-}
-
-.article:hover .article__title,
-.article:active .article__title {
-    background: linear-gradient(135deg, #fff 0%, #fff 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.article:hover .article__subtitle,
-.article:active .article__subtitle {
-    color: #90CAF9;
-    /* Более яркий синий при наведении и касании */
-}
-
-.article:hover,
-.article:active {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(37, 99, 235, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-/* Добавляем состояние :focus для поддержки навигации с клавиатуры */
-.article:focus-within {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(37, 99, 235, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    outline: none;
-    /* Убираем стандартное выделение */
-}
-
-.article:focus-within .article__content {
-    color: #FFFFFF;
-}
-
-.article:focus-within .article__content strong {
-    color: #90CAF9;
-}
-
-.article:focus-within .article__content em {
-    color: #FFFFFF;
-}
-
-.article:focus-within .article__content mark {
-    color: #F8BBD0;
-}
-
-/* Стили для улучшения взаимодействия на сенсорных устройствах */
-@media (hover: none) {
-
-    /* Эти стили применяются только на устройствах, где нет возможности hover */
-    .article {
-        cursor: pointer;
-        /* Показываем, что элемент интерактивный */
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        /* Убираем стандартное выделение при касании на iOS */
-    }
-
-    /* Класс 'touched' будет добавляться через JavaScript при касании */
-    .article.touched .article__content {
-        color: #FFFFFF;
-    }
-
-    .article.touched .article__content strong {
-        color: #90CAF9;
-    }
-
-    .article.touched .article__content em {
-        color: #FFFFFF;
-    }
-
-    .article.touched .article__content mark {
-        color: #F8BBD0;
-    }
+/* Адаптивные стили для кнопки переключения яркости (добавлено) */
+.brightness-toggle,
+.brightness-toggle-corner,
+.brightness-toggle-with-label {
+    z-index: 100;
 }
 
 @keyframes fadeIn {
@@ -737,8 +626,6 @@
         font-size: 24px;
     }
 
-
-
     .article__title {
         font-size: 20px;
     }
@@ -758,7 +645,6 @@
 
 /* Мобильные устройства от 375px */
 @media screen and (min-width: 375px) {
-
     .articles__heading {
         font-size: 32px;
         margin-bottom: 30px;
