@@ -3,8 +3,8 @@
 import { createModalAbout } from './modalabout.js';
 
 // Прямые импорты медиафайлов с адаптированными путями
-import displayControls from '/video/about/video_1_.gif';
-import videoGif from '/video/about/video_2_.gif';
+import displayControls from '/video/about/video_1_.webp';
+import videoGif from '/video/about/video_2_.webp';
 import untitled1 from '/img/about/Untitled_1_1x.jpg';
 import untitled2 from '/img/about/Untitled_2_1x.jpg';
 import untitled3 from '/img/about/Untitled_3_1x.jpg';
