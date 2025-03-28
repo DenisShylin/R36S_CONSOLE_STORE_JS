@@ -1,0 +1,36 @@
+{
+  "title": {
+    "firstLine": "R36S",
+    "secondLine": "HANDHELD",
+    "thirdLine": "SPIELKONSOLE"
+  },
+  "description": {
+    "desktop": "Die R36S Handheld-Spielkonsole öffnet die Tür zur aufregenden Welt des Retro-Gamings und bietet eine beeindruckende Sammlung von über 15.000 legendären Spielen aus verschiedenen Epochen und Plattformen. Tauchen Sie mit der R36S Retro Handheld-Konsole in ein Universum voller Gaming-Nostalgie ein!",
+    "mobile": "R36S Handheld-Spielkonsole - Gaming-Legenden in Ihrer Handfläche. Über 15.000 Retro-Spiele in einem tragbaren Gerät."
+  },
+  "pricing": {
+    "original": "108,06 US $",
+    "current": "35,48 US $",
+    "discount": "-68%"
+  },
+  "buttons": {
+    "buy": "Mit Rabatt einkaufen",
+    "moreDetails": "Mehr Details"
+  },
+  "meta": {
+    "altText": "R36S Handheld-Spielkonsole - Retro-Gaming-Gerät mit 15000+ Spielen",
+    "brand": "R36S",
+    "category": "Handheld-Spielkonsole",
+    "sku": "R36S-RETRO-CONSOLE",
+    "mpn": "R36S-2024",
+    "productID": "R36S-2024",
+    "releaseDate": "2024-01-01",
+    "buyButtonLabel": "R36S Handheld-Spielkonsole mit Rabatt kaufen",
+    "moreDetailsButtonLabel": "Mehr Details zur R36S Handheld-Spielkonsole anzeigen"
+  },
+  "seo": {
+    "heading1": "R36S Handheld-Spielkonsole kaufen - Tragbares Retro-Gaming-Gerät",
+    "heading2": "R36S Tragbares Spielsystem mit 15000+ klassischen Spielen",
+    "heading3": "Beste Retro Handheld-Konsole R36S mit hoher Leistung"
+  }
+}

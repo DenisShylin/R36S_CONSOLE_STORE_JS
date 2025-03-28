@@ -1,0 +1,36 @@
+{
+  "title": {
+    "firstLine": "R36S",
+    "secondLine": "휴대용",
+    "thirdLine": "게임 콘솔"
+  },
+  "description": {
+    "desktop": "R36S 휴대용 게임 콘솔은 다양한 시대와 플랫폼에서 15,000개 이상의 전설적인 게임을 제공하는 레트로 게임의 흥미로운 세계로의 문을 열어줍니다. R36S 레트로 휴대용 콘솔과 함께 게임 향수의 세계에 빠져보세요!",
+    "mobile": "R36S 휴대용 게임 콘솔 - 손바닥 안의 게임 전설. 하나의 휴대용 기기에 15,000개 이상의 레트로 게임."
+  },
+  "pricing": {
+    "original": "US $108.06",
+    "current": "$35.48 US",
+    "discount": "-68%"
+  },
+  "buttons": {
+    "buy": "할인 구매하기",
+    "moreDetails": "더 많은 정보"
+  },
+  "meta": {
+    "altText": "R36S 휴대용 게임 콘솔 - 15000개 이상의 게임이 있는 레트로 게임 기기",
+    "brand": "R36S",
+    "category": "휴대용 게임 콘솔",
+    "sku": "R36S-RETRO-CONSOLE",
+    "mpn": "R36S-2024",
+    "productID": "R36S-2024",
+    "releaseDate": "2024-01-01",
+    "buyButtonLabel": "R36S 휴대용 게임 콘솔 할인 구매하기",
+    "moreDetailsButtonLabel": "R36S 휴대용 게임 콘솔에 대한 더 많은 정보 보기"
+  },
+  "seo": {
+    "heading1": "R36S 휴대용 게임 콘솔 구매 - 휴대용 레트로 게임 기기",
+    "heading2": "15000개 이상의 클래식 게임이 있는 R36S 휴대용 게임 시스템",
+    "heading3": "고성능 레트로 휴대용 콘솔 R36S"
+  }
+}

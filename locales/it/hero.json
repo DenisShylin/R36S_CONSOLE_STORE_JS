@@ -1,0 +1,36 @@
+{
+  "title": {
+    "firstLine": "R36S",
+    "secondLine": "CONSOLE DI GIOCO",
+    "thirdLine": "PORTATILE"
+  },
+  "description": {
+    "desktop": "La console di gioco portatile R36S apre le porte all'emozionante mondo del retro gaming, offrendo un'impressionante collezione di oltre 15.000 giochi leggendari di diverse epoche e piattaforme. Immergiti in un universo di nostalgia videoludica con la console portatile retro R36S!",
+    "mobile": "Console di gioco portatile R36S - Leggende del gaming nel palmo della tua mano. Oltre 15.000 giochi retro in un unico dispositivo portatile."
+  },
+  "pricing": {
+    "original": "US $108,06",
+    "current": "$35,48 US",
+    "discount": "-68%"
+  },
+  "buttons": {
+    "buy": "Acquista con sconto",
+    "moreDetails": "Maggiori dettagli"
+  },
+  "meta": {
+    "altText": "Console di gioco portatile R36S - Dispositivo di gioco retro con oltre 15000 giochi",
+    "brand": "R36S",
+    "category": "Console di gioco portatile",
+    "sku": "R36S-RETRO-CONSOLE",
+    "mpn": "R36S-2024",
+    "productID": "R36S-2024",
+    "releaseDate": "2024-01-01",
+    "buyButtonLabel": "Acquista la console di gioco portatile R36S con sconto",
+    "moreDetailsButtonLabel": "Visualizza maggiori dettagli sulla console di gioco portatile R36S"
+  },
+  "seo": {
+    "heading1": "Acquista la console di gioco portatile R36S - Dispositivo di gioco retro portatile",
+    "heading2": "Sistema di gioco portatile R36S con oltre 15000 giochi classici",
+    "heading3": "Migliore console portatile retro R36S con alte prestazioni"
+  }
+}

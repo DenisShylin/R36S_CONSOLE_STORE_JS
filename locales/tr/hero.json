@@ -1,0 +1,36 @@
+{
+  "title": {
+    "firstLine": "R36S",
+    "secondLine": "EL TİPİ",
+    "thirdLine": "OYUN KONSOLU"
+  },
+  "description": {
+    "desktop": "R36S El Tipi Oyun Konsolu, farklı dönemlerden ve platformlardan 15.000'den fazla efsanevi oyun sunan retro oyun dünyasının heyecan verici kapılarını açıyor. R36S Retro El Tipi Konsol ile oyun nostalji evrenine dalın!",
+    "mobile": "R36S El Tipi Oyun Konsolu - Avucunuzda oyun efsaneleri. Tek bir taşınabilir cihazda 15.000'den fazla retro oyun."
+  },
+  "pricing": {
+    "original": "108,06 ABD $",
+    "current": "35,48 ABD $",
+    "discount": "-%68"
+  },
+  "buttons": {
+    "buy": "İndirimli Satın Al",
+    "moreDetails": "Daha fazla detay"
+  },
+  "meta": {
+    "altText": "R36S El Tipi Oyun Konsolu - 15000+ Oyunlu Retro Oyun Cihazı",
+    "brand": "R36S",
+    "category": "El Tipi Oyun Konsolu",
+    "sku": "R36S-RETRO-CONSOLE",
+    "mpn": "R36S-2024",
+    "productID": "R36S-2024",
+    "releaseDate": "2024-01-01",
+    "buyButtonLabel": "R36S El Tipi Oyun Konsolunu indirimli satın alın",
+    "moreDetailsButtonLabel": "R36S El Tipi Oyun Konsolu hakkında daha fazla detay görüntüleyin"
+  },
+  "seo": {
+    "heading1": "R36S El Tipi Oyun Konsolu Satın Alın - Taşınabilir Retro Oyun Cihazı",
+    "heading2": "15000+ Klasik Oyunlu R36S Taşınabilir Oyun Sistemi",
+    "heading3": "Yüksek Performanslı En İyi Retro El Tipi Konsol R36S"
+  }
+}
