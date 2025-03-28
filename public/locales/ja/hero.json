@@ -1,0 +1,36 @@
+{
+  "title": {
+    "firstLine": "R36S",
+    "secondLine": "携帯型",
+    "thirdLine": "ゲーム機"
+  },
+  "description": {
+    "desktop": "R36S携帯型ゲーム機は、様々な時代とプラットフォームから15,000以上の伝説的なゲームを収録した、レトロゲームの世界への扉を開きます。R36Sレトロ携帯型ゲーム機でゲームの懐かしさを体験しましょう！",
+    "mobile": "R36S携帯型ゲーム機 - 手のひらサイズのゲーム伝説。一台の携帯デバイスに15,000以上のレトロゲームを収録。"
+  },
+  "pricing": {
+    "original": "US $108.06",
+    "current": "$35.48 US",
+    "discount": "-68%"
+  },
+  "buttons": {
+    "buy": "割引で購入",
+    "moreDetails": "詳細を見る"
+  },
+  "meta": {
+    "altText": "R36S携帯型ゲーム機 - 15000以上のゲームを収録したレトロゲーム機",
+    "brand": "R36S",
+    "category": "携帯型ゲーム機",
+    "sku": "R36S-RETRO-CONSOLE",
+    "mpn": "R36S-2024",
+    "productID": "R36S-2024",
+    "releaseDate": "2024-01-01",
+    "buyButtonLabel": "R36S携帯型ゲーム機を割引で購入",
+    "moreDetailsButtonLabel": "R36S携帯型ゲーム機の詳細を見る"
+  },
+  "seo": {
+    "heading1": "R36S携帯型ゲーム機を購入 - ポータブルレトロゲームデバイス",
+    "heading2": "15000以上のクラシックゲームを収録したR36Sポータブルゲームシステム",
+    "heading3": "高性能レトロ携帯ゲーム機R36S"
+  }
+}

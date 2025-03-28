@@ -27,6 +27,7 @@ export function initHero() {
   // Хранение ссылки на обсервер для корректного удаления
   let contentObserver = null;
   let resizeTimeout;
+  let languageChangeListener = null;
 
   /**
    * Настраивает изображение секции Hero.
@@ -159,6 +160,35 @@ export function initHero() {
   }
 
   /**
+   * Настройка обработчика события изменения языка
+   * @private
+   */
+  function setupLanguageChangeListener() {
+    // Функция обработчик события изменения языка
+    const handleLanguageChange = event => {
+      console.log('Language changed in Hero section:', event.detail.language);
+
+      // Здесь можно дополнительно обновить динамические элементы,
+      // которые не обновляются автоматически через data-i18n атрибуты
+
+      // Например, обновить специфические для языка стили
+      if (event.detail.language === 'ar') {
+        // Специальные настройки для арабского языка (RTL)
+        if (heroContent) heroContent.classList.add('rtl-content');
+      } else {
+        // Удаляем специальные настройки для RTL
+        if (heroContent) heroContent.classList.remove('rtl-content');
+      }
+    };
+
+    // Добавляем слушатель события изменения языка
+    window.addEventListener('languageChanged', handleLanguageChange);
+
+    // Сохраняем ссылку на функцию для последующего удаления
+    languageChangeListener = handleLanguageChange;
+  }
+
+  /**
    * Функция очистки слушателей и наблюдателей
    * @private
    */
@@ -180,6 +210,11 @@ export function initHero() {
     if (moreDetailsButton) {
       moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
     }
+
+    // Удаляем обработчик изменения языка
+    if (languageChangeListener) {
+      window.removeEventListener('languageChanged', languageChangeListener);
+    }
   }
 
   // Обработчик resize с дебаунсингом
@@ -193,6 +228,7 @@ export function initHero() {
   adjustForViewport();
   setupContentAnimation();
   setupButtonHandlers();
+  setupLanguageChangeListener();
 
   // Слушаем событие изменения размера окна
   window.addEventListener('resize', handleResize);

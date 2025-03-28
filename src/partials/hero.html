@@ -12,6 +12,7 @@
             src="./img/hero/herou1_2x_.png"
             srcset="./img/hero/herou1_1x_.png 1x, ./img/hero/herou1_2x_.png 2x"
             alt="R36S Handheld Game Console - Retro Gaming Device with 15000+ Games"
+            data-i18n="[alt]hero.meta.altText"
             class="hero__console-img"
             width="600"
             height="400"
@@ -24,23 +25,54 @@
 
       <div class="hero__title">
         <h1 itemprop="name">
-          <span class="hero__title-line">R36S</span>
-          <span class="hero__title-line">HANDHELD</span>
-          <span class="hero__title-line">GAME CONSOLE</span>
+          <span class="hero__title-line" data-i18n="hero.title.firstLine"
+            >R36S</span
+          >
+          <span class="hero__title-line" data-i18n="hero.title.secondLine"
+            >HANDHELD</span
+          >
+          <span class="hero__title-line" data-i18n="hero.title.thirdLine"
+            >GAME CONSOLE</span
+          >
         </h1>
       </div>
 
       <div class="hero__content">
-        <meta itemprop="brand" content="R36S" />
-        <meta itemprop="category" content="Handheld Game Console" />
-        <meta itemprop="sku" content="R36S-RETRO-CONSOLE" />
-        <meta itemprop="mpn" content="R36S-2024" />
-        <meta itemprop="productID" content="R36S-2024" />
-        <meta itemprop="releaseDate" content="2024-01-01" />
+        <meta
+          itemprop="brand"
+          content="R36S"
+          data-i18n="[content]hero.meta.brand"
+        />
+        <meta
+          itemprop="category"
+          content="Handheld Game Console"
+          data-i18n="[content]hero.meta.category"
+        />
+        <meta
+          itemprop="sku"
+          content="R36S-RETRO-CONSOLE"
+          data-i18n="[content]hero.meta.sku"
+        />
+        <meta
+          itemprop="mpn"
+          content="R36S-2024"
+          data-i18n="[content]hero.meta.mpn"
+        />
+        <meta
+          itemprop="productID"
+          content="R36S-2024"
+          data-i18n="[content]hero.meta.productID"
+        />
+        <meta
+          itemprop="releaseDate"
+          content="2024-01-01"
+          data-i18n="[content]hero.meta.releaseDate"
+        />
 
         <p
           class="hero__description hero__description--desktop"
           itemprop="description"
+          data-i18n="hero.description.desktop"
         >
           R36S Handheld Game Console opens the door to the exciting world of
           retro gaming, offering an impressive collection of over 15,000
@@ -50,6 +82,7 @@
         <p
           class="hero__description hero__description--mobile"
           itemprop="description"
+          data-i18n="hero.description.mobile"
         >
           R36S Handheld Game Console - Gaming legends in the palm of your hand.
           15,000+ retro games in one portable device.
@@ -75,13 +108,22 @@
           <link itemprop="url" href="https://www.yourdomain.com/r36s-console" />
 
           <div class="hero__price-wrapper">
-            <span class="hero__original-price">US $108.06</span>
-            <span class="hero__current-price" itemprop="price" content="35.48">
+            <span class="hero__original-price" data-i18n="hero.pricing.original"
+              >US $108.06</span
+            >
+            <span
+              class="hero__current-price"
+              itemprop="price"
+              content="35.48"
+              data-i18n="hero.pricing.current"
+            >
               $35.48
               <span style="font-size: 24px">US</span>
             </span>
           </div>
-          <span class="hero__discount-badge">-68%</span>
+          <span class="hero__discount-badge" data-i18n="hero.pricing.discount"
+            >-68%</span
+          >
         </div>
 
         <div class="hero__buttons">
@@ -89,17 +131,21 @@
             class="hero__button hero__button--primary"
             id="buy-button"
             aria-label="Buy R36S Handheld Game Console with discount"
+            data-i18n="[aria-label]hero.meta.buyButtonLabel"
           >
             <span class="hero__button-pulse"></span>
-            <span class="hero__button-text">Shop With Discount</span>
+            <span class="hero__button-text" data-i18n="hero.buttons.buy"
+              >Shop With Discount</span
+            >
             <span class="hero__button-shine"></span>
           </button>
           <button
             id="more-details-button"
             class="hero__button hero__button--secondary"
             aria-label="View more details about R36S Handheld Game Console"
+            data-i18n="[aria-label]hero.meta.moreDetailsButtonLabel"
           >
-            More details
+            <span data-i18n="hero.buttons.moreDetails">More details</span>
           </button>
         </div>
       </div>
@@ -119,8 +165,14 @@
 
   <!-- Hidden SEO information (but no breadcrumbs) -->
   <div class="visually-hidden">
-    <h2>Buy R36S Handheld Game Console - Portable Retro Gaming Device</h2>
-    <h3>R36S Portable Gaming System with 15000+ Classic Games</h3>
-    <h4>Best Retro Handheld Console R36S with High Performance</h4>
+    <h2 data-i18n="hero.seo.heading1">
+      Buy R36S Handheld Game Console - Portable Retro Gaming Device
+    </h2>
+    <h3 data-i18n="hero.seo.heading2">
+      R36S Portable Gaming System with 15000+ Classic Games
+    </h3>
+    <h4 data-i18n="hero.seo.heading3">
+      Best Retro Handheld Console R36S with High Performance
+    </h4>
   </div>
 </section>
