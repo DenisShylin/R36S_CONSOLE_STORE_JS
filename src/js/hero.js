@@ -134,17 +134,15 @@ export function initHero() {
   function handleMoreDetailsClick(e) {
     e.preventDefault();
     const featuresSection = document.getElementById('features');
-    const header = document.querySelector('.header');
 
-    if (!featuresSection || !header) {
+    if (!featuresSection) {
       window.location.hash = 'features';
       return;
     }
 
-    // Учитываем высоту фиксированного заголовка при прокрутке
-    const headerHeight = header.offsetHeight;
+    // Получаем позицию секции без учета высоты хедера
     const elementPosition = featuresSection.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.scrollY - headerHeight;
+    const offsetPosition = elementPosition + window.scrollY;
 
     // Плавная прокрутка к секции features
     window.scrollTo({

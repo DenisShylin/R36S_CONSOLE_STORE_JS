@@ -8,6 +8,8 @@
  * @returns {Function} Функция очистки для удаления обработчиков событий
  */
 export function initScrollToTop() {
+  console.log('Инициализация кнопки прокрутки вверх');
+
   // Создаем элемент кнопки
   const scrollButton = document.createElement('button');
   scrollButton.className = 'scroll-to-top';
@@ -24,20 +26,52 @@ export function initScrollToTop() {
   // Флаг для отслеживания видимости кнопки
   let isButtonVisible = false;
 
+  // Используем throttle для уменьшения количества вызовов обработчика скролла
+  function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }
+
   /**
    * Обработчик события прокрутки страницы
    * Показывает/скрывает кнопку в зависимости от позиции скролла
    */
-  function handleScroll() {
+  const handleScroll = throttle(function () {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const shouldBeVisible = scrollTop > 300; // Показать после прокрутки на 300px вниз
 
-    // Меняем состояние только при необходимости, чтобы избежать лишних операций с DOM
+    // Меняем состояние только при необходимости
     if (shouldBeVisible !== isButtonVisible) {
-      scrollButton.classList.toggle('visible', shouldBeVisible);
+      if (shouldBeVisible) {
+        // Устанавливаем видимость перед добавлением класса для анимации
+        scrollButton.style.visibility = 'visible';
+        // Используем setTimeout с минимальной задержкой для того, чтобы
+        // transition для opacity сработал после изменения видимости
+        setTimeout(() => {
+          scrollButton.classList.add('visible');
+        }, 10);
+      } else {
+        // Сначала убираем класс для анимации opacity
+        scrollButton.classList.remove('visible');
+        // После завершения анимации скрываем элемент
+        setTimeout(() => {
+          // Проверяем, что элемент все еще должен быть скрыт
+          if (!isButtonVisible) {
+            scrollButton.style.visibility = 'hidden';
+          }
+        }, 300); // 300ms соответствует длительности transition в CSS
+      }
       isButtonVisible = shouldBeVisible;
     }
-  }
+  }, 100); // Ограничиваем вызовы до одного раза в 100ms
 
   /**
    * Обработчик клика по кнопке
@@ -47,6 +81,12 @@ export function initScrollToTop() {
   function handleButtonClick(e) {
     e.preventDefault();
 
+    // Эффект нажатия кнопки
+    scrollButton.classList.add('active');
+    setTimeout(() => {
+      scrollButton.classList.remove('active');
+    }, 200);
+
     // Плавная прокрутка наверх страницы
     window.scrollTo({
       top: 0,
@@ -55,7 +95,7 @@ export function initScrollToTop() {
   }
 
   // Назначаем обработчики событий
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleScroll, { passive: true });
   scrollButton.addEventListener('click', handleButtonClick);
 
   // Инициализируем начальное состояние кнопки
@@ -66,6 +106,7 @@ export function initScrollToTop() {
    * @returns {void}
    */
   return function cleanup() {
+    console.log('Очистка кнопки прокрутки вверх');
     window.removeEventListener('scroll', handleScroll);
     scrollButton.removeEventListener('click', handleButtonClick);
 

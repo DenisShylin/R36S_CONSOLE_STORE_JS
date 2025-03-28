@@ -43,12 +43,13 @@ body {
   transform: translateY(0);
 }
 
-.nav {
+.header_nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 32px !important;
-  max-width: 1200px;
+  margin-left: 30px;
+  padding: 16px 32px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   background: transparent;
   /* Убираем фон у навигации */
@@ -56,8 +57,8 @@ body {
 }
 
 /* Убираем любые возможные фоновые стили для контейнера навигации */
-.header .nav,
-.nav {
+.header .header_nav,
+.header_nav {
   background: transparent;
   box-shadow: none;
   margin-bottom: 0;
@@ -85,33 +86,36 @@ body {
 }
 
 .our-menu-link {
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
   position: relative;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .our-menu-link:hover {
-  color: #94A3B8;
+  color: #60A5FA;
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.7);
 }
 
 .our-menu-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -3px;
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #94A3B8, transparent);
+  background: #60A5FA;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.8);
   transition: width 0.3s ease;
 }
 
 .our-menu-link:hover::after {
-  max-width: 100%;
+  width: 100%;
 }
+
 
 .burger-btn {
   display: none;
@@ -234,6 +238,14 @@ body {
 
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
+
+  .our-menu-link {
+    font-size: 12px;
+    /* Уменьшаем размер шрифта в проблемном диапазоне */
+    letter-spacing: 0.5px;
+    /* Немного уменьшаем межбуквенный интервал */
+  }
+
   .desktop-menu {
     display: none;
   }
@@ -262,4 +274,23 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+
+@media screen and (max-width: 1279px) {
+  .our-menu-link {
+    font-size: 12px;
+    /* Уменьшаем размер шрифта в проблемном диапазоне */
+    letter-spacing: 0.5px;
+    /* Немного уменьшаем межбуквенный интервал */
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .header_nav {
+    padding: 16px 100px;
+
+  }
+
+
 }

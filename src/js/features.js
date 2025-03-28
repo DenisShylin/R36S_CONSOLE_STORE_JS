@@ -154,13 +154,11 @@ function handleBuyClick() {
  */
 function handleMoreInfoClick() {
   const aboutSection = document.getElementById('features-r36s');
-  const header = document.querySelector('.header');
 
-  if (aboutSection && header) {
-    const headerHeight = header.offsetHeight;
+  if (aboutSection) {
     const elementPosition = aboutSection.getBoundingClientRect().top;
     const currentScrollY = window.scrollY || window.pageYOffset;
-    const offsetPosition = elementPosition + currentScrollY - headerHeight;
+    const offsetPosition = elementPosition + currentScrollY;
 
     window.scrollTo({
       top: offsetPosition,
