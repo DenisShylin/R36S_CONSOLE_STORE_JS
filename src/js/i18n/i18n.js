@@ -44,19 +44,19 @@ export const languageNames = {
 
 // Список секций с переводами
 const translationSections = [
-  'common',
-  'about',
-  'articles',
-  'categories',
-  'contact',
-  'features',
-  'footer',
-  'header',
+  // 'common',
+  // 'about',
+  // 'articles',
+  // 'categories',
+  // 'contact',
+  // 'features',
+  // 'footer',
+  // 'header',
   'hero',
-  'mobilemenu',
-  'modal',
-  'products',
-  'reviews',
+  // 'mobilemenu',
+  // 'modal',
+  // 'products',
+  // 'reviews',
 ];
 
 // Создаем CustomEvent для обновления языка
