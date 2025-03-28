@@ -2,14 +2,6 @@
 // Импорт всех стилей
 import './css/styles.css';
 import './css/scroll-to-top.css'; // Импортируем стили для кнопки скролла вверх
-import './css/components/languageSelector.css';
-// Импорт i18n системы
-import {
-  setupI18n,
-  setupLanguageSelector,
-  supportedLanguages,
-} from './js/i18n/i18n.js';
-import { getLanguageFromURL } from './js/utils/urlManager.js';
 
 // Импорт компонентов js
 import { initHeader } from './js/header.js';
@@ -31,6 +23,17 @@ console.log('Main.js инициализирован');
 
 // Хранение функций очистки для компонентов
 let cleanupFunctions = [];
+
+// Добавить инициализацию в событие DOMContentLoaded
+const headerCleanup = initHeader();
+if (typeof headerCleanup === 'function') {
+  cleanupFunctions.push(headerCleanup);
+}
+
+const mobileMenuCleanup = initMobileMenu();
+if (typeof mobileMenuCleanup === 'function') {
+  cleanupFunctions.push(mobileMenuCleanup);
+}
 
 // Вспомогательная функция для определения поддержки браузером
 function checkBrowserCompatibility() {
@@ -81,42 +84,11 @@ function globalCleanup() {
   }
 }
 
-// Инициализация i18n системы перед загрузкой DOM
-async function initializeI18n() {
-  try {
-    // Получаем язык из URL
-    const urlLanguage = getLanguageFromURL(supportedLanguages);
-    console.log('Language from URL:', urlLanguage);
-
-    // Инициализируем i18n
-    await setupI18n({ forcedLanguage: urlLanguage });
-
-    // Настраиваем селектор языка
-    setupLanguageSelector();
-  } catch (error) {
-    console.error('Error initializing i18n:', error);
-  }
-}
-
 // Инициализация страницы после загрузки DOM
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM загружен');
 
   try {
-    // Сначала инициализируем i18n
-    await initializeI18n();
-
-    // Добавить инициализацию header в событие DOMContentLoaded
-    const headerCleanup = initHeader();
-    if (typeof headerCleanup === 'function') {
-      cleanupFunctions.push(headerCleanup);
-    }
-
-    const mobileMenuCleanup = initMobileMenu();
-    if (typeof mobileMenuCleanup === 'function') {
-      cleanupFunctions.push(mobileMenuCleanup);
-    }
-
     // Инициализация иконок до других компонентов
     initIcons(); // Добавляем инициализацию иконок
 
