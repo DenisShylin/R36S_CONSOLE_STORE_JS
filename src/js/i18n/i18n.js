@@ -59,12 +59,104 @@ const translationSections = [
   // 'reviews',
 ];
 
+// Встроенные переводы для критических секций (аварийный запасной вариант)
+const fallbackTranslations = {
+  en: {
+    hero: {
+      title: {
+        firstLine: 'R36S',
+        secondLine: 'HANDHELD',
+        thirdLine: 'GAME CONSOLE',
+      },
+      description: {
+        desktop:
+          'R36S Handheld Game Console opens the door to the exciting world of retro gaming, offering an impressive collection of over 15,000 legendary games from different eras and platforms. Dive into a universe of gaming nostalgia with the R36S Retro Handheld Console!',
+        mobile:
+          'R36S Handheld Game Console - Gaming legends in the palm of your hand. 15,000+ retro games in one portable device.',
+      },
+      pricing: {
+        original: 'US $108.06',
+        current: '$35.48 US',
+        discount: '-68%',
+      },
+      buttons: {
+        buy: 'Shop With Discount',
+        moreDetails: 'More details',
+      },
+      meta: {
+        altText:
+          'R36S Handheld Game Console - Retro Gaming Device with 15000+ Games',
+        brand: 'R36S',
+        category: 'Handheld Game Console',
+        sku: 'R36S-RETRO-CONSOLE',
+        mpn: 'R36S-2024',
+        productID: 'R36S-2024',
+        releaseDate: '2024-01-01',
+        buyButtonLabel: 'Buy R36S Handheld Game Console with discount',
+        moreDetailsButtonLabel:
+          'View more details about R36S Handheld Game Console',
+      },
+      seo: {
+        heading1:
+          'Buy R36S Handheld Game Console - Portable Retro Gaming Device',
+        heading2: 'R36S Portable Gaming System with 15000+ Classic Games',
+        heading3: 'Best Retro Handheld Console R36S with High Performance',
+      },
+    },
+  },
+  ru: {
+    hero: {
+      title: {
+        firstLine: 'R36S',
+        secondLine: 'ПОРТАТИВНАЯ',
+        thirdLine: 'ИГРОВАЯ КОНСОЛЬ',
+      },
+      description: {
+        desktop:
+          'Портативная игровая консоль R36S открывает дверь в захватывающий мир ретро-игр, предлагая впечатляющую коллекцию из более чем 15 000 легендарных игр разных эпох и платформ. Погрузитесь в мир игровой ностальгии с портативной ретро-консолью R36S!',
+        mobile:
+          'Игровая консоль R36S - легенды гейминга в вашем кармане. Более 15 000 ретро-игр в одном портативном устройстве.',
+      },
+      pricing: {
+        original: '7 900 ₽',
+        current: '2 590 ₽',
+        discount: '-68%',
+      },
+      buttons: {
+        buy: 'Купить со скидкой',
+        moreDetails: 'Подробнее',
+      },
+      meta: {
+        altText:
+          'Портативная игровая консоль R36S - Ретро-устройство с более чем 15000 игр',
+        brand: 'R36S',
+        category: 'Портативная игровая консоль',
+        sku: 'R36S-RETRO-CONSOLE',
+        mpn: 'R36S-2024',
+        productID: 'R36S-2024',
+        releaseDate: '2024-01-01',
+        buyButtonLabel: 'Купить портативную игровую консоль R36S со скидкой',
+        moreDetailsButtonLabel:
+          'Посмотреть подробности о портативной игровой консоли R36S',
+      },
+      seo: {
+        heading1: 'Купить портативную игровую консоль R36S - Ретро-устройство',
+        heading2:
+          'Портативная игровая система R36S с более чем 15000 классических игр',
+        heading3:
+          'Лучшая ретро портативная консоль R36S с высокой производительностью',
+      },
+    },
+  },
+};
+
 // Создаем CustomEvent для обновления языка
 const LANGUAGE_CHANGE_EVENT = 'languageChanged';
 
 // Получение пути к файлам переводов
 const getTranslationPath = (language, section) => {
-  return `/locales/${language}/${section}.json`;
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl}locales/${language}/${section}.json`;
 };
 
 // Загрузка переводов для конкретной секции
@@ -79,10 +171,40 @@ const loadSectionTranslation = async (language, section) => {
 
   try {
     const path = getTranslationPath(language, section);
-    const response = await fetch(path);
+    console.log(`Загрузка перевода: ${path}`);
+
+    const response = await fetch(path, {
+      // Добавляем кеш-контроль для обхода кеширования
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      console.warn(
+        `Не удалось загрузить перевод ${language}/${section}: ${response.status}`
+      );
+
+      // Проверяем, есть ли секция во встроенных переводах
+      if (
+        fallbackTranslations[language] &&
+        fallbackTranslations[language][section]
+      ) {
+        console.log(`Используем встроенный перевод для ${language}/${section}`);
+        const fallbackData = fallbackTranslations[language][section];
+        translationsCache[cacheKey] = fallbackData;
+        return fallbackData;
+      }
+
+      // Если основной язык не загрузился, пробуем запасной вариант
+      if (language !== 'en') {
+        console.log(`Пробуем загрузить запасной перевод (en) для ${section}`);
+        return loadSectionTranslation('en', section);
+      }
+
+      // Возвращаем пустой объект для обработки ошибки
+      return {};
     }
 
     const data = await response.json();
@@ -91,7 +213,29 @@ const loadSectionTranslation = async (language, section) => {
     translationsCache[cacheKey] = data;
     return data;
   } catch (error) {
-    console.error(`Failed to load ${language}/${section} translations:`, error);
+    console.error(`Ошибка загрузки ${language}/${section} переводов:`, error);
+
+    // Проверяем, есть ли секция во встроенных переводах
+    if (
+      fallbackTranslations[language] &&
+      fallbackTranslations[language][section]
+    ) {
+      console.log(
+        `Используем встроенный перевод для ${language}/${section} после ошибки`
+      );
+      const fallbackData = fallbackTranslations[language][section];
+      translationsCache[cacheKey] = fallbackData;
+      return fallbackData;
+    }
+
+    // Если основной язык не загрузился, пробуем запасной вариант
+    if (language !== 'en') {
+      console.log(
+        `Пробуем загрузить запасной перевод (en) для ${section} после ошибки`
+      );
+      return loadSectionTranslation('en', section);
+    }
+
     return {};
   }
 };
@@ -117,13 +261,15 @@ const loadAllTranslations = async language => {
         // Добавляем как вложенный объект
         translations[sectionName] = sectionData;
       } else {
-        console.warn(`Failed to load section: ${translationSections[index]}`);
+        console.warn(
+          `Не удалось загрузить секцию: ${translationSections[index]}`
+        );
       }
     });
 
     return translations;
   } catch (error) {
-    console.error(`Failed to load translations for ${language}:`, error);
+    console.error(`Ошибка загрузки переводов для ${language}:`, error);
     return {};
   }
 };
@@ -156,7 +302,7 @@ const updateTextElements = () => {
       }
     });
   } catch (error) {
-    console.error('Error updating text elements:', error);
+    console.error('Ошибка обновления текстовых элементов:', error);
   }
 };
 
@@ -168,7 +314,7 @@ const updateRTLSupport = () => {
       : 'ltr';
     document.documentElement.setAttribute('lang', i18next.language);
   } catch (error) {
-    console.error('Error updating RTL support:', error);
+    console.error('Ошибка обновления поддержки RTL:', error);
   }
 };
 
@@ -186,7 +332,7 @@ const updateAllContent = async () => {
       })
     );
   } catch (error) {
-    console.error('Error in updateAllContent:', error);
+    console.error('Ошибка в updateAllContent:', error);
   }
 };
 
@@ -197,6 +343,7 @@ export async function setupI18n(options = {}) {
       'Current localStorage userLanguage:',
       localStorage.getItem('userLanguage')
     );
+    console.log('Current BASE_URL:', import.meta.env.BASE_URL);
 
     // Принимаем forcedLanguage из options
     const { forcedLanguage } = options;
@@ -216,6 +363,8 @@ export async function setupI18n(options = {}) {
 
     // Загружаем переводы
     const translations = await loadAllTranslations(userLanguage);
+    console.log(`Загруженные переводы для ${userLanguage}:`, translations);
+
     const fallbackTranslations =
       userLanguage !== 'en' ? await loadAllTranslations('en') : null;
 
@@ -227,16 +376,21 @@ export async function setupI18n(options = {}) {
       resources.en = { translation: fallbackTranslations };
     }
 
-    // Инициализируем i18next
+    // Инициализируем i18next с расширенным обнаружением ошибок
     await i18next.init({
       lng: userLanguage,
       fallbackLng: 'en',
       resources,
       interpolation: { escapeValue: false },
-      debug: false,
+      debug: true, // Включаем дебаг для отслеживания проблем
       load: 'languageOnly',
       returnNull: false,
       returnEmptyString: false,
+      missingKeyHandler: (lng, ns, key) => {
+        console.warn(
+          `Отсутствует ключ перевода: ${key} для языка ${lng} в пространстве ${ns}`
+        );
+      },
     });
 
     // Сохраняем выбранный язык

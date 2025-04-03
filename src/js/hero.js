@@ -4,6 +4,8 @@
  * адаптивности и обработки событий кнопок.
  */
 
+import { getLocalizedPrice } from './utils/priceFormatter';
+
 /**
  * Инициализирует секцию Hero на странице.
  * Настраивает изображения, обработку событий загрузки, адаптивность и анимации.
@@ -23,10 +25,45 @@ export function initHero() {
   const heroPricing = document.querySelector('.hero__pricing');
   const buyButton = document.getElementById('buy-button');
   const moreDetailsButton = document.getElementById('more-details-button');
+  const currentPrice = document.querySelector('.hero__current-price');
+  const originalPrice = document.querySelector('.hero__original-price');
+  const discountBadge = document.querySelector('.hero__discount-badge');
 
   // Хранение ссылки на обсервер для корректного удаления
   let contentObserver = null;
   let resizeTimeout;
+  let languageChangeHandler;
+
+  /**
+   * Обновляет цены на основе текущего языка
+   * @private
+   */
+  function updatePrices() {
+    try {
+      if (currentPrice) {
+        const formattedCurrentPrice = getLocalizedPrice('current');
+        if (formattedCurrentPrice) {
+          currentPrice.innerHTML = formattedCurrentPrice;
+        }
+      }
+
+      if (originalPrice) {
+        const formattedOriginalPrice = getLocalizedPrice('original');
+        if (formattedOriginalPrice) {
+          originalPrice.textContent = formattedOriginalPrice;
+        }
+      }
+
+      if (discountBadge) {
+        const formattedDiscount = getLocalizedPrice('discount');
+        if (formattedDiscount) {
+          discountBadge.textContent = formattedDiscount;
+        }
+      }
+    } catch (error) {
+      console.error('Ошибка при обновлении цен:', error);
+    }
+  }
 
   /**
    * Настраивает изображение секции Hero.
@@ -114,6 +151,24 @@ export function initHero() {
   }
 
   /**
+   * Настраивает обработчики событий для смены языка
+   * @private
+   */
+  function setupLanguageChangeListener() {
+    // Обработчик изменения языка
+    languageChangeHandler = event => {
+      console.log(
+        'Hero секция получила событие изменения языка:',
+        event.detail
+      );
+      updatePrices();
+    };
+
+    // Слушаем событие смены языка
+    window.addEventListener('languageChanged', languageChangeHandler);
+  }
+
+  /**
    * Обработчик клика по кнопке Buy
    * @private
    */
@@ -172,6 +227,11 @@ export function initHero() {
     clearTimeout(resizeTimeout);
     window.removeEventListener('resize', handleResize);
 
+    // Удаляем обработчик смены языка
+    if (languageChangeHandler) {
+      window.removeEventListener('languageChanged', languageChangeHandler);
+    }
+
     // Удаляем обработчики кнопок
     if (buyButton) {
       buyButton.removeEventListener('click', handleBuyButtonClick);
@@ -193,6 +253,8 @@ export function initHero() {
   adjustForViewport();
   setupContentAnimation();
   setupButtonHandlers();
+  setupLanguageChangeListener();
+  updatePrices(); // Обновляем цены при первой загрузке
 
   // Слушаем событие изменения размера окна
   window.addEventListener('resize', handleResize);
