@@ -1,8 +1,8 @@
 // main.js - Точка входа в приложение
 // Импорт всех стилей
 import './css/styles.css';
-import './css/scroll-to-top.css'; // Импортируем стили для кнопки скролла вверх
-
+// import './css/scroll-to-top.css'; // Импортируем стили для кнопки скролла вверх
+import { initScrollToTop } from './js/scroll-to-top.js'; // Импортируем модуль кнопки скролла вверх
 // Импорт i18n системы
 import {
   setupI18n,
@@ -25,7 +25,6 @@ import { initIcons } from './js/iconscontact.js';
 import { initReviews } from './js/reviews.js';
 import { initProducts } from './js/products.js';
 import { initFooter } from './js/footer.js';
-import { initScrollToTop } from './js/scroll-to-top.js'; // Импортируем модуль кнопки скролла вверх
 
 console.log('Main.js инициализирован');
 
