@@ -59,97 +59,6 @@ const translationSections = [
   // 'reviews',
 ];
 
-// Встроенные переводы для критических секций (аварийный запасной вариант)
-// const fallbackTranslations = {
-//   en: {
-//     hero: {
-//       title: {
-//         firstLine: 'R36S',
-//         secondLine: 'HANDHELD',
-//         thirdLine: 'GAME CONSOLE',
-//       },
-//       description: {
-//         desktop:
-//           'R36S Handheld Game Console opens the door to the exciting world of retro gaming, offering an impressive collection of over 15,000 legendary games from different eras and platforms. Dive into a universe of gaming nostalgia with the R36S Retro Handheld Console!',
-//         mobile:
-//           'R36S Handheld Game Console - Gaming legends in the palm of your hand. 15,000+ retro games in one portable device.',
-//       },
-//       pricing: {
-//         original: 'US $108.06',
-//         current: '$35.48 US',
-//         discount: '-68%',
-//       },
-//       buttons: {
-//         buy: 'Shop With Discount',
-//         moreDetails: 'More details',
-//       },
-//       meta: {
-//         altText:
-//           'R36S Handheld Game Console - Retro Gaming Device with 15000+ Games',
-//         brand: 'R36S',
-//         category: 'Handheld Game Console',
-//         sku: 'R36S-RETRO-CONSOLE',
-//         mpn: 'R36S-2024',
-//         productID: 'R36S-2024',
-//         releaseDate: '2024-01-01',
-//         buyButtonLabel: 'Buy R36S Handheld Game Console with discount',
-//         moreDetailsButtonLabel:
-//           'View more details about R36S Handheld Game Console',
-//       },
-//       seo: {
-//         heading1:
-//           'Buy R36S Handheld Game Console - Portable Retro Gaming Device',
-//         heading2: 'R36S Portable Gaming System with 15000+ Classic Games',
-//         heading3: 'Best Retro Handheld Console R36S with High Performance',
-//       },
-//     },
-//   },
-//   ru: {
-//     hero: {
-//       title: {
-//         firstLine: 'R36S',
-//         secondLine: 'ПОРТАТИВНАЯ',
-//         thirdLine: 'ИГРОВАЯ КОНСОЛЬ',
-//       },
-//       description: {
-//         desktop:
-//           'Портативная игровая консоль R36S открывает дверь в захватывающий мир ретро-игр, предлагая впечатляющую коллекцию из более чем 15 000 легендарных игр разных эпох и платформ. Погрузитесь в мир игровой ностальгии с портативной ретро-консолью R36S!',
-//         mobile:
-//           'Игровая консоль R36S - легенды гейминга в вашем кармане. Более 15 000 ретро-игр в одном портативном устройстве.',
-//       },
-//       pricing: {
-//         original: '7 900 ₽',
-//         current: '2 590 ₽',
-//         discount: '-68%',
-//       },
-//       buttons: {
-//         buy: 'Купить со скидкой',
-//         moreDetails: 'Подробнее',
-//       },
-//       meta: {
-//         altText:
-//           'Портативная игровая консоль R36S - Ретро-устройство с более чем 15000 игр',
-//         brand: 'R36S',
-//         category: 'Портативная игровая консоль',
-//         sku: 'R36S-RETRO-CONSOLE',
-//         mpn: 'R36S-2024',
-//         productID: 'R36S-2024',
-//         releaseDate: '2024-01-01',
-//         buyButtonLabel: 'Купить портативную игровую консоль R36S со скидкой',
-//         moreDetailsButtonLabel:
-//           'Посмотреть подробности о портативной игровой консоли R36S',
-//       },
-//       seo: {
-//         heading1: 'Купить портативную игровую консоль R36S - Ретро-устройство',
-//         heading2:
-//           'Портативная игровая система R36S с более чем 15000 классических игр',
-//         heading3:
-//           'Лучшая ретро портативная консоль R36S с высокой производительностью',
-//       },
-//     },
-//   },
-// };
-
 // Создаем CustomEvent для обновления языка
 const LANGUAGE_CHANGE_EVENT = 'languageChanged';
 
@@ -186,17 +95,6 @@ const loadSectionTranslation = async (language, section) => {
         `Не удалось загрузить перевод ${language}/${section}: ${response.status}`
       );
 
-      // Проверяем, есть ли секция во встроенных переводах
-      if (
-        fallbackTranslations[language] &&
-        fallbackTranslations[language][section]
-      ) {
-        console.log(`Используем встроенный перевод для ${language}/${section}`);
-        const fallbackData = fallbackTranslations[language][section];
-        translationsCache[cacheKey] = fallbackData;
-        return fallbackData;
-      }
-
       // Если основной язык не загрузился, пробуем запасной вариант
       if (language !== 'en') {
         console.log(`Пробуем загрузить запасной перевод (en) для ${section}`);
@@ -214,19 +112,6 @@ const loadSectionTranslation = async (language, section) => {
     return data;
   } catch (error) {
     console.error(`Ошибка загрузки ${language}/${section} переводов:`, error);
-
-    // Проверяем, есть ли секция во встроенных переводах
-    if (
-      fallbackTranslations[language] &&
-      fallbackTranslations[language][section]
-    ) {
-      console.log(
-        `Используем встроенный перевод для ${language}/${section} после ошибки`
-      );
-      const fallbackData = fallbackTranslations[language][section];
-      translationsCache[cacheKey] = fallbackData;
-      return fallbackData;
-    }
 
     // Если основной язык не загрузился, пробуем запасной вариант
     if (language !== 'en') {
@@ -448,9 +333,24 @@ export function setupLanguageSelector() {
         const newLanguage = event.target.value;
         console.log(`Language selector changed to: ${newLanguage}`);
 
+        // Проверка, что селектор все еще в DOM
+        if (!document.contains(selector)) {
+          console.log('Language selector no longer in DOM, aborting');
+          return;
+        }
+
         // Загружаем переводы если их еще нет
         if (!i18next.hasResourceBundle(newLanguage, 'translation')) {
           const translations = await loadAllTranslations(newLanguage);
+
+          // Повторная проверка после асинхронной операции
+          if (!document.contains(selector)) {
+            console.log(
+              'Language selector no longer in DOM after loading translations, aborting'
+            );
+            return;
+          }
+
           i18next.addResourceBundle(
             newLanguage,
             'translation',
