@@ -9,7 +9,8 @@
 @import url('./base.css');
 @import url('./container.css');
 @import url('./animations.css');
-@import url('./components/languageSelector.css');
+/* @import url('./components/languageSelector.css'); */
+/* @import url('./corner_buttons.css'); */
 /* @import url('./media-placeholders.css'); */
 
 /* Sections style */

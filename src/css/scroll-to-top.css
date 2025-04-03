@@ -1,9 +1,21 @@
-/* scroll-to-top.css - Стили для кнопки прокрутки вверх */
+/* scroll-to-top.css - Стили для кнопок в правом нижнем углу */
 
-.scroll-to-top {
+/* Контейнер для кнопок */
+.corner-buttons-container {
     position: fixed;
     bottom: 30px;
     right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+}
+
+/* Общие стили для кнопок (и скролла вверх, и языкового переключателя) */
+.scroll-to-top,
+.language-button {
+    position: relative;
     width: 50px;
     height: 50px;
     border-radius: 12px;
@@ -14,17 +26,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
     overflow: hidden;
+    padding: 0;
 }
 
-.scroll-to-top::before {
+.scroll-to-top {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Эффект свечения для кнопок при наведении */
+.scroll-to-top::before,
+.language-button::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -35,27 +58,25 @@
     transition: opacity 0.5s;
 }
 
-.scroll-to-top.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.scroll-to-top:hover {
+.scroll-to-top:hover,
+.language-button:hover {
     transform: translateY(-5px) scale(1.02);
     border-color: rgba(96, 165, 250, 0.4);
     box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
 }
 
-.scroll-to-top:hover::before {
+.scroll-to-top:hover::before,
+.language-button:hover::before {
     opacity: 1;
 }
 
-.scroll-to-top:active {
+.scroll-to-top:active,
+.language-button:active {
     transform: translateY(0) scale(0.98);
 }
 
-.scroll-to-top svg {
+.scroll-to-top svg,
+.language-button svg {
     width: 24px;
     height: 24px;
     stroke-width: 2.5px;
@@ -65,30 +86,178 @@
     z-index: 2;
 }
 
-.scroll-to-top:hover svg {
+.scroll-to-top:hover svg,
+.language-button:hover svg {
     transform: translateY(-2px);
     filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.5));
 }
 
-/* Адаптивность для мобильных устройств */
-@media screen and (max-width: 767px) {
-    .scroll-to-top {
-        width: 45px;
-        height: 45px;
+/* Стили для селектора языка */
+.corner-buttons-container .language-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.language-button__flag {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.language-button__flag svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Стили для выпадающего списка языков */
+.language-dropdown {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    min-width: 160px;
+    z-index: 1100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+.language-selector.active .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-dropdown__item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.language-dropdown__item:last-child {
+    border-bottom: none;
+}
+
+.language-dropdown__item:hover {
+    background-color: rgba(96, 165, 250, 0.2);
+}
+
+.language-dropdown__item.active {
+    background-color: rgba(96, 165, 250, 0.3);
+}
+
+.language-dropdown__flag {
+    width: 24px;
+    height: 15px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.language-dropdown__flag svg {
+    width: 100%;
+    height: 100%;
+}
+
+.language-dropdown__name {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Стили для RTL-языков */
+[dir="rtl"] .corner-buttons-container {
+    right: auto;
+    left: 30px;
+}
+
+[dir="rtl"] .language-dropdown {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .language-dropdown__flag {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+    .corner-buttons-container {
         bottom: 20px;
         right: 20px;
+        gap: 8px;
+    }
+
+    .scroll-to-top,
+    .language-button {
+        width: 45px;
+        height: 45px;
         border-radius: 10px;
     }
 
-    .scroll-to-top svg {
+    .scroll-to-top svg,
+    .language-button svg {
         width: 22px;
         height: 22px;
     }
+
+    .language-dropdown {
+        min-width: 140px;
+        bottom: 55px;
+    }
 }
 
-/* Для iOS Safari, который иногда имеет проблемы с backdrop-filter */
+/* Маленькие экраны */
+@media (max-width: 480px) {
+    .corner-buttons-container {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .scroll-to-top,
+    .language-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .language-button__flag,
+    .scroll-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Удаляем стандартный селектор языка из шапки */
+.header .language-selector {
+    display: none;
+}
+
 @supports (-webkit-touch-callout: none) {
-    .scroll-to-top {
+
+    .scroll-to-top,
+    .language-button {
         background: rgba(15, 23, 42, 0.9);
     }
 }
