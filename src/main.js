@@ -86,13 +86,54 @@ async function initializeI18n() {
     const urlLanguage = getLanguageFromURL(supportedLanguages);
     console.log('Language from URL:', urlLanguage);
 
-    // Инициализируем i18n
-    await setupI18n({ forcedLanguage: urlLanguage });
+    // Установка атрибутов lang и dir перед инициализацией i18n
+    // для предотвращения мигания контента
+    const savedLanguage =
+      localStorage.getItem('userLanguage') || urlLanguage || 'en';
+    const rtlLanguages = ['ar'];
+    document.documentElement.setAttribute('lang', savedLanguage);
+    document.documentElement.dir = rtlLanguages.includes(savedLanguage)
+      ? 'rtl'
+      : 'ltr';
+
+    // Инициализируем i18n с тайм-аутом для защиты от зависания
+    const i18nInitPromise = setupI18n({ forcedLanguage: urlLanguage });
+
+    // Создаем таймаут для защиты от бесконечного ожидания
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('i18n initialization timed out after 5 seconds'));
+      }, 5000);
+    });
+
+    // Используем Promise.race для ограничения времени ожидания
+    await Promise.race([i18nInitPromise, timeoutPromise]);
 
     // Настраиваем селектор языка
     setupLanguageSelector();
+
+    // Добавляем класс для указания, что i18n инициализирован
+    document.documentElement.classList.add('i18n-initialized');
+
+    return true;
   } catch (error) {
     console.error('Error initializing i18n:', error);
+
+    // В случае ошибки все равно пытаемся установить базовый язык
+    try {
+      document.documentElement.setAttribute('lang', 'en');
+      document.documentElement.dir = 'ltr';
+
+      // Добавляем класс для индикации сбоя i18n
+      document.documentElement.classList.add('i18n-failed');
+    } catch (fallbackError) {
+      console.error(
+        'Failed to set fallback language attributes:',
+        fallbackError
+      );
+    }
+
+    return false;
   }
 }
 
@@ -101,96 +142,158 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('DOM загружен');
 
   try {
+    // Добавляем класс для индикации загрузки
+    document.documentElement.classList.add('loading-i18n');
+
     // Сначала инициализируем i18n
-    await initializeI18n();
+    const i18nSuccess = await initializeI18n();
 
-    // Добавить инициализацию header в событие DOMContentLoaded
-    const headerCleanup = initHeader();
-    if (typeof headerCleanup === 'function') {
-      cleanupFunctions.push(headerCleanup);
+    // Убираем класс загрузки
+    document.documentElement.classList.remove('loading-i18n');
+
+    // Если i18n не удалось инициализировать, все равно продолжаем загрузку страницы
+    if (!i18nSuccess) {
+      console.warn('Continuing page initialization with failed i18n');
     }
 
-    const mobileMenuCleanup = initMobileMenu();
-    if (typeof mobileMenuCleanup === 'function') {
-      cleanupFunctions.push(mobileMenuCleanup);
-    }
+    // Создаем массив промисов для всех инициализаций компонентов
+    // чтобы обработать случай, когда один из них вызывает ошибку
+    const componentInitPromises = [];
 
-    // Инициализация иконок до других компонентов
-    initIcons(); // Добавляем инициализацию иконок
+    // Добавляем инициализацию header
+    componentInitPromises.push(
+      (async () => {
+        try {
+          const headerCleanup = initHeader();
+          if (typeof headerCleanup === 'function') {
+            cleanupFunctions.push(headerCleanup);
+          }
+          return true;
+        } catch (error) {
+          console.error('Failed to initialize header:', error);
+          return false;
+        }
+      })()
+    );
+
+    // Аналогично для мобильного меню
+    componentInitPromises.push(
+      (async () => {
+        try {
+          const mobileMenuCleanup = initMobileMenu();
+          if (typeof mobileMenuCleanup === 'function') {
+            cleanupFunctions.push(mobileMenuCleanup);
+          }
+          return true;
+        } catch (error) {
+          console.error('Failed to initialize mobile menu:', error);
+          return false;
+        }
+      })()
+    );
+
+    // Инициализация иконок
+    componentInitPromises.push(
+      (async () => {
+        try {
+          initIcons();
+          return true;
+        } catch (error) {
+          console.error('Failed to initialize icons:', error);
+          return false;
+        }
+      })()
+    );
 
     // Проверка совместимости браузера
-    const compatibility = checkBrowserCompatibility();
+    componentInitPromises.push(
+      (async () => {
+        try {
+          const compatibility = checkBrowserCompatibility();
+          return true;
+        } catch (error) {
+          console.error('Failed to check browser compatibility:', error);
+          return false;
+        }
+      })()
+    );
 
-    // Инициализация компонентов и сохранение функций очистки
-    const heroCleanup = initHero();
-    if (typeof heroCleanup === 'function') {
-      cleanupFunctions.push(heroCleanup);
-    }
+    // Добавляем все остальные компоненты в массив промисов
+    const components = [
+      { name: 'hero', init: initHero },
+      { name: 'about', init: initAbout },
+      { name: 'features', init: initFeatures },
+      { name: 'categories', init: initCategories },
+      { name: 'articles', init: initArticles },
+      { name: 'themeToggle', init: initThemeToggle },
+      { name: 'contact', init: initContact },
+      { name: 'reviews', init: initReviews },
+      { name: 'products', init: initProducts },
+      { name: 'footer', init: initFooter },
+      { name: 'scrollToTop', init: initScrollToTop },
+    ];
 
-    // Инициализация секции About
-    const aboutCleanup = initAbout();
-    if (typeof aboutCleanup === 'function') {
-      cleanupFunctions.push(aboutCleanup);
-    }
+    // Инициализируем все компоненты с обработкой ошибок
+    components.forEach(component => {
+      componentInitPromises.push(
+        (async () => {
+          try {
+            const cleanup = component.init();
+            if (typeof cleanup === 'function') {
+              cleanupFunctions.push(cleanup);
+            }
+            return true;
+          } catch (error) {
+            console.error(`Failed to initialize ${component.name}:`, error);
+            return false;
+          }
+        })()
+      );
+    });
 
-    // Инициализация секции Features
-    const featuresCleanup = initFeatures();
-    if (typeof featuresCleanup === 'function') {
-      cleanupFunctions.push(featuresCleanup);
-    }
+    // Ждем завершения всех инициализаций
+    const results = await Promise.allSettled(componentInitPromises);
 
-    // Инициализация секции Categories
-    const categoriesCleanup = initCategories();
-    if (typeof categoriesCleanup === 'function') {
-      cleanupFunctions.push(categoriesCleanup);
-    }
+    // Проверяем результаты инициализации
+    const totalComponents = results.length;
+    const successfulComponents = results.filter(
+      result => result.status === 'fulfilled' && result.value === true
+    ).length;
 
-    // Инициализация секции Articles
-    const articlesCleanup = initArticles();
-    if (typeof articlesCleanup === 'function') {
-      cleanupFunctions.push(articlesCleanup);
-    }
-    // В блоке initArticles или после
-    const themeToggleCleanup = initThemeToggle();
-    if (typeof themeToggleCleanup === 'function') {
-      cleanupFunctions.push(themeToggleCleanup);
-    }
-    // Инициализация секции Contact
-    const contactCleanup = initContact();
-    if (typeof contactCleanup === 'function') {
-      cleanupFunctions.push(contactCleanup);
-    }
-
-    // Инициализация секции Reviews
-    const reviewsCleanup = initReviews();
-    if (typeof reviewsCleanup === 'function') {
-      cleanupFunctions.push(reviewsCleanup);
-    }
-    // Инициализация секции Products
-    const productsCleanup = initProducts();
-    if (typeof productsCleanup === 'function') {
-      cleanupFunctions.push(productsCleanup);
-    }
-    // Инициализация секции Footer
-    const footerCleanup = initFooter();
-    if (typeof footerCleanup === 'function') {
-      cleanupFunctions.push(footerCleanup);
-    }
-
-    // Инициализация кнопки "скролл вверх"
-    const scrollToTopCleanup = initScrollToTop();
-    if (typeof scrollToTopCleanup === 'function') {
-      cleanupFunctions.push(scrollToTopCleanup);
-    }
+    console.log(
+      `Инициализация завершена: ${successfulComponents}/${totalComponents} компонентов успешно загружены`
+    );
 
     // Добавим информацию о загрузке страницы в консоль для отладки
     const loadTime = performance.now();
     console.log(`Страница загружена за ${loadTime.toFixed(2)}ms`);
 
+    // Удаляем класс загрузки с документа
+    document.documentElement.classList.remove('loading');
+    document.documentElement.classList.add('loaded');
+
     // Регистрируем обработчик для очистки при закрытии/перезагрузке
     window.addEventListener('beforeunload', globalCleanup);
   } catch (error) {
-    console.error('Ошибка при инициализации страницы:', error);
+    console.error('Критическая ошибка при инициализации страницы:', error);
+
+    // Удаляем класс загрузки даже при ошибке
+    document.documentElement.classList.remove('loading');
+    document.documentElement.classList.add('error');
+
+    // Показываем сообщение об ошибке для пользователя только в режиме разработки
+    if (import.meta.env.DEV) {
+      const errorElement = document.createElement('div');
+      errorElement.className = 'critical-error';
+      errorElement.innerHTML = `
+        <div class="critical-error__content">
+          <h2>Ошибка инициализации</h2>
+          <p>Произошла ошибка при загрузке страницы. Пожалуйста, обновите страницу или свяжитесь с администратором.</p>
+          <button onclick="window.location.reload()">Обновить страницу</button>
+        </div>
+      `;
+      document.body.appendChild(errorElement);
+    }
   }
 });
 

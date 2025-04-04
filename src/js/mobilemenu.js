@@ -91,17 +91,76 @@ export function initMobileMenu() {
 
   // Обработчик события смены языка
   function handleLanguageChange(event) {
-    // Обновляем направление текста для языков с RTL
-    const rtlLanguages = ['ar'];
-    const currentLang = event?.detail?.language || i18next.language;
+    try {
+      // Проверка, что мобильное меню все еще в DOM
+      const mobileMenu = document.querySelector('.mobile-menu');
+      if (!mobileMenu) {
+        console.log(
+          'Mobile menu no longer in DOM, skipping language change handling'
+        );
+        return;
+      }
 
-    if (rtlLanguages.includes(currentLang)) {
-      mobileMenu.classList.add('rtl');
-    } else {
-      mobileMenu.classList.remove('rtl');
+      // Обновляем направление текста для языков с RTL
+      const rtlLanguages = ['ar'];
+      const currentLang = event?.detail?.language || i18next.language;
+
+      if (rtlLanguages.includes(currentLang)) {
+        mobileMenu.classList.add('rtl');
+
+        // Дополнительные настройки для RTL, если требуются
+        const menuItems = mobileMenu.querySelectorAll('.mobile-menu__item');
+        menuItems.forEach(item => {
+          item.classList.add('rtl');
+        });
+      } else {
+        mobileMenu.classList.remove('rtl');
+
+        // Удаление RTL классов с элементов меню
+        const menuItems = mobileMenu.querySelectorAll('.mobile-menu__item');
+        menuItems.forEach(item => {
+          item.classList.remove('rtl');
+        });
+      }
+
+      console.log('Language changed in mobile menu to:', currentLang);
+
+      // Добавляем дополнительные классы для разных языков
+      // Удаляем все языковые классы
+      const supportedLanguages = [
+        'en',
+        'ru',
+        'ar',
+        'be',
+        'de',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'ko',
+        'nl',
+        'pt',
+        'tr',
+        'uk',
+      ];
+      supportedLanguages.forEach(lang => {
+        mobileMenu.classList.remove(`lang-${lang}`);
+      });
+
+      // Добавляем класс для текущего языка
+      mobileMenu.classList.add(`lang-${currentLang}`);
+
+      // Обновляем атрибуты доступности
+      const closeButton = mobileMenu.querySelector('.close-button');
+      if (closeButton) {
+        const translatedLabel = i18next.t('mobilemenu.close');
+        if (translatedLabel && translatedLabel !== 'mobilemenu.close') {
+          closeButton.setAttribute('aria-label', translatedLabel);
+        }
+      }
+    } catch (error) {
+      console.error('Error handling language change in mobile menu:', error);
     }
-
-    console.log('Language changed in mobile menu to:', currentLang);
   }
 
   // Добавляем обработчик для события смены языка

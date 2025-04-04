@@ -146,18 +146,68 @@ export function initHeader() {
 
   // Обработчик события смены языка
   function handleLanguageChange(event) {
-    // Обновляем направление текста для языков с RTL
-    const rtlLanguages = ['ar'];
-    const currentLang = event?.detail?.language || i18next.language;
+    try {
+      // Проверка, что хедер все еще в DOM
+      const header = document.querySelector('.header');
+      if (!header) {
+        console.log(
+          'Header no longer in DOM, skipping language change handling'
+        );
+        return;
+      }
 
-    if (rtlLanguages.includes(currentLang)) {
-      header.classList.add('rtl');
-    } else {
-      header.classList.remove('rtl');
+      // Обновляем направление текста для языков с RTL
+      const rtlLanguages = ['ar'];
+      const currentLang = event?.detail?.language || i18next.language;
+
+      if (rtlLanguages.includes(currentLang)) {
+        header.classList.add('rtl');
+      } else {
+        header.classList.remove('rtl');
+      }
+
+      // Дополнительная логика при смене языка, если необходимо
+      console.log('Language changed in header to:', currentLang);
+
+      // Добавляем дополнительные классы для разных языков
+      // Удаляем все языковые классы
+      const supportedLanguages = [
+        'en',
+        'ru',
+        'ar',
+        'be',
+        'de',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'ko',
+        'nl',
+        'pt',
+        'tr',
+        'uk',
+      ];
+      supportedLanguages.forEach(lang => {
+        header.classList.remove(`lang-${lang}`);
+      });
+
+      // Добавляем класс для текущего языка
+      header.classList.add(`lang-${currentLang}`);
+
+      // Обновляем атрибуты доступности
+      const ariaLabel = header.querySelector('[aria-label]');
+      if (ariaLabel) {
+        const translatedLabel = i18next.t('header.aria-label.navigation');
+        if (
+          translatedLabel &&
+          translatedLabel !== 'header.aria-label.navigation'
+        ) {
+          ariaLabel.setAttribute('aria-label', translatedLabel);
+        }
+      }
+    } catch (error) {
+      console.error('Error handling language change in header:', error);
     }
-
-    // Дополнительная логика при смене языка, если необходимо
-    console.log('Language changed in header to:', currentLang);
   }
 
   // Установка обработчиков событий

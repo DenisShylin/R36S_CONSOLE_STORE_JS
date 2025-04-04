@@ -40,6 +40,11 @@ export function initHero() {
    */
   function updatePrices() {
     try {
+      if (!document.body.contains(heroSection)) {
+        console.warn('Hero section removed from DOM, skipping price update');
+        return;
+      }
+
       if (currentPrice) {
         const formattedCurrentPrice = getLocalizedPrice('current');
         if (formattedCurrentPrice) {
@@ -73,17 +78,27 @@ export function initHero() {
   function setupHeroImage() {
     if (!heroImage || !heroSection) return;
 
-    // Обработчики событий
-    heroImage.onload = () => heroSection.classList.add('hero--loaded');
-    heroImage.onerror = () => {
-      console.error('Не удалось загрузить изображение:', heroImage.src);
-      // В любом случае показываем секцию
-      heroSection.classList.add('hero--loaded');
-    };
+    try {
+      // Обработчики событий
+      heroImage.onload = () => {
+        if (document.body.contains(heroSection)) {
+          heroSection.classList.add('hero--loaded');
+        }
+      };
+      heroImage.onerror = () => {
+        console.error('Не удалось загрузить изображение:', heroImage.src);
+        // В любом случае показываем секцию
+        if (document.body.contains(heroSection)) {
+          heroSection.classList.add('hero--loaded');
+        }
+      };
 
-    // Если изображение уже загружено (из кэша)
-    if (heroImage.complete) {
-      heroSection.classList.add('hero--loaded');
+      // Если изображение уже загружено (из кэша)
+      if (heroImage.complete && document.body.contains(heroSection)) {
+        heroSection.classList.add('hero--loaded');
+      }
+    } catch (error) {
+      console.error('Ошибка при настройке изображения в Hero секции:', error);
     }
   }
 
@@ -93,12 +108,23 @@ export function initHero() {
    * @private
    */
   function adjustForViewport() {
-    if (!desktopDescription || !mobileDescription) return;
+    try {
+      if (
+        !desktopDescription ||
+        !mobileDescription ||
+        !document.body.contains(desktopDescription) ||
+        !document.body.contains(mobileDescription)
+      ) {
+        return;
+      }
 
-    const isDesktop = window.innerWidth > 992;
+      const isDesktop = window.innerWidth > 992;
 
-    desktopDescription.style.display = isDesktop ? 'block' : 'none';
-    mobileDescription.style.display = isDesktop ? 'none' : 'block';
+      desktopDescription.style.display = isDesktop ? 'block' : 'none';
+      mobileDescription.style.display = isDesktop ? 'none' : 'block';
+    } catch (error) {
+      console.error('Ошибка при адаптации контента для разных экранов:', error);
+    }
   }
 
   /**
@@ -109,28 +135,32 @@ export function initHero() {
   function setupContentAnimation() {
     if (!heroContent) return;
 
-    // Удаляем предыдущий observer если он существует
-    if (contentObserver) {
-      contentObserver.disconnect();
-      contentObserver = null;
-    }
+    try {
+      // Удаляем предыдущий observer если он существует
+      if (contentObserver) {
+        contentObserver.disconnect();
+        contentObserver = null;
+      }
 
-    contentObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && entry.target?.isConnected) {
-            entry.target.classList.add('animate-in');
-            // Отключаем наблюдение после анимации
-            contentObserver?.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+      contentObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.target?.isConnected) {
+              entry.target.classList.add('animate-in');
+              // Отключаем наблюдение после анимации
+              contentObserver?.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
 
-    // Наблюдаем за элементом контента
-    if (heroContent.isConnected) {
-      contentObserver.observe(heroContent);
+      // Наблюдаем за элементом контента
+      if (heroContent.isConnected) {
+        contentObserver.observe(heroContent);
+      }
+    } catch (error) {
+      console.error('Ошибка при настройке анимации контента:', error);
     }
   }
 
@@ -139,14 +169,18 @@ export function initHero() {
    * @private
    */
   function setupButtonHandlers() {
-    // Обработчик для кнопки покупки
-    if (buyButton) {
-      buyButton.addEventListener('click', handleBuyButtonClick);
-    }
+    try {
+      // Обработчик для кнопки покупки
+      if (buyButton) {
+        buyButton.addEventListener('click', handleBuyButtonClick);
+      }
 
-    // Обработчик для кнопки "More details"
-    if (moreDetailsButton) {
-      moreDetailsButton.addEventListener('click', handleMoreDetailsClick);
+      // Обработчик для кнопки "More details"
+      if (moreDetailsButton) {
+        moreDetailsButton.addEventListener('click', handleMoreDetailsClick);
+      }
+    } catch (error) {
+      console.error('Ошибка при настройке обработчиков кнопок:', error);
     }
   }
 
@@ -155,17 +189,43 @@ export function initHero() {
    * @private
    */
   function setupLanguageChangeListener() {
-    // Обработчик изменения языка
-    languageChangeHandler = event => {
-      console.log(
-        'Hero секция получила событие изменения языка:',
-        event.detail
-      );
-      updatePrices();
-    };
+    try {
+      // Обработчик изменения языка
+      languageChangeHandler = event => {
+        try {
+          // Проверяем, что секция все еще в DOM
+          if (!document.body.contains(heroSection)) {
+            console.warn(
+              'Hero section removed from DOM, skipping language change handling'
+            );
+            return;
+          }
 
-    // Слушаем событие смены языка
-    window.addEventListener('languageChanged', languageChangeHandler);
+          console.log(
+            'Hero секция получила событие изменения языка:',
+            event.detail
+          );
+          updatePrices();
+
+          // Если язык является RTL, добавляем соответствующий класс
+          const rtlLanguages = ['ar'];
+          const currentLang = event?.detail?.language || 'en';
+
+          if (rtlLanguages.includes(currentLang)) {
+            heroSection.classList.add('rtl');
+          } else {
+            heroSection.classList.remove('rtl');
+          }
+        } catch (error) {
+          console.error('Error in hero language change handler:', error);
+        }
+      };
+
+      // Слушаем событие смены языка
+      window.addEventListener('languageChanged', languageChangeHandler);
+    } catch (error) {
+      console.error('Ошибка при настройке слушателя смены языка:', error);
+    }
   }
 
   /**
@@ -173,11 +233,15 @@ export function initHero() {
    * @private
    */
   function handleBuyButtonClick() {
-    window.open(
-      'https://www.aliexpress.com/item/1005007171465465.html',
-      '_blank',
-      'noopener,noreferrer'
-    );
+    try {
+      window.open(
+        'https://www.aliexpress.com/item/1005007171465465.html',
+        '_blank',
+        'noopener,noreferrer'
+      );
+    } catch (error) {
+      console.error('Ошибка при обработке клика по кнопке Buy:', error);
+    }
   }
 
   /**
@@ -187,30 +251,37 @@ export function initHero() {
    * @private
    */
   function handleMoreDetailsClick(e) {
-    e.preventDefault();
-    const featuresSection = document.getElementById('features');
+    try {
+      e.preventDefault();
+      const featuresSection = document.getElementById('features');
 
-    if (!featuresSection) {
-      window.location.hash = 'features';
-      return;
+      if (!featuresSection) {
+        window.location.hash = 'features';
+        return;
+      }
+
+      // Получаем позицию секции без учета высоты хедера
+      const elementPosition = featuresSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY;
+
+      // Плавная прокрутка к секции features
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+
+      // Обновляем URL без перезагрузки страницы
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}#features`
+      );
+    } catch (error) {
+      console.error(
+        'Ошибка при обработке клика по кнопке More Details:',
+        error
+      );
     }
-
-    // Получаем позицию секции без учета высоты хедера
-    const elementPosition = featuresSection.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.scrollY;
-
-    // Плавная прокрутка к секции features
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth',
-    });
-
-    // Обновляем URL без перезагрузки страницы
-    window.history.replaceState(
-      null,
-      '',
-      `${window.location.pathname}#features`
-    );
   }
 
   /**
@@ -218,27 +289,31 @@ export function initHero() {
    * @private
    */
   function cleanup() {
-    // Отключаем IntersectionObserver
-    if (contentObserver) {
-      contentObserver.disconnect();
-    }
+    try {
+      // Отключаем IntersectionObserver
+      if (contentObserver) {
+        contentObserver.disconnect();
+      }
 
-    // Очищаем таймаут resize
-    clearTimeout(resizeTimeout);
-    window.removeEventListener('resize', handleResize);
+      // Очищаем таймаут resize
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', handleResize);
 
-    // Удаляем обработчик смены языка
-    if (languageChangeHandler) {
-      window.removeEventListener('languageChanged', languageChangeHandler);
-    }
+      // Удаляем обработчик смены языка
+      if (languageChangeHandler) {
+        window.removeEventListener('languageChanged', languageChangeHandler);
+      }
 
-    // Удаляем обработчики кнопок
-    if (buyButton) {
-      buyButton.removeEventListener('click', handleBuyButtonClick);
-    }
+      // Удаляем обработчики кнопок
+      if (buyButton) {
+        buyButton.removeEventListener('click', handleBuyButtonClick);
+      }
 
-    if (moreDetailsButton) {
-      moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
+      if (moreDetailsButton) {
+        moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
+      }
+    } catch (error) {
+      console.error('Ошибка при очистке ресурсов Hero секции:', error);
     }
   }
 
@@ -249,15 +324,19 @@ export function initHero() {
   }
 
   // Инициализация компонента
-  setupHeroImage();
-  adjustForViewport();
-  setupContentAnimation();
-  setupButtonHandlers();
-  setupLanguageChangeListener();
-  updatePrices(); // Обновляем цены при первой загрузке
+  try {
+    setupHeroImage();
+    adjustForViewport();
+    setupContentAnimation();
+    setupButtonHandlers();
+    setupLanguageChangeListener();
+    updatePrices(); // Обновляем цены при первой загрузке
 
-  // Слушаем событие изменения размера окна
-  window.addEventListener('resize', handleResize);
+    // Слушаем событие изменения размера окна
+    window.addEventListener('resize', handleResize);
+  } catch (error) {
+    console.error('Ошибка при инициализации Hero секции:', error);
+  }
 
   // Возвращаем функцию очистки
   return cleanup;

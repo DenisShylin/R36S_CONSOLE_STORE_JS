@@ -68,7 +68,7 @@ const getTranslationPath = (language, section) => {
   return `${baseUrl}locales/${language}/${section}.json`;
 };
 
-// Загрузка переводов для конкретной секции
+// Загрузка переводов для конкретной секции с улучшенной обработкой ошибок
 const loadSectionTranslation = async (language, section) => {
   // Создаем уникальный ключ для кэша
   const cacheKey = `${language}_${section}`;
@@ -78,56 +78,94 @@ const loadSectionTranslation = async (language, section) => {
     return translationsCache[cacheKey];
   }
 
-  try {
-    const path = getTranslationPath(language, section);
-    console.log(`Загрузка перевода: ${path}`);
+  // Добавляем счетчик попыток для предотвращения бесконечных рекурсий
+  let attemptCount = 0;
+  const maxAttempts = 2; // Максимальное количество попыток
 
-    const response = await fetch(path, {
-      // Добавляем кеш-контроль для обхода кеширования
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
-    });
-
-    if (!response.ok) {
-      console.warn(
-        `Не удалось загрузить перевод ${language}/${section}: ${response.status}`
+  const attemptLoad = async (lang, sect, attempts) => {
+    if (attempts >= maxAttempts) {
+      console.error(
+        `Превышено максимальное количество попыток загрузки ${lang}/${sect}`
       );
-
-      // Если основной язык не загрузился, пробуем запасной вариант
-      if (language !== 'en') {
-        console.log(`Пробуем загрузить запасной перевод (en) для ${section}`);
-        return loadSectionTranslation('en', section);
-      }
-
-      // Возвращаем пустой объект для обработки ошибки
       return {};
     }
 
-    const data = await response.json();
+    try {
+      const path = getTranslationPath(lang, sect);
+      console.log(`Загрузка перевода: ${path}`);
 
-    // Сохраняем в кэш
-    translationsCache[cacheKey] = data;
-    return data;
-  } catch (error) {
-    console.error(`Ошибка загрузки ${language}/${section} переводов:`, error);
+      // Добавляем таймаут для предотвращения зависания запроса
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 секунд таймаут
 
-    // Если основной язык не загрузился, пробуем запасной вариант
-    if (language !== 'en') {
-      console.log(
-        `Пробуем загрузить запасной перевод (en) для ${section} после ошибки`
-      );
-      return loadSectionTranslation('en', section);
+      const response = await fetch(path, {
+        // Добавляем кеш-контроль для обхода кеширования
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+        signal: controller.signal,
+      });
+
+      // Очищаем таймаут
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn(
+          `Не удалось загрузить перевод ${lang}/${sect}: ${response.status}`
+        );
+
+        // Если основной язык не загрузился, пробуем запасной вариант
+        if (lang !== 'en') {
+          console.log(`Пробуем загрузить запасной перевод (en) для ${sect}`);
+          return attemptLoad('en', sect, attempts + 1);
+        }
+
+        // Возвращаем пустой объект для обработки ошибки
+        return {};
+      }
+
+      const data = await response.json();
+
+      // Проверяем валидность данных JSON
+      if (!data || typeof data !== 'object') {
+        throw new Error(`Invalid translation data format for ${lang}/${sect}`);
+      }
+
+      // Сохраняем в кэш
+      translationsCache[cacheKey] = data;
+      return data;
+    } catch (error) {
+      // Проверяем, является ли ошибка таймаутом
+      if (error.name === 'AbortError') {
+        console.error(`Таймаут загрузки ${lang}/${sect} переводов`);
+      } else {
+        console.error(`Ошибка загрузки ${lang}/${sect} переводов:`, error);
+      }
+
+      // Если основной язык не загрузился, пробуем запасной вариант
+      if (lang !== 'en') {
+        console.log(
+          `Пробуем загрузить запасной перевод (en) для ${sect} после ошибки`
+        );
+        return attemptLoad('en', sect, attempts + 1);
+      }
+
+      return {};
     }
+  };
 
-    return {};
-  }
+  // Начинаем попытки загрузки
+  return attemptLoad(language, section, 0);
 };
 
 // Загрузка всех переводов для языка
 const loadAllTranslations = async language => {
   try {
+    // Счетчик успешных загрузок для логирования
+    let successCount = 0;
+    let failCount = 0;
+
     // Используем Promise.allSettled для надежной загрузки всех секций
     const results = await Promise.allSettled(
       translationSections.map(section =>
@@ -143,14 +181,29 @@ const loadAllTranslations = async language => {
         const sectionData = result.value;
         const sectionName = translationSections[index];
 
-        // Добавляем как вложенный объект
-        translations[sectionName] = sectionData;
+        // Проверяем, что получили валидные данные (не пустой объект)
+        if (sectionData && Object.keys(sectionData).length > 0) {
+          // Добавляем как вложенный объект
+          translations[sectionName] = sectionData;
+          successCount++;
+        } else {
+          console.warn(
+            `Получен пустой или недействительный перевод для секции: ${sectionName}`
+          );
+          failCount++;
+        }
       } else {
         console.warn(
-          `Не удалось загрузить секцию: ${translationSections[index]}`
+          `Не удалось загрузить секцию: ${translationSections[index]}, ошибка:`,
+          result.reason
         );
+        failCount++;
       }
     });
+
+    console.log(
+      `Загрузка переводов для ${language}: успешно ${successCount}, не удалось ${failCount}`
+    );
 
     return translations;
   } catch (error) {
@@ -162,37 +215,54 @@ const loadAllTranslations = async language => {
 // Функции обновления контента
 const updateTextElements = () => {
   try {
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-      const key = element.getAttribute('data-i18n');
-      if (!key) return;
+    const elements = document.querySelectorAll('[data-i18n]');
+    console.log(`Обновление ${elements.length} текстовых элементов`);
 
-      if (key.startsWith('[')) {
-        const matches = key.match(/^\[(.*)\](.*)$/);
-        if (matches) {
-          const [, attr, translationKey] = matches;
-          const translation = i18next.t(translationKey);
-          // Проверяем наличие перевода и используем атрибут только если перевод найден
-          if (translation && translation !== translationKey) {
-            element.setAttribute(attr, translation);
-          }
-        }
-      } else {
-        const translation = i18next.t(key);
-        // Проверяем, что перевод не равен ключу (если ключ не найден, i18next вернет ключ)
-        if (translation && translation !== key) {
-          if (element.hasAttribute('content')) {
-            element.setAttribute('content', translation);
-          } else {
-            // Сохраняем оригинальный текст для английского языка
-            if (!element.dataset.originalText && i18next.language !== 'en') {
-              element.dataset.originalText = element.textContent;
+    // Если не нашли элементов с data-i18n, просто выходим
+    if (elements.length === 0) {
+      console.log('Не найдено элементов с атрибутом data-i18n');
+      return;
+    }
+
+    elements.forEach(element => {
+      try {
+        const key = element.getAttribute('data-i18n');
+        if (!key) return;
+
+        if (key.startsWith('[')) {
+          const matches = key.match(/^\[(.*)\](.*)$/);
+          if (matches) {
+            const [, attr, translationKey] = matches;
+            const translation = i18next.t(translationKey);
+            // Проверяем наличие перевода и используем атрибут только если перевод найден
+            if (translation && translation !== translationKey) {
+              element.setAttribute(attr, translation);
             }
-            element.textContent = translation;
           }
-        } else if (element.dataset.originalText && i18next.language === 'en') {
-          // Восстанавливаем оригинальный текст для английского языка
-          element.textContent = element.dataset.originalText;
+        } else {
+          const translation = i18next.t(key);
+          // Проверяем, что перевод не равен ключу (если ключ не найден, i18next вернет ключ)
+          if (translation && translation !== key) {
+            if (element.hasAttribute('content')) {
+              element.setAttribute('content', translation);
+            } else {
+              // Сохраняем оригинальный текст для английского языка
+              if (!element.dataset.originalText && i18next.language !== 'en') {
+                element.dataset.originalText = element.textContent;
+              }
+              element.textContent = translation;
+            }
+          } else if (
+            element.dataset.originalText &&
+            i18next.language === 'en'
+          ) {
+            // Восстанавливаем оригинальный текст для английского языка
+            element.textContent = element.dataset.originalText;
+          }
         }
+      } catch (elementError) {
+        console.warn('Ошибка при обновлении элемента:', elementError, element);
+        // Продолжаем обновление других элементов
       }
     });
   } catch (error) {
@@ -203,10 +273,41 @@ const updateTextElements = () => {
 const updateRTLSupport = () => {
   try {
     const rtlLanguages = ['ar'];
-    document.documentElement.dir = rtlLanguages.includes(i18next.language)
-      ? 'rtl'
-      : 'ltr';
+    const direction = rtlLanguages.includes(i18next.language) ? 'rtl' : 'ltr';
+
+    // Устанавливаем направление текста на уровне документа
+    document.documentElement.dir = direction;
     document.documentElement.setAttribute('lang', i18next.language);
+
+    // Добавляем/удаляем класс RTL для корневого элемента
+    if (direction === 'rtl') {
+      document.documentElement.classList.add('rtl');
+    } else {
+      document.documentElement.classList.remove('rtl');
+    }
+
+    // Обновляем кастомные классы на основных контейнерах, если они существуют
+    const mainContainers = [
+      '.header',
+      '.footer',
+      '.mobile-menu',
+      '.hero',
+      '.features',
+      '.about',
+      '.contact',
+      'main',
+    ];
+
+    mainContainers.forEach(selector => {
+      const container = document.querySelector(selector);
+      if (container) {
+        if (direction === 'rtl') {
+          container.classList.add('rtl');
+        } else {
+          container.classList.remove('rtl');
+        }
+      }
+    });
   } catch (error) {
     console.error('Ошибка обновления поддержки RTL:', error);
   }
@@ -215,18 +316,48 @@ const updateRTLSupport = () => {
 // Основная функция обновления контента
 const updateAllContent = async () => {
   try {
-    // Вызываем отдельные функции обновления
-    updateTextElements();
-    updateRTLSupport();
+    // Создаем массив промисов для параллельного выполнения
+    const updatePromises = [];
+
+    // Добавляем задачи обновления в очередь
+    updatePromises.push(
+      (async () => {
+        try {
+          updateTextElements();
+        } catch (e) {
+          console.error('Failed to update text elements:', e);
+        }
+      })()
+    );
+
+    updatePromises.push(
+      (async () => {
+        try {
+          updateRTLSupport();
+        } catch (e) {
+          console.error('Failed to update RTL support:', e);
+        }
+      })()
+    );
+
+    // Ожидаем завершения всех задач
+    await Promise.allSettled(updatePromises);
 
     // Вызываем пользовательское событие для компонентов
-    window.dispatchEvent(
-      new CustomEvent(LANGUAGE_CHANGE_EVENT, {
-        detail: { language: i18next.language },
-      })
-    );
+    try {
+      window.dispatchEvent(
+        new CustomEvent('languageChanged', {
+          detail: { language: i18next.language },
+        })
+      );
+    } catch (eventError) {
+      console.error('Error dispatching languageChanged event:', eventError);
+    }
+
+    console.log('Content update completed for language:', i18next.language);
   } catch (error) {
-    console.error('Ошибка в updateAllContent:', error);
+    console.error('Error in updateAllContent:', error);
+    throw error; // Передаем ошибку выше для обработки
   }
 };
 
@@ -255,12 +386,29 @@ export async function setupI18n(options = {}) {
 
     console.log('Selected user language:', userLanguage);
 
-    // Загружаем переводы
-    const translations = await loadAllTranslations(userLanguage);
-    console.log(`Загруженные переводы для ${userLanguage}:`, translations);
+    // Загружаем переводы с обработкой ошибок
+    let translations = {};
+    try {
+      translations = await loadAllTranslations(userLanguage);
+      console.log(`Загруженные переводы для ${userLanguage}:`, translations);
+    } catch (loadError) {
+      console.error(
+        `Ошибка загрузки переводов для ${userLanguage}:`,
+        loadError
+      );
+      // Продолжаем работу с пустыми переводами
+    }
 
-    const fallbackTranslations =
-      userLanguage !== 'en' ? await loadAllTranslations('en') : null;
+    // Загружаем запасные переводы с обработкой ошибок
+    let fallbackTranslations = null;
+    if (userLanguage !== 'en') {
+      try {
+        fallbackTranslations = await loadAllTranslations('en');
+      } catch (fallbackError) {
+        console.error('Ошибка загрузки запасных переводов:', fallbackError);
+        // Продолжаем работу без запасных переводов
+      }
+    }
 
     const resources = {
       [userLanguage]: { translation: translations },
@@ -276,7 +424,7 @@ export async function setupI18n(options = {}) {
       fallbackLng: 'en',
       resources,
       interpolation: { escapeValue: false },
-      debug: true, // Включаем дебаг для отслеживания проблем
+      debug: import.meta.env.DEV, // Включаем дебаг только в режиме разработки
       load: 'languageOnly',
       returnNull: false, // Не возвращать null, если перевод не найден
       returnEmptyString: false, // Не возвращать пустую строку, если перевод не найден
@@ -297,27 +445,81 @@ export async function setupI18n(options = {}) {
     // Сохраняем выбранный язык
     localStorage.setItem('userLanguage', userLanguage);
 
-    // Привязываем обновление контента к смене языка
-    i18next.on('languageChanged', language => {
-      console.log('Language changed to:', language);
-      localStorage.setItem('userLanguage', language);
-      updateLanguageURL(language);
-      if (typeof clearPriceCache === 'function') {
-        clearPriceCache();
+    // Создаем функцию обработки изменения языка, которая защищена от неожиданных ошибок
+    const safeLanguageChangeHandler = async language => {
+      try {
+        console.log('Language changed to:', language);
+        localStorage.setItem('userLanguage', language);
+        updateLanguageURL(language);
+        if (typeof clearPriceCache === 'function') {
+          clearPriceCache();
+        }
+        await updateAllContent();
+      } catch (error) {
+        console.error('Error in language change handler:', error);
+        // Пытаемся выполнить хотя бы базовое обновление контента
+        try {
+          updateTextElements();
+          updateRTLSupport();
+        } catch (innerError) {
+          console.error('Failed to update basic content:', innerError);
+        }
       }
-      updateAllContent();
-    });
+    };
 
-    // Экспортируем функцию обновления в window
-    window.updateContent = updateAllContent;
+    // Привязываем обновление контента к смене языка с защитой от ошибок
+    i18next.on('languageChanged', safeLanguageChangeHandler);
+
+    // Экспортируем функцию обновления в window с обработкой ошибок
+    window.updateContent = async () => {
+      try {
+        await updateAllContent();
+      } catch (error) {
+        console.error('Error in window.updateContent:', error);
+        // Попытка восстановления
+        try {
+          updateTextElements();
+          updateRTLSupport();
+        } catch (innerError) {
+          console.error('Failed to recover content update:', innerError);
+        }
+      }
+    };
 
     // Вызываем обновление контента сразу после инициализации
-    await updateAllContent();
+    try {
+      await updateAllContent();
+    } catch (contentError) {
+      console.error('Error in initial content update:', contentError);
+      // Базовое обновление контента
+      try {
+        updateTextElements();
+        updateRTLSupport();
+      } catch (basicError) {
+        console.error('Failed to perform basic content update:', basicError);
+      }
+    }
 
     return i18next;
   } catch (error) {
-    console.error('Error in setupI18n:', error);
-    throw error;
+    console.error('Fatal error in setupI18n:', error);
+    // Создаем мини-версию i18next для защиты от сбоев
+    try {
+      // Если i18next не инициализирован, создадим базовую функциональность
+      if (!i18next.isInitialized) {
+        await i18next.init({
+          lng: 'en',
+          resources: {},
+          interpolation: { escapeValue: false },
+        });
+      }
+    } catch (fallbackError) {
+      console.error(
+        'Failed to create fallback i18next instance:',
+        fallbackError
+      );
+    }
+    return i18next;
   }
 }
 
@@ -344,11 +546,22 @@ export function setupLanguageSelector() {
     selector.value = i18next.language;
 
     // Обработчик изменения языка
-    // В файле i18n.js, функция setupLanguageSelector()
+    // Добавляем AbortController для возможности отмены запроса
+    let currentAbortController = null;
+
     selector.addEventListener('change', async function (event) {
       event.preventDefault(); // Предотвращаем действие по умолчанию
 
       try {
+        // Отменяем предыдущую операцию, если она еще не завершена
+        if (currentAbortController) {
+          currentAbortController.abort();
+        }
+
+        // Создаем новый AbortController
+        currentAbortController = new AbortController();
+        const signal = currentAbortController.signal;
+
         const newLanguage = event.target.value;
         console.log(`Language selector changed to: ${newLanguage}`);
 
@@ -360,23 +573,29 @@ export function setupLanguageSelector() {
 
         // Загружаем переводы если их еще нет
         if (!i18next.hasResourceBundle(newLanguage, 'translation')) {
-          const translations = await loadAllTranslations(newLanguage);
+          try {
+            // Оборачиваем асинхронную операцию в try-catch
+            const translations = await loadAllTranslations(newLanguage);
 
-          // Повторная проверка после асинхронной операции
-          if (!document.contains(selector)) {
-            console.log(
-              'Language selector no longer in DOM after loading translations, aborting'
+            // Проверяем signal на случай отмены и селектор на наличие в DOM
+            if (signal.aborted || !document.contains(selector)) {
+              console.log(
+                'Operation aborted or language selector no longer in DOM after loading translations'
+              );
+              return;
+            }
+
+            i18next.addResourceBundle(
+              newLanguage,
+              'translation',
+              translations,
+              true,
+              true
             );
-            return;
+          } catch (loadError) {
+            console.error('Error loading translations:', loadError);
+            // Продолжаем выполнение, чтобы хотя бы обновить языковые настройки
           }
-
-          i18next.addResourceBundle(
-            newLanguage,
-            'translation',
-            translations,
-            true,
-            true
-          );
         }
 
         // Сохраняем выбор в localStorage
@@ -385,17 +604,25 @@ export function setupLanguageSelector() {
         // Меняем язык
         await i18next.changeLanguage(newLanguage);
 
-        // Обновляем URL с языковым префиксом
-        updateLanguageURL(newLanguage);
+        // Проверяем, что элемент все еще в DOM перед обновлением URL
+        if (document.contains(selector) && !signal.aborted) {
+          // Обновляем URL с языковым префиксом
+          updateLanguageURL(newLanguage);
 
-        // Дополнительно обновляем контент
-        if (typeof window.updateContent === 'function') {
-          window.updateContent();
+          // Дополнительно обновляем контент
+          if (typeof window.updateContent === 'function') {
+            window.updateContent();
+          }
         }
       } catch (error) {
         console.error('Error changing language:', error);
-        // В случае ошибки возвращаем старый язык
-        selector.value = i18next.language;
+        // В случае ошибки возвращаем старый язык, если селектор еще существует
+        if (document.contains(selector)) {
+          selector.value = i18next.language;
+        }
+      } finally {
+        // Сбрасываем AbortController
+        currentAbortController = null;
       }
     });
   } catch (error) {

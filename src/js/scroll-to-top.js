@@ -254,89 +254,173 @@ export function initScrollToTop() {
 
       // Добавляем обработчик клика на кнопку языка
       languageButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        languageSelectorContainer.classList.toggle('active');
-        // Не возвращайте true здесь
+        try {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Проверяем, присутствует ли элемент в DOM
+          if (!document.body.contains(languageSelectorContainer)) {
+            console.warn('Language selector container removed from DOM');
+            return;
+          }
+
+          languageSelectorContainer.classList.toggle('active');
+        } catch (clickError) {
+          console.error('Error handling language button click:', clickError);
+        }
       });
 
       // Закрываем dropdown при клике вне элемента
       document.addEventListener('click', e => {
-        if (!languageSelectorContainer.contains(e.target)) {
-          languageSelectorContainer.classList.remove('active');
+        try {
+          // Проверяем наличие элемента в DOM
+          if (!document.body.contains(languageSelectorContainer)) {
+            return;
+          }
+
+          if (!languageSelectorContainer.contains(e.target)) {
+            languageSelectorContainer.classList.remove('active');
+          }
+        } catch (documentClickError) {
+          console.error('Error handling document click:', documentClickError);
         }
       });
 
       // Функция для обновления внешнего вида кнопки языка
       function updateLanguageButtonAppearance(langCode) {
-        currentLangFlag.innerHTML = flagsSVG[langCode] || '';
+        try {
+          if (!document.body.contains(currentLangFlag)) {
+            console.warn('Current language flag element removed from DOM');
+            return;
+          }
+
+          currentLangFlag.innerHTML = flagsSVG[langCode] || '';
+        } catch (updateError) {
+          console.error(
+            'Error updating language button appearance:',
+            updateError
+          );
+        }
       }
 
       // Функция для создания элементов выпадающего списка
       function createLanguageDropdownItems() {
-        // Очищаем контейнер
-        languageDropdown.innerHTML = '';
+        try {
+          // Проверяем наличие dropdown в DOM
+          if (!document.body.contains(languageDropdown)) {
+            console.warn('Language dropdown removed from DOM');
+            return;
+          }
 
-        // Создаем элементы для каждого языка
-        supportedLanguages.forEach(code => {
-          const item = document.createElement('div');
-          item.className = `language-dropdown__item ${
-            code === currentLang ? 'active' : ''
-          }`;
-          item.dataset.lang = code;
+          // Очищаем контейнер
+          languageDropdown.innerHTML = '';
 
-          // Создаем элемент флага
-          const flag = document.createElement('div');
-          flag.className = 'language-dropdown__flag';
-          flag.innerHTML = flagsSVG[code] || '';
+          // Создаем элементы для каждого языка
+          supportedLanguages.forEach(code => {
+            const item = document.createElement('div');
+            item.className = `language-dropdown__item ${
+              code === currentLang ? 'active' : ''
+            }`;
+            item.dataset.lang = code;
 
-          // Создаем элемент названия языка
-          const name = document.createElement('div');
-          name.className = 'language-dropdown__name';
-          name.textContent = languageNames[code] || code;
+            // Создаем элемент флага
+            const flag = document.createElement('div');
+            flag.className = 'language-dropdown__flag';
+            flag.innerHTML = flagsSVG[code] || '';
 
-          // Добавляем элементы в контейнер
-          item.appendChild(flag);
-          item.appendChild(name);
-          languageDropdown.appendChild(item);
+            // Создаем элемент названия языка
+            const name = document.createElement('div');
+            name.className = 'language-dropdown__name';
+            name.textContent = languageNames[code] || code;
 
-          // Добавляем обработчик клика
-          item.addEventListener('click', () => {
-            // Эмулируем выбор в оригинальном селекторе для совместимости
-            if (originalSelector) {
-              originalSelector.value = code;
-              // Вызываем событие change для запуска обработчика в i18n.js
-              originalSelector.dispatchEvent(new Event('change'));
-            }
+            // Добавляем элементы в контейнер
+            item.appendChild(flag);
+            item.appendChild(name);
+            languageDropdown.appendChild(item);
 
-            // Закрываем dropdown
-            languageSelectorContainer.classList.remove('active');
+            // Добавляем обработчик клика
+            item.addEventListener('click', e => {
+              try {
+                // Проверяем наличие оригинального селектора
+                if (!document.body.contains(originalSelector)) {
+                  console.warn('Original language selector removed from DOM');
+                  return;
+                }
 
-            // Обновляем активный элемент
-            document
-              .querySelectorAll('.language-dropdown__item')
-              .forEach(el => {
-                el.classList.toggle('active', el.dataset.lang === code);
-              });
+                // Проверяем наличие dropdown в DOM
+                if (!document.body.contains(languageDropdown)) {
+                  console.warn('Language dropdown removed from DOM');
+                  return;
+                }
 
-            // Обновляем внешний вид кнопки
-            updateLanguageButtonAppearance(code);
+                // Эмулируем выбор в оригинальном селекторе для совместимости
+                originalSelector.value = code;
+
+                // Создаем и диспатчим событие change безопасно
+                try {
+                  const changeEvent = new Event('change');
+                  originalSelector.dispatchEvent(changeEvent);
+                } catch (eventError) {
+                  console.error('Error dispatching change event:', eventError);
+
+                  // Резервный вариант для старых браузеров
+                  if (typeof originalSelector.onchange === 'function') {
+                    originalSelector.onchange();
+                  }
+                }
+
+                // Закрываем dropdown
+                languageSelectorContainer.classList.remove('active');
+
+                // Обновляем активный элемент
+                document
+                  .querySelectorAll('.language-dropdown__item')
+                  .forEach(el => {
+                    el.classList.toggle('active', el.dataset.lang === code);
+                  });
+
+                // Обновляем внешний вид кнопки
+                updateLanguageButtonAppearance(code);
+              } catch (itemClickError) {
+                console.error(
+                  'Error handling language item click:',
+                  itemClickError
+                );
+              }
+            });
           });
-        });
+        } catch (createError) {
+          console.error('Error creating language dropdown items:', createError);
+        }
       }
 
       // Добавляем слушатель события изменения языка
       window.addEventListener('languageChanged', event => {
-        if (event.detail && event.detail.language) {
-          updateLanguageButtonAppearance(event.detail.language);
+        try {
+          // Проверяем, что элементы существуют в DOM
+          if (
+            !document.body.contains(languageDropdown) ||
+            !document.body.contains(currentLangFlag)
+          ) {
+            console.warn('Language elements removed from DOM, skipping update');
+            return;
+          }
 
-          // Обновляем активный элемент в dropdown
-          document.querySelectorAll('.language-dropdown__item').forEach(el => {
-            el.classList.toggle(
-              'active',
-              el.dataset.lang === event.detail.language
-            );
-          });
+          if (event.detail && event.detail.language) {
+            updateLanguageButtonAppearance(event.detail.language);
+
+            // Обновляем активный элемент в dropdown
+            document
+              .querySelectorAll('.language-dropdown__item')
+              .forEach(el => {
+                el.classList.toggle(
+                  'active',
+                  el.dataset.lang === event.detail.language
+                );
+              });
+          }
+        } catch (eventError) {
+          console.error('Error handling language change event:', eventError);
         }
       });
     } catch (error) {
