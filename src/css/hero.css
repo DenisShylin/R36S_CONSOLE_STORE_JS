@@ -455,6 +455,28 @@
         z-index: 1;
     }
 
+    /* RTL стили для секции Hero */
+
+    /* Основные контейнеры в RTL режиме */
+    .rtl .hero__container {
+        direction: rtl;
+    }
+
+    /* Выравнивание текста в RTL режиме */
+    .rtl .hero__title {
+        text-align: right;
+    }
+
+    .rtl .hero__description--desktop,
+    .rtl .hero__description--mobile {
+        text-align: right;
+    }
+
+    /* Кнопки в RTL режиме */
+    .rtl .hero__buttons {
+        flex-direction: row-reverse;
+    }
+
     /* Адаптивная мобильная версия (375-767px) */
     @media screen and (min-width: 375px) {
 
@@ -660,6 +682,41 @@
             font-size: 18px;
             padding: 4px 12px;
         }
+
+        .rtl .hero__image-wrapper {
+            transform: perspective(1000px) rotateY(-15deg) translateZ(0) !important;
+            /* Меняем угол на противоположный */
+        }
+
+        .rtl .hero__image-wrapper:hover {
+            transform: perspective(1000px) rotateY(-5deg) translateZ(0) !important;
+            /* Меняем угол на противоположный при наведении */
+        }
+
+        /* Выравнивание элементов цены в RTL режиме */
+        .rtl .hero__pricing {
+            flex-direction: row-reverse;
+        }
+
+        .rtl .hero__price-wrapper {
+            flex-direction: row-reverse;
+        }
+
+        /* Изменяем анимацию появления для RTL */
+        .rtl .hero__content {
+            transform: translateY(30px) translateX(-30px);
+        }
+    }
+
+    @keyframes rtlContentFadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+    }
+
+    .rtl .hero__content.animate-in {
+        animation: rtlContentFadeIn 1s forwards;
     }
 
     /* Анимация для мягкого перелива */

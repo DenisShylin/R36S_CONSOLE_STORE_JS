@@ -1,17 +1,30 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "labels": {
+    "premium": "PREMIUM"
+  },
+  "title": "Handheld Game Console",
+  "video": {
+    "fallback": "Your browser does not support the video tag. View the R36S Handheld Game Console on our website.",
+    "ariaLabel": "R36S Handheld Game Console demo video"
+  },
+  "sound": {
+    "toggle": {
+      "enable": "Enable sound for R36S demo video",
+      "disable": "Disable sound for R36S demo video"
+    }
+  },
+  "description": {
+    "paragraph1": "The R36S Handheld Game Console opens the door to the exciting world of retro gaming, offering an impressive collection of over 15,000 legendary games from different eras and platforms. The heart of the console is a premium 3.5-inch IPS screen, which renders images with stunning clarity and color saturation at 640x480 resolution.",
+    "paragraph2": "The R36S doesn't just play old games - it reimagines retro gaming for the modern era with 7-8 hours of battery life, customizable controls, and multiple color options. Dive into the universe of gaming nostalgia with the R36S Handheld Game Console!"
   },
   "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+    "buy": {
+      "text": "Buy now -68%",
+      "ariaLabel": "Buy R36S Handheld Game Console with 68% discount"
+    },
+    "details": {
+      "text": "Show Details",
+      "ariaLabel": "View R36S Handheld Game Console detailed specifications"
+    }
   }
 }

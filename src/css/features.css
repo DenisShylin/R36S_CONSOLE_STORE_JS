@@ -271,6 +271,32 @@ html {
     color: #FF3366;
 }
 
+/* RTL стили для секции Features */
+
+/* Общий контейнер в RTL режиме */
+.rtl .features__container {
+    direction: rtl;
+}
+
+/* Кнопки в RTL режиме */
+.rtl .features__buttons {
+    flex-direction: row-reverse;
+}
+
+/* Лейблы в RTL режиме */
+.rtl .about__labels {
+    flex-direction: row-reverse;
+}
+
+/* Управление отступами при RTL */
+.rtl .features__title {
+    text-align: right;
+}
+
+.rtl .features__description p {
+    text-align: right;
+}
+
 /* Анимация градиента как в Hero секции */
 @keyframes gradientTextAnimation {
     0% {
@@ -406,6 +432,43 @@ html {
     .features__image-wrapper:hover {
         transform: perspective(1000px) rotateY(-5deg);
     }
+
+    .rtl .features__image-wrapper {
+        transform: perspective(1000px) rotateY(15deg) !important;
+        /* Меняем угол на противоположный */
+    }
+
+    .rtl .features__image-wrapper:hover {
+        transform: perspective(1000px) rotateY(5deg) !important;
+        /* Меняем угол на противоположный при наведении */
+    }
+
+    /* Зеркалируем движение при анимации появления */
+    .rtl .features__image-mobile,
+    .rtl .features__image-desktop {
+        transform: translateX(-50px);
+        /* Меняем направление движения */
+        animation: rtlSlideIn 0.8s ease forwards;
+    }
+}
+
+/* Новая анимация для RTL */
+@keyframes rtlSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Меняем положение кнопки звука для RTL */
+.rtl .features__sound-toggle {
+    right: auto;
+    left: 20px;
 }
 
 /* Большие десктопные экраны от 1440px */

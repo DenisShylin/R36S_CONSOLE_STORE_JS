@@ -11,14 +11,17 @@
   <meta itemprop="category" content="Retro Gaming Consoles" />
 
   <div class="about__labels">
-    <span class="about__label">PREMIUM</span>
+    <span class="about__label" data-i18n="features.labels.premium"
+      >PREMIUM</span
+    >
     <span class="about__label about__label--outline">R36S</span>
   </div>
 
   <div class="features__container">
     <div class="features__content">
       <h2 class="features__title" itemprop="name">
-        <span class="r36s-gradient-text">R36S</span> Handheld Game Console
+        <span class="r36s-gradient-text">R36S</span>
+        <span data-i18n="features.title">Handheld Game Console</span>
       </h2>
 
       <!-- Видео для мобильной версии (перемещено сюда) -->
@@ -41,13 +44,16 @@
               label="R36S Features"
               src="/video/features/captions.vtt"
             />
-            Your browser does not support the video tag. View the R36S Handheld
-            Game Console on our website.
+            <span data-i18n="features.video.fallback"
+              >Your browser does not support the video tag. View the R36S
+              Handheld Game Console on our website.</span
+            >
           </video>
           <button
             class="features__sound-toggle"
             id="soundToggleButtonMobile"
             aria-label="Enable sound for R36S demo video"
+            data-i18n="[aria-label]features.sound.toggle.enable"
           >
             <!-- SVG иконка Volume X (звук выключен) -->
             <svg
@@ -101,14 +107,14 @@
       </div>
 
       <div class="features__description" itemprop="description">
-        <p>
+        <p data-i18n="features.description.paragraph1">
           The R36S Handheld Game Console opens the door to the exciting world of
           retro gaming, offering an impressive collection of over 15,000
           legendary games from different eras and platforms. The heart of the
           console is a premium 3.5-inch IPS screen, which renders images with
           stunning clarity and color saturation at 640x480 resolution.
         </p>
-        <p>
+        <p data-i18n="features.description.paragraph2">
           The R36S doesn't just play old games - it reimagines retro gaming for
           the modern era with 7-8 hours of battery life, customizable controls,
           and multiple color options. Dive into the universe of gaming nostalgia
@@ -137,16 +143,18 @@
           class="features__button"
           id="buyButton"
           aria-label="Buy R36S Handheld Game Console with 68% discount"
+          data-i18n="[aria-label]features.buttons.buy.ariaLabel"
         >
-          Buy now -68%
+          <span data-i18n="features.buttons.buy.text">Buy now -68%</span>
         </button>
 
         <button
           class="features__button-secondary"
           id="moreInfoButton"
           aria-label="View R36S Handheld Game Console detailed specifications"
+          data-i18n="[aria-label]features.buttons.details.ariaLabel"
         >
-          Show Details
+          <span data-i18n="features.buttons.details.text">Show Details</span>
         </button>
       </div>
     </div>
@@ -164,6 +172,7 @@
           src="/video/features/video_features_.mp4"
           poster="/img/features/products_8_2x.jpg"
           aria-label="R36S Handheld Game Console demo video"
+          data-i18n="[aria-label]features.video.ariaLabel"
           itemprop="video"
         >
           <track
@@ -171,13 +180,16 @@
             label="R36S Features"
             src="/video/features/captions.vtt"
           />
-          Your browser does not support the video tag. View the R36S Handheld
-          Game Console on our website.
+          <span data-i18n="features.video.fallback"
+            >Your browser does not support the video tag. View the R36S Handheld
+            Game Console on our website.</span
+          >
         </video>
         <button
           class="features__sound-toggle"
           id="soundToggleButton"
           aria-label="Enable sound for R36S demo video"
+          data-i18n="[aria-label]features.sound.toggle.enable"
         >
           <!-- SVG иконка Volume X (звук выключен) -->
           <svg

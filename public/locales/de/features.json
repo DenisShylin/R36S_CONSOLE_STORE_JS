@@ -1,17 +1,30 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "labels": {
+    "premium": "PREMIUM"
+  },
+  "title": "Tragbare Spielkonsole",
+  "video": {
+    "fallback": "Ihr Browser unterstützt das Video-Tag nicht. Sehen Sie die R36S Tragbare Spielkonsole auf unserer Website an.",
+    "ariaLabel": "Demonstrationsvideo der R36S Tragbaren Spielkonsole"
+  },
+  "sound": {
+    "toggle": {
+      "enable": "Ton für R36S-Demovideo aktivieren",
+      "disable": "Ton für R36S-Demovideo deaktivieren"
+    }
+  },
+  "description": {
+    "paragraph1": "Die R36S Tragbare Spielkonsole öffnet die Tür zur aufregenden Welt des Retro-Gamings und bietet eine beeindruckende Sammlung von über 15.000 legendären Spielen aus verschiedenen Epochen und Plattformen. Das Herzstück der Konsole ist ein hochwertiger 3,5-Zoll-IPS-Bildschirm, der Bilder mit beeindruckender Klarheit und Farbsättigung bei einer Auflösung von 640x480 darstellt.",
+    "paragraph2": "Die R36S spielt nicht nur alte Spiele ab - sie interpretiert Retro-Gaming für die moderne Ära neu, mit 7-8 Stunden Akkulaufzeit, anpassbaren Steuerungselementen und mehreren Farboptionen. Tauchen Sie ein in das Universum der Gaming-Nostalgie mit der R36S Tragbaren Spielkonsole!"
   },
   "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+    "buy": {
+      "text": "Jetzt kaufen -68%",
+      "ariaLabel": "Kaufen Sie die R36S Tragbare Spielkonsole mit 68% Rabatt"
+    },
+    "details": {
+      "text": "Details anzeigen",
+      "ariaLabel": "Detaillierte Spezifikationen der R36S Tragbaren Spielkonsole ansehen"
+    }
   }
 }

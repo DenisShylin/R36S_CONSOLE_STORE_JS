@@ -1,7 +1,10 @@
 /**
  * Features Section
  * Реализация секции Features для проекта R36S_CONSOLE_STORE_JS
+ * с поддержкой i18n, но без изменений логики видео и звука
  */
+
+import i18next from 'i18next';
 
 /**
  * Инициализация секции Features
@@ -58,6 +61,21 @@ function initFeatures() {
 
   window.addEventListener('scroll', scrollHandler);
 
+  // Обработчик события изменения языка
+  const languageChangedHandler = () => {
+    // Обновление атрибутов aria-label в зависимости от текущего состояния
+    if (soundToggleButton) {
+      const key =
+        featuresVideo && !featuresVideo.muted
+          ? 'features.sound.toggle.disable'
+          : 'features.sound.toggle.enable';
+      soundToggleButton.setAttribute('aria-label', i18next.t(key));
+    }
+  };
+
+  // Регистрируем обработчик изменения языка
+  window.addEventListener('languageChanged', languageChangedHandler);
+
   // Функция очистки для удаления всех обработчиков событий
   return function cleanup() {
     if (buyButton) buyButton.removeEventListener('click', handleBuyClick);
@@ -69,6 +87,7 @@ function initFeatures() {
       );
     }
     window.removeEventListener('scroll', scrollHandler);
+    window.removeEventListener('languageChanged', languageChangedHandler);
 
     console.log('Features component cleaned up');
   };
@@ -93,7 +112,10 @@ function toggleMute(videoElement, volumeOffIcon, volumeOnIcon) {
     // Обновляем aria-label
     const soundToggle = document.getElementById('soundToggleButton');
     if (soundToggle) {
-      soundToggle.setAttribute('aria-label', 'Выключить звук');
+      soundToggle.setAttribute(
+        'aria-label',
+        i18next.t('features.sound.toggle.disable')
+      );
     }
   } else {
     volumeOffIcon.style.display = 'block';
@@ -102,7 +124,10 @@ function toggleMute(videoElement, volumeOffIcon, volumeOnIcon) {
     // Обновляем aria-label
     const soundToggle = document.getElementById('soundToggleButton');
     if (soundToggle) {
-      soundToggle.setAttribute('aria-label', 'Включить звук');
+      soundToggle.setAttribute(
+        'aria-label',
+        i18next.t('features.sound.toggle.enable')
+      );
     }
   }
 }
@@ -133,7 +158,10 @@ function handleScroll(
     // Обновляем aria-label
     const soundToggle = document.getElementById('soundToggleButton');
     if (soundToggle) {
-      soundToggle.setAttribute('aria-label', 'Включить звук');
+      soundToggle.setAttribute(
+        'aria-label',
+        i18next.t('features.sound.toggle.enable')
+      );
     }
   }
 }
