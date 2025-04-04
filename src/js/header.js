@@ -1,4 +1,6 @@
 // Инициализация событий для хедера
+import i18next from 'i18next';
+
 export function initHeader() {
   let isMenuOpen = false;
   let isScrolled = false;
@@ -142,6 +144,22 @@ export function initHeader() {
     }
   }
 
+  // Обработчик события смены языка
+  function handleLanguageChange(event) {
+    // Обновляем направление текста для языков с RTL
+    const rtlLanguages = ['ar'];
+    const currentLang = event?.detail?.language || i18next.language;
+
+    if (rtlLanguages.includes(currentLang)) {
+      header.classList.add('rtl');
+    } else {
+      header.classList.remove('rtl');
+    }
+
+    // Дополнительная логика при смене языка, если необходимо
+    console.log('Language changed in header to:', currentLang);
+  }
+
   // Установка обработчиков событий
   window.addEventListener('scroll', handleScroll);
   window.addEventListener('resize', () => {
@@ -152,13 +170,13 @@ export function initHeader() {
     }
   });
 
+  // Добавляем обработчик для события смены языка
+  window.addEventListener('languageChanged', handleLanguageChange);
+
   // Обработчики для кнопки бургера
   if (burgerBtn) {
     burgerBtn.addEventListener('click', toggleMenu);
   }
-
-  // Не добавляем обработчик для кнопки закрытия здесь,
-  // так как он добавляется в initMobileMenu
 
   // Обработчики для ссылок в меню
   menuLinks.forEach(link => {
@@ -167,4 +185,20 @@ export function initHeader() {
 
   // Обработка хэша при загрузке
   handleInitialHash();
+
+  // Проверяем текущий язык при инициализации
+  handleLanguageChange();
+
+  // Возвращаем функцию очистки
+  return function cleanup() {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('languageChanged', handleLanguageChange);
+    window.removeEventListener('resize', () => {});
+    if (burgerBtn) {
+      burgerBtn.removeEventListener('click', toggleMenu);
+    }
+    menuLinks.forEach(link => {
+      link.removeEventListener('click', smoothScrollToSection);
+    });
+  };
 }

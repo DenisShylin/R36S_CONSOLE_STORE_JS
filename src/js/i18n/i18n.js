@@ -51,9 +51,9 @@ const translationSections = [
   // 'contact',
   // 'features',
   // 'footer',
-  // 'header',
+  'header',
   'hero',
-  // 'mobilemenu',
+  'mobilemenu',
   // 'modal',
   // 'products',
   // 'reviews',
@@ -171,18 +171,27 @@ const updateTextElements = () => {
         if (matches) {
           const [, attr, translationKey] = matches;
           const translation = i18next.t(translationKey);
-          if (translation) {
+          // Проверяем наличие перевода и используем атрибут только если перевод найден
+          if (translation && translation !== translationKey) {
             element.setAttribute(attr, translation);
           }
         }
       } else {
         const translation = i18next.t(key);
-        if (translation) {
+        // Проверяем, что перевод не равен ключу (если ключ не найден, i18next вернет ключ)
+        if (translation && translation !== key) {
           if (element.hasAttribute('content')) {
             element.setAttribute('content', translation);
           } else {
+            // Сохраняем оригинальный текст для английского языка
+            if (!element.dataset.originalText && i18next.language !== 'en') {
+              element.dataset.originalText = element.textContent;
+            }
             element.textContent = translation;
           }
+        } else if (element.dataset.originalText && i18next.language === 'en') {
+          // Восстанавливаем оригинальный текст для английского языка
+          element.textContent = element.dataset.originalText;
         }
       }
     });
@@ -261,7 +270,7 @@ export async function setupI18n(options = {}) {
       resources.en = { translation: fallbackTranslations };
     }
 
-    // Инициализируем i18next с расширенным обнаружением ошибок
+    // Инициализируем i18next с расширенным обнаружением ошибок и улучшенным fallback
     await i18next.init({
       lng: userLanguage,
       fallbackLng: 'en',
@@ -269,12 +278,19 @@ export async function setupI18n(options = {}) {
       interpolation: { escapeValue: false },
       debug: true, // Включаем дебаг для отслеживания проблем
       load: 'languageOnly',
-      returnNull: false,
-      returnEmptyString: false,
-      missingKeyHandler: (lng, ns, key) => {
+      returnNull: false, // Не возвращать null, если перевод не найден
+      returnEmptyString: false, // Не возвращать пустую строку, если перевод не найден
+      saveMissing: false, // Не сохранять отсутствующие ключи (на продакшене должно быть false)
+      keySeparator: '.', // Использовать точку как разделитель вложенности в ключах
+      nsSeparator: ':', // Использовать двоеточие как разделитель пространств имен
+      missingKeyHandler: (lng, ns, key, fallbackValue) => {
         console.warn(
-          `Отсутствует ключ перевода: ${key} для языка ${lng} в пространстве ${ns}`
+          `Отсутствует ключ перевода: ${key} для языка ${lng} в пространстве ${ns}. Используется HTML-текст.`
         );
+      },
+      parseMissingKeyHandler: key => {
+        // Возвращаем null вместо ключа, чтобы сохранить HTML-текст
+        return null;
       },
     });
 

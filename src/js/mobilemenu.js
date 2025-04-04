@@ -1,3 +1,6 @@
+// Модуль инициализации мобильного меню
+import i18next from 'i18next';
+
 export function initMobileMenu() {
   // Находим существующее мобильное меню
   const mobileMenu = document.querySelector('.mobile-menu');
@@ -86,8 +89,46 @@ export function initMobileMenu() {
     });
   }
 
+  // Обработчик события смены языка
+  function handleLanguageChange(event) {
+    // Обновляем направление текста для языков с RTL
+    const rtlLanguages = ['ar'];
+    const currentLang = event?.detail?.language || i18next.language;
+
+    if (rtlLanguages.includes(currentLang)) {
+      mobileMenu.classList.add('rtl');
+    } else {
+      mobileMenu.classList.remove('rtl');
+    }
+
+    console.log('Language changed in mobile menu to:', currentLang);
+  }
+
+  // Добавляем обработчик для события смены языка
+  window.addEventListener('languageChanged', handleLanguageChange);
+
   // Запускаем настройку анимации
   setupIconAnimations();
 
+  // Проверяем текущий язык при инициализации
+  handleLanguageChange();
+
   console.log('Мобильное меню с иконками инициализировано');
+
+  // Возвращаем функцию очистки
+  return function cleanup() {
+    if (closeButton) {
+      closeButton.removeEventListener('click', closeMobileMenu);
+    }
+
+    menuLinks.forEach(link => {
+      link.removeEventListener('click', () => {});
+    });
+
+    if (menuBackground) {
+      menuBackground.removeEventListener('click', closeMobileMenu);
+    }
+
+    window.removeEventListener('languageChanged', handleLanguageChange);
+  };
 }
