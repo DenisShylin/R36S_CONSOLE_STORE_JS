@@ -253,10 +253,11 @@ export function initScrollToTop() {
       createLanguageDropdownItems();
 
       // Добавляем обработчик клика на кнопку языка
-      languageButton.addEventListener('click', e => {
+      languageButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         languageSelectorContainer.classList.toggle('active');
+        // Не возвращайте true здесь
       });
 
       // Закрываем dropdown при клике вне элемента

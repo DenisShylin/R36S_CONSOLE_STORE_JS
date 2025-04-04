@@ -328,7 +328,10 @@ export function setupLanguageSelector() {
     selector.value = i18next.language;
 
     // Обработчик изменения языка
-    selector.addEventListener('change', async event => {
+    // В файле i18n.js, функция setupLanguageSelector()
+    selector.addEventListener('change', async function (event) {
+      event.preventDefault(); // Предотвращаем действие по умолчанию
+
       try {
         const newLanguage = event.target.value;
         console.log(`Language selector changed to: ${newLanguage}`);
