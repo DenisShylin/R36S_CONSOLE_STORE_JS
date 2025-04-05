@@ -1,17 +1,30 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "labels": {
+    "premium": "PREMIUM"
+  },
+  "title": "Console di Gioco Portatile",
+  "video": {
+    "fallback": "Il tuo browser non supporta la riproduzione video. Scopri la console di gioco R36S sul nostro sito web.",
+    "ariaLabel": "Video dimostrativo della console di gioco R36S"
+  },
+  "sound": {
+    "toggle": {
+      "enable": "Attiva l'audio per il video dimostrativo R36S",
+      "disable": "Disattiva l'audio per il video dimostrativo R36S"
+    }
+  },
+  "description": {
+    "paragraph1": "La console di gioco portatile R36S apre le porte a un emozionante mondo di giochi retro, offrendo un'impressionante collezione di oltre 15.000 giochi leggendari di diverse epoche e piattaforme. Al cuore della console c'è uno schermo IPS premium da 3,5 pollici che visualizza immagini con straordinaria nitidezza e ricchezza di colori a una risoluzione di 640x480.",
+    "paragraph2": "La R36S non si limita a riprodurre vecchi giochi — reinterpreta il retro gaming per l'era moderna con 7-8 ore di autonomia, controlli personalizzabili e molteplici opzioni di colore. Immergiti nell'universo della nostalgia videoludica con la console di gioco portatile R36S!"
   },
   "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+    "buy": {
+      "text": "Acquista ora -68%",
+      "ariaLabel": "Acquista la console di gioco portatile R36S con uno sconto del 68%"
+    },
+    "details": {
+      "text": "Mostra dettagli",
+      "ariaLabel": "Visualizza le specifiche dettagliate della console di gioco R36S"
+    }
   }
 }

@@ -1,17 +1,30 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "labels": {
+    "premium": "PREMIUM"
+  },
+  "title": "Draagbare Spelconsole",
+  "video": {
+    "fallback": "Uw browser ondersteunt geen videoweergave. Bekijk de R36S-spelconsole op onze website.",
+    "ariaLabel": "Demonstratievideo van de R36S-spelconsole"
+  },
+  "sound": {
+    "toggle": {
+      "enable": "Geluid inschakelen voor R36S-demonstratievideo",
+      "disable": "Geluid uitschakelen voor R36S-demonstratievideo"
+    }
+  },
+  "description": {
+    "paragraph1": "De draagbare R36S-spelconsole opent de deuren naar een spannende wereld van retrogames, met een indrukwekkende collectie van meer dan 15.000 legendarische games uit verschillende tijdperken en platforms. Het hart van de console is een premium 3,5-inch IPS-scherm dat beelden weergeeft met verbluffende helderheid en kleurrijkdom bij een resolutie van 640x480.",
+    "paragraph2": "De R36S speelt niet alleen oude games af - hij herinterpreteert retrogaming voor het moderne tijdperk met 7-8 uur batterijduur, aanpasbare bedieningselementen en meerdere kleuropties. Dompel jezelf onder in het universum van gamingnostalgie met de draagbare R36S-spelconsole!"
   },
   "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+    "buy": {
+      "text": "Nu kopen -68%",
+      "ariaLabel": "Koop de draagbare R36S-spelconsole met 68% korting"
+    },
+    "details": {
+      "text": "Details weergeven",
+      "ariaLabel": "Bekijk gedetailleerde specificaties van de R36S-spelconsole"
+    }
   }
 }
