@@ -1,17 +1,30 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "labels": {
+    "premium": "PREMIUM"
+  },
+  "title": "Taşınabilir Oyun Konsolu",
+  "video": {
+    "fallback": "Tarayıcınız video oynatmayı desteklemiyor. R36S oyun konsolunu web sitemizde inceleyin.",
+    "ariaLabel": "R36S oyun konsolu tanıtım videosu"
+  },
+  "sound": {
+    "toggle": {
+      "enable": "R36S tanıtım videosu için sesi etkinleştir",
+      "disable": "R36S tanıtım videosu için sesi devre dışı bırak"
+    }
+  },
+  "description": {
+    "paragraph1": "R36S taşınabilir oyun konsolu, farklı dönemlerden ve platformlardan 15.000'den fazla efsanevi oyunun etkileyici bir koleksiyonunu sunan, heyecan verici bir retro oyun dünyasının kapılarını açıyor. Konsolun kalbinde, 640x480 çözünürlükte şaşırtıcı netlik ve renk zenginliğiyle görüntüleri sergileyen premium 3,5 inç IPS ekran bulunmaktadır.",
+    "paragraph2": "R36S sadece eski oyunları oynamakla kalmıyor — 7-8 saatlik pil ömrü, özelleştirilebilir kontroller ve çeşitli renk seçenekleriyle modern çağ için retro oyun deneyimini yeniden yorumluyor. R36S taşınabilir oyun konsolu ile oyun nostalji evrenine dalın!"
   },
   "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+    "buy": {
+      "text": "Şimdi Satın Al -%68",
+      "ariaLabel": "R36S taşınabilir oyun konsolunu %68 indirimle satın alın"
+    },
+    "details": {
+      "text": "Detayları Göster",
+      "ariaLabel": "R36S oyun konsolunun ayrıntılı özelliklerini görüntüleyin"
+    }
   }
 }

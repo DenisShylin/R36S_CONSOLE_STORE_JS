@@ -45,7 +45,7 @@ export const languageNames = {
 // Список секций с переводами
 const translationSections = [
   // 'common',
-  // 'about',
+  'about',
   // 'articles',
   // 'categories',
   // 'contact',
@@ -54,6 +54,7 @@ const translationSections = [
   'header',
   'hero',
   'mobilemenu',
+  // 'button',
   // 'modal',
   // 'products',
   // 'reviews',

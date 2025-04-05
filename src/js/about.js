@@ -1,5 +1,5 @@
-// about.js;
-// Импорт модального окна
+// about.js с интеграцией i18n
+import i18next from 'i18next';
 import { createModalAbout } from './modalabout.js';
 
 // Прямые импорты медиафайлов с адаптированными путями
@@ -16,6 +16,21 @@ import videoOption2 from '/video/about/video_4_.mp4';
 
 // Глобальная переменная для хранения модального окна
 let globalModalInstance = null;
+
+// Функция для получения локализованного текста с поддержкой fallback
+const getLocalizedText = (key, defaultText) => {
+  try {
+    const translation = i18next.t(key);
+    // Если перевод совпадает с ключом, значит перевод не найден
+    if (translation === key) {
+      return defaultText;
+    }
+    return translation;
+  } catch (error) {
+    console.warn(`Error getting translation for ${key}:`, error);
+    return defaultText;
+  }
+};
 
 // ОПТИМИЗАЦИЯ 1: Предзагрузка изображений для улучшения производительности
 function preloadImages() {
@@ -98,6 +113,7 @@ export function initAbout() {
   const features = [
     {
       id: 1,
+      i18nKey: 'about.cards.1', // Изменено с 'features.cards.1'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,6 +150,7 @@ The collection includes:
     },
     {
       id: 2,
+      i18nKey: 'about.cards.2', // Изменено с 'features.cards.2'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -168,6 +185,7 @@ The collection includes:
     },
     {
       id: 3,
+      i18nKey: 'about.cards.3', // Изменено с 'features.cards.3'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -199,6 +217,7 @@ Key features:
     },
     {
       id: 4,
+      i18nKey: 'about.cards.4', // Изменено с 'features.cards.4'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -231,6 +250,7 @@ Available Colors:
     },
     {
       id: 5,
+      i18nKey: 'about.cards.5', // Изменено с 'features.cards.5'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -265,6 +285,7 @@ Available Colors:
     },
     {
       id: 6,
+      i18nKey: 'about.cards.6', // Изменено с 'features.cards.6'
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -299,6 +320,26 @@ Features:
     },
   ];
 
+  // Получение локализованных данных для фичи
+  const getLocalizedFeature = feature => {
+    const basePath = feature.i18nKey;
+    return {
+      ...feature,
+      title: getLocalizedText(`${basePath}.title`, feature.title),
+      description: getLocalizedText(
+        `${basePath}.description`,
+        feature.description
+      ),
+      detail: getLocalizedText(`${basePath}.detail`, feature.detail),
+      number: getLocalizedText(`${basePath}.number`, feature.number),
+      fullDescription: getLocalizedText(
+        `${basePath}.fullDescription`,
+        feature.fullDescription
+      ),
+      imageAlt: getLocalizedText(`${basePath}.imageAlt`, feature.imageAlt),
+    };
+  };
+
   // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
   // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
@@ -308,21 +349,23 @@ Features:
 
     // Создаем HTML для всех 6 карточек
     const cardsHTML = features
-      .map(
-        feature => `
+      .map(feature => {
+        // Получаем локализованные данные
+        const localizedFeature = getLocalizedFeature(feature);
+        return `
       <div class="about-card" data-id="${feature.id}">
         <div class="card-blur"></div>
         <div class="card-glow"></div>
         <div class="about-card__content">
           <div class="about-card__icon-wrapper">${feature.icon}</div>
-          <h3 class="about-card__title">${feature.title}</h3>
-          <p class="about-card__description">${feature.description}</p>
+          <h3 class="about-card__title" data-i18n="${feature.i18nKey}.title">${localizedFeature.title}</h3>
+          <p class="about-card__description" data-i18n="${feature.i18nKey}.description">${localizedFeature.description}</p>
           <div class="about-card__stats">
-            <span class="about-card__number">${feature.number}</span>
-            <span class="about-card__detail">${feature.detail}</span>
+            <span class="about-card__number" data-i18n="${feature.i18nKey}.number">${localizedFeature.number}</span>
+            <span class="about-card__detail" data-i18n="${feature.i18nKey}.detail">${localizedFeature.detail}</span>
           </div>
           <button class="about-card__button" data-feature-id="${feature.id}">
-            <span class="button-text">More details</span>
+            <span class="button-text" data-i18n="about.button.details">More details</span>
             <span class="button-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -343,8 +386,8 @@ Features:
         </div>
         <div class="card-indicator"></div>
       </div>
-    `
-      )
+    `;
+      })
       .join('');
 
     // Добавляем все карточки в контейнер
@@ -440,9 +483,12 @@ Features:
         return;
       }
 
+      // Локализуем данные перед открытием модального окна
+      const localizedFeature = getLocalizedFeature(feature);
+
       // Открываем модальное окно (уже создано при инициализации)
       if (modalInstance) {
-        modalInstance.open(feature);
+        modalInstance.open(localizedFeature);
       }
     } catch (err) {
       console.error('Ошибка при обработке клика по кнопке:', err);
@@ -528,9 +574,13 @@ Features:
               console.error('Данные для карточки не найдены');
               return;
             }
+
+            // Локализуем данные перед открытием модального окна
+            const localizedFeature = getLocalizedFeature(feature);
+
             // Открываем модальное окно
             if (modalInstance) {
-              modalInstance.open(feature);
+              modalInstance.open(localizedFeature);
             }
           }
         });
@@ -597,11 +647,30 @@ Features:
     }
   }
 
+  // Обработчик изменения языка
+  function setupLanguageChangeListener() {
+    window.addEventListener('languageChanged', function (event) {
+      try {
+        console.log('Обработка события смены языка в секции About');
+        // Перерендерим карточки с новыми переводами
+        renderCards();
+        // Повторно устанавливаем обработчики событий
+        setupCardEvents();
+      } catch (error) {
+        console.error(
+          'Ошибка при обновлении секции About после смены языка:',
+          error
+        );
+      }
+    });
+  }
+
   // Очистка всех обработчиков событий
   function cleanupEvents() {
     console.log('Очистка всех обработчиков событий...');
     cleanupCardEvents();
     window.removeEventListener('resize', debounce);
+    window.removeEventListener('languageChanged', function () {});
 
     // Сохраняем модальное окно в глобальной переменной, но очищаем локальную ссылку
     modalInstance = null;
@@ -610,6 +679,9 @@ Features:
 
   // ОПТИМИЗАЦИЯ 11: Асинхронная инициализация для предотвращения блокировки основного потока
   function asyncInit() {
+    // Устанавливаем слушатель изменения языка
+    setupLanguageChangeListener();
+
     // Возвращаем функцию очистки
     return function cleanup() {
       console.log('Запуск функции очистки секции About');

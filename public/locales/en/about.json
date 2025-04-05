@@ -1,17 +1,93 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": {
+    "functionality": "Functionality",
+    "model": "R36S"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "title": {
+    "highlight": "R36S",
+    "rest": "Portable Gaming Console Features"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "subtitle": "Discover a world of over 15,000 retro games with the R36S - portable gaming technology with extended battery life, customizable settings, and a vibrant display.",
+  "button": {
+    "details": "More Details"
+  },
+  "cards": {
+    "1": {
+      "title": "Retro Game Collection",
+      "description": "Immerse yourself in gaming with the R36S portable gaming console.",
+      "number": "15K+",
+      "detail": "classic games",
+      "fullDescription": "Discover a rich collection of classic games including over 15,000 titles from different eras. From iconic arcade games to beloved console games, our library covers all significant platforms of the past.\n\nThe collection includes:\n• Classic arcade games from the 80s and 90s\n• Complete libraries of NES, SNES, Sega, and other consoles\n• Exclusive ports and rare releases\n• Optimized versions for modern hardware",
+      "imageAlt": "Retro Game Collection"
+    },
+    "2": {
+      "title": "Vibrant Display Technology",
+      "description": "Enjoy vibrant gaming on a 3.5-inch LCD display with crisp 640x480 resolution.",
+      "number": "3.5\"",
+      "detail": "IPS display",
+      "fullDescription": "R36S console display specifications:\n• 3.5-inch IPS display\n• 640x480 resolution\n• High brightness and contrast\n• Wide viewing angles\n• Anti-glare coating\n• Energy-efficient backlight\n• Scratch-resistant surface",
+      "imageAlt": "Display Technology"
+    },
+    "3": {
+      "title": "Powerful Battery",
+      "description": "Enjoy up to 7-8 hours of continuous gaming with the R36S.",
+      "number": "7-8",
+      "detail": "hours of gameplay",
+      "fullDescription": "Powerful 3200 mAh battery\n\nEnjoy up to 7-8 hours of extended gameplay with the R36S. The high-capacity 3200 mAh battery powers the crisp 3.5-inch IPS display (640x480 resolution), providing immersive gameplay without frequent recharging.\n\nKey features:\n- Extended gameplay\n- Full-screen IPS display",
+      "imageAlt": "Battery Life"
+    },
+    "4": {
+      "title": "Wide Color Selection",
+      "description": "Appreciate our wide range of stunning console colors.",
+      "number": "10+",
+      "detail": "COLORS",
+      "fullDescription": "Meet the R36S collection:\nThe R36S console offers over 12 attractive color variations in 2024, including our signature Midnight Black and attention-grabbing Galactic Purple. Each R36S model features recycled plastic finishes and scratch-resistant coating.\n\nAvailable colors:\n- Classic Black\n- Vibrant Orange\n- Mesmerizing Purple...",
+      "imageAlt": "R36S Color Options",
+      "imageAlt.1": "Black R36S variant",
+      "imageAlt.2": "Orange R36S variant",
+      "imageAlt.3": "Purple R36S variant",
+      "imageAlt.4": "Red R36S variant"
+    },
+    "5": {
+      "title": "Extensive Settings",
+      "description": "Customize controls, brightness, sound, and parameters for maximum comfort",
+      "number": "30+",
+      "detail": "settings",
+      "fullDescription": "Capabilities and connectivity:\n- Connect to external displays via OTG for big-screen gaming\n- Compatibility with modern gaming controllers and gamepads\n- Multi-language interface support\n- Customizable control schemes and button assignments\n- Advanced display settings with adjustable brightness and contrast\n- Sound optimization with multiple audio profiles\n- Screen mirroring capabilities\n- Low-latency connectivity for seamless gameplay",
+      "imageAlt": "R36S Settings"
+    },
+    "6": {
+      "title": "Maximum Portability",
+      "description": "Portable console with removable battery for gaming on the go.",
+      "number": "Ultra",
+      "detail": "Portable",
+      "fullDescription": "Whether commuting, traveling, or taking a short break, the R36S is ready for instant entertainment. Its durable design and protected screen ensure carefree portability, while the long-lasting battery allows for on-the-go gaming.\n\nFeatures:\n• Pocket-sized dimensions for maximum portability\n• Sturdy construction for daily carrying\n• Ergonomic grip for extended gaming sessions\n• Quick startup for instant game access",
+      "imageAlt": "R36S Portability"
+    }
+  },
+  "modal": {
+    "close": "Close",
+    "buyNow": "BUY NOW",
+    "discount": "-68%",
+    "imageAlt": {
+      "default": "Feature image"
+    }
+  },
+  "seo": {
+    "title": "R36S Portable Gaming Console Features",
+    "subtitle": "The Best R36S Portable Retro Gaming Console",
+    "description": "The R36S portable gaming console is the perfect gaming device for retro gaming enthusiasts, with an extensive library of classic games, vibrant display, long battery life, and customizable settings.",
+    "list": {
+      "games": "Over 15,000 retro games from various platforms",
+      "display": "3.5-inch IPS LCD display with 640x480 resolution",
+      "battery": "7-8 hours of battery life with a 3200 mAh capacity",
+      "colors": "Available in more than 10 color variations",
+      "settings": "Over 30 customizable parameters for optimal gameplay",
+      "portable": "Ultra-portable design for gaming on the go"
+    }
+  },
+  "faq": {
+    "question": "How many games are included in the R36S console?",
+    "answer": "The R36S console includes over 15,000 classic retro games from various platforms."
   }
 }

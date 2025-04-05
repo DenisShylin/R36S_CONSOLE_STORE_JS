@@ -1,17 +1,93 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": {
+    "functionality": "İşlevsellik",
+    "model": "R36S"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "title": {
+    "highlight": "R36S",
+    "rest": "Taşınabilir Oyun Konsolu Özellikleri"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "subtitle": "R36S ile 15.000'den fazla retro oyun dünyasını keşfedin - uzun pil ömrü, özelleştirilebilir ayarlar ve canlı ekrana sahip taşınabilir oyun teknolojisi.",
+  "button": {
+    "details": "Daha Fazla Detay"
+  },
+  "cards": {
+    "1": {
+      "title": "Retro Oyun Koleksiyonu",
+      "description": "R36S taşınabilir oyun konsolu ile oyun dünyasına dalın.",
+      "number": "15K+",
+      "detail": "klasik oyun",
+      "fullDescription": "Farklı dönemlerden 15.000'den fazla başlık içeren zengin bir klasik oyun koleksiyonunu keşfedin. İkonik arcade oyunlarından sevilen konsol oyunlarına kadar, kütüphanemiz geçmişin tüm önemli platformlarını kapsar.\n\nKoleksiyon şunları içerir:\n• 80'ler ve 90'ların klasik arcade oyunları\n• NES, SNES, Sega ve diğer konsolların tam kütüphaneleri\n• Özel portlar ve nadir bulunan sürümler\n• Modern donanım için optimize edilmiş versiyonlar",
+      "imageAlt": "Retro Oyun Koleksiyonu"
+    },
+    "2": {
+      "title": "Canlı Ekran Teknolojisi",
+      "description": "Net 640x480 çözünürlüklü 3,5 inçlik LCD ekranda canlı oyunların keyfini çıkarın.",
+      "number": "3.5\"",
+      "detail": "IPS ekran",
+      "fullDescription": "R36S konsol ekran özellikleri:\n• 3,5 inç IPS ekran\n• 640x480 çözünürlük\n• Yüksek parlaklık ve kontrast\n• Geniş görüş açıları\n• Yansıma önleyici kaplama\n• Enerji verimli arka aydınlatma\n• Çizilmeye dayanıklı yüzey",
+      "imageAlt": "Ekran Teknolojisi"
+    },
+    "3": {
+      "title": "Güçlü Pil",
+      "description": "R36S ile 7-8 saate kadar kesintisiz oyun keyfi yaşayın.",
+      "number": "7-8",
+      "detail": "saat oyun süresi",
+      "fullDescription": "Güçlü 3200 mAh pil\n\nR36S ile 7-8 saate kadar uzatılmış oyun keyfi yaşayın. Yüksek kapasiteli 3200 mAh pil, net 3,5 inç IPS ekranı (640x480 çözünürlük) besleyerek sık şarj etme gereği olmadan sürükleyici bir oyun deneyimi sunar.\n\nAna özellikler:\n- Uzatılmış oyun süresi\n- Tam ekran IPS ekran",
+      "imageAlt": "Pil Ömrü"
+    },
+    "4": {
+      "title": "Geniş Renk Seçenekleri",
+      "description": "Konsolun etkileyici geniş renk yelpazesini takdir edin.",
+      "number": "10+",
+      "detail": "RENK",
+      "fullDescription": "R36S koleksiyonuyla tanışın:\nR36S konsolu, 2024 yılında imza niteliğindeki Gece Yarısı Siyahı ve dikkat çekici Galaktik Mor dahil olmak üzere 12'den fazla çekici renk varyasyonu sunmaktadır. Her R36S modeli, geri dönüştürülmüş plastik kaplamalara ve çizilmeye dayanıklı kaplamalara sahiptir.\n\nMevcut renkler:\n- Klasik Siyah\n- Canlı Turuncu\n- Büyüleyici Mor...",
+      "imageAlt": "R36S Renk Seçenekleri",
+      "imageAlt.1": "Siyah R36S varyantı",
+      "imageAlt.2": "Turuncu R36S varyantı",
+      "imageAlt.3": "Mor R36S varyantı",
+      "imageAlt.4": "Kırmızı R36S varyantı"
+    },
+    "5": {
+      "title": "Kapsamlı Ayarlar",
+      "description": "Maksimum konfor için kontrolleri, parlaklığı, sesi ve parametreleri özelleştirin",
+      "number": "30+",
+      "detail": "ayar",
+      "fullDescription": "Yetenekler ve bağlantı:\n- Büyük ekranda oyun için OTG üzerinden harici ekranlara bağlantı\n- Modern oyun kontrolcüleri ve gamepad'lerle uyumluluk\n- Çok dilli arayüz desteği\n- Özelleştirilebilir kontrol şemaları ve düğme atamaları\n- Ayarlanabilir parlaklık ve kontrasta sahip gelişmiş ekran ayarları\n- Birden fazla ses profili ile ses optimizasyonu\n- Ekran yansıtma yetenekleri\n- Kesintisiz oyun deneyimi için düşük gecikmeli bağlantı",
+      "imageAlt": "R36S Ayarları"
+    },
+    "6": {
+      "title": "Maksimum Taşınabilirlik",
+      "description": "Hareket halindeyken oyun oynamak için çıkarılabilir pile sahip taşınabilir konsol.",
+      "number": "Ultra",
+      "detail": "Taşınabilir",
+      "fullDescription": "İster işe gidip gelirken, ister seyahat ederken, ister kısa bir mola verirken, R36S anında eğlence için hazırdır. Dayanıklı tasarımı ve korumalı ekranı endişesiz taşınabilirlik sağlarken, uzun ömürlü pili hareket halindeyken oyun oynamanıza olanak tanır.\n\nÖzellikler:\n• Maksimum taşınabilirlik için cep boyutunda boyutlar\n• Günlük taşıma için sağlam yapı\n• Uzun oyun oturumları için ergonomik tutuş\n• Oyunlara anında erişim için hızlı başlatma",
+      "imageAlt": "R36S Taşınabilirlik"
+    }
+  },
+  "modal": {
+    "close": "Kapat",
+    "buyNow": "ŞİMDİ SATIN AL",
+    "discount": "-68%",
+    "imageAlt": {
+      "default": "Özellik görüntüsü"
+    }
+  },
+  "seo": {
+    "title": "R36S Taşınabilir Oyun Konsolu Özellikleri",
+    "subtitle": "En İyi R36S Taşınabilir Retro Oyun Konsolu",
+    "description": "R36S taşınabilir oyun konsolu, klasik oyunların geniş kütüphanesi, canlı ekranı, uzun pil ömrü ve özelleştirilebilir ayarlarıyla retro oyun tutkunları için mükemmel bir oyun cihazıdır.",
+    "list": {
+      "games": "Çeşitli platformlardan 15.000'den fazla retro oyun",
+      "display": "640x480 çözünürlüklü 3,5 inç IPS LCD ekran",
+      "battery": "3200 mAh kapasiteyle 7-8 saatlik pil ömrü",
+      "colors": "10'dan fazla renk varyasyonunda mevcut",
+      "settings": "Optimum oyun deneyimi için 30'dan fazla özelleştirilebilir parametre",
+      "portable": "Hareket halinde oyun için ultra taşınabilir tasarım"
+    }
+  },
+  "faq": {
+    "question": "R36S konsolunda kaç oyun bulunmaktadır?",
+    "answer": "R36S konsolu, çeşitli platformlardan 15.000'den fazla klasik retro oyun içermektedir."
   }
 }

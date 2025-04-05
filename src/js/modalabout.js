@@ -1,4 +1,7 @@
-// modalabout.js
+// modalabout.js с поддержкой i18n
+import i18next from 'i18next';
+import { getLocalizedPrice } from './utils/priceFormatter.js';
+
 // Фабричная функция для создания модального окна
 export function createModalAbout(parentElement) {
   let modalElement = null;
@@ -6,6 +9,31 @@ export function createModalAbout(parentElement) {
   let isOpen = false;
   let currentImageIndex = 0;
   let colorImagesInterval = null;
+
+  // Функция для получения локализованного текста
+  const getLocalizedText = (key, defaultText) => {
+    try {
+      const translation = i18next.t(key);
+      return translation !== key ? translation : defaultText;
+    } catch (error) {
+      console.warn(`Error getting translation for ${key}:`, error);
+      return defaultText;
+    }
+  };
+
+  // Получение локализованной цены
+  const getLocalizedPriceWithFallback = type => {
+    try {
+      return getLocalizedPrice(type);
+    } catch (error) {
+      console.warn(`Error getting localized price for ${type}:`, error);
+      // Значения по умолчанию
+      if (type === 'current') return '$35.48 US';
+      if (type === 'original') return 'US $108.06';
+      if (type === 'discount') return '-68%';
+      return '';
+    }
+  };
 
   // Добавляем базовые стили для модального окна
   const addStyles = () => {
@@ -47,11 +75,18 @@ export function createModalAbout(parentElement) {
     if (!feature) return '';
 
     // Обработка карусели цветов
-    if (feature.title === 'Extensive color selection' && feature.colorImages) {
+    if (
+      feature.title ===
+        getLocalizedText('about.cards.4.title', 'Extensive color selection') &&
+      feature.colorImages
+    ) {
       return `
       <img
         src="${feature.colorImages[currentImageIndex]}"
-        alt="R36S Color Variant ${currentImageIndex + 1}"
+        alt="${getLocalizedText(
+          `about.cards.4.imageAlt.${currentImageIndex + 1}`,
+          `R36S Color Variant ${currentImageIndex + 1}`
+        )}"
         class="modal-about-image"
         loading="lazy"
         width="400" 
@@ -89,7 +124,10 @@ export function createModalAbout(parentElement) {
       return `
       <img
         src="${feature.videoUrl}"
-        alt="${feature.imageAlt || 'Feature animation'}"
+        alt="${
+          feature.imageAlt ||
+          getLocalizedText('about.modal.imageAlt.default', 'Feature animation')
+        }"
         class="modal-about-image"
         width="400" 
         height="400"
@@ -127,7 +165,10 @@ export function createModalAbout(parentElement) {
       return `
       <img
         src="${feature.imageUrl}"
-        alt="${feature.imageAlt || 'Feature image'}"
+        alt="${
+          feature.imageAlt ||
+          getLocalizedText('about.modal.imageAlt.default', 'Feature image')
+        }"
         class="modal-about-image"
         width="400" 
         height="400"
@@ -140,13 +181,20 @@ export function createModalAbout(parentElement) {
     // Запасной вариант если ни imageUrl, ни videoUrl не указаны
     return `
     <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
-      ${feature.imageAlt || 'Feature Image'}
+      ${
+        feature.imageAlt ||
+        getLocalizedText('about.modal.imageAlt.default', 'Feature Image')
+      }
     </div>
   `;
   }
   // Настройка автоматической смены изображений цветов
   function setupColorImagesRotation() {
-    if (feature?.title === 'Extensive color selection' && feature.colorImages) {
+    if (
+      feature?.title ===
+        getLocalizedText('about.cards.4.title', 'Extensive color selection') &&
+      feature.colorImages
+    ) {
       // Очистка существующего интервала
       if (colorImagesInterval) {
         clearInterval(colorImagesInterval);
@@ -163,7 +211,10 @@ export function createModalAbout(parentElement) {
         const imageElement = modalElement.querySelector('.modal-about-image');
         if (imageElement) {
           imageElement.src = feature.colorImages[currentImageIndex];
-          imageElement.alt = `R36S Color Variant ${currentImageIndex + 1}`;
+          imageElement.alt = getLocalizedText(
+            `about.cards.4.imageAlt.${currentImageIndex + 1}`,
+            `R36S Color Variant ${currentImageIndex + 1}`
+          );
         }
       }, 1000);
     }
@@ -203,10 +254,16 @@ export function createModalAbout(parentElement) {
         mainEntity: [
           {
             '@type': 'Question',
-            name: 'How many games are included in the R36S console?',
+            name: getLocalizedText(
+              'about.faq.question',
+              'How many games are included in the R36S console?'
+            ),
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'The R36S console includes over 15,000 classic retro games from various platforms.',
+              text: getLocalizedText(
+                'about.faq.answer',
+                'The R36S console includes over 15,000 classic retro games from various platforms.'
+              ),
             },
           },
         ],
@@ -220,6 +277,14 @@ export function createModalAbout(parentElement) {
         </script>
       `;
 
+    // Получаем локализованные тексты для модального окна
+    const buyNowText = getLocalizedText('about.modal.buyNow', 'BUY NOW');
+    const discountText = getLocalizedText('about.modal.discount', '-68%');
+
+    // Локализованные цены
+    const currentPrice = getLocalizedPriceWithFallback('current');
+    const originalPrice = getLocalizedPriceWithFallback('original');
+
     modalElement.innerHTML = `
         ${structuredDataScript}
         <div class="modal-about-content" itemscope itemtype="https://schema.org/Product">
@@ -231,7 +296,10 @@ export function createModalAbout(parentElement) {
           <meta itemprop="brand" content="R36S" />
           <meta itemprop="productID" content="R36S-F${feature.id}" />
           
-          <button class="modal-about-close" aria-label="Close modal">
+          <button class="modal-about-close" aria-label="${getLocalizedText(
+            'about.modal.close',
+            'Close modal'
+          )}">
             <svg
               width="24"
               height="24"
@@ -252,7 +320,9 @@ export function createModalAbout(parentElement) {
             <div class="modal-about-icon-wrapper" aria-hidden="true">${
               feature.icon
             }</div>
-            <h3 class="modal-about-title" itemprop="name">${feature.title}</h3>
+            <h3 class="modal-about-title" itemprop="name" data-i18n="${
+              feature.i18nKey
+            }.title">${feature.title}</h3>
           </div>
 
           <div class="modal-about-body">
@@ -263,10 +333,10 @@ export function createModalAbout(parentElement) {
             <div class="modal-about-content-container">
               <div class="modal-about-stats" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                 <div class="modal-about-price-wrapper">
-                  <span class="modal-about-original-price">US $108.06</span>
+                  <span class="modal-about-original-price">${originalPrice}</span>
                   <span class="modal-about-current-price" itemprop="price" content="35.48">
-                    $35.48
-                    <span style="font-size: 24px" itemprop="priceCurrency" content="USD">US</span>
+                    ${currentPrice}
+                    <meta itemprop="priceCurrency" content="USD" />
                   </span>
                   <meta itemprop="availability" content="https://schema.org/InStock" />
                   <meta itemprop="url" content="https://www.aliexpress.com/item/1005007171465465.html" />
@@ -280,12 +350,14 @@ export function createModalAbout(parentElement) {
                   itemprop="url"
                 >
                   <span class="modal-about-button-pulse"></span>
-                  <span class="modal-about-button-text">BUY NOW -68%</span>
+                  <span class="modal-about-button-text">${buyNowText} ${discountText}</span>
                   <span class="modal-about-button-shine"></span>
                 </a>
               </div>
 
-              <div class="modal-about-description" itemprop="description">
+              <div class="modal-about-description" itemprop="description" data-i18n="${
+                feature.i18nKey
+              }.fullDescription">
                 ${feature.fullDescription}
               </div>
             </div>

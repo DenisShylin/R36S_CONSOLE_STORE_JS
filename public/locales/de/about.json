@@ -1,17 +1,93 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": {
+    "functionality": "Funktionalität",
+    "model": "R36S"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "title": {
+    "highlight": "R36S",
+    "rest": "Funktionen der tragbaren Spielkonsole"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "subtitle": "Entdecken Sie eine Welt mit über 15.000 Retro-Spielen mit dem R36S - tragbare Spieltechnologie mit langer Akkulaufzeit, anpassbaren Einstellungen und einem lebendigen Display.",
+  "button": {
+    "details": "Mehr Details"
+  },
+  "cards": {
+    "1": {
+      "title": "Retro-Spielesammlung",
+      "description": "Tauchen Sie mit der tragbaren R36S-Spielkonsole in das Spielerlebnis ein.",
+      "number": "15K+",
+      "detail": "klassische Spiele",
+      "fullDescription": "Entdecken Sie eine reiche Sammlung klassischer Spiele mit über 15.000 Titeln aus verschiedenen Epochen. Von ikonischen Arcade-Spielen bis hin zu beliebten Konsolenspielen umfasst unsere Bibliothek alle bedeutenden Plattformen der Vergangenheit.\n\nDie Sammlung umfasst:\n• Klassische Arcade-Spiele der 80er und 90er Jahre\n• Vollständige Bibliotheken von NES, SNES, Sega und anderen Konsolen\n• Exklusive Ports und seltene Veröffentlichungen\n• Optimierte Versionen für moderne Hardware",
+      "imageAlt": "Retro-Spielesammlung"
+    },
+    "2": {
+      "title": "Lebendige Display-Technologie",
+      "description": "Genießen Sie lebendiges Gaming auf einem 3,5-Zoll-LCD-Display mit scharfer 640x480-Auflösung.",
+      "number": "3.5\"",
+      "detail": "IPS-Display",
+      "fullDescription": "R36S-Konsolen-Displayspezifikationen:\n• 3,5-Zoll-IPS-Display\n• 640x480 Auflösung\n• Hohe Helligkeit und Kontrast\n• Weite Betrachtungswinkel\n• Antireflexbeschichtung\n• Energieeffiziente Hintergrundbeleuchtung\n• Kratzfeste Oberfläche",
+      "imageAlt": "Display-Technologie"
+    },
+    "3": {
+      "title": "Leistungsstarker Akku",
+      "description": "Genießen Sie bis zu 7-8 Stunden kontinuierliches Spielen mit dem R36S.",
+      "number": "7-8",
+      "detail": "Stunden Spielzeit",
+      "fullDescription": "Leistungsstarker 3200-mAh-Akku\n\nGenießen Sie bis zu 7-8 Stunden erweiterte Spielzeit mit dem R36S. Der hochkapazitive 3200-mAh-Akku versorgt das gestochen scharfe 3,5-Zoll-IPS-Display (640x480 Auflösung) und bietet ein immersives Spielerlebnis ohne häufiges Aufladen.\n\nHauptmerkmale:\n- Erweiterte Spielzeit\n- Vollbild-IPS-Display",
+      "imageAlt": "Akkulaufzeit"
+    },
+    "4": {
+      "title": "Große Farbauswahl",
+      "description": "Wertschätzen Sie unsere breite Palette an atemberaubenden Konsolenfarben.",
+      "number": "10+",
+      "detail": "FARBEN",
+      "fullDescription": "Entdecken Sie die R36S-Kollektion:\nDie R36S-Konsole bietet 2024 über 12 attraktive Farbvariationen, darunter unser charakteristisches Mitternachtsschwarz und das aufmerksamkeitserregende Galaktisch-Lila. Jedes R36S-Modell verfügt über Recycling-Kunststoff-Oberflächen und eine kratzfeste Beschichtung.\n\nVerfügbare Farben:\n- Klassisches Schwarz\n- Leuchtendes Orange\n- Faszinierendes Lila...",
+      "imageAlt": "R36S-Farboptionen",
+      "imageAlt.1": "Schwarze R36S-Variante",
+      "imageAlt.2": "Orange R36S-Variante",
+      "imageAlt.3": "Lila R36S-Variante",
+      "imageAlt.4": "Rote R36S-Variante"
+    },
+    "5": {
+      "title": "Umfangreiche Einstellungen",
+      "description": "Passen Sie Steuerungen, Helligkeit, Ton und Parameter für maximalen Komfort an",
+      "number": "30+",
+      "detail": "Einstellungen",
+      "fullDescription": "Fähigkeiten und Konnektivität:\n- Verbindung zu externen Displays über OTG für Spiele auf dem großen Bildschirm\n- Kompatibilität mit modernen Gaming-Controllern und Gamepads\n- Unterstützung mehrsprachiger Benutzeroberflächen\n- Anpassbare Steuerungsschemata und Tastenbelegungen\n- Erweiterte Display-Einstellungen mit einstellbarer Helligkeit und Kontrast\n- Tonoptimierung mit mehreren Audioprofilen\n- Bildschirmspiegelungsfunktionen\n- Verbindung mit geringer Latenz für nahtloses Gameplay",
+      "imageAlt": "R36S-Einstellungen"
+    },
+    "6": {
+      "title": "Maximale Tragbarkeit",
+      "description": "Tragbare Konsole mit austauschbarem Akku für Spiele unterwegs.",
+      "number": "Ultra",
+      "detail": "Tragbar",
+      "fullDescription": "Ob beim Pendeln, auf Reisen oder in einer kurzen Pause, der R36S ist bereit für sofortige Unterhaltung. Sein robustes Design und der geschützte Bildschirm sorgen für sorgenfreie Tragbarkeit, während der langlebige Akku Spiele unterwegs ermöglicht.\n\nFunktionen:\n• Taschengroße Abmessungen für maximale Tragbarkeit\n• Robuste Konstruktion für tägliches Tragen\n• Ergonomischer Griff für längere Spielsitzungen\n• Schneller Start für sofortigen Spielzugriff",
+      "imageAlt": "R36S-Tragbarkeit"
+    }
+  },
+  "modal": {
+    "close": "Schließen",
+    "buyNow": "JETZT KAUFEN",
+    "discount": "-68%",
+    "imageAlt": {
+      "default": "Funktionsbild"
+    }
+  },
+  "seo": {
+    "title": "R36S Tragbare Spielkonsole Funktionen",
+    "subtitle": "Die beste tragbare R36S Retro-Spielkonsole",
+    "description": "Die tragbare R36S-Spielkonsole ist das perfekte Spielgerät für Retro-Gaming-Enthusiasten, mit einer umfangreichen Bibliothek klassischer Spiele, einem lebendigen Display, langer Akkulaufzeit und anpassbaren Einstellungen.",
+    "list": {
+      "games": "Über 15.000 Retro-Spiele von verschiedenen Plattformen",
+      "display": "3,5-Zoll-IPS-LCD-Display mit 640x480 Auflösung",
+      "battery": "7-8 Stunden Akkulaufzeit mit einer Kapazität von 3200 mAh",
+      "colors": "Erhältlich in mehr als 10 Farbvariationen",
+      "settings": "Über 30 anpassbare Parameter für optimales Gameplay",
+      "portable": "Ultra-tragbares Design für Spiele unterwegs"
+    }
+  },
+  "faq": {
+    "question": "Wie viele Spiele sind in der R36S-Konsole enthalten?",
+    "answer": "Die R36S-Konsole enthält über 15.000 klassische Retro-Spiele von verschiedenen Plattformen."
   }
 }

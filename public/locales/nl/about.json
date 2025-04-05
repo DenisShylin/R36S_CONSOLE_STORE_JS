@@ -1,17 +1,93 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": {
+    "functionality": "Functionaliteit",
+    "model": "R36S"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "title": {
+    "highlight": "R36S",
+    "rest": "Functies van Draagbare Spelconsole"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "subtitle": "Ontdek een wereld van meer dan 15.000 retrogames met de R36S - draagbare gametechnologie met lange batterijduur, aanpasbare instellingen en een levendig display.",
+  "button": {
+    "details": "Meer Details"
+  },
+  "cards": {
+    "1": {
+      "title": "Retro Gamecollectie",
+      "description": "Verdiep je in het gamen met de R36S draagbare spelconsole.",
+      "number": "15K+",
+      "detail": "klassieke games",
+      "fullDescription": "Ontdek een rijke collectie klassieke games met meer dan 15.000 titels uit verschillende tijdperken. Van iconische arcadegames tot geliefde consolegames, onze bibliotheek dekt alle belangrijke platforms uit het verleden.\n\nDe collectie omvat:\n• Klassieke arcadegames uit de jaren 80 en 90\n• Complete bibliotheken van NES, SNES, Sega en andere consoles\n• Exclusieve ports en zeldzame releases\n• Geoptimaliseerde versies voor moderne hardware",
+      "imageAlt": "Retro Gamecollectie"
+    },
+    "2": {
+      "title": "Levendige Displaytechnologie",
+      "description": "Geniet van levendige games op een 3,5-inch LCD-scherm met scherpe 640x480 resolutie.",
+      "number": "3.5\"",
+      "detail": "IPS display",
+      "fullDescription": "R36S console displayspecificaties:\n• 3,5-inch IPS-display\n• 640x480 resolutie\n• Hoge helderheid en contrast\n• Brede kijkhoeken\n• Anti-reflectiecoating\n• Energiezuinige achtergrondverlichting\n• Krasbestendige oppervlakte",
+      "imageAlt": "Displaytechnologie"
+    },
+    "3": {
+      "title": "Krachtige Batterij",
+      "description": "Geniet van tot 7-8 uur ononderbroken gamen met de R36S.",
+      "number": "7-8",
+      "detail": "uur speeltijd",
+      "fullDescription": "Krachtige 3200 mAh batterij\n\nGeniet van tot 7-8 uur uitgebreide speeltijd met de R36S. De 3200 mAh batterij met hoge capaciteit voedt het scherpe 3,5-inch IPS-display (640x480 resolutie) en biedt meeslepende gameplay zonder frequent opladen.\n\nBelangrijkste kenmerken:\n- Verlengde speeltijd\n- Volledig scherm IPS-display",
+      "imageAlt": "Batterijduur"
+    },
+    "4": {
+      "title": "Ruime Kleurkeuze",
+      "description": "Waardeer ons brede assortiment aan prachtige consolekleuren.",
+      "number": "10+",
+      "detail": "KLEUREN",
+      "fullDescription": "Maak kennis met de R36S-collectie:\nDe R36S-console biedt in 2024 meer dan 12 aantrekkelijke kleurvariaties, waaronder onze kenmerkende Midnight Black en de aandachttrekkende Galactic Purple. Elk R36S-model heeft afwerkingen van gerecycled plastic en een krasbestendige coating.\n\nBeschikbare kleuren:\n- Klassiek Zwart\n- Levendig Oranje\n- Betoverend Paars...",
+      "imageAlt": "R36S Kleuropties",
+      "imageAlt.1": "Zwarte R36S-variant",
+      "imageAlt.2": "Oranje R36S-variant",
+      "imageAlt.3": "Paarse R36S-variant",
+      "imageAlt.4": "Rode R36S-variant"
+    },
+    "5": {
+      "title": "Uitgebreide Instellingen",
+      "description": "Pas bediening, helderheid, geluid en parameters aan voor maximaal comfort",
+      "number": "30+",
+      "detail": "instellingen",
+      "fullDescription": "Mogelijkheden en connectiviteit:\n- Verbinding met externe displays via OTG voor gaming op groot scherm\n- Compatibiliteit met moderne gamecontrollers en gamepads\n- Ondersteuning voor meertalige interface\n- Aanpasbare bedieningsschema's en knoptoewijzingen\n- Geavanceerde displayinstellingen met verstelbare helderheid en contrast\n- Geluidsoptimalisatie met meerdere audioprofielen\n- Mogelijkheden voor schermspiegeling\n- Verbinding met lage latentie voor naadloze gameplay",
+      "imageAlt": "R36S Instellingen"
+    },
+    "6": {
+      "title": "Maximale Draagbaarheid",
+      "description": "Draagbare console met verwijderbare batterij voor gaming onderweg.",
+      "number": "Ultra",
+      "detail": "Draagbaar",
+      "fullDescription": "Of je nu forenst, reist of een korte pauze neemt, de R36S is klaar voor direct entertainment. Het duurzame ontwerp en beschermde scherm zorgen voor zorgeloze draagbaarheid, terwijl de lang meegaande batterij gaming onderweg mogelijk maakt.\n\nKenmerken:\n• Zakformaat afmetingen voor maximale draagbaarheid\n• Stevige constructie voor dagelijks dragen\n• Ergonomische grip voor langdurige gamesessies\n• Snelle opstart voor directe toegang tot games",
+      "imageAlt": "R36S Draagbaarheid"
+    }
+  },
+  "modal": {
+    "close": "Sluiten",
+    "buyNow": "NU KOPEN",
+    "discount": "-68%",
+    "imageAlt": {
+      "default": "Functieafbeelding"
+    }
+  },
+  "seo": {
+    "title": "R36S Draagbare Spelconsole Functies",
+    "subtitle": "De Beste R36S Draagbare Retro Spelconsole",
+    "description": "De R36S draagbare spelconsole is het perfecte gameapparaat voor liefhebbers van retrogaming, met een uitgebreide bibliotheek aan klassieke games, een levendig display, lange batterijduur en aanpasbare instellingen.",
+    "list": {
+      "games": "Meer dan 15.000 retrogames van verschillende platforms",
+      "display": "3,5-inch IPS LCD-display met 640x480 resolutie",
+      "battery": "7-8 uur batterijduur met een capaciteit van 3200 mAh",
+      "colors": "Beschikbaar in meer dan 10 kleurvariaties",
+      "settings": "Meer dan 30 aanpasbare parameters voor optimale gameplay",
+      "portable": "Ultradraagbaar ontwerp voor gaming onderweg"
+    }
+  },
+  "faq": {
+    "question": "Hoeveel games zijn inbegrepen in de R36S-console?",
+    "answer": "De R36S-console bevat meer dan 15.000 klassieke retrogames van verschillende platforms."
   }
 }
