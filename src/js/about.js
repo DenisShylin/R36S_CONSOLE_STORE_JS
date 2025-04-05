@@ -113,7 +113,7 @@ export function initAbout() {
   const features = [
     {
       id: 1,
-      i18nKey: 'about.cards.1', // Изменено с 'features.cards.1'
+      i18nKey: 'about.cards.1',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@ The collection includes:
     },
     {
       id: 2,
-      i18nKey: 'about.cards.2', // Изменено с 'features.cards.2'
+      i18nKey: 'about.cards.2',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +185,7 @@ The collection includes:
     },
     {
       id: 3,
-      i18nKey: 'about.cards.3', // Изменено с 'features.cards.3'
+      i18nKey: 'about.cards.3',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +217,7 @@ Key features:
     },
     {
       id: 4,
-      i18nKey: 'about.cards.4', // Изменено с 'features.cards.4'
+      i18nKey: 'about.cards.4',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +250,7 @@ Available Colors:
     },
     {
       id: 5,
-      i18nKey: 'about.cards.5', // Изменено с 'features.cards.5'
+      i18nKey: 'about.cards.5',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +285,7 @@ Available Colors:
     },
     {
       id: 6,
-      i18nKey: 'about.cards.6', // Изменено с 'features.cards.6'
+      i18nKey: 'about.cards.6',
       icon: `
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -340,12 +340,38 @@ Features:
     };
   };
 
+  // Функция для явного обновления текста кнопок
+  function updateButtonsText() {
+    try {
+      const buttonText = getLocalizedText(
+        'about.button.details',
+        'More details'
+      );
+      const buttons = document.querySelectorAll(
+        '.about-card__button .button-text'
+      );
+
+      console.log(
+        `Обновление текста ${buttons.length} кнопок на: "${buttonText}"`
+      );
+
+      buttons.forEach(button => {
+        button.textContent = buttonText;
+      });
+    } catch (error) {
+      console.error('Ошибка при обновлении текста кнопок:', error);
+    }
+  }
+
   // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
   // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
     console.log('Начинаем рендеринг карточек...');
     // Очищаем контейнер перед добавлением карточек для предотвращения дублирования
     cardsContainer.innerHTML = '';
+
+    // Получаем перевод для кнопки
+    const buttonText = getLocalizedText('about.button.details', 'More details');
 
     // Создаем HTML для всех 6 карточек
     const cardsHTML = features
@@ -365,7 +391,7 @@ Features:
             <span class="about-card__detail" data-i18n="${feature.i18nKey}.detail">${localizedFeature.detail}</span>
           </div>
           <button class="about-card__button" data-feature-id="${feature.id}">
-            <span class="button-text" data-i18n="about.button.details">More details</span>
+            <span class="button-text" data-i18n="about.button.details">${buttonText}</span>
             <span class="button-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -652,8 +678,13 @@ Features:
     window.addEventListener('languageChanged', function (event) {
       try {
         console.log('Обработка события смены языка в секции About');
+
         // Перерендерим карточки с новыми переводами
         renderCards();
+
+        // Дополнительно обновим текст кнопок напрямую, чтобы гарантировать их перевод
+        updateButtonsText();
+
         // Повторно устанавливаем обработчики событий
         setupCardEvents();
       } catch (error) {

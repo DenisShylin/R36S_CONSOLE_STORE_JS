@@ -120,6 +120,19 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
+.rtl .about__cards {
+    direction: rtl;
+}
+
+.rtl .about-card__button {
+    flex-direction: row-reverse;
+}
+
+.rtl .about-card__icon-wrapper {
+    margin-right: 0;
+    margin-left: 20px;
+}
+
 /* Курсор pointer только для десктопа */
 @media (min-width: 769px) {
     .about-card {

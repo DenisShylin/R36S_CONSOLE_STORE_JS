@@ -290,6 +290,16 @@ video::media-controls {
     white-space: pre-line;
 }
 
+.rtl .modal-about-close {
+    right: auto;
+    left: 16px;
+}
+
+.rtl .modal-about-content-container {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
 /* Animations */
 @keyframes modalAboutOverlayShow {
     from {
