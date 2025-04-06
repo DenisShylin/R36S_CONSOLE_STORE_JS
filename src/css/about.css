@@ -79,6 +79,7 @@
 .about__title-rest {
     background: linear-gradient(135deg, #fff 0%, #94A3B8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 600;
 }
@@ -120,17 +121,45 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.rtl .about__cards {
-    direction: rtl;
+/* RTL поддержка для секции About */
+.rtl .about-card__button {
+    flex-direction: row-reverse;
+    /* Меняем порядок элементов для RTL */
 }
 
-.rtl .about-card__button {
+.rtl .about-card__button .button-icon {
+    transform: rotate(180deg);
+    /* Поворачиваем стрелку для RTL */
+}
+
+.rtl .about-card__button:hover .button-text {
+    transform: translateX(8px);
+    /* Меняем направление анимации для RTL */
+}
+
+.rtl .about-card__button:hover .button-icon {
+    transform: translateX(-4px) rotate(180deg);
+    /* Меняем направление анимации для RTL, сохраняя поворот */
+}
+
+/* RTL поддержка для модального окна */
+.rtl .modal-about-close {
+    right: auto;
+    left: 16px;
+}
+
+.rtl .modal-about-content-container {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
+.rtl .modal-about-header {
     flex-direction: row-reverse;
 }
 
-.rtl .about-card__icon-wrapper {
-    margin-right: 0;
-    margin-left: 20px;
+.rtl .modal-about-icon-wrapper {
+    margin-left: 0;
+    margin-right: 17px;
 }
 
 /* Курсор pointer только для десктопа */
@@ -168,10 +197,12 @@
     position: absolute;
     inset: -1px;
     background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
-            rgba(96, 165, 250, 0.15),
+            rgba(96, 165, 250, 0.4),
             transparent 40%);
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.3s;
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Эффект при наведении */
@@ -297,6 +328,7 @@
     line-height: 1;
     background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 

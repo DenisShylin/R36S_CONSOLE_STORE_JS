@@ -63,6 +63,100 @@ function preloadImages() {
 export function initAbout() {
   console.log('Инициализация секции About');
 
+  // Диагностика и исправление эффекта свечения
+  function fixGlowEffect() {
+    console.log('Запуск диагностики эффекта свечения...');
+
+    // Получаем контейнер для карточек
+    const cardsContainer = document.querySelector('.about__cards');
+    if (!cardsContainer) {
+      console.error('Контейнер для карточек не найден!');
+
+      // Пробуем найти контейнер по другим селекторам
+      const alternativeContainers = [
+        document.querySelector('.about .cards'),
+        document.querySelector('[data-section="about"] .cards'),
+        document.querySelector('#features-r36s .about__cards'),
+      ];
+
+      const foundContainer = alternativeContainers.find(
+        container => container !== null
+      );
+      if (foundContainer) {
+        console.log('Найден альтернативный контейнер:', foundContainer);
+        setTimeout(() => setupGlowEffect(foundContainer), 500);
+      } else {
+        console.error('Не удалось найти контейнер с карточками');
+      }
+
+      return;
+    }
+
+    setTimeout(() => setupGlowEffect(cardsContainer), 500);
+  }
+
+  function setupGlowEffect(container) {
+    // Ищем карточки внутри контейнера
+    const cards = container.querySelectorAll('.about-card');
+    console.log(`Найдено ${cards.length} карточек`);
+
+    if (cards.length === 0) {
+      console.error('Карточки не найдены в контейнере!');
+
+      // Пробуем альтернативные селекторы
+      const alternativeCards = container.querySelectorAll(
+        '.card, .feature-card, [data-card]'
+      );
+      if (alternativeCards.length > 0) {
+        console.log(
+          `Найдено ${alternativeCards.length} карточек по альтернативному селектору`
+        );
+        setupMouseEffects(alternativeCards);
+      } else {
+        console.error('Не удалось найти карточки ни по одному селектору');
+      }
+
+      return;
+    }
+
+    setupMouseEffects(cards);
+  }
+
+  function setupMouseEffects(cards) {
+    cards.forEach((card, index) => {
+      console.log(`Настройка карточки ${index + 1}`);
+
+      // Проверяем наличие элемента подсветки
+      let glowElement = card.querySelector('.card-glow');
+      if (!glowElement) {
+        console.log(`Создаем элемент подсветки для карточки ${index + 1}`);
+        glowElement = document.createElement('div');
+        glowElement.className = 'card-glow';
+        card.prepend(glowElement);
+      }
+
+      // Устанавливаем начальные значения переменных
+      card.style.setProperty('--mouse-x', '0px');
+      card.style.setProperty('--mouse-y', '0px');
+
+      // Добавляем прямой обработчик mousemove
+      card.addEventListener('mousemove', function (e) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      console.log(
+        `Обработчик события mousemove добавлен к карточке ${index + 1}`
+      );
+    });
+  }
+
+  // Вызов функции диагностики в начале initAbout()
+  fixGlowEffect();
   // ОПТИМИЗАЦИЯ 2: Начинаем предзагрузку изображений сразу
   preloadImages();
 
@@ -362,7 +456,10 @@ Features:
       console.error('Ошибка при обновлении текста кнопок:', error);
     }
   }
-
+  // Функция для проверки RTL направления
+  function isRTL() {
+    return document.documentElement.dir === 'rtl';
+  }
   // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
   // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
@@ -373,11 +470,52 @@ Features:
     // Получаем перевод для кнопки
     const buttonText = getLocalizedText('about.button.details', 'More details');
 
+    // Проверяем направление текста
+    const rtlDirection = isRTL();
+
     // Создаем HTML для всех 6 карточек
     const cardsHTML = features
       .map(feature => {
         // Получаем локализованные данные
         const localizedFeature = getLocalizedFeature(feature);
+
+        // Определяем содержимое кнопки в зависимости от направления текста
+        const buttonContent = rtlDirection
+          ? `<span class="button-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+        <span class="button-text" data-i18n="about.button.details">${buttonText}</span>`
+          : `<span class="button-text" data-i18n="about.button.details">${buttonText}</span>
+        <span class="button-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>`;
+
         return `
       <div class="about-card" data-id="${feature.id}">
         <div class="card-blur"></div>
@@ -391,23 +529,7 @@ Features:
             <span class="about-card__detail" data-i18n="${feature.i18nKey}.detail">${localizedFeature.detail}</span>
           </div>
           <button class="about-card__button" data-feature-id="${feature.id}">
-            <span class="button-text" data-i18n="about.button.details">${buttonText}</span>
-            <span class="button-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </span>
+            ${buttonContent}
           </button>
         </div>
         <div class="card-indicator"></div>

@@ -35,6 +35,11 @@ export function createModalAbout(parentElement) {
     }
   };
 
+  // Функция для проверки RTL направления
+  function isRTL() {
+    return document.documentElement.dir === 'rtl';
+  }
+
   // Добавляем базовые стили для модального окна
   const addStyles = () => {
     const styleId = 'modal-about-styles';
@@ -81,19 +86,19 @@ export function createModalAbout(parentElement) {
       feature.colorImages
     ) {
       return `
-      <img
-        src="${feature.colorImages[currentImageIndex]}"
-        alt="${getLocalizedText(
-          `about.cards.4.imageAlt.${currentImageIndex + 1}`,
-          `R36S Color Variant ${currentImageIndex + 1}`
-        )}"
-        class="modal-about-image"
-        loading="lazy"
-        width="400" 
-        height="400"
-        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Q29sb3IgVmFyaWFudCBJbWFnZTwvdGV4dD48L3N2Zz4=';"
-      />
-    `;
+        <img
+          src="${feature.colorImages[currentImageIndex]}"
+          alt="${getLocalizedText(
+            `about.cards.4.imageAlt.${currentImageIndex + 1}`,
+            `R36S Color Variant ${currentImageIndex + 1}`
+          )}"
+          class="modal-about-image"
+          loading="lazy"
+          width="400" 
+          height="400"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Q29sb3IgVmFyaWFudCBJbWFnZTwvdGV4dD48L3N2Zz4=';"
+        />
+      `;
     }
 
     // Обработка видео или GIF в videoUrl
@@ -104,37 +109,40 @@ export function createModalAbout(parentElement) {
       // Обработка MP4 (отображаем как видео без элементов управления)
       if (isMp4) {
         return `
-      <div class="gif-container">
-        <video
-          class="modal-about-image"
-          autoplay
-          muted
-          loop
-          playsInline
-          width="400" 
-          height="400"
-        >
-          <source src="${feature.videoUrl}" type="video/mp4" />
-        </video>
-      </div>
-      `;
+        <div class="gif-container">
+          <video
+            class="modal-about-image"
+            autoplay
+            muted
+            loop
+            playsInline
+            width="400" 
+            height="400"
+          >
+            <source src="${feature.videoUrl}" type="video/mp4" />
+          </video>
+        </div>
+        `;
       }
 
       // Обработка GIF
       return `
-      <img
-        src="${feature.videoUrl}"
-        alt="${
-          feature.imageAlt ||
-          getLocalizedText('about.modal.imageAlt.default', 'Feature animation')
-        }"
-        class="modal-about-image"
-        width="400" 
-        height="400"
-        loading="lazy"
-        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+R0lGIEFuaW1hdGlvbjwvdGV4dD48L3N2Zz4=';"
-      />
-    `;
+        <img
+          src="${feature.videoUrl}"
+          alt="${
+            feature.imageAlt ||
+            getLocalizedText(
+              'about.modal.imageAlt.default',
+              'Feature animation'
+            )
+          }"
+          class="modal-about-image"
+          width="400" 
+          height="400"
+          loading="lazy"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+R0lGIEFuaW1hdGlvbjwvdGV4dD48L3N2Zz4=';"
+        />
+      `;
     }
 
     // Обработка статичного изображения или MP4 в imageUrl
@@ -145,49 +153,50 @@ export function createModalAbout(parentElement) {
       // Обработка MP4 в imageUrl (отображаем как видео без элементов управления)
       if (isMp4) {
         return `
-      <div class="gif-container">
-        <video
-          class="modal-about-image"
-          autoplay
-          muted
-          loop
-          playsInline
-          width="400" 
-          height="400"
-        >
-          <source src="${feature.imageUrl}" type="video/mp4" />
-        </video>
-      </div>
-      `;
+        <div class="gif-container">
+          <video
+            class="modal-about-image"
+            autoplay
+            muted
+            loop
+            playsInline
+            width="400" 
+            height="400"
+          >
+            <source src="${feature.imageUrl}" type="video/mp4" />
+          </video>
+        </div>
+        `;
       }
 
       // Обработка обычного изображения
       return `
-      <img
-        src="${feature.imageUrl}"
-        alt="${
-          feature.imageAlt ||
-          getLocalizedText('about.modal.imageAlt.default', 'Feature image')
-        }"
-        class="modal-about-image"
-        width="400" 
-        height="400"
-        loading="lazy"
-        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW1hZ2U8L3RleHQ+PC9zdmc+=';"
-      />
-    `;
+        <img
+          src="${feature.imageUrl}"
+          alt="${
+            feature.imageAlt ||
+            getLocalizedText('about.modal.imageAlt.default', 'Feature image')
+          }"
+          class="modal-about-image"
+          width="400" 
+          height="400"
+          loading="lazy"
+          onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW1hZ2U8L3RleHQ+PC9zdmc+=';"
+        />
+      `;
     }
 
     // Запасной вариант если ни imageUrl, ни videoUrl не указаны
     return `
-    <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
-      ${
-        feature.imageAlt ||
-        getLocalizedText('about.modal.imageAlt.default', 'Feature Image')
-      }
-    </div>
-  `;
+      <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
+        ${
+          feature.imageAlt ||
+          getLocalizedText('about.modal.imageAlt.default', 'Feature Image')
+        }
+      </div>
+    `;
   }
+
   // Настройка автоматической смены изображений цветов
   function setupColorImagesRotation() {
     if (
@@ -272,98 +281,108 @@ export function createModalAbout(parentElement) {
 
     // JSON-LD для структурированных данных
     const structuredDataScript = `
-        <script type="application/ld+json">
-          ${JSON.stringify(structuredData)}
-        </script>
-      `;
+          <script type="application/ld+json">
+            ${JSON.stringify(structuredData)}
+          </script>
+        `;
 
     // Получаем локализованные тексты для модального окна
     const buyNowText = getLocalizedText('about.modal.buyNow', 'BUY NOW');
     const discountText = getLocalizedText('about.modal.discount', '-68%');
+
+    // Проверяем направление текста для RTL-поддержки
+    const rtlDirection = isRTL();
+
+    // Адаптируем текст кнопки в зависимости от направления
+    const buttonContent = rtlDirection
+      ? `<span class="modal-about-button-shine"></span>
+        <span class="modal-about-button-text">${discountText} ${buyNowText}</span>
+        <span class="modal-about-button-pulse"></span>`
+      : `<span class="modal-about-button-pulse"></span>
+        <span class="modal-about-button-text">${buyNowText} ${discountText}</span>
+        <span class="modal-about-button-shine"></span>`;
 
     // Локализованные цены
     const currentPrice = getLocalizedPriceWithFallback('current');
     const originalPrice = getLocalizedPriceWithFallback('original');
 
     modalElement.innerHTML = `
-        ${structuredDataScript}
-        <div class="modal-about-content" itemscope itemtype="https://schema.org/Product">
-          <meta itemprop="name" content="R36S Handheld Game Console" />
-          <meta itemprop="description" content="${
-            feature.title
-          } for R36S console" />
-          <meta itemprop="sku" content="R36S-${feature.id}" />
-          <meta itemprop="brand" content="R36S" />
-          <meta itemprop="productID" content="R36S-F${feature.id}" />
-          
-          <button class="modal-about-close" aria-label="${getLocalizedText(
-            'about.modal.close',
-            'Close modal'
-          )}">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          
-          <div class="modal-about-header">
-            <div class="modal-about-icon-wrapper" aria-hidden="true">${
-              feature.icon
-            }</div>
-            <h3 class="modal-about-title" itemprop="name" data-i18n="${
-              feature.i18nKey
-            }.title">${feature.title}</h3>
-          </div>
-
-          <div class="modal-about-body">
-            <div class="modal-about-media-container" itemprop="image">
-              ${renderMedia()}
-            </div>
+          ${structuredDataScript}
+          <div class="modal-about-content" itemscope itemtype="https://schema.org/Product">
+            <meta itemprop="name" content="R36S Handheld Game Console" />
+            <meta itemprop="description" content="${
+              feature.title
+            } for R36S console" />
+            <meta itemprop="sku" content="R36S-${feature.id}" />
+            <meta itemprop="brand" content="R36S" />
+            <meta itemprop="productID" content="R36S-F${feature.id}" />
             
-            <div class="modal-about-content-container">
-              <div class="modal-about-stats" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                <div class="modal-about-price-wrapper">
-                  <span class="modal-about-original-price">${originalPrice}</span>
-                  <span class="modal-about-current-price" itemprop="price" content="35.48">
-                    ${currentPrice}
-                    <meta itemprop="priceCurrency" content="USD" />
-                  </span>
-                  <meta itemprop="availability" content="https://schema.org/InStock" />
-                  <meta itemprop="url" content="https://www.aliexpress.com/item/1005007171465465.html" />
+            <button class="modal-about-close" aria-label="${getLocalizedText(
+              'about.modal.close',
+              'Close modal'
+            )}">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            
+            <div class="modal-about-header">
+              <div class="modal-about-icon-wrapper" aria-hidden="true">${
+                feature.icon
+              }</div>
+              <h3 class="modal-about-title" itemprop="name" data-i18n="${
+                feature.i18nKey
+              }.title">${feature.title}</h3>
+            </div>
+
+            <div class="modal-about-body">
+              <div class="modal-about-media-container" itemprop="image">
+                ${renderMedia()}
+              </div>
+              
+              <div class="modal-about-content-container">
+                <div class="modal-about-stats" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                  <div class="modal-about-price-wrapper">
+                    <span class="modal-about-original-price">${originalPrice}</span>
+                    <span class="modal-about-current-price" itemprop="price" content="35.48">
+                      ${currentPrice}
+                      <meta itemprop="priceCurrency" content="USD" />
+                    </span>
+                    <meta itemprop="availability" content="https://schema.org/InStock" />
+                    <meta itemprop="url" content="https://www.aliexpress.com/item/1005007171465465.html" />
+                  </div>
+
+                  <a
+                    href="https://www.aliexpress.com/item/1005007171465465.html"
+                    class="modal-about-button modal-about-button--primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    itemprop="url"
+                  >
+                    ${buttonContent}
+                  </a>
                 </div>
 
-                <a
-                  href="https://www.aliexpress.com/item/1005007171465465.html"
-                  class="modal-about-button modal-about-button--primary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  itemprop="url"
-                >
-                  <span class="modal-about-button-pulse"></span>
-                  <span class="modal-about-button-text">${buyNowText} ${discountText}</span>
-                  <span class="modal-about-button-shine"></span>
-                </a>
-              </div>
-
-              <div class="modal-about-description" itemprop="description" data-i18n="${
-                feature.i18nKey
-              }.fullDescription">
-                ${feature.fullDescription}
+                <div class="modal-about-description" itemprop="description" data-i18n="${
+                  feature.i18nKey
+                }.fullDescription">
+                  ${feature.fullDescription}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      `;
+        `;
 
     // Настройка кнопки закрытия
     const closeButton = modalElement.querySelector('.modal-about-close');

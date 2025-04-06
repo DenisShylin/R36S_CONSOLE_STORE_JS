@@ -290,6 +290,7 @@ video::media-controls {
     white-space: pre-line;
 }
 
+/* RTL поддержка для модального окна */
 .rtl .modal-about-close {
     right: auto;
     left: 16px;
@@ -298,6 +299,27 @@ video::media-controls {
 .rtl .modal-about-content-container {
     padding-right: 0;
     padding-left: 10px;
+}
+
+.rtl .modal-about-header {
+    flex-direction: row-reverse;
+}
+
+.rtl .modal-about-body {
+    flex-direction: row-reverse;
+}
+
+.rtl .modal-about-price-wrapper {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.rtl .modal-about-button--primary {
+    flex-direction: row-reverse;
+}
+
+.rtl .modal-about-description {
+    text-align: right;
 }
 
 /* Animations */
@@ -358,6 +380,10 @@ video::media-controls {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
+    .rtl .modal-about-body {
+        flex-direction: column;
+    }
+
     .modal-about-content {
         max-width: 680px;
         max-height: 76.5vh;
