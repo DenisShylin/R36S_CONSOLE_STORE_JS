@@ -290,36 +290,31 @@ video::media-controls {
     white-space: pre-line;
 }
 
-/* RTL поддержка для модального окна */
+.rtl .modal-about-header {
+    flex-direction: row-reverse;
+    /* Меняем направление на обратное */
+    justify-content: flex-end;
+    /* Выравниваем элементы по правому краю */
+    padding-right: 16px;
+    /* Обычный отступ справа */
+    padding-left: 50px;
+    /* Отступ слева для крестика */
+}
+
+.rtl .modal-about-icon-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.rtl .modal-about-title {
+    text-align: right;
+    margin-right: 17px;
+    /* Отступ справа для заголовка */
+}
+
 .rtl .modal-about-close {
     right: auto;
     left: 16px;
-}
-
-.rtl .modal-about-content-container {
-    padding-right: 0;
-    padding-left: 10px;
-}
-
-.rtl .modal-about-header {
-    flex-direction: row-reverse;
-}
-
-.rtl .modal-about-body {
-    flex-direction: row-reverse;
-}
-
-.rtl .modal-about-price-wrapper {
-    align-items: flex-end;
-    text-align: right;
-}
-
-.rtl .modal-about-button--primary {
-    flex-direction: row-reverse;
-}
-
-.rtl .modal-about-description {
-    text-align: right;
 }
 
 /* Animations */
@@ -380,8 +375,9 @@ video::media-controls {
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-    .rtl .modal-about-body {
-        flex-direction: column;
+    .rtl .modal-about-header {
+        padding-left: 40px;
+        /* Уменьшаем отступ для мобильных устройств */
     }
 
     .modal-about-content {
@@ -441,6 +437,11 @@ video::media-controls {
 }
 
 @media (max-width: 480px) {
+    .rtl .modal-about-header {
+        padding-left: 35px;
+        /* Еще меньше для очень маленьких экранов */
+    }
+
     .modal-about-overlay {
         padding: 17px;
     }

@@ -32,6 +32,9 @@ const getLocalizedText = (key, defaultText) => {
   }
 };
 
+// Экспортируем инициализатор по умолчанию для поддержки импорта
+export default { initAbout };
+
 // ОПТИМИЗАЦИЯ 1: Предзагрузка изображений для улучшения производительности
 function preloadImages() {
   console.log('Начинаем предзагрузку изображений...');
@@ -95,68 +98,6 @@ export function initAbout() {
     setTimeout(() => setupGlowEffect(cardsContainer), 500);
   }
 
-  function setupGlowEffect(container) {
-    // Ищем карточки внутри контейнера
-    const cards = container.querySelectorAll('.about-card');
-    console.log(`Найдено ${cards.length} карточек`);
-
-    if (cards.length === 0) {
-      console.error('Карточки не найдены в контейнере!');
-
-      // Пробуем альтернативные селекторы
-      const alternativeCards = container.querySelectorAll(
-        '.card, .feature-card, [data-card]'
-      );
-      if (alternativeCards.length > 0) {
-        console.log(
-          `Найдено ${alternativeCards.length} карточек по альтернативному селектору`
-        );
-        setupMouseEffects(alternativeCards);
-      } else {
-        console.error('Не удалось найти карточки ни по одному селектору');
-      }
-
-      return;
-    }
-
-    setupMouseEffects(cards);
-  }
-
-  function setupMouseEffects(cards) {
-    cards.forEach((card, index) => {
-      console.log(`Настройка карточки ${index + 1}`);
-
-      // Проверяем наличие элемента подсветки
-      let glowElement = card.querySelector('.card-glow');
-      if (!glowElement) {
-        console.log(`Создаем элемент подсветки для карточки ${index + 1}`);
-        glowElement = document.createElement('div');
-        glowElement.className = 'card-glow';
-        card.prepend(glowElement);
-      }
-
-      // Устанавливаем начальные значения переменных
-      card.style.setProperty('--mouse-x', '0px');
-      card.style.setProperty('--mouse-y', '0px');
-
-      // Добавляем прямой обработчик mousemove
-      card.addEventListener('mousemove', function (e) {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-
-      console.log(
-        `Обработчик события mousemove добавлен к карточке ${index + 1}`
-      );
-    });
-  }
-
-  // Вызов функции диагностики в начале initAbout()
-  fixGlowEffect();
   // ОПТИМИЗАЦИЯ 2: Начинаем предзагрузку изображений сразу
   preloadImages();
 
@@ -460,12 +401,19 @@ Features:
   function isRTL() {
     return document.documentElement.dir === 'rtl';
   }
+
   // ОПТИМИЗАЦИЯ 6: Разделение рендеринга карточек
   // Сначала рендерим разметку карточек без обработчиков событий
   function renderCards() {
     console.log('Начинаем рендеринг карточек...');
     // Очищаем контейнер перед добавлением карточек для предотвращения дублирования
-    cardsContainer.innerHTML = '';
+    const currentContainer = document.querySelector('.about__cards');
+    if (!currentContainer) {
+      console.error('Контейнер карточек не найден для рендеринга!');
+      return;
+    }
+
+    currentContainer.innerHTML = '';
 
     // Получаем перевод для кнопки
     const buttonText = getLocalizedText('about.button.details', 'More details');
@@ -539,10 +487,10 @@ Features:
       .join('');
 
     // Добавляем все карточки в контейнер
-    cardsContainer.innerHTML = cardsHTML;
+    currentContainer.innerHTML = cardsHTML;
 
     // Проверка на количество карточек
-    const renderedCards = cardsContainer.querySelectorAll('.about-card');
+    const renderedCards = currentContainer.querySelectorAll('.about-card');
     console.log(
       `Отрендерено ${renderedCards.length} карточек из ${features.length} необходимых`
     );
@@ -557,9 +505,8 @@ Features:
     }
   }
 
-  // Обработчик движения мыши (оптимизирован с использованием throttle)
-  // ОПТИМИЗАЦИЯ 8: Используем throttle для уменьшения количества вызовов обработчика
-  const handleMouseMove = throttle(function (e) {
+  // ИСПРАВЛЕННЫЙ обработчик движения мыши - КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ
+  function handleMouseMove(e) {
     // Проверка на существование события
     if (!e || !e.currentTarget) {
       return;
@@ -578,17 +525,20 @@ Features:
     try {
       const rect = card.getBoundingClientRect();
 
-      mousePosition = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
+      // Вычисляем точную позицию мыши относительно карточки
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
 
-      card.style.setProperty('--mouse-x', `${mousePosition.x}px`);
-      card.style.setProperty('--mouse-y', `${mousePosition.y}px`);
+      // Применяем позицию как CSS переменные напрямую
+      card.style.setProperty('--mouse-x', `${mouseX}px`);
+      card.style.setProperty('--mouse-y', `${mouseY}px`);
+
+      // Логируем позицию для отладки
+      // console.log(`Карточка ${card.dataset.id}: X=${mouseX}px, Y=${mouseY}px`);
     } catch (err) {
       console.error('Ошибка при обработке движения мыши:', err);
     }
-  }, 16); // 60fps (1000ms / 60 = ~16ms)
+  }
 
   // Функция throttle для ограничения количества вызовов функции
   function throttle(func, limit) {
@@ -656,188 +606,373 @@ Features:
     };
   }
 
-  // Функция очистки обработчиков событий карточек
+  // КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: Полностью переписанная функция очистки обработчиков
   function cleanupCardEvents() {
     console.log('Очистка обработчиков событий карточек...');
     try {
+      // Получаем ссылки на все карточки
       const cards = document.querySelectorAll('.about-card');
       if (cards && cards.length > 0) {
-        cards.forEach(card => {
+        console.log(`Удаление обработчиков из ${cards.length} карточек`);
+        cards.forEach((card, index) => {
           if (card) {
-            card.removeEventListener('mouseenter', () => {});
-            card.removeEventListener('mouseleave', () => {});
-            card.removeEventListener('mousemove', handleMouseMove);
+            // Сохраняем данные атрибуты и содержимое перед клонированием
+            const dataId = card.getAttribute('data-id');
+            const content = card.innerHTML;
+
+            // Удаляем все обработчики событий у карточки путем клонирования
+            const clone = card.cloneNode(false); // Клонируем только элемент без детей
+
+            // Восстанавливаем атрибуты
+            clone.setAttribute('data-id', dataId);
+
+            // Восстанавливаем содержимое
+            clone.innerHTML = content;
+
+            // Заменяем оригинальный элемент клоном
+            if (card.parentNode) {
+              card.parentNode.replaceChild(clone, card);
+              console.log(
+                `Карточка ${index + 1} заменена на клон без обработчиков`
+              );
+            }
           }
         });
+      } else {
+        console.warn('Не найдено карточек для очистки обработчиков');
       }
 
-      const buttons = document.querySelectorAll('.about-card__button');
-      if (buttons && buttons.length > 0) {
-        buttons.forEach(button => {
-          if (button) {
-            button.removeEventListener('click', handleButtonClick);
-          }
-        });
+      // Удаляем делегированный обработчик событий с контейнера путем клонирования
+      const container = document.querySelector('.about__cards');
+      if (container) {
+        // Сохраняем содержимое
+        const content = container.innerHTML;
+
+        // Клонируем контейнер без детей
+        const newContainer = container.cloneNode(false);
+
+        // Восстанавливаем содержимое
+        newContainer.innerHTML = content;
+
+        // Заменяем оригинальный контейнер
+        if (container.parentNode) {
+          container.parentNode.replaceChild(newContainer, container);
+          console.log('Контейнер карточек заменен на клон без обработчиков');
+        }
+      } else {
+        console.warn('Не найден контейнер карточек для очистки обработчиков');
       }
 
-      if (cardsContainer) {
-        cardsContainer.removeEventListener('click', () => {});
-      }
-
-      console.log('Очистка обработчиков завершена');
+      console.log('Очистка обработчиков успешно завершена');
     } catch (err) {
       console.error('Ошибка при очистке обработчиков событий:', err);
+
+      // В случае ошибки пытаемся использовать альтернативный метод очистки
+      try {
+        console.log('Применяем альтернативный метод очистки...');
+        const container = document.querySelector('.about__cards');
+        if (container) {
+          // Сохраняем HTML и полностью перестраиваем раздел
+          const html = container.outerHTML;
+          const parent = container.parentNode;
+
+          if (parent) {
+            // Удаляем оригинальный контейнер
+            parent.removeChild(container);
+
+            // Создаем новый контейнер через HTML
+            parent.insertAdjacentHTML('beforeend', html);
+            console.log('Альтернативная очистка успешно завершена');
+          }
+        }
+      } catch (fallbackError) {
+        console.error('Ошибка при альтернативной очистке:', fallbackError);
+      }
     }
+  }
+
+  // КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: Переработанная функция установки эффекта свечения
+  function setupGlowEffect(container) {
+    // Получаем все карточки (свежесозданные после смены языка)
+    const cards = container.querySelectorAll('.about-card');
+    console.log(`Настройка эффекта свечения для ${cards.length} карточек`);
+
+    if (cards.length === 0) {
+      console.error('Карточки не найдены для эффекта свечения!');
+      return;
+    }
+
+    cards.forEach((card, index) => {
+      // Проверяем наличие элемента подсветки
+      let glowElement = card.querySelector('.card-glow');
+      if (!glowElement) {
+        console.log(`Создаем элемент подсветки для карточки ${index + 1}`);
+        glowElement = document.createElement('div');
+        glowElement.className = 'card-glow';
+        card.prepend(glowElement);
+      }
+
+      // Устанавливаем начальные значения переменных CSS
+      card.style.setProperty('--mouse-x', '0px');
+      card.style.setProperty('--mouse-y', '0px');
+
+      // Добавляем обработчик mousemove
+      card.addEventListener('mousemove', handleMouseMove);
+
+      console.log(
+        `Обработчик события mousemove добавлен к карточке ${index + 1}`
+      );
+    });
   }
 
   // ОПТИМИЗАЦИЯ 9: Асинхронная установка обработчиков событий для карточек
   function setupCardEvents() {
     console.log('Настройка обработчиков событий для карточек...');
-    // Используем DOMContentLoaded или timeout для уверенности, что DOM загружен
-    const setupEvents = () => {
-      console.log('Проверяем наличие карточек для установки обработчиков...');
-      const cards = document.querySelectorAll('.about-card');
-      if (!cards || cards.length === 0) {
-        console.warn('Не найдены карточки для установки обработчиков событий');
-        // Попробуем снова через небольшую задержку
-        setTimeout(setupEvents, 200);
-        return;
-      }
 
-      console.log(
-        `Устанавливаем обработчики событий для ${cards.length} карточек`
-      );
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    // Сначала получаем обновленный контейнер
+    const currentCardsContainer = document.querySelector('.about__cards');
+    if (!currentCardsContainer) {
+      console.error('Контейнер карточек не найден для установки обработчиков!');
+      return;
+    }
 
-      // ОПТИМИЗАЦИЯ 10: Используем делегирование событий вместо множества обработчиков
-      // Устанавливаем один обработчик на контейнер для всех карточек
-      if (!isMobile && cardsContainer) {
-        cardsContainer.addEventListener('click', function (e) {
-          const card = e.target.closest('.about-card');
-          if (card && !e.target.closest('.about-card__button')) {
-            const featureId = parseInt(card.dataset.id);
-            console.log('Клик по карточке ID:', featureId);
-            const feature = features.find(f => f.id === featureId);
-            if (!feature) {
-              console.error('Данные для карточки не найдены');
-              return;
-            }
+    // Получаем свежие карточки
+    const cards = currentCardsContainer.querySelectorAll('.about-card');
+    if (!cards || cards.length === 0) {
+      console.warn('Не найдены карточки для установки обработчиков событий');
+      return;
+    }
 
-            // Локализуем данные перед открытием модального окна
-            const localizedFeature = getLocalizedFeature(feature);
+    console.log(
+      `Устанавливаем обработчики событий для ${cards.length} карточек`
+    );
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-            // Открываем модальное окно
-            if (modalInstance) {
-              modalInstance.open(localizedFeature);
-            }
+    // Устанавливаем эффект свечения для карточек
+    setupGlowEffect(currentCardsContainer);
+
+    // Устанавливаем один обработчик на контейнер для всех карточек (делегирование)
+    if (!isMobile && currentCardsContainer) {
+      currentCardsContainer.addEventListener('click', function (e) {
+        const card = e.target.closest('.about-card');
+        if (card && !e.target.closest('.about-card__button')) {
+          const featureId = parseInt(card.dataset.id);
+          console.log('Клик по карточке ID:', featureId);
+          const feature = features.find(f => f.id === featureId);
+          if (!feature) {
+            console.error('Данные для карточки не найдены');
+            return;
           }
-        });
-      }
 
-      // Добавляем обработчики для визуальных эффектов на карточках
-      cards.forEach(card => {
-        if (!card) return; // Проверка на null
+          // Локализуем данные перед открытием модального окна
+          const localizedFeature = getLocalizedFeature(feature);
 
-        // Используем делегирование событий для mouseenter/mouseleave
-        card.addEventListener('mouseenter', function () {
-          if (!card) return;
-          activeCard = parseInt(card.dataset.id);
-          card.classList.add('active');
-        });
+          // Открываем модальное окно
+          if (modalInstance) {
+            modalInstance.open(localizedFeature);
+          }
+        }
+      });
+    }
 
-        card.addEventListener('mouseleave', function () {
-          if (!card) return;
-          activeCard = null;
-          card.classList.remove('active');
-        });
+    // Добавляем обработчики для визуальных эффектов на карточках
+    cards.forEach(card => {
+      if (!card) return; // Проверка на null
 
-        // Используем throttle для mousemove
-        card.addEventListener('mousemove', handleMouseMove);
+      // Используем делегирование событий для mouseenter/mouseleave
+      card.addEventListener('mouseenter', function () {
+        if (!card) return;
+        activeCard = parseInt(card.dataset.id);
+        card.classList.add('active');
       });
 
-      // Оптимизированная обработка кликов по кнопкам
-      const buttons = document.querySelectorAll('.about-card__button');
-      if (buttons && buttons.length > 0) {
-        buttons.forEach(button => {
-          if (!button) return; // Проверка на null
-          button.addEventListener('click', handleButtonClick);
-        });
-        console.log(`Установлены обработчики для ${buttons.length} кнопок`);
-      } else {
-        console.warn('Не найдены кнопки карточек');
-      }
+      card.addEventListener('mouseleave', function () {
+        if (!card) return;
+        activeCard = null;
+        card.classList.remove('active');
+      });
+    });
 
-      // Оптимизированный обработчик изменения размера окна
-      window.addEventListener(
-        'resize',
-        debounce(() => {
-          const wasDesktop = !isMobile;
-          const isDesktopNow = !window.matchMedia('(max-width: 768px)').matches;
-
-          if (wasDesktop !== isDesktopNow) {
-            cleanupCardEvents();
-            setupCardEvents();
-          }
-        }, 250)
-      );
-
-      console.log('Настройка обработчиков событий успешно завершена');
-    };
-
-    // Запускаем настройку событий, когда DOM гарантированно загружен
-    if (
-      document.readyState === 'complete' ||
-      document.readyState === 'interactive'
-    ) {
-      setTimeout(setupEvents, 10);
+    // Оптимизированная обработка кликов по кнопкам
+    const buttons = currentCardsContainer.querySelectorAll(
+      '.about-card__button'
+    );
+    if (buttons && buttons.length > 0) {
+      buttons.forEach(button => {
+        if (!button) return; // Проверка на null
+        button.addEventListener('click', handleButtonClick);
+      });
+      console.log(`Установлены обработчики для ${buttons.length} кнопок`);
     } else {
-      document.addEventListener('DOMContentLoaded', setupEvents);
+      console.warn('Не найдены кнопки карточек');
     }
+
+    console.log('Настройка обработчиков событий успешно завершена');
   }
 
-  // Обработчик изменения языка
+  // КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: Обработчик события смены языка
   function setupLanguageChangeListener() {
-    window.addEventListener('languageChanged', function (event) {
+    // Создаем именованную функцию-обработчик для возможности корректного удаления
+    function languageChangeHandler(event) {
       try {
         console.log('Обработка события смены языка в секции About');
 
-        // Перерендерим карточки с новыми переводами
+        // Получаем новый язык из события
+        const newLanguage = event.detail
+          ? event.detail.language
+          : i18next.language;
+        console.log(`Переключение на язык: ${newLanguage}`);
+
+        // Сначала очищаем существующие обработчики
+        cleanupCardEvents();
+
+        // Затем перерендериваем карточки с новыми переводами
         renderCards();
 
-        // Дополнительно обновим текст кнопок напрямую, чтобы гарантировать их перевод
+        // И заново устанавливаем все обработчики событий с небольшой задержкой для гарантии завершения рендеринга DOM
+        setTimeout(() => {
+          setupCardEvents();
+
+          // Дополнительно проверяем состояние карточек
+          const cards = document.querySelectorAll('.about-card');
+
+          // Проверяем наличие эффекта подсветки у всех карточек
+          cards.forEach((card, index) => {
+            const glowElement = card.querySelector('.card-glow');
+            if (!glowElement) {
+              console.warn(
+                `Карточка ${
+                  index + 1
+                } не имеет элемента подсветки, добавляем...`
+              );
+              const newGlowElement = document.createElement('div');
+              newGlowElement.className = 'card-glow';
+              card.prepend(newGlowElement);
+            }
+
+            // Принудительно устанавливаем начальные значения переменных CSS
+            card.style.setProperty('--mouse-x', '0px');
+            card.style.setProperty('--mouse-y', '0px');
+          });
+
+          console.log(`Проверено ${cards.length} карточек после смены языка`);
+        }, 100);
+
+        // Дополнительно обновляем текст кнопок напрямую для уверенности
         updateButtonsText();
 
-        // Повторно устанавливаем обработчики событий
-        setupCardEvents();
+        console.log('Обновление секции About после смены языка завершено');
       } catch (error) {
         console.error(
           'Ошибка при обновлении секции About после смены языка:',
           error
         );
+
+        // Пытаемся восстановить работоспособность в случае ошибки
+        try {
+          renderCards();
+          setTimeout(setupCardEvents, 150);
+        } catch (fallbackError) {
+          console.error(
+            'Не удалось выполнить восстановление после ошибки:',
+            fallbackError
+          );
+        }
       }
-    });
+    }
+
+    // Удаляем предыдущий обработчик, если он был
+    window.removeEventListener('languageChanged', languageChangeHandler);
+
+    // Устанавливаем новый обработчик
+    window.addEventListener('languageChanged', languageChangeHandler);
+
+    // Сохраняем ссылку на функцию для возможности удаления
+    return languageChangeHandler;
   }
 
   // Очистка всех обработчиков событий
   function cleanupEvents() {
     console.log('Очистка всех обработчиков событий...');
     cleanupCardEvents();
-    window.removeEventListener('resize', debounce);
-    window.removeEventListener('languageChanged', function () {});
+
+    // Исправление: сохраняем ссылку на функцию debounce для корректного удаления
+    const debouncedResize = debounce(() => {}, 250);
+    window.removeEventListener('resize', debouncedResize);
+
+    // Исправление: создаем именованную функцию для правильного удаления слушателя событий
+    function languageChangeHandler() {}
+    window.removeEventListener('languageChanged', languageChangeHandler);
 
     // Сохраняем модальное окно в глобальной переменной, но очищаем локальную ссылку
     modalInstance = null;
+
+    // Очищаем кеш CSS-переменных, если необходимо
+    const cachedCards = document.querySelectorAll('.about-card');
+    cachedCards.forEach(card => {
+      if (card) {
+        card.style.removeProperty('--mouse-x');
+        card.style.removeProperty('--mouse-y');
+      }
+    });
+
     console.log('Очистка обработчиков событий завершена');
   }
 
   // ОПТИМИЗАЦИЯ 11: Асинхронная инициализация для предотвращения блокировки основного потока
   function asyncInit() {
     // Устанавливаем слушатель изменения языка
-    setupLanguageChangeListener();
+    const languageChangeHandler = setupLanguageChangeListener();
+
+    // Создаем и сохраняем ссылку на debouncedResize для возможности удаления
+    const debouncedResize = debounce(() => {
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const currentIsMobile = window.matchMedia('(max-width: 768px)').matches;
+
+      if (isMobile !== currentIsMobile) {
+        console.log('Состояние адаптивности изменилось, обновляем обработчики');
+        cleanupCardEvents();
+        setupCardEvents();
+      }
+    }, 250);
+
+    // Устанавливаем обработчик изменения размера окна
+    window.addEventListener('resize', debouncedResize);
+
+    // Проверяем повторно установленные обработчики для подтверждения корректной работы
+    setTimeout(() => {
+      const cards = document.querySelectorAll('.about-card');
+      console.log(
+        `Проверка установки эффекта подсветки: найдено ${cards.length} карточек`
+      );
+
+      let cardWithoutGlow = false;
+      cards.forEach(card => {
+        if (!card.querySelector('.card-glow')) {
+          cardWithoutGlow = true;
+          console.warn(
+            'Обнаружена карточка без эффекта подсветки, исправляем...'
+          );
+          setupGlowEffect(document.querySelector('.about__cards'));
+        }
+      });
+
+      if (!cardWithoutGlow) {
+        console.log('Все карточки имеют корректный эффект подсветки');
+      }
+    }, 100);
 
     // Возвращаем функцию очистки
     return function cleanup() {
       console.log('Запуск функции очистки секции About');
+
+      // Удаляем созданный ранее обработчик resize
+      window.removeEventListener('resize', debouncedResize);
+
+      // Удаляем обработчик смены языка
+      window.removeEventListener('languageChanged', languageChangeHandler);
+
+      // Очищаем все остальные обработчики
       cleanupEvents();
     };
   }
@@ -856,6 +991,3 @@ Features:
     return null;
   }
 }
-
-// Экспортируем инициализатор по умолчанию для поддержки импорта
-export default { initAbout };

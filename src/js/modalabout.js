@@ -75,6 +75,45 @@ export function createModalAbout(parentElement) {
     return modalDiv;
   }
 
+  // Функция updateModalRTLStyles тоже должна быть обновлена
+  function updateModalRTLStyles() {
+    if (!modalElement) return;
+
+    const rtlDirection = isRTL();
+
+    if (rtlDirection) {
+      // Находим и настраиваем заголовок
+      const header = modalElement.querySelector('.modal-about-header');
+      if (header) {
+        // Переместить заголовок в правый угол
+        header.style.flexDirection = 'row-reverse';
+        header.style.justifyContent = 'flex-end'; // Выравнивание по правому краю
+        header.style.paddingRight = '16px';
+        header.style.paddingLeft = '50px'; // Отступ для крестика
+
+        // Настраиваем иконку
+        const iconWrapper = header.querySelector('.modal-about-icon-wrapper');
+        if (iconWrapper) {
+          iconWrapper.style.marginLeft = '0';
+          iconWrapper.style.marginRight = '0';
+        }
+
+        // Настраиваем заголовок
+        const title = header.querySelector('.modal-about-title');
+        if (title) {
+          title.style.textAlign = 'right';
+          title.style.marginRight = '17px'; // Отступ между иконкой и текстом
+        }
+      }
+
+      // Кнопка закрытия (крестик)
+      const closeButton = modalElement.querySelector('.modal-about-close');
+      if (closeButton) {
+        closeButton.style.right = 'auto';
+        closeButton.style.left = '16px';
+      }
+    }
+  }
   // Рендер медиа-контента (изображение, видео или карусель)
   function renderMedia() {
     if (!feature) return '';
@@ -306,6 +345,17 @@ export function createModalAbout(parentElement) {
     const currentPrice = getLocalizedPriceWithFallback('current');
     const originalPrice = getLocalizedPriceWithFallback('original');
 
+    // КЛЮЧЕВАЯ МОДИФИКАЦИЯ: Изменяем структуру заголовка для RTL версии
+    const headerContent = rtlDirection
+      ? `<div class="modal-about-header" style="flex-direction: row-reverse; justify-content: flex-start; padding-left: 50px;">
+       <h3 class="modal-about-title" itemprop="name" data-i18n="${feature.i18nKey}.title" style="text-align: right; margin-right: 17px;">${feature.title}</h3>
+       <div class="modal-about-icon-wrapper" aria-hidden="true">${feature.icon}</div>
+     </div>`
+      : `<div class="modal-about-header">
+       <div class="modal-about-icon-wrapper" aria-hidden="true">${feature.icon}</div>
+       <h3 class="modal-about-title" itemprop="name" data-i18n="${feature.i18nKey}.title">${feature.title}</h3>
+     </div>`;
+
     modalElement.innerHTML = `
           ${structuredDataScript}
           <div class="modal-about-content" itemscope itemtype="https://schema.org/Product">
@@ -337,14 +387,7 @@ export function createModalAbout(parentElement) {
               </svg>
             </button>
             
-            <div class="modal-about-header">
-              <div class="modal-about-icon-wrapper" aria-hidden="true">${
-                feature.icon
-              }</div>
-              <h3 class="modal-about-title" itemprop="name" data-i18n="${
-                feature.i18nKey
-              }.title">${feature.title}</h3>
-            </div>
+            ${headerContent}
 
             <div class="modal-about-body">
               <div class="modal-about-media-container" itemprop="image">
@@ -383,6 +426,9 @@ export function createModalAbout(parentElement) {
             </div>
           </div>
         `;
+
+    // Применяем дополнительные стили для RTL режима
+    updateModalRTLStyles();
 
     // Настройка кнопки закрытия
     const closeButton = modalElement.querySelector('.modal-about-close');
