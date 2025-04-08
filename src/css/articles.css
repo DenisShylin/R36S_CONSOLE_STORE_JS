@@ -593,6 +593,135 @@
     z-index: 100;
 }
 
+/* RTL поддержка для секции Articles */
+
+/* Основные RTL стили для секции */
+.articles.rtl,
+html[dir="rtl"] .articles {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Заголовки в RTL режиме */
+.articles.rtl .articles__heading,
+html[dir="rtl"] .articles .articles__heading,
+.articles.rtl .article__title,
+html[dir="rtl"] .articles .article__title,
+.articles.rtl .article__subtitle,
+html[dir="rtl"] .articles .article__subtitle,
+.articles.rtl .articles__related-title,
+html[dir="rtl"] .articles .articles__related-title,
+.articles.rtl .articles__faq-title,
+html[dir="rtl"] .articles .articles__faq-title,
+.articles.rtl .articles__cta-title,
+html[dir="rtl"] .articles .articles__cta-title {
+    text-align: right;
+}
+
+/* Контент в RTL режиме */
+.articles.rtl .article__content,
+html[dir="rtl"] .articles .article__content,
+.articles.rtl .articles__cta-text,
+html[dir="rtl"] .articles .articles__cta-text {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Списки в RTL режиме */
+.articles.rtl .article__content ul,
+html[dir="rtl"] .articles .article__content ul {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+.articles.rtl .article__content ul li,
+html[dir="rtl"] .articles .article__content ul li {
+    padding-right: 5px;
+    padding-left: 0;
+}
+
+/* Аккордеон в RTL режиме */
+.articles.rtl .accordion__header,
+html[dir="rtl"] .articles .accordion__header {
+    flex-direction: row-reverse;
+}
+
+.articles.rtl .articles__faq-question,
+html[dir="rtl"] .articles .articles__faq-question {
+    text-align: right;
+}
+
+.articles.rtl .articles__faq-answer,
+html[dir="rtl"] .articles .articles__faq-answer {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Выделенные блоки в RTL режиме */
+.articles.rtl .article__highlight,
+html[dir="rtl"] .articles .article__highlight {
+    border-right: 3px solid #60A5FA;
+    border-left: none;
+    border-radius: 8px 0 0 8px;
+    background: linear-gradient(270deg, rgba(37, 99, 235, 0.1), transparent);
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+.articles.rtl .article:hover .article__highlight,
+html[dir="rtl"] .articles .article:hover .article__highlight {
+    border-right-color: #90CAF9;
+    background: linear-gradient(270deg, rgba(37, 99, 235, 0.15), transparent);
+}
+
+/* Ссылки в RTL режиме */
+.articles.rtl .article__content a::after,
+html[dir="rtl"] .articles .article__content a::after {
+    transform-origin: left;
+}
+
+.articles.rtl .article__content a:hover::after,
+html[dir="rtl"] .articles .article__content a:hover::after {
+    transform-origin: right;
+}
+
+/* Кнопки в RTL режиме */
+.articles.rtl .article__cta,
+html[dir="rtl"] .articles .article__cta,
+.articles.rtl .articles__cta-button,
+html[dir="rtl"] .articles .articles__cta-button {
+    text-align: center;
+}
+
+/* RTL-специфичные стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+
+    .articles.rtl .article__content ul li,
+    html[dir="rtl"] .articles .article__content ul li {
+        padding-right: 0;
+    }
+}
+
+/* Анимации в RTL режиме */
+.articles.rtl .article:hover,
+html[dir="rtl"] .articles .article:hover {
+    transform: translateY(-5px);
+}
+
+/* Анимация кнопок в RTL */
+.articles.rtl .article__cta:hover,
+html[dir="rtl"] .articles .article__cta:hover,
+.articles.rtl .articles__cta-button:hover,
+html[dir="rtl"] .articles .articles__cta-button:hover {
+    transform: translateY(-3px);
+}
+
+/* Микро-интерфейсные элементы в RTL */
+.articles.rtl .articles__related-list a,
+html[dir="rtl"] .articles .articles__related-list a {
+    text-align: center;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0.7;
