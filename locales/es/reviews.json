@@ -1,17 +1,44 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
-  },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "es": {
+    "reviews": {
+      "meta": {
+        "productName": "Consola de Juegos Portátil R36S",
+        "productDescription": "Consola de Juegos Portátil R36S con pantalla IPS de 3,5 pulgadas, más de 15.000 juegos retro"
+      },
+      "label": "Reseñas",
+      "title": "Reseñas de Clientes",
+      "subtitle": "Mira lo que dicen los jugadores sobre la consola retro R36S",
+      "helpful": "Útil ({{count}})",
+      "reviewItems": {
+        "1": {
+          "text": "Acabo de recibir la consola retro R36S y es realmente increíble para juegos de la vieja escuela. La pantalla es súper clara, ejecuta juegos sin problemas y la duración de la batería es sólida. Me encanta cómo puedo cargar mis clásicos favoritos y jugar...",
+          "author": "Comprador de AliExpress",
+          "date": "21 ago 2024",
+          "color": "Púrpura 64GB",
+          "verified": true
+        },
+        "2": {
+          "text": "Después de jugar con la R36S durante una semana, estoy realmente impresionado y absolutamente encantado. La calidad de construcción se siente genial, y cambiar entre diferentes juegos retro es súper fácil. Los controles son cómodos para sesiones largas de juego.",
+          "author": "V***h",
+          "date": "26 ago 2024",
+          "color": "Amarillo 128G",
+          "verified": true
+        },
+        "3": {
+          "text": "La R36S se ha convertido en mi dispositivo de juego preferido. No estaba seguro de comprar otra consola retro, pero esta me sorprendió. La pantalla es brillante y nítida, los juegos funcionan sin problemas, y es lo suficientemente pequeña para caber en mi bolsillo.",
+          "author": "M***z",
+          "date": "22 ago 2024",
+          "color": "Blanco 64GB",
+          "verified": true
+        },
+        "4": {
+          "text": "He estado usando la R36S durante algunas semanas, y estoy genuinamente impresionado. La pantalla IPS de 3,5 pulgadas ofrece imágenes nítidas, y la calidad de construcción se siente sólida. Los sticks analógicos duales son receptivos, haciendo que los juegos retro sean un placer.",
+          "author": "K***r",
+          "date": "28 ago 2024",
+          "color": "Negro 128GB",
+          "verified": true
+        }
+      }
+    }
   }
 }

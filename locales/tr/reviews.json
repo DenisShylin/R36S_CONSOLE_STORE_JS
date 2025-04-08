@@ -1,17 +1,44 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
-  },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "tr": {
+    "reviews": {
+      "meta": {
+        "productName": "R36S El Tipi Oyun Konsolu",
+        "productDescription": "3,5 inç IPS ekranlı R36S El Tipi Oyun Konsolu, 15.000'den fazla retro oyun"
+      },
+      "label": "İncelemeler",
+      "title": "Müşteri İncelemeleri",
+      "subtitle": "Oyuncuların R36S retro konsol hakkında ne söylediğini görün",
+      "helpful": "Yararlı ({{count}})",
+      "reviewItems": {
+        "1": {
+          "text": "R36S retro konsolu yeni aldım ve eski tarz oyunlar için gerçekten harika. Ekran süper net, oyunları sorunsuz çalıştırıyor ve pil ömrü sağlam. En sevdiğim klasikleri yükleyip oynayabilmek harika...",
+          "author": "AliExpress Alışverişçisi",
+          "date": "21 Ağu 2024",
+          "color": "Mor 64GB",
+          "verified": true
+        },
+        "2": {
+          "text": "R36S ile bir hafta oynadıktan sonra, gerçekten etkilendim ve kesinlikle çok memnunum. Yapım kalitesi harika hissettiriyor ve farklı retro oyunlar arasında geçiş yapmak süper kolay. Kontroller uzun oyun oturumları için rahat.",
+          "author": "V***h",
+          "date": "26 Ağu 2024",
+          "color": "Sarı 128G",
+          "verified": true
+        },
+        "3": {
+          "text": "R36S benim tercih ettiğim oyun cihazım haline geldi. Başka bir retro konsol satın alma konusunda emin değildim, ama bu beni şaşırttı. Ekran parlak ve keskin, oyunlar sorunsuz çalışıyor ve cebime sığacak kadar küçük.",
+          "author": "M***z",
+          "date": "22 Ağu 2024",
+          "color": "Beyaz 64GB",
+          "verified": true
+        },
+        "4": {
+          "text": "R36S'i birkaç haftadır kullanıyorum ve gerçekten etkilendim. 3,5 inç IPS ekran net görüntüler sunuyor ve yapım kalitesi sağlam hissettiriyor. Çift analog çubuklar tepki veriyor, retro oyunları keyifli hale getiriyor.",
+          "author": "K***r",
+          "date": "28 Ağu 2024",
+          "color": "Siyah 128GB",
+          "verified": true
+        }
+      }
+    }
   }
 }
