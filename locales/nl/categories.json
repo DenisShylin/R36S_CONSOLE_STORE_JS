@@ -1,17 +1,27 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "Gameplay-demonstratie op de draagbare R36S-console",
+    "description": "Ervaar klassieke games met verbeterde graphics en soepele gameplay op het 3,5-inch IPS-scherm van de draagbare R36S-console."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "labels": {
+    "demonstration": "Demonstratie"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "title": {
+    "rest": "Gameplay-video"
+  },
+  "description": "Dompel jezelf onder in de wereld van klassieke games met verbeterde graphics en soepele gameplay. Geniet van je favoriete retrogames in hoge kwaliteit op het heldere 3,5-inch IPS-scherm met verbeterde prestaties en lange batterijduur.",
+  "controls": {
+    "pause": "R36S-gameplay-video pauzeren",
+    "play": "R36S-gameplay-video afspelen",
+    "unmute": "Geluid voor R36S-gameplay-video inschakelen",
+    "mute": "Geluid voor R36S-gameplay-video uitschakelen",
+    "progress": "Voortgang van videoweergave"
+  },
+  "stats": {
+    "quality": "Kwaliteit",
+    "screen": "IPS-scherm"
+  },
+  "fallback": {
+    "videoDescription": "Deze video toont de draagbare spelconsole R36S met een 3,5-inch IPS-scherm dat klassieke retrogames weergeeft met verbeterde graphics en soepele gameplay op 60 FPS."
   }
 }

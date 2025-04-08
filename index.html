@@ -35,7 +35,7 @@
     <!-- <link rel="stylesheet" href="./css/styles.css" /> -->
     <script type="module" crossorigin src="/R36S_CONSOLE_STORE_JS/index.js"></script>
     <link rel="modulepreload" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/vendor-C77IuWVK.js">
-    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-DOmwvbru.css">
+    <link rel="stylesheet" crossorigin href="/R36S_CONSOLE_STORE_JS/assets/index-DIq8CyO7.css">
   </head>
   <body>
     <main>
@@ -735,10 +735,15 @@
   itemscope
   itemtype="http://schema.org/VideoObject"
 >
-  <meta itemprop="name" content="R36S Handheld Game Console Gameplay Demo" />
+  <meta
+    itemprop="name"
+    content="R36S Handheld Game Console Gameplay Demo"
+    data-i18n="[content]categories.meta.name"
+  />
   <meta
     itemprop="description"
     content="Experience retro gaming with improved graphics and smooth gameplay on the R36S 3.5-inch IPS screen handheld console."
+    data-i18n="[content]categories.meta.description"
   />
   <meta itemprop="uploadDate" content="2024-03-15" />
   <meta itemprop="thumbnailUrl" content="/img/video-placeholder.jpg" />
@@ -754,16 +759,22 @@
     <div class="categories__content">
       <div class="categories__info">
         <div class="categories__labels">
-          <span class="categories__label">Demonstration</span>
+          <span
+            class="categories__label"
+            data-i18n="categories.labels.demonstration"
+            >Demonstration</span
+          >
           <span class="categories__label categories__label--outline">
             R36S
           </span>
         </div>
         <h2 class="categories__title" itemprop="headline">
           <span class="categories__title-highlight">R36S</span>
-          <span class="categories__title-rest">Gameplay Video</span>
+          <span class="categories__title-rest" data-i18n="categories.title.rest"
+            >Gameplay Video</span
+          >
         </h2>
-        <p class="categories__description">
+        <p class="categories__description" data-i18n="categories.description">
           Immerse yourself in the world of classic games with improved graphics
           and smooth gameplay. Enjoy your favorite retro games in high quality
           on a bright 3.5-inch IPS screen with enhanced performance and long
@@ -773,16 +784,6 @@
 
       <div class="categories__video-wrapper">
         <div class="categories__video-container">
-          <!-- Использование тега img в качестве плейсхолдера, пока видео не загрузится -->
-          <!-- <img
-            class="categories__video-placeholder"
-            src="/public/img/categories/products_9_2x.jpg"
-            alt="R36S Handheld Console Gameplay Preview"
-            style="display: none; width: 100%; border-radius: 24px"
-            itemprop="thumbnail"
-          /> -->
-
-          <!-- Видео с корректными путями -->
           <video
             class="categories__video"
             muted
@@ -804,6 +805,7 @@
             <button
               class="categories__video-play"
               aria-label="Pause R36S gameplay video"
+              data-i18n="[aria-label]categories.controls.pause"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -823,6 +825,7 @@
             <button
               class="categories__video-mute"
               aria-label="Enable sound for R36S gameplay video"
+              data-i18n="[aria-label]categories.controls.unmute"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -849,6 +852,7 @@
                 step="0.1"
                 class="categories__video-slider"
                 aria-label="Video playback progress"
+                data-i18n="[aria-label]categories.controls.progress"
               />
               <div class="categories__video-time">
                 <span>0:00</span>
@@ -871,13 +875,19 @@
             </div>
             <div class="categories__stat">
               <span class="categories__stat-number" itemprop="value">HD</span>
-              <span class="categories__stat-label" itemprop="name"
+              <span
+                class="categories__stat-label"
+                itemprop="name"
+                data-i18n="categories.stats.quality"
                 >Quality</span
               >
             </div>
             <div class="categories__stat">
               <span class="categories__stat-number" itemprop="value">3.5"</span>
-              <span class="categories__stat-label" itemprop="name"
+              <span
+                class="categories__stat-label"
+                itemprop="name"
+                data-i18n="categories.stats.screen"
                 >IPS Screen</span
               >
             </div>
@@ -888,20 +898,25 @@
   </div>
 </section>
 
-    <!-- Articles.html - SEO-оптимизированная HTML-разметка для секции Articles -->
+    <!-- Articles.html - SEO-оптимизированная HTML-разметка для секции Articles с поддержкой i18n -->
 <section
   class="articles"
   id="articles"
   itemscope
   itemtype="https://schema.org/CollectionPage"
 >
-  <meta itemprop="name" content="R36S Gaming Console - Official Information" />
+  <meta
+    itemprop="name"
+    content="R36S Gaming Console - Official Information"
+    data-i18n="[content]articles.meta.name"
+  />
   <meta
     itemprop="description"
     content="Discover the ultimate R36S handheld gaming console with reviews, specifications, and buying guides. Perfect for retro gaming enthusiasts."
+    data-i18n="[content]articles.meta.description"
   />
 
-      <div class="articles__container">
+  <div class="articles__container">
     <!-- Заголовок будет добавлен через JavaScript -->
 
     <div class="articles__grid" role="list">
@@ -910,42 +925,72 @@
 
     <!-- Добавляем дополнительную структуру для SEO -->
     <aside class="articles__related">
-      <h2 class="articles__related-title">Often searched</h2>
+      <h2 class="articles__related-title" data-i18n="articles.related.title">
+        Often searched
+      </h2>
       <ul class="articles__related-list">
         <li>
-          <a href="#features-r36s" title="R36S Gaming Console Specifications"
+          <a
+            href="#features-r36s"
+            title="R36S Gaming Console Specifications"
+            data-i18n="[title]articles.related.specs.title"
+            data-i18n="articles.related.specs.text"
             >R36S Specifications</a
           >
         </li>
         <li>
-          <a href="#reviews" title="R36S Gaming Console Reviews"
+          <a
+            href="#reviews"
+            title="R36S Gaming Console Reviews"
+            data-i18n="[title]articles.related.reviews.title"
+            data-i18n="articles.related.reviews.text"
             >R36S Reviews</a
           >
         </li>
         <li>
-          <a href="#section-1-5" title="Best Games for R36S"
+          <a
+            href="#section-1-5"
+            title="Best Games for R36S"
+            data-i18n="[title]articles.related.games.title"
+            data-i18n="articles.related.games.text"
             >Best Games for R36S</a
           >
         </li>
         <li>
-          <a href="#products" title="R36S Firmware Updates">R36S Firmware</a>
+          <a
+            href="#products"
+            title="R36S Firmware Updates"
+            data-i18n="[title]articles.related.firmware.title"
+            data-i18n="articles.related.firmware.text"
+            >R36S Firmware</a
+          >
         </li>
         <li>
-          <a href="https://www.aliexpress.com/w/wholesale-R36S-Accessories.html?spm=a2g0o.detail.search.0" title="R36S Gaming Accessories" style="color: #e62e04; font-weight: bold;">
-   R36S Accessories 🛒
-</a>
+          <a
+            href="https://www.aliexpress.com/w/wholesale-R36S-Accessories.html?spm=a2g0o.detail.search.0"
+            title="R36S Gaming Accessories"
+            style="color: #e62e04; font-weight: bold"
+            data-i18n="[title]articles.related.accessories.title"
+            data-i18n="articles.related.accessories.text"
+          >
+            R36S Accessories 🛒
+          </a>
         </li>
         <li>
-          <a href="https://www.aliexpress.com/item/1005007171465465.html" title="R36S Gaming Accessories" style="color: #e62e04; font-weight: bold;">
-   R36S Official Store 🛒
-</a>
+          <a
+            href="https://www.aliexpress.com/item/1005007171465465.html"
+            title="R36S Gaming Accessories"
+            style="color: #e62e04; font-weight: bold"
+            data-i18n="[title]articles.related.store.title"
+            data-i18n="articles.related.store.text"
+          >
+            R36S Official Store 🛒
+          </a>
         </li>
       </ul>
     </aside>
 
     <footer class="articles__footer">
-      
-
       <div
         class="articles__seo-content"
         itemprop="mainEntity"
@@ -953,601 +998,1095 @@
         itemtype="https://schema.org/FAQPage"
       >
         <!-- FAQ Accordion для R36S -->
-<div class="articles__seo-content" itemprop="mainEntity" itemscope itemtype="https://schema.org/FAQPage">
-  <h3 class="articles__faq-title">Frequently Asked Questions about R36S</h3>
-  
-  <div class="accordion">
-    <!-- Вопрос 1 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">What is the R36S Handheld Console?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The R36S is a premium portable gaming device specifically designed for retro gaming enthusiasts. It features powerful hardware, exceptional build quality, and comes preloaded with thousands of classic games for on-the-go nostalgia.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 2 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">What gaming platforms does the R36S support?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The R36S supports multiple classic gaming platforms including NES, SNES, N64, PS1, Game Boy, Game Boy Advance, Sega, and many others through its built-in emulators.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 3 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">What are the display specifications?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The console features a 3.5-inch IPS display with a 640x480 resolution that delivers crisp, clear visuals for an enhanced gaming experience.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 4 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">How long does the battery last?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The 3200mAh rechargeable battery provides approximately 6 hours of continuous gameplay on a full charge.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 5 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Can I connect the R36S to my TV?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>Yes, the R36S supports TV output via OTG, allowing you to enjoy your games on a larger screen.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 6 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Is it possible to add more games to the device?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>Absolutely. The R36S allows you to load additional games via a TF card, expanding your gaming library beyond the preloaded titles.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 7 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Does the R36S support multiplayer gaming?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>Yes, the console supports multiplayer gaming through Bluetooth connectivity, making it easy to play with friends.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 8 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">How does the R36S compare to competing handheld consoles?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The R36S outperforms similarly priced competitors with its superior build quality, longer battery life, better screen resolution, and more extensive game compatibility.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 9 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Are all retro games compatible with the R36S?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>While most retro games work excellently on the device, performance may vary slightly depending on the specific emulator. The R36S excels particularly with 8-bit and 16-bit titles but also handles more demanding 32-bit games impressively.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 10 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">How do I update the firmware on my R36S?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>For firmware updates, refer to the R36S Custom Firmware Guide, which provides detailed step-by-step instructions, including methods for updating ArkOS on your device.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 11 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">What should I do if I experience technical issues?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>First, consult the user manual for troubleshooting tips. If problems persist, contact your retailer or visit our support page for additional assistance.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 12 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">What warranty comes with the R36S?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>Warranty details vary by retailer. Please check with your specific seller at the time of purchase for complete warranty terms and coverage information.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 13 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Where can I purchase the R36S?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>The R36S is available through our official website, which offers exclusive configurations, extended warranty options, and special promotional pricing not available through other retailers.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Вопрос 14 -->
-    <div class="accordion__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <div class="accordion__header">
-        <h4 itemprop="name" class="articles__faq-question">Where can I get additional support?</h4>
-        <button class="accordion__toggle" aria-label="Toggle answer">
-  <svg class="accordion__icon" viewBox="0 0 24 24" width="24" height="24">
-    <!-- Градиентный фон (опционально) -->
-    <defs>
-      <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3B82F6" />
-        <stop offset="100%" stop-color="#60A5FA" />
-      </linearGradient>
-    </defs>
-    
-    <!-- Шеврон вниз -->
-    <path d="M5 9l7 7 7-7" 
-          class="arrow-down" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-    
-    <!-- Шеврон вверх -->
-    <path d="M5 15l7-7 7 7" 
-          class="arrow-up" 
-          stroke="url(#blueGradient)" 
-          stroke-width="2.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          fill="none" />
-  </svg>
-</button>
-      </div>
-      <div class="accordion__content" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-        <div itemprop="text" class="articles__faq-answer">
-          <p>For further assistance or questions, please visit our <strong>Contact Us</strong> page where our dedicated support team will be happy to help with any inquiries about your R36S gaming console.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="articles__cta">
-        <h3 class="articles__cta-title">
-          Are you ready to experience the benefits of the R36S gaming console?
-        </h3>
-        <p class="articles__cta-text">
-          Join thousands of satisfied gamers worldwide. Order your R36S gaming
-          console today and enjoy special promotional pricing!
-        </p>
-        <a
-          href="https://www.aliexpress.com/item/1005007171465465.html"
-          class="articles__cta-button"
-          title="Order R36S Gaming Console Now"
-          target="_blank"
-          rel="nofollow"
-          >BUY ON ALIEXPRESS</a
+        <div
+          class="articles__seo-content"
+          itemprop="mainEntity"
+          itemscope
+          itemtype="https://schema.org/FAQPage"
         >
+          <h3 class="articles__faq-title" data-i18n="articles.faq.title">
+            Frequently Asked Questions about R36S
+          </h3>
+
+          <div class="accordion">
+            <!-- Вопрос 1 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q1"
+                >
+                  What is the R36S Handheld Console?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <!-- Градиентный фон (опционально) -->
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Шеврон вниз -->
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+
+                    <!-- Шеврон вверх -->
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a1">
+                    The R36S is a premium portable gaming device specifically
+                    designed for retro gaming enthusiasts. It features powerful
+                    hardware, exceptional build quality, and comes preloaded
+                    with thousands of classic games for on-the-go nostalgia.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q2"
+                >
+                  What gaming platforms does the R36S support?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a2">
+                    The R36S supports multiple classic gaming platforms
+                    including NES, SNES, N64, PS1, Game Boy, Game Boy Advance,
+                    Sega, and many others through its built-in emulators.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 3 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q3"
+                >
+                  What are the display specifications?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a3">
+                    The console features a 3.5-inch IPS display with a 640x480
+                    resolution that delivers crisp, clear visuals for an
+                    enhanced gaming experience.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Остальные вопросы также размечаются data-i18n атрибутами -->
+            <!-- Вопрос 4 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q4"
+                >
+                  How long does the battery last?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a4">
+                    The 3200mAh rechargeable battery provides approximately 6
+                    hours of continuous gameplay on a full charge.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Вопрос 5 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q5"
+                >
+                  Can I connect the R36S to my TV?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a5">
+                    Yes, the R36S supports TV output via OTG, allowing you to
+                    enjoy your games on a larger screen.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 6 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q6"
+                >
+                  Is it possible to add more games to the device?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a6">
+                    Absolutely. The R36S allows you to load additional games via
+                    a TF card, expanding your gaming library beyond the
+                    preloaded titles.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 7 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q7"
+                >
+                  Does the R36S support multiplayer gaming?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a7">
+                    Yes, the console supports multiplayer gaming through
+                    Bluetooth connectivity, making it easy to play with friends.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 8 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q8"
+                >
+                  How does the R36S compare to competing handheld consoles?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a8">
+                    The R36S outperforms similarly priced competitors with its
+                    superior build quality, longer battery life, better screen
+                    resolution, and more extensive game compatibility.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 9 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q9"
+                >
+                  Are all retro games compatible with the R36S?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a9">
+                    While most retro games work excellently on the device,
+                    performance may vary slightly depending on the specific
+                    emulator. The R36S excels particularly with 8-bit and 16-bit
+                    titles but also handles more demanding 32-bit games
+                    impressively.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 10 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q10"
+                >
+                  How do I update the firmware on my R36S?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a10">
+                    For firmware updates, refer to the R36S Custom Firmware
+                    Guide, which provides detailed step-by-step instructions,
+                    including methods for updating ArkOS on your device.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 11 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q11"
+                >
+                  What should I do if I experience technical issues?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a11">
+                    First, consult the user manual for troubleshooting tips. If
+                    problems persist, contact your retailer or visit our support
+                    page for additional assistance.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 12 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q12"
+                >
+                  What warranty comes with the R36S?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a12">
+                    Warranty details vary by retailer. Please check with your
+                    specific seller at the time of purchase for complete
+                    warranty terms and coverage information.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Вопрос 13 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q13"
+                >
+                  Where can I purchase the R36S?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a13">
+                    The R36S is available through our official website, which
+                    offers exclusive configurations, extended warranty options,
+                    and special promotional pricing not available through other
+                    retailers.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Вопрос 14 -->
+            <div
+              class="accordion__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+            >
+              <div class="accordion__header">
+                <h4
+                  itemprop="name"
+                  class="articles__faq-question"
+                  data-i18n="articles.faq.q14"
+                >
+                  Where can I get additional support?
+                </h4>
+                <button
+                  class="accordion__toggle"
+                  aria-label="Toggle answer"
+                  data-i18n="[aria-label]articles.faq.toggle"
+                >
+                  <svg
+                    class="accordion__icon"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="blueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stop-color="#3B82F6" />
+                        <stop offset="100%" stop-color="#60A5FA" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M5 9l7 7 7-7"
+                      class="arrow-down"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                    <path
+                      d="M5 15l7-7 7 7"
+                      class="arrow-up"
+                      stroke="url(#blueGradient)"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                class="accordion__content"
+                itemscope
+                itemprop="acceptedAnswer"
+                itemtype="https://schema.org/Answer"
+              >
+                <div itemprop="text" class="articles__faq-answer">
+                  <p data-i18n="articles.faq.a14">
+                    For further assistance or questions, please visit our
+                    <strong>Contact Us</strong> page where our dedicated support
+                    team will be happy to help with any inquiries about your
+                    R36S gaming console.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Оставшиеся вопросы аналогично размечаются data-i18n -->
+          </div>
+        </div>
+
+        <div class="articles__cta">
+          <h3 class="articles__cta-title" data-i18n="articles.cta.title">
+            Are you ready to experience the benefits of the R36S gaming console?
+          </h3>
+          <p class="articles__cta-text" data-i18n="articles.cta.text">
+            Join thousands of satisfied gamers worldwide. Order your R36S gaming
+            console today and enjoy special promotional pricing!
+          </p>
+          <a
+            href="https://www.aliexpress.com/item/1005007171465465.html"
+            class="articles__cta-button"
+            title="Order R36S Gaming Console Now"
+            target="_blank"
+            rel="nofollow"
+            data-i18n="[title]articles.cta.button.title"
+            data-i18n="articles.cta.button.text"
+            >BUY ON ALIEXPRESS</a
+          >
+        </div>
       </div>
     </footer>
 
@@ -1557,10 +2096,15 @@
       itemtype="https://schema.org/Organization"
       style="display: none"
     >
-      <meta itemprop="name" content="R36S Gaming" />
+      <meta
+        itemprop="name"
+        content="R36S Gaming"
+        data-i18n="[content]articles.schema.org.name"
+      />
       <meta
         itemprop="description"
         content="Official manufacturer of the R36S Handheld Gaming Console"
+        data-i18n="[content]articles.schema.org.description"
       />
       <link itemprop="url" href="https://www.r36sgaming.com" />
       <meta
@@ -1578,15 +2122,21 @@
 
     <!-- Микроразметка для продукта -->
     <div itemscope itemtype="https://schema.org/Product" style="display: none">
-      <meta itemprop="name" content="R36S Handheld Gaming Console" />
+      <meta
+        itemprop="name"
+        content="R36S Handheld Gaming Console"
+        data-i18n="[content]articles.schema.product.name"
+      />
       <meta
         itemprop="description"
         content="The ultimate portable retro gaming console with exceptional performance and extensive game compatibility."
+        data-i18n="[content]articles.schema.product.description"
       />
       <meta itemprop="brand" content="R36S" />
       <meta
         itemprop="category"
         content="Electronics > Video Games > Handheld Game Consoles"
+        data-i18n="[content]articles.schema.product.category"
       />
       <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
         <meta itemprop="priceCurrency" content="USD" />
@@ -1594,7 +2144,9 @@
         <link itemprop="url" href="https://www.r36sgaming.com/order" />
       </div>
     </div>
+  </div>
 </section>
+
     <!-- Reviews.html - HTML шаблон для секции отзывов с минимальными SEO-улучшениями -->
 <section
   class="reviews"

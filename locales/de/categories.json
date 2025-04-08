@@ -1,17 +1,27 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "Gameplay-Demonstration auf der tragbaren R36S-Konsole",
+    "description": "Erleben Sie klassische Spiele mit verbesserter Grafik und flüssigem Gameplay auf dem 3,5-Zoll-IPS-Bildschirm der tragbaren R36S-Konsole."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "labels": {
+    "demonstration": "Demonstration"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "title": {
+    "rest": "Gameplay-Video"
+  },
+  "description": "Tauchen Sie ein in die Welt klassischer Spiele mit verbesserter Grafik und flüssigem Gameplay. Genießen Sie Ihre Lieblings-Retro-Spiele in hoher Qualität auf dem leuchtenden 3,5-Zoll-IPS-Bildschirm mit verbesserter Leistung und langer Akkulaufzeit.",
+  "controls": {
+    "pause": "R36S-Gameplay-Video pausieren",
+    "play": "R36S-Gameplay-Video abspielen",
+    "unmute": "Ton für R36S-Gameplay-Video einschalten",
+    "mute": "Ton für R36S-Gameplay-Video ausschalten",
+    "progress": "Videowiedergabefortschritt"
+  },
+  "stats": {
+    "quality": "Qualität",
+    "screen": "IPS-Bildschirm"
+  },
+  "fallback": {
+    "videoDescription": "Dieses Video zeigt die tragbare Spielekonsole R36S mit einem 3,5-Zoll-IPS-Bildschirm, der klassische Retro-Spiele mit verbesserter Grafik und flüssigem Gameplay bei 60 FPS darstellt."
   }
 }
