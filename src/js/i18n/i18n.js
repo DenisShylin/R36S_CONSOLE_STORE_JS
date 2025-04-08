@@ -57,7 +57,7 @@ const translationSections = [
   // 'button',
   // 'modal',
   // 'products',
-  // 'reviews',
+  'reviews',
 ];
 
 // Создаем CustomEvent для обновления языка

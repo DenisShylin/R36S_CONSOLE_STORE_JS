@@ -1,17 +1,44 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
-  },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "nl": {
+    "reviews": {
+      "meta": {
+        "productName": "R36S Draagbare Spelconsole",
+        "productDescription": "R36S Draagbare Spelconsole met 3,5-inch IPS-scherm, meer dan 15.000 retro games"
+      },
+      "label": "Beoordelingen",
+      "title": "Klantbeoordelingen",
+      "subtitle": "Zie wat gamers zeggen over de R36S retroconsole",
+      "helpful": "Nuttig ({{count}})",
+      "reviewItems": {
+        "1": {
+          "text": "Ik heb net de R36S retroconsole in handen gekregen en het is echt geweldig voor old-school gaming. Het scherm is super helder, het draait games soepel, en de batterijduur is solide. Ik vind het geweldig hoe ik mijn favoriete klassiekers kan laden en spelen...",
+          "author": "AliExpress Koper",
+          "date": "21 aug 2024",
+          "color": "Paars 64GB",
+          "verified": true
+        },
+        "2": {
+          "text": "Na een week spelen met de R36S ben ik echt onder de indruk en absoluut verheugd. De bouwkwaliteit voelt geweldig aan, en schakelen tussen verschillende retrogames is super eenvoudig. De besturing is comfortabel voor lange gamesessies.",
+          "author": "V***h",
+          "date": "26 aug 2024",
+          "color": "Geel 128G",
+          "verified": true
+        },
+        "3": {
+          "text": "De R36S is mijn favoriete gameapparaat geworden. Ik was niet zeker over het kopen van nog een retroconsole, maar deze verraste me. Het scherm is helder en scherp, games draaien zonder problemen, en het is klein genoeg om in mijn zak te passen.",
+          "author": "M***z",
+          "date": "22 aug 2024",
+          "color": "Wit 64GB",
+          "verified": true
+        },
+        "4": {
+          "text": "Ik gebruik de R36S nu al een paar weken, en ik ben oprecht onder de indruk. Het 3,5-inch IPS-scherm levert scherpe beelden, en de bouwkwaliteit voelt solide aan. De dubbele analoge sticks reageren goed, wat retrogaming een plezier maakt.",
+          "author": "K***r",
+          "date": "28 aug 2024",
+          "color": "Zwart 128GB",
+          "verified": true
+        }
+      }
+    }
   }
 }

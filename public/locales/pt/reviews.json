@@ -1,17 +1,44 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
-  },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "pt": {
+    "reviews": {
+      "meta": {
+        "productName": "Console de Jogos Portátil R36S",
+        "productDescription": "Console de Jogos Portátil R36S com tela IPS de 3,5 polegadas, mais de 15.000 jogos retrô"
+      },
+      "label": "Avaliações",
+      "title": "Avaliações de Clientes",
+      "subtitle": "Veja o que os jogadores dizem sobre o console retrô R36S",
+      "helpful": "Útil ({{count}})",
+      "reviewItems": {
+        "1": {
+          "text": "Acabei de pôr as mãos no console retrô R36S e é seriamente incrível para jogos da velha guarda. A tela é super clara, roda os jogos sem problemas, e a duração da bateria é sólida. Adoro como posso carregar meus clássicos favoritos e jogar...",
+          "author": "Comprador do AliExpress",
+          "date": "21 ago 2024",
+          "color": "Roxo 64GB",
+          "verified": true
+        },
+        "2": {
+          "text": "Depois de jogar com o R36S por uma semana, estou realmente impressionado e absolutamente encantado. A qualidade de construção é ótima, e alternar entre diferentes jogos retrô é super fácil. Os controles são confortáveis para longas sessões de jogo.",
+          "author": "V***h",
+          "date": "26 ago 2024",
+          "color": "Amarelo 128G",
+          "verified": true
+        },
+        "3": {
+          "text": "O R36S se tornou meu dispositivo de jogos preferido. Eu não estava certo sobre comprar outro console retrô, mas este me surpreendeu. A tela é brilhante e nítida, os jogos rodam sem problemas, e é pequeno o suficiente para caber no meu bolso.",
+          "author": "M***z",
+          "date": "22 ago 2024",
+          "color": "Branco 64GB",
+          "verified": true
+        },
+        "4": {
+          "text": "Tenho usado o R36S por algumas semanas agora, e estou genuinamente impressionado. A tela IPS de 3,5 polegadas oferece visuais nítidos, e a qualidade de construção parece sólida. Os dois analógicos são responsivos, tornando os jogos retrô um prazer.",
+          "author": "K***r",
+          "date": "28 ago 2024",
+          "color": "Preto 128GB",
+          "verified": true
+        }
+      }
+    }
   }
 }
