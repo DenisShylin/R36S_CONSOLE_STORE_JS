@@ -265,6 +265,55 @@
     letter-spacing: 1px;
 }
 
+/* Дополнительные стили для RTL поддержки */
+
+/* Базовая поддержка RTL для секции categories */
+.categories.rtl,
+html[dir="rtl"] .categories {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Центрирование элементов, не зависящих от направления текста */
+html[dir="rtl"] .categories__info,
+.categories.rtl .categories__info {
+    text-align: center;
+}
+
+html[dir="rtl"] .categories__labels,
+.categories.rtl .categories__labels {
+    justify-content: center;
+}
+
+html[dir="rtl"] .categories__video-stats,
+.categories.rtl .categories__video-stats {
+    justify-content: center;
+}
+
+/* Изменение направления stat элементов */
+html[dir="rtl"] .categories__stat,
+.categories.rtl .categories__stat {
+    direction: rtl;
+}
+
+/* Корректировка контроля видео для RTL */
+html[dir="rtl"] .categories__video-controls,
+.categories.rtl .categories__video-controls {
+    direction: rtl;
+}
+
+/* Корректировки для элементов, которые должны иметь обратный порядок */
+html[dir="rtl"] .categories__video-time,
+.categories.rtl .categories__video-time {
+    flex-direction: row-reverse;
+}
+
+/* Сбрасываем transform для видео в RTL, чтобы не было искажений */
+html[dir="rtl"] .categories__video-container,
+.categories.rtl .categories__video-container {
+    transform: perspective(1000px) rotateX(5deg) scaleX(1);
+}
+
 /* Анимация градиента для заголовка */
 @keyframes gradientTextAnimation {
     0% {

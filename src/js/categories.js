@@ -1,4 +1,5 @@
-// Categories.js - Максимально упрощенная версия
+// Categories.js - Версия с поддержкой i18n
+import i18next from 'i18next';
 
 export function initCategories() {
   try {
@@ -20,6 +21,9 @@ export function initCategories() {
     const durationElement = document.querySelector(
       '.categories__video-time span:last-child'
     );
+
+    // Константа для события смены языка (чтобы не зависеть от внешних модулей)
+    const LANGUAGE_CHANGE_EVENT = 'languageChanged';
 
     // Проверка наличия секции
     if (!sectionRef) {
@@ -65,6 +69,18 @@ export function initCategories() {
         : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
              <polygon points="5 3 19 12 5 21 5 3"></polygon>
            </svg>`;
+
+      // Обновляем aria-label в зависимости от состояния
+      if (playButton.hasAttribute('data-i18n')) {
+        const i18nKey = isPlaying
+          ? 'categories.controls.pause'
+          : 'categories.controls.play';
+
+        const translation = i18next.t(i18nKey);
+        if (translation && translation !== i18nKey) {
+          playButton.setAttribute('aria-label', translation);
+        }
+      }
     }
 
     // Функция обновления иконки кнопки включения/выключения звука
@@ -81,6 +97,18 @@ export function initCategories() {
              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
            </svg>`;
+
+      // Обновляем aria-label в зависимости от состояния
+      if (muteButton.hasAttribute('data-i18n')) {
+        const i18nKey = isMuted
+          ? 'categories.controls.unmute'
+          : 'categories.controls.mute';
+
+        const translation = i18next.t(i18nKey);
+        if (translation && translation !== i18nKey) {
+          muteButton.setAttribute('aria-label', translation);
+        }
+      }
     }
 
     // Функция переключения воспроизведения
@@ -123,17 +151,41 @@ export function initCategories() {
         videoElement.style.display = 'none';
       }
 
+      // Получаем перевод для текста ошибки
+      const fallbackText = i18next.t('categories.fallback.videoUnavailable', {
+        defaultValue: 'Видео временно недоступно',
+      });
+
       videoContainer.innerHTML = `
         <div class="categories__video-fallback" style="height: 300px; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.8); border-radius: 24px;">
           <div style="text-align: center; padding: 20px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 20px;">
               <path d="M8 16l12-8-12-8v16z"></path>
             </svg>
-            <p style="margin: 0; font-size: 16px;">Видео временно недоступно</p>
+            <p style="margin: 0; font-size: 16px;">${fallbackText}</p>
           </div>
         </div>
       `;
     }
+
+    // Обработчик изменения языка
+    const handleLanguageChange = () => {
+      try {
+        // Обновляем тексты, которые могут меняться динамически
+        updatePlayButtonIcon();
+        updateMuteButtonIcon();
+
+        // Если видео недоступно, обновляем fallback сообщение
+        if (videoError) {
+          createVideoFallback();
+        }
+      } catch (langError) {
+        console.error('Ошибка при обновлении языка в видео секции:', langError);
+      }
+    };
+
+    // Подписываемся на событие смены языка
+    window.addEventListener(LANGUAGE_CHANGE_EVENT, handleLanguageChange);
 
     // Инициализация видео
     if (videoElement) {
@@ -264,6 +316,39 @@ export function initCategories() {
     // Добавляем класс, указывающий, что инициализация завершена
     sectionRef.classList.add('initialized');
 
+    // Обеспечиваем поддержку RTL языков
+    const handleRTLChange = () => {
+      try {
+        // Проверяем, является ли текущий язык RTL-языком
+        const isRTL = document.documentElement.dir === 'rtl';
+
+        if (isRTL) {
+          sectionRef.classList.add('rtl');
+          if (contentRef) {
+            contentRef.classList.add('rtl');
+          }
+        } else {
+          sectionRef.classList.remove('rtl');
+          if (contentRef) {
+            contentRef.classList.remove('rtl');
+          }
+        }
+      } catch (rtlError) {
+        console.error('Ошибка при обработке RTL в видео секции:', rtlError);
+      }
+    };
+
+    // Сразу вызываем для текущего состояния
+    handleRTLChange();
+
+    // Подписываемся на событие изменения языка для RTL поддержки
+    window.addEventListener(LANGUAGE_CHANGE_EVENT, handleRTLChange);
+
+    // Показываем секцию даже при ошибке
+    if (sectionRef) {
+      sectionRef.style.display = 'block';
+    }
+
     return {
       togglePlay,
       cleanup: () => {
@@ -272,6 +357,10 @@ export function initCategories() {
           videoElement.removeAttribute('src');
           videoElement.load();
         }
+
+        // Удаляем обработчики событий
+        window.removeEventListener(LANGUAGE_CHANGE_EVENT, handleLanguageChange);
+        window.removeEventListener(LANGUAGE_CHANGE_EVENT, handleRTLChange);
       },
     };
   } catch (error) {

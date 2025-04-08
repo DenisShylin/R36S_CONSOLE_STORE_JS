@@ -1,17 +1,28 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "R36S Handheld Game Console Gameplay Demo",
+    "description": "Experience retro gaming with improved graphics and smooth gameplay on the R36S 3.5-inch IPS screen handheld console."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "labels": {
+    "demonstration": "Demonstration"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "title": {
+    "rest": "Gameplay Video"
+  },
+  "description": "Immerse yourself in the world of classic games with improved graphics and smooth gameplay. Enjoy your favorite retro games in high quality on a bright 3.5-inch IPS screen with enhanced performance and long battery life.",
+  "controls": {
+    "pause": "Pause R36S gameplay video",
+    "play": "Play R36S gameplay video",
+    "unmute": "Enable sound for R36S gameplay video",
+    "mute": "Disable sound for R36S gameplay video",
+    "progress": "Video playback progress"
+  },
+  "stats": {
+    "quality": "Quality",
+    "screen": "IPS Screen"
+  },
+  "fallback": {
+    "videoUnavailable": "Video temporarily unavailable",
+    "videoDescription": "This video demonstrates the R36S handheld gaming console with 3.5-inch IPS screen displaying classic retro games with enhanced graphics and smooth 60 FPS gameplay."
   }
 }

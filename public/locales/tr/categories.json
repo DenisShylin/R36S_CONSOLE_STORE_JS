@@ -1,17 +1,27 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "Taşınabilir R36S konsolunda oyun deneyimi gösterimi",
+    "description": "Taşınabilir R36S konsolunun 3,5 inç IPS ekranında geliştirilmiş grafikler ve akıcı oyun deneyimiyle klasik oyunları deneyimleyin."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "labels": {
+    "demonstration": "Gösterim"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "title": {
+    "rest": "Oyun videosu"
+  },
+  "description": "Geliştirilmiş grafikler ve akıcı oyun deneyimiyle klasik oyunlar dünyasına dalın. Sevdiğiniz retro oyunların keyfini, geliştirilmiş performans ve uzun pil ömrü ile parlak 3,5 inç IPS ekranda yüksek kalitede çıkarın.",
+  "controls": {
+    "pause": "R36S oyun videosunu duraklat",
+    "play": "R36S oyun videosunu oynat",
+    "unmute": "R36S oyun videosu için sesi aç",
+    "mute": "R36S oyun videosu için sesi kapat",
+    "progress": "Video oynatma ilerlemesi"
+  },
+  "stats": {
+    "quality": "Kalite",
+    "screen": "IPS Ekran"
+  },
+  "fallback": {
+    "videoDescription": "Bu video, 3,5 inç IPS ekranlı taşınabilir oyun konsolu R36S'i göstermektedir. Ekranda, gelişmiş grafikler ve 60 FPS'de akıcı oyun deneyimiyle klasik retro oyunlar görüntülenmektedir."
   }
 }

@@ -1,17 +1,27 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "Demonstração de gameplay no console portátil R36S",
+    "description": "Experimente jogos clássicos com gráficos aprimorados e gameplay fluido na tela IPS de 3,5 polegadas do console portátil R36S."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "labels": {
+    "demonstration": "Demonstração"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "title": {
+    "rest": "Vídeo de gameplay"
+  },
+  "description": "Mergulhe no mundo dos jogos clássicos com gráficos aprimorados e gameplay fluido. Desfrute de seus jogos retrô favoritos em alta qualidade na brilhante tela IPS de 3,5 polegadas com desempenho aprimorado e longa duração de bateria.",
+  "controls": {
+    "pause": "Pausar vídeo de gameplay do R36S",
+    "play": "Reproduzir vídeo de gameplay do R36S",
+    "unmute": "Ativar som para o vídeo de gameplay do R36S",
+    "mute": "Desativar som para o vídeo de gameplay do R36S",
+    "progress": "Progresso de reprodução do vídeo"
+  },
+  "stats": {
+    "quality": "Qualidade",
+    "screen": "Tela IPS"
+  },
+  "fallback": {
+    "videoDescription": "Este vídeo mostra o console portátil de jogos R36S com uma tela IPS de 3,5 polegadas exibindo jogos retrô clássicos com gráficos aprimorados e gameplay fluido a 60 FPS."
   }
 }

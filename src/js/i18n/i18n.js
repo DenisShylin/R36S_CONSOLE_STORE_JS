@@ -46,8 +46,8 @@ export const languageNames = {
 const translationSections = [
   // 'common',
   'about',
-  // 'articles',
-  // 'categories',
+  'articles',
+  'categories',
   // 'contact',
   'features',
   // 'footer',

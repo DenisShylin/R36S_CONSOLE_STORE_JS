@@ -1,17 +1,117 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "meta": {
+    "name": "R36S Gaming Console - Official Information",
+    "description": "Discover the ultimate R36S handheld gaming console with reviews, specifications, and buying guides. Perfect for retro gaming enthusiasts."
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "heading": "R36S Gaming Console - Official Information",
+  "related": {
+    "title": "Often searched",
+    "specs": {
+      "title": "R36S Gaming Console Specifications",
+      "text": "R36S Specifications"
+    },
+    "reviews": {
+      "title": "R36S Gaming Console Reviews",
+      "text": "R36S Reviews"
+    },
+    "games": {
+      "title": "Best Games for R36S",
+      "text": "Best Games for R36S"
+    },
+    "firmware": {
+      "title": "R36S Firmware Updates",
+      "text": "R36S Firmware"
+    },
+    "accessories": {
+      "title": "R36S Gaming Accessories",
+      "text": "R36S Accessories 🛒"
+    },
+    "store": {
+      "title": "R36S Official Store",
+      "text": "R36S Official Store 🛒"
+    }
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "faq": {
+    "title": "Frequently Asked Questions about R36S",
+    "toggle": "Toggle answer",
+    "q1": "What is the R36S Handheld Console?",
+    "a1": "The R36S is a premium portable gaming device specifically designed for retro gaming enthusiasts. It features powerful hardware, exceptional build quality, and comes preloaded with thousands of classic games for on-the-go nostalgia.",
+    "q2": "What gaming platforms does the R36S support?",
+    "a2": "The R36S supports multiple classic gaming platforms including NES, SNES, N64, PS1, Game Boy, Game Boy Advance, Sega, and many others through its built-in emulators.",
+    "q3": "What are the display specifications?",
+    "a3": "The console features a 3.5-inch IPS display with a 640x480 resolution that delivers crisp, clear visuals for an enhanced gaming experience.",
+    "q4": "How long does the battery last?",
+    "a4": "The 3200mAh rechargeable battery provides approximately 6 hours of continuous gameplay on a full charge.",
+    "q5": "Can I connect the R36S to my TV?",
+    "a5": "Yes, the R36S supports TV output via OTG, allowing you to enjoy your games on a larger screen.",
+    "q6": "Is it possible to add more games to the device?",
+    "a6": "Absolutely. The R36S allows you to load additional games via a TF card, expanding your gaming library beyond the preloaded titles.",
+    "q7": "Does the R36S support multiplayer gaming?",
+    "a7": "Yes, the console supports multiplayer gaming through Bluetooth connectivity, making it easy to play with friends.",
+    "q8": "How does the R36S compare to competing handheld consoles?",
+    "a8": "The R36S outperforms similarly priced competitors with its superior build quality, longer battery life, better screen resolution, and more extensive game compatibility.",
+    "q9": "Are all retro games compatible with the R36S?",
+    "a9": "While most retro games work excellently on the device, performance may vary slightly depending on the specific emulator. The R36S excels particularly with 8-bit and 16-bit titles but also handles more demanding 32-bit games impressively.",
+    "q10": "How do I update the firmware on my R36S?",
+    "a10": "For firmware updates, refer to the R36S Custom Firmware Guide, which provides detailed step-by-step instructions, including methods for updating ArkOS on your device.",
+    "q11": "What should I do if I experience technical issues?",
+    "a11": "First, consult the user manual for troubleshooting tips. If problems persist, contact your retailer or visit our support page for additional assistance.",
+    "q12": "What warranty comes with the R36S?",
+    "a12": "Warranty details vary by retailer. Please check with your specific seller at the time of purchase for complete warranty terms and coverage information.",
+    "q13": "Where can I purchase the R36S?",
+    "a13": "The R36S is available through our official website, which offers exclusive configurations, extended warranty options, and special promotional pricing not available through other retailers.",
+    "q14": "Where can I get additional support?",
+    "a14": "For further assistance or questions, please visit our Contact Us page where our dedicated support team will be happy to help with any inquiries about your R36S gaming console."
+  },
+  "cta": {
+    "title": "Are you ready to experience the benefits of the R36S gaming console?",
+    "text": "Join thousands of satisfied gamers worldwide. Order your R36S gaming console today and enjoy special promotional pricing!",
+    "button": {
+      "title": "Order R36S Gaming Console Now",
+      "text": "BUY ON ALIEXPRESS"
+    }
+  },
+  "schema": {
+    "org": {
+      "name": "R36S Gaming",
+      "description": "Official manufacturer of the R36S Handheld Gaming Console"
+    },
+    "product": {
+      "name": "R36S Handheld Gaming Console",
+      "description": "The ultimate portable retro gaming console with exceptional performance and extensive game compatibility.",
+      "category": "Electronics > Video Games > Handheld Game Consoles"
+    }
+  },
+  "article": {
+    "1": {
+      "title": "R36S Retro Gaming",
+      "sections": {
+        "1": {
+          "subtitle": "R36S: The Ultimate Handheld Gaming Console for Retro Gaming Enthusiasts",
+          "content": "Welcome to the official home of the R36S handheld gaming console. The R36S has quickly become the go-to device for retro gaming enthusiasts across the United States, United Kingdom, and Australia. This powerful portable gaming system offers an exceptional combination of performance, versatility, and value that puts other retro consoles to shame. Whether you're reliving childhood classics or discovering retro gems for the first time, the R36S console delivers an unmatched gaming experience. Many gamers compare the R36S vs Anbernic models and consistently find that the R36S offers superior features at a more competitive price point. Ready to elevate your portable gaming experience? The R36S is now available for purchase online with special promotional pricing for a limited time."
+        },
+        "2": {
+          "subtitle": "Comprehensive R36S Review: Performance That Exceeds Expectations",
+          "content": "After extensive testing, our R36S review confirms what many gamers have discovered – this console punches well above its weight class. The R36S emulator performance is particularly impressive, handling everything from 8-bit classics to more demanding 32-bit titles with remarkable smoothness. Games load quickly and run without the lag or frame drops that plague lesser devices. The R36S specs include a powerful processor paired with ample RAM that ensures consistent performance across various emulation platforms. What truly sets the R36S console apart in our review is its ability to handle multiple emulation systems without compromising on quality. Unlike competitors in the same price range, the R36S maintains excellent performance even with graphically intensive games. Players across North America and Europe have shared R36S reviews praising its reliable performance during extended gaming sessions. Order your R36S today to experience this exceptional performance firsthand at our special online price."
+        }
+      }
+    },
+    "2": {
+      "title": "R36S Official Website",
+      "sections": {
+        "1": {
+          "subtitle": "R36S Official Website - The Ultimate Gaming Experience at Your Fingertips",
+          "content": "Welcome to the R36S Official Website, your premier destination for cutting-edge handheld gaming technology. Our revolutionary gaming console has transformed the portable gaming landscape, offering unprecedented performance in a sleek, ergonomic design. The R36S combines powerful hardware with intuitive controls to deliver an immersive gaming experience wherever you go. Whether you're a casual gamer or a dedicated enthusiast, the R36S game console provides the perfect balance of power, portability, and playability. Discover why gamers across North America, Europe, and Asia are choosing the R36S as their preferred handheld gaming device. Continue reading to learn about our exclusive features, technical specifications, and why the R36S stands apart from other gaming consoles on the market today."
+        },
+        "2": {
+          "subtitle": "Discover the Revolutionary R36S Handheld Gaming Experience",
+          "content": "The R36S handheld represents the next generation of portable gaming technology. Unlike conventional gaming devices, the R36S handheld features an advanced cooling system that prevents overheating during extended gaming sessions. Additionally, the vibrant high-resolution display ensures crystal-clear visuals even in bright outdoor conditions. Moreover, the R36S game console includes customizable controls that adapt to your unique gaming style. Furthermore, the lightweight yet durable construction makes the R36S perfect for gaming on the go. Meanwhile, the extended battery life keeps you playing for hours without interruption. Subsequently, the intuitive user interface makes navigating between games and settings effortless. In contrast to other portable systems, the R36S handheld offers exceptional value without compromising on quality. Consequently, gamers in the United Kingdom, Australia, and Canada can order online and experience the difference today. However, limited-time promotional pricing makes this the ideal time to purchase your R36S game console."
+        },
+        "3": {
+          "subtitle": "Unmatched Performance in the R36S Game Console",
+          "content": "The heart of the R36S game console lies in its powerful processing capabilities. Specifically, the custom-designed CPU and GPU combination delivers desktop-quality graphics in a handheld format. In particular, the advanced thermal management system prevents throttling during intensive gaming sessions. Similarly, the high-speed RAM ensures smooth multitasking between games and applications. Likewise, the expandable storage options allow you to carry your entire game library wherever you go. Certainly, the R36S handheld's performance metrics exceed industry standards in its price range. Nevertheless, the energy-efficient design maintains battery life without sacrificing processing power. Above all, the R36S game console's architecture supports both retro classics and modern gaming experiences. Therefore, gamers looking for performance and versatility consistently choose the R36S. Indeed, retailers across Germany, France, and Japan report steadily increasing demand for this innovative gaming device. Finally, manufacturer specifications confirm that the R36S outperforms competing handhelds costing significantly more."
+        }
+      }
+    }
   }
 }

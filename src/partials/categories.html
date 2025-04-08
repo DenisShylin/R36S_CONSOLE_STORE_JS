@@ -4,10 +4,15 @@
   itemscope
   itemtype="http://schema.org/VideoObject"
 >
-  <meta itemprop="name" content="R36S Handheld Game Console Gameplay Demo" />
+  <meta
+    itemprop="name"
+    content="R36S Handheld Game Console Gameplay Demo"
+    data-i18n="[content]categories.meta.name"
+  />
   <meta
     itemprop="description"
     content="Experience retro gaming with improved graphics and smooth gameplay on the R36S 3.5-inch IPS screen handheld console."
+    data-i18n="[content]categories.meta.description"
   />
   <meta itemprop="uploadDate" content="2024-03-15" />
   <meta itemprop="thumbnailUrl" content="/img/video-placeholder.jpg" />
@@ -23,16 +28,22 @@
     <div class="categories__content">
       <div class="categories__info">
         <div class="categories__labels">
-          <span class="categories__label">Demonstration</span>
+          <span
+            class="categories__label"
+            data-i18n="categories.labels.demonstration"
+            >Demonstration</span
+          >
           <span class="categories__label categories__label--outline">
             R36S
           </span>
         </div>
         <h2 class="categories__title" itemprop="headline">
           <span class="categories__title-highlight">R36S</span>
-          <span class="categories__title-rest">Gameplay Video</span>
+          <span class="categories__title-rest" data-i18n="categories.title.rest"
+            >Gameplay Video</span
+          >
         </h2>
-        <p class="categories__description">
+        <p class="categories__description" data-i18n="categories.description">
           Immerse yourself in the world of classic games with improved graphics
           and smooth gameplay. Enjoy your favorite retro games in high quality
           on a bright 3.5-inch IPS screen with enhanced performance and long
@@ -42,16 +53,6 @@
 
       <div class="categories__video-wrapper">
         <div class="categories__video-container">
-          <!-- Использование тега img в качестве плейсхолдера, пока видео не загрузится -->
-          <!-- <img
-            class="categories__video-placeholder"
-            src="/public/img/categories/products_9_2x.jpg"
-            alt="R36S Handheld Console Gameplay Preview"
-            style="display: none; width: 100%; border-radius: 24px"
-            itemprop="thumbnail"
-          /> -->
-
-          <!-- Видео с корректными путями -->
           <video
             class="categories__video"
             muted
@@ -73,6 +74,7 @@
             <button
               class="categories__video-play"
               aria-label="Pause R36S gameplay video"
+              data-i18n="[aria-label]categories.controls.pause"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -92,6 +94,7 @@
             <button
               class="categories__video-mute"
               aria-label="Enable sound for R36S gameplay video"
+              data-i18n="[aria-label]categories.controls.unmute"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +121,7 @@
                 step="0.1"
                 class="categories__video-slider"
                 aria-label="Video playback progress"
+                data-i18n="[aria-label]categories.controls.progress"
               />
               <div class="categories__video-time">
                 <span>0:00</span>
@@ -140,13 +144,19 @@
             </div>
             <div class="categories__stat">
               <span class="categories__stat-number" itemprop="value">HD</span>
-              <span class="categories__stat-label" itemprop="name"
+              <span
+                class="categories__stat-label"
+                itemprop="name"
+                data-i18n="categories.stats.quality"
                 >Quality</span
               >
             </div>
             <div class="categories__stat">
               <span class="categories__stat-number" itemprop="value">3.5"</span>
-              <span class="categories__stat-label" itemprop="name"
+              <span
+                class="categories__stat-label"
+                itemprop="name"
+                data-i18n="categories.stats.screen"
                 >IPS Screen</span
               >
             </div>
