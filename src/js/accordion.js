@@ -200,12 +200,10 @@ function initFaqAccordion() {
       child.style.pointerEvents = 'none';
     });
 
-    // Отдельно обрабатываем клик по кнопке toggle, чтобы не было конфликтов
+    // ИСПРАВЛЕНИЕ: фиксируем обработчик клика для кнопки переключения
     toggleBtn.style.pointerEvents = 'auto';
-    toggleBtn.addEventListener('click', e => {
-      e.stopPropagation(); // Предотвращаем всплытие, чтобы не вызвать обработчик header
-      handleClick(e);
-    });
+    // Не используем stopPropagation здесь, и просто вызываем напрямую handleClick
+    toggleBtn.addEventListener('click', handleClick);
 
     // Для доступности добавляем атрибуты ARIA если их ещё нет
     const questionId =
