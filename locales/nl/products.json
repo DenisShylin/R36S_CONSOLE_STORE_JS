@@ -1,17 +1,76 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "section_label": "FIRMWARE",
+  "guide_nav_title": "Gids",
+  "guide_title": "R36S Console Firmware Installatie & Aanpassingsgids",
+  "guide_intro": "Deze officiële gids biedt stap-voor-stap instructies voor het maken van back-ups, het installeren van aangepaste firmware en het optimaliseren van uw R36S handheld retro gaming console. Volg deze geverifieerde methoden om uw game-ervaring te verbeteren met verbeterde prestaties, extra functies en toegang tot duizenden retro games.",
+  "related_resources_title": "Gerelateerde Bronnen",
+  "related_resources": {
+    "custom_installation": "Aangepaste Firmware Installatiegids",
+    "firmware_options": "Vergelijking van R36S Firmware Opties",
+    "game_setup": "Games Instellen op R36S Console",
+    "downloads": "Download Nieuwste R36S Firmware"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "start_guide": {
+    "title": "Startgids",
+    "text": "Let op dat deze handleiding niet van toepassing is op K36 apparaten of klonen die als R36S worden verkocht. Voor meer informatie over uw hardware kunt u de uitgebreide R36S Wiki-pagina raadplegen.\n\nEssentiële benodigdheden:\n- R36S handheld apparaat\n- Computer met USB-poort\n- MicroSD-kaarten (suggesties: 16GB voor aangepaste firmware, 128GB voor gamebestanden)\n- MicroSD-kaartlezer\n- Aanbevolen software: Balena Etcher, Rufus, 7-Zip, MiniTool Partition Wizard\n- Optioneel: Linux-systeem of Ubuntu Live USB\n\nAlle informatie wordt verstrekt voor educatieve doeleinden, en gebruikers aanvaarden volledige verantwoordelijkheid voor mogelijke schade aan hun hardware.\n\nOm te bepalen welke versie van de R36S u heeft, gebruikt u de snelle identificatietool op de R36 Wiki – 'Schermidentificatiegids'. Deze stap is cruciaal omdat het bepaalt welke aangepaste firmware-image compatibel is met uw apparaat."
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "original_backup": {
+    "title": "Origineel Back-uppen",
+    "text": "Deze stap kan cruciaal zijn in uw modificatieproces. Een volledige back-up van de originele firmware zorgt ervoor dat u uw apparaat kunt herstellen als er iets misgaat tijdens het flashen, of als u later wilt terugkeren naar de originele staat.",
+    "subsections": {
+      "backup_procedure": {
+        "title": "Back-up maken met Win32DiskImager",
+        "text": "1. Start Win32DiskImager: Klik op het map-icoon in het gedeelte \"Image File\" en selecteer een locatie om uw back-up op te slaan, zorg ervoor dat u de .img extensie aan uw bestandsnaam toevoegt.\n\n2. Selecteer het apparaat: Kies de stationsletter die overeenkomt met uw R36S. *Wees uiterst voorzichtig tijdens deze selectie om te voorkomen dat u per ongeluk onbedoelde stations wist.\n\n3. Schakel Read Only-modus in: Zorg ervoor dat de optie \"Read Only Allocated Partitions\" is geselecteerd om te voorkomen dat lege sectoren samen met de gegevens worden gekopieerd.\n\n4. Start de back-up: Klik op de knop \"Read\" om te beginnen met het maken van het back-up imagebestand op de door u gekozen locatie."
+      }
+    }
+  },
+  "custom_installation": {
+    "title": "Aangepaste Installatie",
+    "text": "Zoals eerder vermeld, moet een van uw eerste prioriteiten zijn om een SD-kaart van een kwaliteitsmerk te verkrijgen. De kaarten die bij de R36S worden geleverd, zijn meestal onbetrouwbaar. Het is niet de vraag of ze zullen falen, maar wanneer.\n\nEnkele vs. Dubbele Kaartconfiguratie – De R36S heeft twee microSD-kaartsleuven. U kunt ervoor kiezen om alles op één kaart te hebben of het besturingssysteem te scheiden van uw gamecollectie.",
+    "subsections": {
+      "method_balena": {
+        "title": "Optie 1: Balena Etcher Methode",
+        "text": "Hoewel het algemene proces vergelijkbaar is voor alle aangepaste firmware-opties, zijn er enkele verschillen op te merken tijdens de installatie.\n\n1. Start Balena Etcher en selecteer \"Flash From File\", blader vervolgens naar uw gedownloade .img firmware-bestand.\n\n2. Selecteer \"Select Target\" en kies uw lege SD-kaart uit de lijst met apparaten.\n\n3. Laat Balena Etcher de image schrijven en verifiëren, en u bent klaar!\n\n*Opmerking – Als de verificatie mislukt met ArkOS bij gebruik van Balena Etcher, kan de installatie nog steeds correct werken, maar u kunt indien gewenst alternatieve image-schrijfsoftware proberen."
+      },
+      "method_win32": {
+        "title": "Optie 2: Win32DiskImager Methode",
+        "text": "1. Open Win32DiskImager en klik op het map-icoon in het gedeelte \"Image File\" om uw gedownloade aangepaste firmware te selecteren.\n\n2. Selecteer bestemming: Kies de juiste SD-kaart als uw doelapparaat. Controleer nogmaals of u naar de juiste locatie schrijft.\n\n3. Image schrijven: Klik op de knop Write om het flashproces te starten."
+      },
+      "method_raspberry": {
+        "title": "Optie 3: Raspberry Pi Imager",
+        "text": "1. Open Raspberry Pi Imager en klik op \"Choose OS\", selecteer vervolgens \"Use Custom\" om uw firmware-bestand te lokaliseren.\n\n2. Selecteer opslag: Kies zorgvuldig uw SD-kaart, NIET de interne schijf van uw computer!\n\n3. Begin met schrijven: Klik op de knop Write om te beginnen met het flashen van de image."
+      }
+    }
+  },
+  "firmware_options": {
+    "title": "Firmware Opties",
+    "text": "Er zijn verschillende aangepaste firmware-opties beschikbaar voor de R36S. Hier zijn de meest populaire keuzes:",
+    "subsections": {
+      "option_arkos": {
+        "title": "ArkOS - Community Enhanced Edition",
+        "text": "GitHub Repository: ArkOS Community Edition\n\nDit is een door de community onderhouden fork van ArkOS, ontwikkeld door AeolusUX specifiek voor de 36S-familie van apparaten.\n\nInstallatiegids:\n1. Download de nieuwste ArkOS-versie van de GitHub-pagina van het project\n2. Pak het imagebestand uit met 7-Zip, WinRAR of een vergelijkbaar extractieprogramma\n3. Flash de image naar een SD-kaart met uw voorkeurssoftware voor imaging\n4. Vervang indien nodig het DTB-bestand op de bootpartitie op basis van uw schermtype\n5. Plaats de SD-kaart in uw R36S\n6. Zet het apparaat aan en volg de instructies op het scherm"
+      },
+      "option_rocknix": {
+        "title": "ROCKNIX Besturingssysteem",
+        "text": "GitHub Repository: ROCKNIX\n\nInstallatiegids:\n1. Download de nieuwste ROCKNIX-versie van de GitHub-repository\n2. Pak het imagebestand uit met uw voorkeursextractieprogramma\n3. Schrijf de image naar een SD-kaart met ondersteunde imagingsoftware\n4. Plaats de SD-kaart in uw R36S-apparaat en zet het aan\n5. Voltooi de eerste configuratie door de aanwijzingen op het scherm te volgen"
+      },
+      "option_amber": {
+        "title": "AmberELEC Systeem",
+        "text": "GitHub Repository: AmberELEC\n\nInstallatiegids:\n1. Download de AmberELEC-image specifiek voor R36S van hun GitHub-repository\n2. Flash de image naar een SD-kaart met Balena Etcher of een vergelijkbaar hulpprogramma\n3. Plaats de SD-kaart in uw R36S handheld en zet deze aan\n4. Volg de instructies op het scherm om het installatieproces te voltooien"
+      }
+    }
+  },
+  "game_setup": {
+    "title": "Bestanden Toevoegen",
+    "text": "1. Voor configuraties met twee kaarten, formatteer uw tweede kaart naar FAT32 of exFAT (afhankelijk van de capaciteit van uw kaart)\n\n2. Verbind uw R36S met uw computer via een USB-kabel, of verwijder de SD-kaart voor gameopslag en sluit deze direct aan op uw PC.\n\n3. Kopieer uw gamebestanden naar de juiste mappen op de SD-kaart. OPMERKING: Noord-Amerikaanse gebruikers kunnen in eerste instantie verward zijn door sommige mapnamen. Alle systemen gebruiken hun originele regionale namen, dus NES wordt aangeduid als FC (Famicom), Genesis als MD (Mega Drive), enzovoort.\n\n4. Plaats de SD-kaart terug en vernieuw uw gamelijsten via het systeemmenu."
+  },
+  "helpful_tips": {
+    "title": "Gebruikstips",
+    "text": "• Forceer NOOIT het afsluiten door de aan/uit-knop ingedrukt te houden. Uw apparaat functioneert nu als een computer die correct moet worden afgesloten. Druk op START en navigeer naar QUIT —-> Shutdown\n\n• U kunt schakelen tussen Nintendo (standaard) of Xbox knoplayout. Druk op START en ga naar Advanced Settings —-> Switch A/B\n\n• Verander systeemthema's lokaal door op START te drukken en te navigeren naar UI Settings —-> Themes\n\n• Een korte druk op de aan/uit-knop zet het apparaat in stand-bymodus."
+  },
+  "downloads": {
+    "title": "Beschikbare Downloads",
+    "update_label": "Update",
+    "download_aria": "Download firmware-bestand"
   }
 }

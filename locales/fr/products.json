@@ -1,17 +1,76 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "section_label": "FIRMWARE",
+  "guide_nav_title": "Guide",
+  "guide_title": "Guide d'installation et de personnalisation du firmware pour la console R36S",
+  "guide_intro": "Ce guide officiel fournit des instructions étape par étape pour sauvegarder, installer un firmware personnalisé et optimiser votre console portable de jeux rétro R36S. Suivez ces méthodes vérifiées pour améliorer votre expérience de jeu avec de meilleures performances, des fonctionnalités supplémentaires et l'accès à des milliers de jeux rétro.",
+  "related_resources_title": "Ressources associées",
+  "related_resources": {
+    "custom_installation": "Guide d'installation du firmware personnalisé",
+    "firmware_options": "Comparaison des options de firmware R36S",
+    "game_setup": "Configuration des jeux sur la console R36S",
+    "downloads": "Télécharger le dernier firmware R36S"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "start_guide": {
+    "title": "Guide de démarrage",
+    "text": "Veuillez noter que ce tutoriel ne s'applique pas aux appareils K36 ou aux clones commercialisés sous le nom de R36S. Pour plus d'informations sur votre matériel, veuillez consulter la page Wiki complète du R36S.\n\nÉléments essentiels :\n- Appareil portable R36S\n- Ordinateur avec port USB\n- Cartes MicroSD (suggestions : 16 Go pour le firmware personnalisé, 128 Go pour les fichiers de jeux)\n- Lecteur de carte MicroSD\n- Logiciels recommandés : Balena Etcher, Rufus, 7-Zip, MiniTool Partition Wizard\n- Optionnel : Système Linux ou clé USB Ubuntu Live\n\nToutes les informations fournies sont à des fins éducatives, et les utilisateurs assument l'entière responsabilité de tout dommage potentiel à leur matériel.\n\nPour identifier quelle version du R36S vous possédez, utilisez l'outil d'identification rapide sur le Wiki R36 – 'Guide d'identification d'écran'. Cette étape est cruciale car elle détermine quelle image de firmware personnalisé est compatible avec votre appareil."
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "original_backup": {
+    "title": "Sauvegarde de l'original",
+    "text": "Cette étape peut être critique dans votre parcours de modification. Avoir une sauvegarde complète du firmware d'origine vous assure de pouvoir restaurer votre appareil si quelque chose ne va pas pendant le processus de flash, ou si vous souhaitez revenir à l'état d'origine plus tard.",
+    "subsections": {
+      "backup_procedure": {
+        "title": "Sauvegarde avec Win32DiskImager",
+        "text": "1. Lancez Win32DiskImager : Cliquez sur l'icône du dossier dans la section \"Image File\" et sélectionnez un emplacement pour enregistrer votre sauvegarde, en veillant à ajouter l'extension .img à votre nom de fichier.\n\n2. Sélectionnez l'appareil : Choisissez la lettre de lecteur correspondant à votre R36S. *Soyez extrêmement prudent lors de cette sélection pour éviter d'effacer accidentellement des lecteurs non désirés.\n\n3. Activez le mode lecture seule : Assurez-vous que l'option \"Read Only Allocated Partitions\" est sélectionnée pour éviter de copier les secteurs vides avec les données.\n\n4. Démarrez la sauvegarde : Cliquez sur le bouton \"Read\" pour commencer à créer le fichier image de sauvegarde à l'emplacement choisi."
+      }
+    }
+  },
+  "custom_installation": {
+    "title": "Installation personnalisée",
+    "text": "Comme mentionné précédemment, l'une de vos premières priorités devrait être d'obtenir une carte SD de marque de qualité. Les cartes incluses avec le R36S sont généralement peu fiables. Ce n'est pas une question de si elles vont échouer, mais quand.\n\nConfiguration à carte unique ou double – Le R36S dispose de deux emplacements pour cartes microSD. Vous pouvez choisir d'avoir tout sur une seule carte ou de séparer le système d'exploitation de votre collection de jeux.",
+    "subsections": {
+      "method_balena": {
+        "title": "Option 1 : Méthode Balena Etcher",
+        "text": "Bien que le processus général soit similaire pour toutes les options de firmware personnalisé, il existe quelques différences à noter lors de l'installation.\n\n1. Lancez Balena Etcher et sélectionnez \"Flash From File\", puis naviguez jusqu'à votre fichier de firmware .img téléchargé.\n\n2. Sélectionnez \"Select Target\" et choisissez votre carte SD vierge dans la liste des périphériques.\n\n3. Laissez Balena Etcher écrire et vérifier l'image, et vous avez terminé !\n\n*Remarque – Si la vérification échoue avec ArkOS en utilisant Balena Etcher, l'installation peut toujours fonctionner correctement, mais vous pouvez essayer un logiciel alternatif d'écriture d'image si vous préférez."
+      },
+      "method_win32": {
+        "title": "Option 2 : Méthode Win32DiskImager",
+        "text": "1. Ouvrez Win32DiskImager et cliquez sur l'icône du dossier dans la section \"Image File\" pour sélectionner votre firmware personnalisé téléchargé.\n\n2. Sélectionnez la destination : Choisissez la carte SD correcte comme périphérique cible. Vérifiez deux fois pour vous assurer d'écrire au bon emplacement.\n\n3. Écrivez l'image : Cliquez sur le bouton Write pour commencer le processus de flash."
+      },
+      "method_raspberry": {
+        "title": "Option 3 : Raspberry Pi Imager",
+        "text": "1. Ouvrez Raspberry Pi Imager et cliquez sur \"Choose OS\", puis sélectionnez \"Use Custom\" pour localiser votre fichier de firmware.\n\n2. Sélectionnez le stockage : Choisissez votre carte SD avec soin, PAS le disque interne de votre ordinateur !\n\n3. Commencez l'écriture : Cliquez sur le bouton Write pour commencer à flasher l'image."
+      }
+    }
+  },
+  "firmware_options": {
+    "title": "Options de firmware",
+    "text": "Plusieurs options de firmware personnalisé sont disponibles pour le R36S. Voici les choix les plus populaires :",
+    "subsections": {
+      "option_arkos": {
+        "title": "ArkOS - Édition améliorée par la communauté",
+        "text": "Dépôt GitHub : ArkOS Community Edition\n\nIl s'agit d'un fork d'ArkOS maintenu par la communauté, développé par AeolusUX spécifiquement pour la famille d'appareils 36S.\n\nGuide d'installation :\n1. Téléchargez la dernière version d'ArkOS depuis la page GitHub du projet\n2. Extrayez le fichier image à l'aide de 7-Zip, WinRAR ou d'un outil d'extraction similaire\n3. Flashez l'image sur une carte SD à l'aide de votre logiciel d'imagerie préféré\n4. Si nécessaire, remplacez le fichier DTB sur la partition de démarrage en fonction de votre type d'écran\n5. Insérez la carte SD dans votre R36S\n6. Allumez et suivez les instructions de configuration à l'écran"
+      },
+      "option_rocknix": {
+        "title": "Système d'exploitation ROCKNIX",
+        "text": "Dépôt GitHub : ROCKNIX\n\nGuide d'installation :\n1. Téléchargez la dernière version de ROCKNIX depuis le dépôt GitHub\n2. Extrayez le fichier image à l'aide de votre outil d'extraction préféré\n3. Écrivez l'image sur une carte SD à l'aide de n'importe quel logiciel d'imagerie pris en charge\n4. Insérez la carte SD dans votre appareil R36S et allumez-le\n5. Complétez la configuration initiale en suivant les instructions à l'écran"
+      },
+      "option_amber": {
+        "title": "Système AmberELEC",
+        "text": "Dépôt GitHub : AmberELEC\n\nGuide d'installation :\n1. Téléchargez l'image AmberELEC spécifiquement pour R36S depuis leur dépôt GitHub\n2. Flashez l'image sur une carte SD à l'aide de Balena Etcher ou d'un outil équivalent\n3. Insérez la carte SD dans votre console portable R36S et allumez-la\n4. Suivez les instructions à l'écran pour finaliser le processus de configuration"
+      }
+    }
+  },
+  "game_setup": {
+    "title": "Ajouter des fichiers",
+    "text": "1. Pour les configurations à deux cartes, formatez votre seconde carte en FAT32 ou exFAT (selon la capacité de votre carte)\n\n2. Connectez votre R36S à votre ordinateur via un câble USB, ou retirez la carte SD de stockage des jeux et connectez-la directement à votre PC.\n\n3. Copiez vos fichiers de jeu dans les répertoires appropriés sur la carte SD. REMARQUE : Les utilisateurs nord-américains peuvent être initialement déroutés par certains noms de dossiers. Tous les systèmes utilisent leurs noms régionaux d'origine, donc NES est étiqueté comme FC (Famicom), Genesis comme MD (Mega Drive), etc.\n\n4. Réinsérez la carte SD et actualisez vos listes de jeux via le menu système."
+  },
+  "helpful_tips": {
+    "title": "Conseils d'utilisation",
+    "text": "• NE forcez JAMAIS l'arrêt en maintenant le bouton d'alimentation. Votre appareil fonctionne maintenant comme un ordinateur qui nécessite un arrêt approprié. Appuyez sur START et naviguez vers QUIT —-> Shutdown\n\n• Vous pouvez basculer entre les dispositions de boutons Nintendo (par défaut) ou Xbox. Appuyez sur START et allez dans Advanced Settings —-> Switch A/B\n\n• Changez les thèmes du système localement en appuyant sur START et en naviguant vers UI Settings —-> Themes\n\n• Une pression rapide sur le bouton d'alimentation mettra l'appareil en mode veille."
+  },
+  "downloads": {
+    "title": "Téléchargements disponibles",
+    "update_label": "Mise à jour",
+    "download_aria": "Télécharger le fichier de firmware"
   }
 }

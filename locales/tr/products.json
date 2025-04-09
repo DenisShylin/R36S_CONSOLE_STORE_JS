@@ -1,17 +1,76 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "section_label": "DONANIM YAZILIMI",
+  "guide_nav_title": "Kılavuz",
+  "guide_title": "R36S Konsol Donanım Yazılımı Kurulum ve Özelleştirme Kılavuzu",
+  "guide_intro": "Bu resmi kılavuz, R36S taşınabilir retro oyun konsolunuzun yedeklenmesi, özel donanım yazılımı kurulması ve optimize edilmesi için adım adım talimatlar sunar. Geliştirilmiş performans, ek özellikler ve binlerce retro oyuna erişim ile oyun deneyiminizi geliştirmek için bu doğrulanmış yöntemleri izleyin.",
+  "related_resources_title": "İlgili Kaynaklar",
+  "related_resources": {
+    "custom_installation": "Özel Donanım Yazılımı Kurulum Kılavuzu",
+    "firmware_options": "R36S Donanım Yazılımı Seçeneklerini Karşılaştırma",
+    "game_setup": "R36S Konsoluna Oyun Kurulumu",
+    "downloads": "En Son R36S Donanım Yazılımını İndirin"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "start_guide": {
+    "title": "Başlangıç Kılavuzu",
+    "text": "Lütfen bu eğitimin K36 cihazları veya R36S olarak pazarlanan klonlar için geçerli olmadığını unutmayın. Donanımınız hakkında daha fazla bilgi için kapsamlı R36S Wiki Sayfasına başvurun.\n\nGerekli Öğeler:\n- R36S el cihazı\n- USB bağlantı noktası olan bilgisayar\n- MicroSD kartlar (öneriler: özel donanım yazılımı için 16GB, oyun dosyaları için 128GB)\n- MicroSD kart okuyucu\n- Önerilen yazılımlar: Balena Etcher, Rufus, 7-Zip, MiniTool Partition Wizard\n- İsteğe bağlı: Linux sistemi veya Ubuntu Live USB\n\nSağlanan tüm bilgiler eğitim amaçlıdır ve kullanıcılar donanımlarında oluşabilecek herhangi bir potansiyel hasarın tam sorumluluğunu kabul eder.\n\nHangi R36S sürümüne sahip olduğunuzu belirlemek için R36 Wiki'deki hızlı tanımlama aracını kullanın – 'Ekran Tanımlama Kılavuzu'. Bu adım, cihazınızla uyumlu olan özel donanım yazılımı görüntüsünü belirlediği için çok önemlidir."
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "original_backup": {
+    "title": "Orijinali Yedekleyin",
+    "text": "Bu adım, modifikasyon yolculuğunuzda kritik olabilir. Stok donanım yazılımının tam bir yedeğine sahip olmak, flaşlama işlemi sırasında bir şeyler ters giderse veya daha sonra orijinal duruma geri dönmek isterseniz cihazınızı geri yükleyebilmenizi sağlar.",
+    "subsections": {
+      "backup_procedure": {
+        "title": "Win32DiskImager Kullanarak Yedekleme",
+        "text": "1. Win32DiskImager'ı başlatın: \"Image File\" bölümünde klasör simgesine tıklayın ve yedeğinizi kaydetmek için bir konum seçin, dosya adınıza .img uzantısını eklediğinizden emin olun.\n\n2. Cihazı seçin: R36S'nize karşılık gelen sürücü harfini seçin. *İstenmeyen sürücüleri yanlışlıkla silmemek için bu seçim sırasında son derece dikkatli olun.\n\n3. Salt Okunur modu etkinleştirin: Verilerle birlikte boş sektörleri kopyalamaktan kaçınmak için \"Read Only Allocated Partitions\" seçeneğinin seçili olduğundan emin olun.\n\n4. Yedeklemeyi başlatın: Seçtiğiniz konumda yedekleme görüntü dosyasını oluşturmaya başlamak için \"Read\" düğmesine tıklayın."
+      }
+    }
+  },
+  "custom_installation": {
+    "title": "Özel Kurulum",
+    "text": "Daha önce belirtildiği gibi, ilk önceliklerinizden biri kaliteli bir marka SD kart edinmek olmalıdır. R36S ile birlikte verilen kartlar genellikle güvenilmezdir. Başarısız olup olmayacakları değil, ne zaman başarısız olacakları sorusudur.\n\nTek Kart ve Çift Kart Yapılandırması – R36S iki microSD kart yuvasına sahiptir. Her şeyi tek bir kartta tutmayı veya işletim sistemini oyun koleksiyonunuzdan ayırmayı seçebilirsiniz.",
+    "subsections": {
+      "method_balena": {
+        "title": "Seçenek 1: Balena Etcher Yöntemi",
+        "text": "Genel süreç tüm özel donanım yazılımı seçenekleri için benzer olsa da, kurulum sırasında dikkate alınması gereken bazı farklılıklar vardır.\n\n1. Balena Etcher'ı başlatın ve \"Flash From File\"ı seçin, ardından indirdiğiniz .img donanım yazılımı dosyasına göz atın.\n\n2. \"Select Target\"ı seçin ve cihaz listesinden boş SD kartınızı seçin.\n\n3. Balena Etcher'ın görüntüyü yazmasına ve doğrulamasına izin verin ve işlem tamamlandı!\n\n*Not – ArkOS kullanırken Balena Etcher ile doğrulama başarısız olursa, kurulum yine de doğru çalışabilir, ancak isterseniz alternatif görüntü yazma yazılımını deneyebilirsiniz."
+      },
+      "method_win32": {
+        "title": "Seçenek 2: Win32DiskImager Yöntemi",
+        "text": "1. Win32DiskImager'ı açın ve indirdiğiniz özel donanım yazılımını seçmek için \"Image File\" bölümündeki klasör simgesine tıklayın.\n\n2. Hedefi seçin: Hedef cihazınız olarak doğru SD kartı seçin. Doğru konuma yazdığınızdan emin olmak için iki kez kontrol edin.\n\n3. Görüntüyü yazın: Flaşlama işlemini başlatmak için Write düğmesine tıklayın."
+      },
+      "method_raspberry": {
+        "title": "Seçenek 3: Raspberry Pi Imager",
+        "text": "1. Raspberry Pi Imager'ı açın ve \"Choose OS\"a tıklayın, ardından donanım yazılımı dosyanızı bulmak için \"Use Custom\"ı seçin.\n\n2. Depolama alanını seçin: Bilgisayarınızın dahili sürücüsü DEĞİL, SD kartınızı dikkatle seçin!\n\n3. Yazmaya başlayın: Görüntüyü flaşlamaya başlamak için Write düğmesine tıklayın."
+      }
+    }
+  },
+  "firmware_options": {
+    "title": "Donanım Yazılımı Seçenekleri",
+    "text": "R36S için çeşitli özel donanım yazılımı seçenekleri mevcuttur. İşte en popüler seçenekler:",
+    "subsections": {
+      "option_arkos": {
+        "title": "ArkOS - Topluluk Geliştirilmiş Sürümü",
+        "text": "GitHub Deposu: ArkOS Community Edition\n\nBu, AeolusUX tarafından özellikle 36S cihaz ailesi için geliştirilen ArkOS'un topluluk tarafından bakımı yapılan bir dalıdır.\n\nKurulum kılavuzu:\n1. Projenin GitHub sayfasından en son ArkOS sürümünü indirin\n2. Görüntü dosyasını 7-Zip, WinRAR veya benzer bir çıkarma aracı kullanarak çıkarın\n3. Tercih ettiğiniz görüntüleme yazılımını kullanarak görüntüyü bir SD karta flaşlayın\n4. Gerekirse, ekran tipinize göre önyükleme bölümündeki DTB dosyasını değiştirin\n5. SD kartı R36S'nize takın\n6. Gücü açın ve ekrandaki kurulum talimatlarını izleyin"
+      },
+      "option_rocknix": {
+        "title": "ROCKNIX İşletim Sistemi",
+        "text": "GitHub Deposu: ROCKNIX\n\nKurulum kılavuzu:\n1. GitHub deposundan en son ROCKNIX sürümünü indirin\n2. Tercih ettiğiniz çıkarma aracını kullanarak görüntü dosyasını çıkarın\n3. Desteklenen herhangi bir görüntüleme yazılımı kullanarak görüntüyü bir SD karta yazın\n4. SD kartı R36S cihazınıza takın ve gücü açın\n5. Ekrandaki komutları izleyerek başlangıç yapılandırmasını tamamlayın"
+      },
+      "option_amber": {
+        "title": "AmberELEC Sistemi",
+        "text": "GitHub Deposu: AmberELEC\n\nKurulum kılavuzu:\n1. GitHub depolarından özellikle R36S için AmberELEC görüntüsünü indirin\n2. Görüntüyü Balena Etcher veya eşdeğer bir araç kullanarak bir SD karta flaşlayın\n3. SD kartı R36S el cihazınıza takın ve gücü açın\n4. Kurulum işlemini tamamlamak için ekrandaki talimatları izleyin"
+      }
+    }
+  },
+  "game_setup": {
+    "title": "Dosya Ekleyin",
+    "text": "1. Çift kart kurulumları için, ikinci kartınızı FAT32 veya exFAT'a (kart kapasitesine bağlı olarak) biçimlendirin\n\n2. R36S'nizi USB kablosu ile bilgisayarınıza bağlayın veya oyun depolama SD kartını çıkarın ve doğrudan bilgisayarınıza bağlayın.\n\n3. Oyun dosyalarınızı SD karttaki uygun dizinlere kopyalayın. NOT: Kuzey Amerikalı kullanıcılar başlangıçta bazı klasör adlarından kafaları karışabilir. Tüm sistemler orijinal bölgesel adlarını kullanır, bu nedenle NES, FC (Famicom) olarak, Genesis, MD (Mega Drive) olarak etiketlenmiştir vb.\n\n4. SD kartı yeniden takın ve sistem menüsü aracılığıyla oyun listelerinizi yenileyin."
+  },
+  "helpful_tips": {
+    "title": "Kullanım İpuçları",
+    "text": "• Güç düğmesini basılı tutarak ASLA zorla kapatmayın. Cihazınız artık düzgün kapatma gerektiren bir bilgisayar gibi çalışmaktadır. START'a basın ve QUIT —-> Shutdown'a gidin\n\n• Nintendo (varsayılan) veya Xbox düğme düzenleri arasında geçiş yapabilirsiniz. START'a basın ve Advanced Settings —-> Switch A/B'ye gidin\n\n• START'a basıp UI Settings —-> Themes'e giderek yerel olarak sistem temalarını değiştirin\n\n• Güç düğmesine hızlıca basmak cihazı bekleme moduna alacaktır."
+  },
+  "downloads": {
+    "title": "Mevcut İndirmeler",
+    "update_label": "Güncelleme",
+    "download_aria": "Donanım yazılımı dosyasını indirin"
   }
 }
