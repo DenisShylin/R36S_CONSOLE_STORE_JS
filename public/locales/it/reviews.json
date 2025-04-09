@@ -1,44 +1,40 @@
 {
-  "it": {
-    "reviews": {
-      "meta": {
-        "productName": "Console di Gioco Portatile R36S",
-        "productDescription": "Console di Gioco Portatile R36S con schermo IPS da 3,5 pollici, oltre 15.000 giochi retro"
-      },
-      "label": "Recensioni",
-      "title": "Recensioni dei Clienti",
-      "subtitle": "Scopri cosa dicono i giocatori sulla console retro R36S",
-      "helpful": "Utile ({{count}})",
-      "reviewItems": {
-        "1": {
-          "text": "Ho appena messo le mani sulla console retro R36S ed è davvero straordinaria per i giochi vecchio stile. Lo schermo è super chiaro, esegue i giochi in modo fluido e la durata della batteria è solida. Adoro come posso caricare i miei classici preferiti e giocare...",
-          "author": "Acquirente AliExpress",
-          "date": "21 ago 2024",
-          "color": "Viola 64GB",
-          "verified": true
-        },
-        "2": {
-          "text": "Dopo aver giocato con l'R36S per una settimana, sono davvero impressionato e assolutamente felice. La qualità costruttiva è ottima, e passare da un gioco retro all'altro è super facile. I controlli sono comodi per lunghe sessioni di gioco.",
-          "author": "V***h",
-          "date": "26 ago 2024",
-          "color": "Giallo 128G",
-          "verified": true
-        },
-        "3": {
-          "text": "L'R36S è diventata il mio dispositivo di gioco preferito. Non ero sicuro di acquistare un'altra console retro, ma questa mi ha sorpreso. Lo schermo è luminoso e nitido, i giochi funzionano senza problemi, ed è abbastanza piccola da stare in tasca.",
-          "author": "M***z",
-          "date": "22 ago 2024",
-          "color": "Bianco 64GB",
-          "verified": true
-        },
-        "4": {
-          "text": "Sto usando l'R36S da alcune settimane ormai, e sono sinceramente impressionato. Lo schermo IPS da 3,5 pollici offre immagini nitide, e la qualità costruttiva sembra solida. I doppi stick analogici sono reattivi, rendendo i giochi retro un piacere.",
-          "author": "K***r",
-          "date": "28 ago 2024",
-          "color": "Nero 128GB",
-          "verified": true
-        }
-      }
+  "meta": {
+    "productName": "Console di gioco R36S",
+    "productDescription": "Console di gioco portatile R36S con schermo IPS da 3,5 pollici, più di 15.000 giochi retro"
+  },
+  "label": "Recensioni",
+  "title": "Recensioni degli acquirenti",
+  "subtitle": "Scopri cosa dicono i giocatori sulla console retro R36S",
+  "helpful": "Utile ({{count}})",
+  "reviewItems": {
+    "1": {
+      "text": "Ho appena ricevuto la console retro R36S, ed è davvero un dispositivo fantastico per i vecchi giochi. Lo schermo è molto nitido, i giochi funzionano in modo fluido e la durata della batteria è abbastanza lunga. Mi piace poter caricare i miei classici preferiti e giocare...",
+      "author": "Acquirente AliExpress",
+      "date": "21 ago 2024",
+      "color": "Viola 64GB",
+      "verified": true
+    },
+    "2": {
+      "text": "Dopo aver giocato con l'R36S per una settimana, sono molto colpito e assolutamente soddisfatto. La qualità costruttiva è eccellente e il passaggio tra diversi giochi retro è molto semplice. I controlli sono comodi per sessioni di gioco prolungate.",
+      "author": "V***h",
+      "date": "26 ago 2024",
+      "color": "Giallo 128GB",
+      "verified": true
+    },
+    "3": {
+      "text": "L'R36S è diventata il mio dispositivo di gioco principale. Non ero sicuro di acquistare un'altra console retro, ma questa mi ha sorpreso. Lo schermo è luminoso e chiaro, i giochi funzionano senza problemi, ed è abbastanza piccola da stare in tasca.",
+      "author": "M***z",
+      "date": "22 ago 2024",
+      "color": "Bianco 64GB",
+      "verified": true
+    },
+    "4": {
+      "text": "Sto usando l'R36S da alcune settimane, e l'esperienza è ottima. Lo schermo IPS da 3,5 pollici fornisce un'immagine nitida, e la qualità costruttiva sembra robusta. I doppi joystick analogici sono molto reattivi, rendendo i giochi retro un piacere.",
+      "author": "K***r",
+      "date": "28 ago 2024",
+      "color": "Nero 128GB",
+      "verified": true
     }
   }
 }

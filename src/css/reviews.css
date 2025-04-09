@@ -251,30 +251,42 @@ body {
     height: 18px;
 }
 
-/* RTL поддержка для карточек отзывов */
+/* Базовые правила RTL для секции отзывов */
 .rtl .review-card__header,
 .rtl .review-card__footer,
+.rtl .review-card__rating,
+.rtl .review-card__helpful {
+    flex-direction: row-reverse;
+}
+
 .rtl .review-card__name {
     flex-direction: row-reverse;
 }
 
+.rtl .review-card__text {
+    text-align: right;
+}
+
+.rtl .review-card__date {
+    text-align: right;
+}
+
+.rtl .review-card__title,
+.rtl .review-card__subtitle {
+    text-align: right;
+}
+
+/* Позиционирование элементов для RTL */
 .rtl .review-card__arrow-wrapper {
     left: 12px;
     right: auto;
 }
 
-.rtl .review-card__arrow {
+.rtl .review-card__arrow svg {
     transform: scaleX(-1);
 }
 
-.rtl .review-card:hover {
-    transform: translateY(-5px) scale(1.02);
-}
 
-/* Для кнопки helpful в RTL */
-.rtl .review-card__helpful {
-    flex-direction: row-reverse;
-}
 
 @keyframes pulseArrow {
     0% {
@@ -305,17 +317,21 @@ body {
     }
 }
 
-/* Для RTL нужна обратная анимация стрелки */
-@keyframes moveArrow {
+/* Модифицируем анимацию для RTL */
+@keyframes moveArrowRtl {
 
     0%,
     100% {
-        transform: translateX(0);
+        transform: translateX(0) scaleX(-1);
     }
 
     50% {
-        transform: translateX(-5px);
+        transform: translateX(-5px) scaleX(-1);
     }
+}
+
+.rtl .review-card__arrow {
+    animation: moveArrowRtl 1.5s infinite;
 }
 
 @keyframes starPulse {

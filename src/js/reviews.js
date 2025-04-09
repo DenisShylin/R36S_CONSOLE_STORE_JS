@@ -1,4 +1,7 @@
-// Reviews.js - Исправленный скрипт для секции отзывов
+// Reviews.js - Модифицированный скрипт для секции отзывов с поддержкой i18n
+
+// Импортируем i18next для доступа к переводам
+import i18next from 'i18next';
 
 // Функция инициализации секции отзывов
 export function initReviews() {
@@ -29,15 +32,19 @@ export function initReviews() {
     },
   };
 
-  // Данные отзывов (оставляем оригинальные данные)
+  // Данные отзывов с ключами для переводов
   const reviews = [
     {
       id: 1,
       rating: 5,
-      color: 'Purple 64GB',
-      author: 'AliExpress Shopper',
-      date: '21 Aug 2024',
-      text: "I just got my hands on the R36S retro console and it's seriously amazing for old-school gaming. The screen is super clear, it runs games smoothly, and battery life is solid. I love how I can load up my favorite classics and play...",
+      colorKey: 'reviews.reviewItems.1.color',
+      color: 'Purple 64GB', // Fallback текст
+      authorKey: 'reviews.reviewItems.1.author',
+      author: 'AliExpress Shopper', // Fallback текст
+      dateKey: 'reviews.reviewItems.1.date',
+      date: '21 Aug 2024', // Fallback текст
+      textKey: 'reviews.reviewItems.1.text',
+      text: "I just got my hands on the R36S retro console and it's seriously amazing for old-school gaming. The screen is super clear, it runs games smoothly, and battery life is solid. I love how I can load up my favorite classics and play...", // Fallback текст
       images: {
         webp: reviewImages.review1.webp,
         jpeg: reviewImages.review1.jpg,
@@ -48,10 +55,14 @@ export function initReviews() {
     {
       id: 2,
       rating: 5,
-      color: 'Yellow 128G',
-      author: 'V***h',
-      date: '26 Aug 2024',
-      text: "After playing with the R36S for a week, I'm really impressed and absolutely delighted. The build quality feels great, and switching between different retro games is super easy. The controls are comfortable for long gaming sessions.",
+      colorKey: 'reviews.reviewItems.2.color',
+      color: 'Yellow 128G', // Fallback текст
+      authorKey: 'reviews.reviewItems.2.author',
+      author: 'V***h', // Fallback текст
+      dateKey: 'reviews.reviewItems.2.date',
+      date: '26 Aug 2024', // Fallback текст
+      textKey: 'reviews.reviewItems.2.text',
+      text: "After playing with the R36S for a week, I'm really impressed and absolutely delighted. The build quality feels great, and switching between different retro games is super easy. The controls are comfortable for long gaming sessions.", // Fallback текст
       images: {
         webp: reviewImages.review4.webp,
         jpeg: reviewImages.review4.jpg,
@@ -62,10 +73,14 @@ export function initReviews() {
     {
       id: 3,
       rating: 5,
-      color: 'White 64GB',
-      author: 'M***z',
-      date: '22 Aug 2024',
-      text: "The R36S has become my go-to gaming device. I wasn't sure about buying another retro console, but this one surprised me. The screen is bright and sharp, games run without issues, and it's small enough to fit in my pocket.",
+      colorKey: 'reviews.reviewItems.3.color',
+      color: 'White 64GB', // Fallback текст
+      authorKey: 'reviews.reviewItems.3.author',
+      author: 'M***z', // Fallback текст
+      dateKey: 'reviews.reviewItems.3.date',
+      date: '22 Aug 2024', // Fallback текст
+      textKey: 'reviews.reviewItems.3.text',
+      text: "The R36S has become my go-to gaming device. I wasn't sure about buying another retro console, but this one surprised me. The screen is bright and sharp, games run without issues, and it's small enough to fit in my pocket.", // Fallback текст
       images: {
         webp: reviewImages.review3.webp,
         jpeg: reviewImages.review3.jpg,
@@ -76,10 +91,14 @@ export function initReviews() {
     {
       id: 4,
       rating: 5,
-      color: 'Black 128GB',
-      author: 'K***r',
-      date: '28 Aug 2024',
-      text: "I've been using the R36S for a few weeks now, and I'm genuinely impressed. The 3.5-inch IPS screen delivers crisp visuals, and the build quality feels solid. The dual analog sticks are responsive, making retro gaming a joy.",
+      colorKey: 'reviews.reviewItems.4.color',
+      color: 'Black 128GB', // Fallback текст
+      authorKey: 'reviews.reviewItems.4.author',
+      author: 'K***r', // Fallback текст
+      dateKey: 'reviews.reviewItems.4.date',
+      date: '22 Aug 2024', // Fallback текст
+      textKey: 'reviews.reviewItems.4.text',
+      text: "I've been using the R36S for a few weeks now, and I'm genuinely impressed. The 3.5-inch IPS screen delivers crisp visuals, and the build quality feels solid. The dual analog sticks are responsive, making retro gaming a joy.", // Fallback текст
       images: {
         webp: reviewImages.review2.webp,
         jpeg: reviewImages.review2.jpg,
@@ -139,6 +158,14 @@ export function initReviews() {
     return svg;
   }
 
+  // Функция для получения перевода с fallback на исходный текст
+  function getTranslation(key, fallback) {
+    if (!key) return fallback;
+    const translation = i18next.t(key);
+    // Если перевод не найден или равен ключу, используем fallback
+    return translation && translation !== key ? translation : fallback;
+  }
+
   // Создаем карточку отзыва из шаблона
   function createReviewCard(review) {
     const template = document.getElementById('reviewCardTemplate');
@@ -166,11 +193,13 @@ export function initReviews() {
       ratingContainer.appendChild(createStarIcon(i < review.rating));
     }
 
-    // Цвет/вариант
-    card.querySelector('.review-card__variant').textContent = review.color;
+    // Цвет/вариант с поддержкой i18n
+    const colorText = getTranslation(review.colorKey, review.color);
+    card.querySelector('.review-card__variant').textContent = colorText;
 
-    // Текст отзыва
-    card.querySelector('.review-card__text').textContent = review.text;
+    // Текст отзыва с поддержкой i18n
+    const reviewText = getTranslation(review.textKey, review.text);
+    card.querySelector('.review-card__text').textContent = reviewText;
 
     // Изображения
     const picture = card.querySelector('picture');
@@ -179,20 +208,26 @@ export function initReviews() {
     img.setAttribute('src', review.images.jpeg);
     img.setAttribute('alt', `Review ${review.id}`);
 
-    // Информация об авторе
+    // Информация об авторе с поддержкой i18n
     const nameElement = card.querySelector('.review-card__name');
     if (review.verified) {
       nameElement.prepend(createVerifiedIcon());
     }
-    nameElement.appendChild(document.createTextNode(review.author));
+    const authorText = getTranslation(review.authorKey, review.author);
+    nameElement.appendChild(document.createTextNode(authorText));
 
-    // Дата
-    card.querySelector('.review-card__date').textContent = review.date;
+    // Дата с поддержкой i18n
+    const dateText = getTranslation(review.dateKey, review.date);
+    card.querySelector('.review-card__date').textContent = dateText;
 
-    // Счетчик "Helpful"
-    card.querySelector(
-      '.review-card__helpful-count'
-    ).textContent = `Helpful (${review.helpful})`;
+    // Счетчик "Helpful" с поддержкой i18n
+    // Используем формат template string с подстановкой значения
+    const helpfulTemplate = getTranslation(
+      'reviews.helpful',
+      'Helpful ({{count}})'
+    );
+    const helpfulText = helpfulTemplate.replace('{{count}}', review.helpful);
+    card.querySelector('.review-card__helpful-count').textContent = helpfulText;
 
     // Обработчики событий
     card.addEventListener('click', handleReviewClick);
@@ -286,6 +321,10 @@ export function initReviews() {
         // Если карточка существует, обновляем ее видимость
         const card = existingCards[review.id];
         card.style.display = 'block';
+
+        // Обновляем текстовые элементы с учетом текущего языка
+        updateCardTexts(card, review);
+
         cardsToDisplay.push(card);
         delete existingCards[review.id]; // Удаляем из списка существующих
       } else {
@@ -315,6 +354,62 @@ export function initReviews() {
 
     // Запускаем наблюдение за видимостью карточек
     observeReviewCards();
+  }
+
+  // Функция для обновления текстов карточки при смене языка
+  function updateCardTexts(card, review) {
+    if (!card || !review) return;
+
+    // Обновляем цвет/вариант
+    const colorElement = card.querySelector('.review-card__variant');
+    if (colorElement) {
+      colorElement.textContent = getTranslation(review.colorKey, review.color);
+    }
+
+    // Обновляем текст отзыва
+    const textElement = card.querySelector('.review-card__text');
+    if (textElement) {
+      textElement.textContent = getTranslation(review.textKey, review.text);
+    }
+
+    // Обновляем имя автора
+    const nameElement = card.querySelector('.review-card__name');
+    if (nameElement) {
+      // Сохраняем иконку verified если она есть
+      const verifiedIcon = nameElement.querySelector('.review-card__verified');
+
+      // Очищаем элемент
+      nameElement.textContent = '';
+
+      // Восстанавливаем иконку
+      if (verifiedIcon) {
+        nameElement.appendChild(verifiedIcon);
+      }
+
+      // Добавляем переведенное имя автора
+      nameElement.appendChild(
+        document.createTextNode(getTranslation(review.authorKey, review.author))
+      );
+    }
+
+    // Обновляем дату
+    const dateElement = card.querySelector('.review-card__date');
+    if (dateElement) {
+      dateElement.textContent = getTranslation(review.dateKey, review.date);
+    }
+
+    // Обновляем текст "Helpful"
+    const helpfulElement = card.querySelector('.review-card__helpful-count');
+    if (helpfulElement) {
+      const helpfulTemplate = getTranslation(
+        'reviews.helpful',
+        'Helpful ({{count}})'
+      );
+      helpfulElement.textContent = helpfulTemplate.replace(
+        '{{count}}',
+        review.helpful
+      );
+    }
   }
 
   // Наблюдение за видимостью карточек для анимации
@@ -365,10 +460,37 @@ export function initReviews() {
     });
   }
 
+  // Обработчик события смены языка
+  function handleLanguageChange(event) {
+    console.log('Язык изменился, обновляем отзывы:', event?.detail?.language);
+
+    // Перерисовываем все карточки с учетом нового языка
+    renderReviewCards();
+
+    // Устанавливаем направление текста в зависимости от языка
+    const reviewsSection = document.getElementById('reviews');
+    if (reviewsSection) {
+      const rtlLanguages = ['ar']; // Список языков с RTL направлением
+      const currentLang = event?.detail?.language || i18next.language;
+
+      if (rtlLanguages.includes(currentLang)) {
+        reviewsSection.classList.add('rtl');
+      } else {
+        reviewsSection.classList.remove('rtl');
+      }
+    }
+  }
+
   // Инициализация
   function init() {
+    // Добавляем обработчик смены языка
+    window.addEventListener('languageChanged', handleLanguageChange);
+
     // Вызываем первичный рендеринг
     renderReviewCards();
+
+    // Устанавливаем правильное направление текста при инициализации
+    handleLanguageChange({ detail: { language: i18next.language } });
 
     // Добавляем обработчик изменения размера окна с задержкой (debounce)
     let resizeTimeout;
@@ -403,14 +525,16 @@ export function initReviews() {
       reviewsSection.setAttribute('itemscope', '');
       reviewsSection.setAttribute('itemtype', 'http://schema.org/Product');
 
-      // Добавляем только основные метатеги
+      // Добавляем только основные метатеги с поддержкой i18n
       const metaName = document.createElement('meta');
       metaName.setAttribute('itemprop', 'name');
+      metaName.setAttribute('data-i18n', 'reviews.meta.productName');
       metaName.setAttribute('content', 'R36S Handheld Game Console');
       reviewsSection.prepend(metaName);
 
       const metaDesc = document.createElement('meta');
       metaDesc.setAttribute('itemprop', 'description');
+      metaDesc.setAttribute('data-i18n', 'reviews.meta.productDescription');
       metaDesc.setAttribute(
         'content',
         'R36S Handheld Game Console with 3.5-inch IPS screen and retro games'
@@ -428,6 +552,9 @@ export function initReviews() {
     window.removeEventListener('resize', handleResize);
     window.removeEventListener('resize', () => {}); // Удаляем также debounced версию
 
+    // Удаляем обработчик смены языка
+    window.removeEventListener('languageChanged', handleLanguageChange);
+
     // Если есть активный IntersectionObserver, отключаем его
     if ('IntersectionObserver' in window) {
       const observers = [];
@@ -443,8 +570,10 @@ export function initReviews() {
       card.removeEventListener('mouseleave', handleMouseLeave);
 
       // Удаляем персональные обработчики mouseenter
-      Object.keys(reviews).forEach(id => {
-        card.removeEventListener('mouseenter', () => handleMouseEnter(id));
+      reviews.forEach(review => {
+        card.removeEventListener('mouseenter', () =>
+          handleMouseEnter(review.id)
+        );
       });
 
       const helpfulButton = card.querySelector('.review-card__helpful');
@@ -462,5 +591,8 @@ export function initReviews() {
   return {
     cleanup,
     renderReviewCards,
+    // Добавляем метод для принудительного обновления текстов при смене языка
+    updateTexts: () =>
+      handleLanguageChange({ detail: { language: i18next.language } }),
   };
 }

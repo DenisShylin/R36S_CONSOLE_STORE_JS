@@ -1,44 +1,40 @@
 {
-  "de": {
-    "reviews": {
-      "meta": {
-        "productName": "R36S Handheld-Spielkonsole",
-        "productDescription": "R36S Handheld-Spielkonsole mit 3,5-Zoll-IPS-Bildschirm, über 15.000 Retro-Spiele"
-      },
-      "label": "Bewertungen",
-      "title": "Kundenbewertungen",
-      "subtitle": "Sehen Sie, was Spieler über die R36S Retro-Konsole sagen",
-      "helpful": "Hilfreich ({{count}})",
-      "reviewItems": {
-        "1": {
-          "text": "Ich habe gerade die R36S Retro-Konsole in die Hände bekommen und sie ist wirklich erstaunlich für Old-School-Gaming. Der Bildschirm ist super klar, sie führt Spiele flüssig aus, und die Akkulaufzeit ist solide. Ich liebe es, wie ich meine Lieblingsklassiker laden und spielen kann...",
-          "author": "AliExpress-Käufer",
-          "date": "21. Aug. 2024",
-          "color": "Lila 64GB",
-          "verified": true
-        },
-        "2": {
-          "text": "Nachdem ich eine Woche mit der R36S gespielt habe, bin ich wirklich beeindruckt und absolut begeistert. Die Verarbeitungsqualität fühlt sich großartig an, und das Wechseln zwischen verschiedenen Retro-Spielen ist super einfach. Die Steuerung ist bequem für lange Spielsitzungen.",
-          "author": "V***h",
-          "date": "26. Aug. 2024",
-          "color": "Gelb 128G",
-          "verified": true
-        },
-        "3": {
-          "text": "Die R36S ist zu meinem bevorzugten Spielgerät geworden. Ich war mir nicht sicher, ob ich eine weitere Retro-Konsole kaufen sollte, aber diese hat mich überrascht. Der Bildschirm ist hell und scharf, Spiele laufen ohne Probleme, und sie ist klein genug, um in meine Tasche zu passen.",
-          "author": "M***z",
-          "date": "22. Aug. 2024",
-          "color": "Weiß 64GB",
-          "verified": true
-        },
-        "4": {
-          "text": "Ich benutze die R36S jetzt seit einigen Wochen und bin wirklich beeindruckt. Der 3,5-Zoll-IPS-Bildschirm liefert gestochen scharfe Bilder, und die Verarbeitungsqualität fühlt sich solide an. Die beiden Analogsticks reagieren gut, was Retro-Gaming zu einem Vergnügen macht.",
-          "author": "K***r",
-          "date": "28. Aug. 2024",
-          "color": "Schwarz 128GB",
-          "verified": true
-        }
-      }
+  "meta": {
+    "productName": "R36S Spielkonsole",
+    "productDescription": "Tragbare R36S Spielkonsole mit 3,5-Zoll-IPS-Bildschirm, über 15.000 Retro-Spiele"
+  },
+  "label": "Bewertungen",
+  "title": "Kundenbewertungen",
+  "subtitle": "Erfahren Sie, was Gamer über die R36S Retro-Konsole sagen",
+  "helpful": "Hilfreich ({{count}})",
+  "reviewItems": {
+    "1": {
+      "text": "Ich habe gerade die R36S Retro-Konsole erhalten, und es ist wirklich ein fantastisches Gerät für alte Spiele. Der Bildschirm ist sehr scharf, die Spiele laufen flüssig und die Akkulaufzeit ist ausreichend lang. Ich mag, dass ich meine Lieblings-Klassiker laden und spielen kann...",
+      "author": "AliExpress-Käufer",
+      "date": "21. Aug. 2024",
+      "color": "Lila 64GB",
+      "verified": true
+    },
+    "2": {
+      "text": "Nachdem ich eine Woche lang mit dem R36S gespielt habe, bin ich sehr beeindruckt und absolut zufrieden. Die Verarbeitungsqualität ist ausgezeichnet und das Wechseln zwischen verschiedenen Retro-Spielen ist sehr einfach. Die Steuerelemente sind komfortabel für lange Spielsitzungen.",
+      "author": "W***h",
+      "date": "26. Aug. 2024",
+      "color": "Gelb 128GB",
+      "verified": true
+    },
+    "3": {
+      "text": "Der R36S ist zu meinem Haupt-Spielgerät geworden. Ich war nicht sicher, ob ich eine weitere Retro-Konsole kaufen sollte, aber diese hat mich überrascht. Der Bildschirm ist hell und klar, die Spiele laufen ohne Probleme, und sie ist klein genug, um in die Tasche zu passen.",
+      "author": "M***z",
+      "date": "22. Aug. 2024",
+      "color": "Weiß 64GB",
+      "verified": true
+    },
+    "4": {
+      "text": "Ich benutze den R36S seit einigen Wochen, und die Erfahrung ist großartig. Der 3,5-Zoll-IPS-Bildschirm liefert ein klares Bild, und die Verarbeitungsqualität wirkt robust. Die doppelten Analog-Joysticks reagieren sehr gut, was Retro-Spiele zu einem Vergnügen macht.",
+      "author": "K***r",
+      "date": "28. Aug. 2024",
+      "color": "Schwarz 128GB",
+      "verified": true
     }
   }
 }

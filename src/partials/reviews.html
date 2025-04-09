@@ -1,21 +1,31 @@
-<!-- Reviews.html - HTML шаблон для секции отзывов с минимальными SEO-улучшениями -->
 <section
   class="reviews"
   id="reviews"
   itemscope
   itemtype="http://schema.org/Product"
 >
-  <meta itemprop="name" content="R36S Handheld Game Console" />
+  <meta
+    itemprop="name"
+    data-i18n="reviews.meta.productName"
+    content="R36S Handheld Game Console"
+  />
   <meta
     itemprop="description"
+    data-i18n="reviews.meta.productDescription"
     content="R36S Handheld Game Console with 3.5-inch IPS screen, 15,000+ retro games"
   />
 
   <div class="reviews__container">
     <div class="reviews__header">
-      <span class="reviews__label">Reviews</span>
-      <h2 class="reviews__title" id="customer-reviews">Customer Reviews</h2>
-      <p class="reviews__subtitle">
+      <span class="reviews__label" data-i18n="reviews.label">Reviews</span>
+      <h2
+        class="reviews__title"
+        id="customer-reviews"
+        data-i18n="reviews.title"
+      >
+        Customer Reviews
+      </h2>
+      <p class="reviews__subtitle" data-i18n="reviews.subtitle">
         See what gamers say about the R36S retro console
       </p>
     </div>
@@ -75,7 +85,11 @@
                     d="M14 9V5a3 3 0 0 0-3-3L7 11v10h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
                   />
                 </svg>
-                <span class="review-card__helpful-count">Helpful (0)</span>
+                <span
+                  class="review-card__helpful-count"
+                  data-i18n="reviews.helpful"
+                  >Helpful (0)</span
+                >
               </div>
             </div>
           </div>
