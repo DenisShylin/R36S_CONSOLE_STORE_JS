@@ -56,7 +56,7 @@ const translationSections = [
   'mobilemenu',
   // 'button',
   // 'modal',
-  // 'products',
+  'products',
   'reviews',
 ];
 

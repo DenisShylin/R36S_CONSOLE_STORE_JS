@@ -1,4 +1,6 @@
 // Инициализатор секции Products
+import i18next from 'i18next';
+
 export function initProducts() {
   console.log('Products секция инициализирована');
 
@@ -56,25 +58,14 @@ export function initProducts() {
     },
   };
 
-  // Структура данных секций (остальной код без изменений)
+  // Структура данных секций
+  // Теперь используем ключи i18n вместо жестко заданных текстов
   const sections = [
     {
       id: 'getting-started',
-      title: 'Start Guide',
+      title: 'products.start_guide.title',
       content: {
-        text: `Please be aware that this tutorial does not apply to K36 devices or clones marketed as R36S. For additional information about your hardware, please refer to the comprehensive R36S Wiki Page.
-
-Essential Items:
-- R36S handheld device
-- Computer with USB port
-- MicroSD cards (suggestions: 16GB for custom firmware, 128GB for game files)
-- MicroSD card reader
-- Recommended software: Balena Etcher, Rufus, 7-Zip, MiniTool Partition Wizard
-- Optional: Linux system or Ubuntu Live USB
-
-All information provided is for educational purposes, and users accept full responsibility for any potential damage to their hardware.
-
-To identify which version of the R36S you have, use the quick identification tool on the R36 Wiki – "Screen Identification Guide". This step is crucial as it determines which custom firmware image is compatible with your device.`,
+        text: 'products.start_guide.text',
         images: {
           jpg: productImages.i0_0.jpg,
           webp: productImages.i0_0.webp,
@@ -83,21 +74,16 @@ To identify which version of the R36S you have, use the quick identification too
     },
     {
       id: 'original-backup',
-      title: 'Backup Original',
+      title: 'products.original_backup.title',
       content: {
-        text: `This step can be critical in your modification journey. Having a complete backup of the stock firmware ensures you can restore your device if anything goes wrong during the flashing process, or if you want to revert to the original state later.`,
+        text: 'products.original_backup.text',
         subsections: [
           {
             id: 'backup-procedure',
-            title: 'Backup Using Win32DiskImager',
+            title:
+              'products.original_backup.subsections.backup_procedure.title',
             content: {
-              text: `1. Launch Win32DiskImager: Click the folder icon in the "Image File" section and select a location to save your backup, making sure to add the .img extension to your filename.
-              
-2. Select the device: Choose the drive letter corresponding to your R36S. *Exercise extreme caution during this selection to avoid accidentally erasing unintended drives.
-              
-3. Enable Read Only mode: Make sure the "Read Only Allocated Partitions" option is selected to avoid copying empty sectors along with the data.
-              
-4. Start the backup: Click the "Read" button to begin creating the backup image file at your chosen location.`,
+              text: 'products.original_backup.subsections.backup_procedure.text',
               images: {
                 jpg: productImages.i1.jpg,
                 webp: productImages.i1.webp,
@@ -109,25 +95,16 @@ To identify which version of the R36S you have, use the quick identification too
     },
     {
       id: 'custom-installation',
-      title: 'Install Custom',
+      title: 'products.custom_installation.title',
       content: {
-        text: `As mentioned previously, one of your first priorities should be obtaining a quality brand-name SD card. The cards included with the R36S are typically unreliable. It's not a question of if they will fail, but when.
-
-Single vs. Dual Card Configuration – The R36S features two microSD card slots. You can choose to have everything on a single card or separate the operating system from your game collection.`,
+        text: 'products.custom_installation.text',
         subsections: [
           {
             id: 'method-balena',
-            title: 'Option 1: Balena Etcher Method',
+            title:
+              'products.custom_installation.subsections.method_balena.title',
             content: {
-              text: `While the general process is similar for all custom firmware options, there are some differences to note during installation.
-
-1. Start Balena Etcher and select "Flash From File", then browse to your downloaded .img firmware file.
-              
-2. Select "Select Target" and choose your blank SD card from the device list.
-              
-3. Allow Balena Etcher to write and verify the image, and you're finished!
-              
-*Note – If verification fails with ArkOS using Balena Etcher, the installation may still work correctly, but you can try alternative image writing software if preferred.`,
+              text: 'products.custom_installation.subsections.method_balena.text',
               images: {
                 jpg: productImages.i2.jpg,
                 webp: productImages.i2.webp,
@@ -136,13 +113,10 @@ Single vs. Dual Card Configuration – The R36S features two microSD card slots.
           },
           {
             id: 'method-win32',
-            title: 'Option 2: Win32DiskImager Method',
+            title:
+              'products.custom_installation.subsections.method_win32.title',
             content: {
-              text: `1. Open Win32DiskImager and click the folder icon in the "Image File" section to select your downloaded custom firmware.
-              
-2. Select destination: Choose the correct SD card as your target device. Double-check to ensure you're writing to the correct location.
-              
-3. Write image: Click the Write button to begin the flashing process.`,
+              text: 'products.custom_installation.subsections.method_win32.text',
               images: {
                 jpg: productImages.i3.jpg,
                 webp: productImages.i3.webp,
@@ -151,13 +125,10 @@ Single vs. Dual Card Configuration – The R36S features two microSD card slots.
           },
           {
             id: 'method-raspberry',
-            title: 'Option 3: Raspberry Pi Imager',
+            title:
+              'products.custom_installation.subsections.method_raspberry.title',
             content: {
-              text: `1. Open Raspberry Pi Imager and click "Choose OS", then select "Use Custom" to locate your firmware file.
-              
-2. Select storage: Choose your SD card carefully, NOT your computer's internal drive!
-              
-3. Begin writing: Click the Write button to start flashing the image.`,
+              text: 'products.custom_installation.subsections.method_raspberry.text',
               images: {
                 jpg: productImages.i4.jpg,
                 webp: productImages.i4.webp,
@@ -169,25 +140,15 @@ Single vs. Dual Card Configuration – The R36S features two microSD card slots.
     },
     {
       id: 'firmware-options',
-      title: 'Firmware Options',
+      title: 'products.firmware_options.title',
       content: {
-        text: `Several custom firmware options are available for the R36S. Here are the most popular choices:`,
+        text: 'products.firmware_options.text',
         subsections: [
           {
             id: 'option-arkos',
-            title: 'ArkOS - Community Enhanced Edition',
+            title: 'products.firmware_options.subsections.option_arkos.title',
             content: {
-              text: `GitHub Repository: ArkOS Community Edition
-
-This is a community-maintained fork of ArkOS developed by AeolusUX specifically for the 36S family of devices.
-              
-Installation guide:
-1. Download the latest ArkOS release from the project's GitHub page
-2. Extract the image file using 7-Zip, WinRAR, or similar extraction tool
-3. Flash the image to an SD card using your preferred imaging software
-4. If necessary, replace the DTB file on the boot partition based on your screen type
-5. Insert the SD card into your R36S
-6. Power on and follow on-screen setup instructions`,
+              text: 'products.firmware_options.subsections.option_arkos.text',
               images: {
                 jpg: productImages.i5.jpg,
                 webp: productImages.i5.webp,
@@ -196,16 +157,9 @@ Installation guide:
           },
           {
             id: 'option-rocknix',
-            title: 'ROCKNIX Operating System',
+            title: 'products.firmware_options.subsections.option_rocknix.title',
             content: {
-              text: `GitHub Repository: ROCKNIX
-
-Installation guide:
-1. Download the latest ROCKNIX release from the GitHub repository
-2. Extract the image file using your preferred extraction tool
-3. Write the image to an SD card using any supported imaging software
-4. Insert the SD card into your R36S device and power it on
-5. Complete the initial configuration by following the on-screen prompts`,
+              text: 'products.firmware_options.subsections.option_rocknix.text',
               images: {
                 jpg: productImages.i6.jpg,
                 webp: productImages.i6.webp,
@@ -214,15 +168,9 @@ Installation guide:
           },
           {
             id: 'option-amber',
-            title: 'AmberELEC System',
+            title: 'products.firmware_options.subsections.option_amber.title',
             content: {
-              text: `GitHub Repository: AmberELEC
-
-Installation guide:
-1. Download the AmberELEC image specifically for R36S from their GitHub repository
-2. Flash the image to an SD card using Balena Etcher or an equivalent tool
-3. Insert the SD card into your R36S handheld and power it on
-4. Follow the on-screen instructions to finalize the setup process`,
+              text: 'products.firmware_options.subsections.option_amber.text',
               images: {
                 jpg: productImages.i7.jpg,
                 webp: productImages.i7.webp,
@@ -234,15 +182,9 @@ Installation guide:
     },
     {
       id: 'game-setup',
-      title: 'Add Files',
+      title: 'products.game_setup.title',
       content: {
-        text: `1. For dual-card setups, format your second card to FAT32 or exFAT (depending on your card capacity)
-
-2. Connect your R36S to your computer via USB cable, or remove the game storage SD card and connect it directly to your PC.
-
-3. Copy your game files to the appropriate directories on the SD card. NOTE: North American users may be confused by some folder names initially. All systems use their original regional names, so NES is labeled as FC (Famicom), Genesis as MD (Mega Drive), and so on.
-
-4. Reinsert the SD card and refresh your game lists through the system menu.`,
+        text: 'products.game_setup.text',
         images: {
           jpg: productImages.i8.jpg,
           webp: productImages.i8.webp,
@@ -251,15 +193,9 @@ Installation guide:
     },
     {
       id: 'helpful-tips',
-      title: 'Usage Tips',
+      title: 'products.helpful_tips.title',
       content: {
-        text: `• NEVER force shutdown by holding the power button. Your device now functions like a computer that requires proper shutdown. Press START and navigate to QUIT —-> Shutdown
-
-• You can switch between Nintendo (default) or Xbox button layouts. Press START and go to Advanced Settings —-> Switch A/B
-
-• Change system themes locally by pressing START and navigating to UI Settings —-> Themes
-
-• A quick press of the power button will put the device into standby mode.`,
+        text: 'products.helpful_tips.text',
         images: {
           jpg: productImages.i9.jpg,
           webp: productImages.i9.webp,
@@ -268,7 +204,7 @@ Installation guide:
     },
     {
       id: 'downloads',
-      title: 'Available Downloads',
+      title: 'products.downloads.title',
       content: {
         downloads: [
           {
@@ -360,7 +296,7 @@ Installation guide:
     }, 100);
   }
 
-  // Формирование HTML для меню навигации
+  // Формирование HTML для меню навигации с поддержкой i18n
   function renderNavigation() {
     productsNavList.innerHTML = '';
 
@@ -370,18 +306,29 @@ Installation guide:
         activeSection === section.id ? 'nav-item-active' : ''
       }`;
       navItem.dataset.sectionId = section.id;
+
+      // Добавление поддержки i18n
       navItem.innerHTML = `
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
-        <span>${section.title}</span>
+        <span data-i18n="${section.title}">${i18next.t(section.title)}</span>
       `;
+
       navItem.addEventListener('click', () => handleSectionClick(section.id));
       productsNavList.appendChild(navItem);
     });
   }
 
-  // Формирование HTML для содержимого секции
+  // Функция для разбиения текста на параграфы с поддержкой i18n
+  function translateAndSplitToParagraphs(i18nKey) {
+    const translatedText = i18next.t(i18nKey);
+    return translatedText
+      .split('\n')
+      .filter(paragraph => paragraph.trim() !== '');
+  }
+
+  // Формирование HTML для содержимого секции с поддержкой i18n
   function renderSectionContent(section) {
     if (section.id === 'downloads') {
       let html = '<div class="download-list">';
@@ -398,10 +345,18 @@ Installation guide:
               </svg>
               <div>
                 <div class="download-filename">${item.file}</div>
-                <div class="download-meta">Update: ${item.date} • ${item.version}</div>
+                <div class="download-meta">
+                  <span data-i18n="products.downloads.update_label">Update</span>: ${
+                    item.date
+                  } • ${item.version}
+                </div>
               </div>
             </div>
-            <a href="${item.link}" class="download-button" target="_blank">
+            <a href="${
+              item.link
+            }" class="download-button" target="_blank" aria-label="${i18next.t(
+          'products.downloads.download_aria'
+        )}">
               <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -418,8 +373,8 @@ Installation guide:
 
     let html = '<div class="section-content"><div class="text-content">';
 
-    // Добавление текста с разбивкой на параграфы
-    const paragraphs = section.content.text.split('\n');
+    // Добавление текста с разбивкой на параграфы с переводом
+    const paragraphs = translateAndSplitToParagraphs(section.content.text);
     paragraphs.forEach(paragraph => {
       html += `<p>${paragraph.trim()}</p>`;
     });
@@ -432,7 +387,9 @@ Installation guide:
         <div class="image-container">
           <picture>
             <source srcset="${section.content.images.webp}" type="image/webp">
-            <img src="${section.content.images.jpg}" alt="${section.title}" class="section-image" loading="lazy">
+            <img src="${section.content.images.jpg}" alt="${i18next.t(
+        section.title
+      )}" class="section-image" loading="lazy">
           </picture>
         </div>
       `;
@@ -445,13 +402,17 @@ Installation guide:
       section.content.subsections.forEach(subsection => {
         html += `
           <div class="subsection">
-            <h3 class="subsection-title">${subsection.title}</h3>
+            <h3 class="subsection-title" data-i18n="${
+              subsection.title
+            }">${i18next.t(subsection.title)}</h3>
             <div class="subsection-content">
               <div class="text-content">
         `;
 
-        // Добавление текста подраздела
-        const subParagraphs = subsection.content.text.split('\n');
+        // Добавление текста подраздела с переводом
+        const subParagraphs = translateAndSplitToParagraphs(
+          subsection.content.text
+        );
         subParagraphs.forEach(paragraph => {
           html += `<p>${paragraph.trim()}</p>`;
         });
@@ -463,8 +424,12 @@ Installation guide:
           html += `
             <div class="image-container">
               <picture>
-                <source srcset="${subsection.content.images.webp}" type="image/webp">
-                <img src="${subsection.content.images.jpg}" alt="${subsection.title}" class="subsection-image" loading="lazy">
+                <source srcset="${
+                  subsection.content.images.webp
+                }" type="image/webp">
+                <img src="${subsection.content.images.jpg}" alt="${i18next.t(
+            subsection.title
+          )}" class="subsection-image" loading="lazy">
               </picture>
             </div>
           `;
@@ -480,7 +445,7 @@ Installation guide:
     return html;
   }
 
-  // Формирование HTML для всех секций
+  // Формирование HTML для всех секций с поддержкой i18n
   function renderSections() {
     productsSections.innerHTML = '';
 
@@ -492,12 +457,20 @@ Installation guide:
       }`;
 
       sectionElement.innerHTML = `
-        <h2 class="section-title">${section.title}</h2>
+        <h2 class="section-title" data-i18n="${section.title}">${i18next.t(
+        section.title
+      )}</h2>
         ${renderSectionContent(section)}
       `;
 
       productsSections.appendChild(sectionElement);
     });
+  }
+
+  // Обновление контента при изменении языка
+  function updateContent() {
+    renderNavigation();
+    renderSections();
   }
 
   // Инициализация компонента
@@ -506,12 +479,78 @@ Installation guide:
     renderNavigation();
     renderSections();
 
+    // Обновляем навигационный заголовок для поддержки i18n
+    const navTitle = document.querySelector('.nav-title');
+    if (navTitle) {
+      navTitle.setAttribute('data-i18n', 'products.guide_nav_title');
+      navTitle.textContent = i18next.t('products.guide_nav_title', 'Guide');
+    }
+
+    // Обновляем заголовок секции
+    const sectionTitle = document.querySelector('.section-label');
+    if (sectionTitle) {
+      sectionTitle.setAttribute('data-i18n', 'products.section_label');
+      sectionTitle.textContent = i18next.t(
+        'products.section_label',
+        'FIRMWARE'
+      );
+    }
+
+    // Обновляем основной заголовок руководства
+    const guideTitle = document.querySelector('.title');
+    if (guideTitle) {
+      guideTitle.setAttribute('data-i18n', 'products.guide_title');
+      guideTitle.textContent = i18next.t(
+        'products.guide_title',
+        'R36S Console Firmware Installation & Customization Guide'
+      );
+    }
+
+    // Обновляем введение
+    const guideIntro = document.querySelector('.guide-intro p');
+    if (guideIntro) {
+      guideIntro.setAttribute('data-i18n', 'products.guide_intro');
+      guideIntro.textContent = i18next.t('products.guide_intro');
+    }
+
+    // Обновляем заголовок связанных ресурсов
+    const relatedResourcesTitle = document.querySelector(
+      '.related-resources h2'
+    );
+    if (relatedResourcesTitle) {
+      relatedResourcesTitle.setAttribute(
+        'data-i18n',
+        'products.related_resources_title'
+      );
+      relatedResourcesTitle.textContent = i18next.t(
+        'products.related_resources_title',
+        'Related Resources'
+      );
+    }
+
+    // Обновляем список связанных ресурсов
+    const relatedLinks = document.querySelectorAll('.related-resources a');
+    const relatedLinkIds = [
+      'products.related_resources.custom_installation',
+      'products.related_resources.firmware_options',
+      'products.related_resources.game_setup',
+      'products.related_resources.downloads',
+    ];
+
+    relatedLinks.forEach((link, index) => {
+      if (index < relatedLinkIds.length) {
+        link.setAttribute('data-i18n', relatedLinkIds[index]);
+        link.textContent = i18next.t(relatedLinkIds[index]);
+      }
+    });
+
     // Добавление слушателя для изменения размера окна
     window.addEventListener('resize', checkMobile);
 
-    console.log(
-      'Products: Инициализация завершена. Используются пути к изображениям без /public/'
-    );
+    // Добавляем слушатель события изменения языка
+    window.addEventListener('languageChanged', updateContent);
+
+    console.log('Products: Инициализация завершена с поддержкой i18n');
   }
 
   // Запуск инициализации, если DOM элементы найдены
@@ -521,9 +560,14 @@ Installation guide:
     console.error('Не найдены необходимые DOM элементы для секции Products');
   }
 
+  // Функция очистки при уничтожении компонента
+  function cleanup() {
+    // Удаляем слушатели событий
+    window.removeEventListener('resize', checkMobile);
+    window.removeEventListener('languageChanged', updateContent);
+    console.log('Products: Слушатели событий удалены');
+  }
+
   // Возвращаем методы, которые могут быть полезны для внешнего использования
-  return {
-    handleSectionClick,
-    checkMobile,
-  };
+  return cleanup;
 }

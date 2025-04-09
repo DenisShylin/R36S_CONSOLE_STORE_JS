@@ -1,17 +1,76 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "section_label": "FIRMWARE",
+  "guide_nav_title": "Guide",
+  "guide_title": "R36S Console Firmware Installation & Customization Guide",
+  "guide_intro": "This official guide provides step-by-step instructions for backing up, installing custom firmware, and optimizing your R36S handheld retro gaming console. Follow these verified methods to enhance your gaming experience with improved performance, additional features, and access to thousands of retro games.",
+  "related_resources_title": "Related Resources",
+  "related_resources": {
+    "custom_installation": "Custom Firmware Installation Guide",
+    "firmware_options": "Comparing R36S Firmware Options",
+    "game_setup": "Setting Up Games on R36S Console",
+    "downloads": "Download Latest R36S Firmware"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "start_guide": {
+    "title": "Start Guide",
+    "text": "Please be aware that this tutorial does not apply to K36 devices or clones marketed as R36S. For additional information about your hardware, please refer to the comprehensive R36S Wiki Page.\n\nEssential Items:\n- R36S handheld device\n- Computer with USB port\n- MicroSD cards (suggestions: 16GB for custom firmware, 128GB for game files)\n- MicroSD card reader\n- Recommended software: Balena Etcher, Rufus, 7-Zip, MiniTool Partition Wizard\n- Optional: Linux system or Ubuntu Live USB\n\nAll information provided is for educational purposes, and users accept full responsibility for any potential damage to their hardware.\n\nTo identify which version of the R36S you have, use the quick identification tool on the R36 Wiki – 'Screen Identification Guide'. This step is crucial as it determines which custom firmware image is compatible with your device."
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "original_backup": {
+    "title": "Backup Original",
+    "text": "This step can be critical in your modification journey. Having a complete backup of the stock firmware ensures you can restore your device if anything goes wrong during the flashing process, or if you want to revert to the original state later.",
+    "subsections": {
+      "backup_procedure": {
+        "title": "Backup Using Win32DiskImager",
+        "text": "1. Launch Win32DiskImager: Click the folder icon in the \"Image File\" section and select a location to save your backup, making sure to add the .img extension to your filename.\n\n2. Select the device: Choose the drive letter corresponding to your R36S. *Exercise extreme caution during this selection to avoid accidentally erasing unintended drives.\n\n3. Enable Read Only mode: Make sure the \"Read Only Allocated Partitions\" option is selected to avoid copying empty sectors along with the data.\n\n4. Start the backup: Click the \"Read\" button to begin creating the backup image file at your chosen location."
+      }
+    }
+  },
+  "custom_installation": {
+    "title": "Install Custom",
+    "text": "As mentioned previously, one of your first priorities should be obtaining a quality brand-name SD card. The cards included with the R36S are typically unreliable. It's not a question of if they will fail, but when.\n\nSingle vs. Dual Card Configuration – The R36S features two microSD card slots. You can choose to have everything on a single card or separate the operating system from your game collection.",
+    "subsections": {
+      "method_balena": {
+        "title": "Option 1: Balena Etcher Method",
+        "text": "While the general process is similar for all custom firmware options, there are some differences to note during installation.\n\n1. Start Balena Etcher and select \"Flash From File\", then browse to your downloaded .img firmware file.\n\n2. Select \"Select Target\" and choose your blank SD card from the device list.\n\n3. Allow Balena Etcher to write and verify the image, and you're finished!\n\n*Note – If verification fails with ArkOS using Balena Etcher, the installation may still work correctly, but you can try alternative image writing software if preferred."
+      },
+      "method_win32": {
+        "title": "Option 2: Win32DiskImager Method",
+        "text": "1. Open Win32DiskImager and click the folder icon in the \"Image File\" section to select your downloaded custom firmware.\n\n2. Select destination: Choose the correct SD card as your target device. Double-check to ensure you're writing to the correct location.\n\n3. Write image: Click the Write button to begin the flashing process."
+      },
+      "method_raspberry": {
+        "title": "Option 3: Raspberry Pi Imager",
+        "text": "1. Open Raspberry Pi Imager and click \"Choose OS\", then select \"Use Custom\" to locate your firmware file.\n\n2. Select storage: Choose your SD card carefully, NOT your computer's internal drive!\n\n3. Begin writing: Click the Write button to start flashing the image."
+      }
+    }
+  },
+  "firmware_options": {
+    "title": "Firmware Options",
+    "text": "Several custom firmware options are available for the R36S. Here are the most popular choices:",
+    "subsections": {
+      "option_arkos": {
+        "title": "ArkOS - Community Enhanced Edition",
+        "text": "GitHub Repository: ArkOS Community Edition\n\nThis is a community-maintained fork of ArkOS developed by AeolusUX specifically for the 36S family of devices.\n\nInstallation guide:\n1. Download the latest ArkOS release from the project's GitHub page\n2. Extract the image file using 7-Zip, WinRAR, or similar extraction tool\n3. Flash the image to an SD card using your preferred imaging software\n4. If necessary, replace the DTB file on the boot partition based on your screen type\n5. Insert the SD card into your R36S\n6. Power on and follow on-screen setup instructions"
+      },
+      "option_rocknix": {
+        "title": "ROCKNIX Operating System",
+        "text": "GitHub Repository: ROCKNIX\n\nInstallation guide:\n1. Download the latest ROCKNIX release from the GitHub repository\n2. Extract the image file using your preferred extraction tool\n3. Write the image to an SD card using any supported imaging software\n4. Insert the SD card into your R36S device and power it on\n5. Complete the initial configuration by following the on-screen prompts"
+      },
+      "option_amber": {
+        "title": "AmberELEC System",
+        "text": "GitHub Repository: AmberELEC\n\nInstallation guide:\n1. Download the AmberELEC image specifically for R36S from their GitHub repository\n2. Flash the image to an SD card using Balena Etcher or an equivalent tool\n3. Insert the SD card into your R36S handheld and power it on\n4. Follow the on-screen instructions to finalize the setup process"
+      }
+    }
+  },
+  "game_setup": {
+    "title": "Add Files",
+    "text": "1. For dual-card setups, format your second card to FAT32 or exFAT (depending on your card capacity)\n\n2. Connect your R36S to your computer via USB cable, or remove the game storage SD card and connect it directly to your PC.\n\n3. Copy your game files to the appropriate directories on the SD card. NOTE: North American users may be confused by some folder names initially. All systems use their original regional names, so NES is labeled as FC (Famicom), Genesis as MD (Mega Drive), and so on.\n\n4. Reinsert the SD card and refresh your game lists through the system menu."
+  },
+  "helpful_tips": {
+    "title": "Usage Tips",
+    "text": "• NEVER force shutdown by holding the power button. Your device now functions like a computer that requires proper shutdown. Press START and navigate to QUIT —-> Shutdown\n\n• You can switch between Nintendo (default) or Xbox button layouts. Press START and go to Advanced Settings —-> Switch A/B\n\n• Change system themes locally by pressing START and navigating to UI Settings —-> Themes\n\n• A quick press of the power button will put the device into standby mode."
+  },
+  "downloads": {
+    "title": "Available Downloads",
+    "update_label": "Update",
+    "download_aria": "Download firmware file"
   }
 }

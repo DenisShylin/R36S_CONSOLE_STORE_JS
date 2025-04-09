@@ -585,6 +585,105 @@ body {
     min-width: 320px;
 }
 
+/* Стили для поддержки RTL в секции Products */
+
+/* Основные стили RTL */
+.rtl .guide {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Навигация в RTL режиме */
+.rtl .nav-title {
+    text-align: right;
+}
+
+.rtl .nav-list {
+    align-items: flex-end;
+}
+
+.rtl .nav-item {
+    flex-direction: row-reverse;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+/* Перестановка иконок и текста в навигации */
+.rtl .nav-icon {
+    transform: rotate(180deg);
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+/* Заголовки в RTL режиме */
+.rtl .title,
+.rtl .section-title,
+.rtl .subsection-title {
+    text-align: right;
+}
+
+/* Контент в RTL режиме */
+.rtl .text-content {
+    text-align: right;
+}
+
+.rtl .text-content ul {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+.rtl .text-content ul li::before {
+    right: -18px;
+    left: auto;
+}
+
+/* Карточки загрузок в RTL режиме */
+.rtl .download-card {
+    flex-direction: row-reverse;
+}
+
+.rtl .download-info {
+    flex-direction: row-reverse;
+}
+
+.rtl .download-button {
+    transform: scaleX(-1);
+}
+
+/* Связанные ресурсы в RTL режиме */
+.rtl .related-resources a {
+    text-align: right;
+}
+
+.rtl .related-resources a::before {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.rtl .related-resources a:hover {
+    transform: translateX(-5px);
+}
+
+/* Вводное описание в RTL режиме */
+.rtl .guide-intro {
+    border-left: none;
+    border-right: 4px solid #22C55E;
+    text-align: right;
+}
+
+/* Корректировка порядка элементов для RTL */
+.rtl .subsection-content {
+    direction: rtl;
+}
+
+/* Предотвращение трансформации исходного кода и цифр в RTL */
+.rtl code,
+.rtl pre,
+.rtl .download-meta {
+    direction: ltr;
+    display: inline-block;
+}
+
 /* Стили для адаптивной верстки от 375px */
 @media screen and (min-width: 375px) {
     .container {
@@ -630,6 +729,14 @@ body {
 
     .download-meta {
         font-size: 13px;
+    }
+}
+
+/* Специальные стили для мобильных в RTL режиме */
+@media screen and (max-width: 767px) {
+    .rtl .nav-item {
+        padding-right: 10px;
+        padding-left: 5px;
     }
 }
 
