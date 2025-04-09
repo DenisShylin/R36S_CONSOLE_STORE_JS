@@ -1,44 +1,40 @@
 {
-  "fr": {
-    "reviews": {
-      "meta": {
-        "productName": "Console de jeu portable R36S",
-        "productDescription": "Console de jeu portable R36S avec écran IPS de 3,5 pouces, plus de 15 000 jeux rétro"
-      },
-      "label": "Avis",
-      "title": "Avis des clients",
-      "subtitle": "Découvrez ce que les joueurs disent de la console rétro R36S",
-      "helpful": "Utile ({{count}})",
-      "reviewItems": {
-        "1": {
-          "text": "Je viens de mettre la main sur la console rétro R36S et c'est vraiment incroyable pour les jeux à l'ancienne. L'écran est super clair, elle fait tourner les jeux en douceur, et l'autonomie de la batterie est solide. J'adore pouvoir charger mes classiques préférés et jouer...",
-          "author": "Acheteur AliExpress",
-          "date": "21 août 2024",
-          "color": "Violet 64Go",
-          "verified": true
-        },
-        "2": {
-          "text": "Après avoir joué avec la R36S pendant une semaine, je suis vraiment impressionné et absolument ravi. La qualité de fabrication est excellente, et passer d'un jeu rétro à un autre est super facile. Les contrôles sont confortables pour de longues sessions de jeu.",
-          "author": "V***h",
-          "date": "26 août 2024",
-          "color": "Jaune 128Go",
-          "verified": true
-        },
-        "3": {
-          "text": "La R36S est devenue mon appareil de jeu préféré. Je n'étais pas sûr d'acheter une autre console rétro, mais celle-ci m'a surpris. L'écran est lumineux et net, les jeux fonctionnent sans problème, et elle est assez petite pour tenir dans ma poche.",
-          "author": "M***z",
-          "date": "22 août 2024",
-          "color": "Blanc 64Go",
-          "verified": true
-        },
-        "4": {
-          "text": "J'utilise la R36S depuis quelques semaines maintenant, et je suis vraiment impressionné. L'écran IPS de 3,5 pouces offre des visuels nets, et la qualité de fabrication semble solide. Les deux sticks analogiques sont réactifs, rendant les jeux rétro un plaisir.",
-          "author": "K***r",
-          "date": "28 août 2024",
-          "color": "Noir 128Go",
-          "verified": true
-        }
-      }
+  "meta": {
+    "productName": "Console de jeu R36S",
+    "productDescription": "Console de jeu portable R36S avec écran IPS de 3,5 pouces, plus de 15 000 jeux rétro"
+  },
+  "label": "Avis",
+  "title": "Avis des acheteurs",
+  "subtitle": "Découvrez ce que les joueurs disent à propos de la console rétro R36S",
+  "helpful": "Utile ({{count}})",
+  "reviewItems": {
+    "1": {
+      "text": "Je viens de recevoir la console rétro R36S, et c'est vraiment un appareil fantastique pour les jeux anciens. L'écran est très net, les jeux fonctionnent sans accroc, et l'autonomie de la batterie est suffisamment longue. J'aime le fait que je puisse charger mes jeux classiques préférés et jouer...",
+      "author": "Acheteur AliExpress",
+      "date": "21 août 2024",
+      "color": "Violet 64Go",
+      "verified": true
+    },
+    "2": {
+      "text": "Après avoir joué avec la R36S pendant une semaine, je suis très impressionné et absolument satisfait. La qualité de fabrication est excellente et le passage entre différents jeux rétro est très simple. Les commandes sont confortables pour de longues sessions de jeu.",
+      "author": "V***h",
+      "date": "26 août 2024",
+      "color": "Jaune 128Go",
+      "verified": true
+    },
+    "3": {
+      "text": "La R36S est devenue mon appareil de jeu principal. Je n'étais pas sûr d'acheter une autre console rétro, mais celle-ci m'a surpris. L'écran est lumineux et clair, les jeux fonctionnent sans problème, et elle est assez petite pour tenir dans une poche.",
+      "author": "M***z",
+      "date": "22 août 2024",
+      "color": "Blanc 64Go",
+      "verified": true
+    },
+    "4": {
+      "text": "J'utilise la R36S depuis quelques semaines, et l'expérience est excellente. L'écran IPS de 3,5 pouces offre une image nette, et la qualité de construction semble robuste. Les doubles joysticks analogiques sont très réactifs, ce qui rend les jeux rétro agréables.",
+      "author": "K***r",
+      "date": "28 août 2024",
+      "color": "Noir 128Go",
+      "verified": true
     }
   }
 }

@@ -1,44 +1,40 @@
 {
-  "nl": {
-    "reviews": {
-      "meta": {
-        "productName": "R36S Draagbare Spelconsole",
-        "productDescription": "R36S Draagbare Spelconsole met 3,5-inch IPS-scherm, meer dan 15.000 retro games"
-      },
-      "label": "Beoordelingen",
-      "title": "Klantbeoordelingen",
-      "subtitle": "Zie wat gamers zeggen over de R36S retroconsole",
-      "helpful": "Nuttig ({{count}})",
-      "reviewItems": {
-        "1": {
-          "text": "Ik heb net de R36S retroconsole in handen gekregen en het is echt geweldig voor old-school gaming. Het scherm is super helder, het draait games soepel, en de batterijduur is solide. Ik vind het geweldig hoe ik mijn favoriete klassiekers kan laden en spelen...",
-          "author": "AliExpress Koper",
-          "date": "21 aug 2024",
-          "color": "Paars 64GB",
-          "verified": true
-        },
-        "2": {
-          "text": "Na een week spelen met de R36S ben ik echt onder de indruk en absoluut verheugd. De bouwkwaliteit voelt geweldig aan, en schakelen tussen verschillende retrogames is super eenvoudig. De besturing is comfortabel voor lange gamesessies.",
-          "author": "V***h",
-          "date": "26 aug 2024",
-          "color": "Geel 128G",
-          "verified": true
-        },
-        "3": {
-          "text": "De R36S is mijn favoriete gameapparaat geworden. Ik was niet zeker over het kopen van nog een retroconsole, maar deze verraste me. Het scherm is helder en scherp, games draaien zonder problemen, en het is klein genoeg om in mijn zak te passen.",
-          "author": "M***z",
-          "date": "22 aug 2024",
-          "color": "Wit 64GB",
-          "verified": true
-        },
-        "4": {
-          "text": "Ik gebruik de R36S nu al een paar weken, en ik ben oprecht onder de indruk. Het 3,5-inch IPS-scherm levert scherpe beelden, en de bouwkwaliteit voelt solide aan. De dubbele analoge sticks reageren goed, wat retrogaming een plezier maakt.",
-          "author": "K***r",
-          "date": "28 aug 2024",
-          "color": "Zwart 128GB",
-          "verified": true
-        }
-      }
+  "meta": {
+    "productName": "Console de Jogos R36S",
+    "productDescription": "Console de jogos portátil R36S com tela IPS de 3,5 polegadas, mais de 15.000 jogos retrô"
+  },
+  "label": "Avaliações",
+  "title": "Avaliações dos compradores",
+  "subtitle": "Descubra o que os gamers estão dizendo sobre o console retrô R36S",
+  "helpful": "Útil ({{count}})",
+  "reviewItems": {
+    "1": {
+      "text": "Acabei de receber o console retrô R36S, e é realmente um dispositivo fantástico para jogos antigos. A tela é muito nítida, os jogos funcionam sem problemas e a duração da bateria é suficientemente longa. Adoro poder carregar meus jogos clássicos favoritos e jogar...",
+      "author": "Comprador do AliExpress",
+      "date": "21 ago 2024",
+      "color": "Roxo 64GB",
+      "verified": true
+    },
+    "2": {
+      "text": "Depois de jogar com o R36S por uma semana, estou muito impressionado e absolutamente satisfeito. A qualidade de construção é excelente e a alternância entre diferentes jogos retrô é muito simples. Os controles são confortáveis para longas sessões de jogo.",
+      "author": "V***h",
+      "date": "26 ago 2024",
+      "color": "Amarelo 128GB",
+      "verified": true
+    },
+    "3": {
+      "text": "O R36S tornou-se meu dispositivo principal de jogos. Eu não tinha certeza sobre comprar outro console retrô, mas este me surpreendeu. A tela é brilhante e clara, os jogos funcionam sem problemas, e é pequeno o suficiente para caber no bolso.",
+      "author": "M***z",
+      "date": "22 ago 2024",
+      "color": "Branco 64GB",
+      "verified": true
+    },
+    "4": {
+      "text": "Venho usando o R36S há algumas semanas, e a experiência é ótima. A tela IPS de 3,5 polegadas fornece uma imagem nítida, e a qualidade de construção parece robusta. Os joysticks analógicos duplos são muito responsivos, tornando os jogos retrô um prazer.",
+      "author": "K***r",
+      "date": "28 ago 2024",
+      "color": "Preto 128GB",
+      "verified": true
     }
   }
 }
