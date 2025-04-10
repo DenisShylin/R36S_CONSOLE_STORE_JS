@@ -82,7 +82,7 @@ function globalCleanup() {
 // Инициализация i18n системы перед загрузкой DOM
 async function initializeI18n() {
   try {
-    // Получаем язык из URL
+    // Получаем язык из URL с новым методом (query-параметр)
     const urlLanguage = getLanguageFromURL(supportedLanguages);
     console.log('Language from URL:', urlLanguage);
 

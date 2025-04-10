@@ -1,5 +1,5 @@
 /**
- * Получает код языка из URL
+ * Получает код языка из URL (из query-параметра lang)
  * @param {string[]} supportedLanguages - Список поддерживаемых языков
  * @returns {string|null} - Код языка или null, если не найден
  */
@@ -13,40 +13,17 @@ export function getLanguageFromURL(supportedLanguages) {
       return null;
     }
 
-    // Получаем текущий путь
-    const path = window.location.pathname;
+    // Получаем текущий URL
+    const url = new URL(window.location.href);
 
-    // Получаем базовый URL
-    const baseUrl = import.meta.env.BASE_URL || '/';
-    console.log('Current path for language detection:', path);
-    console.log('Base URL for language detection:', baseUrl);
+    // Получаем параметр lang из URL
+    const langParam = url.searchParams.get('lang');
+    console.log('Language param from URL:', langParam);
 
-    // Обработка пустого пути
-    if (!path || path === '/') {
-      console.log('Empty path, no language prefix');
-      return null;
-    }
-
-    // Удаляем базовый URL из пути, если он присутствует
-    let pathWithoutBase = path;
-    if (baseUrl !== '/' && path.startsWith(baseUrl)) {
-      pathWithoutBase = path.substring(baseUrl.length) || '/';
-    }
-    console.log('Path without base for language detection:', pathWithoutBase);
-
-    // Разбиваем путь на части
-    const pathParts = pathWithoutBase
-      .split('/')
-      .filter(part => part.trim() !== '');
-    console.log('Path parts for language detection:', pathParts);
-
-    // Проверяем, является ли первая часть пути языковым кодом
-    if (pathParts.length > 0) {
-      const possibleLang = pathParts[0].toLowerCase();
-      if (supportedLanguages.includes(possibleLang)) {
-        console.log(`Found language in URL: ${possibleLang}`);
-        return possibleLang;
-      }
+    // Проверяем, является ли параметр поддерживаемым языковым кодом
+    if (langParam && supportedLanguages.includes(langParam.toLowerCase())) {
+      console.log(`Found language in URL query params: ${langParam}`);
+      return langParam.toLowerCase();
     }
 
     return null;
@@ -57,7 +34,7 @@ export function getLanguageFromURL(supportedLanguages) {
 }
 
 /**
- * Обновляет URL с учетом текущего языка
+ * Обновляет URL с учетом текущего языка (добавляет query-параметр lang)
  * @param {string} language - Код языка
  */
 export function updateLanguageURL(language) {
@@ -73,32 +50,6 @@ export function updateLanguageURL(language) {
       return;
     }
 
-    // Добавлено сравнение с текущим языком в URL
-    const currentUrlLanguage = getLanguageFromURL([
-      'en',
-      'ru',
-      'ar',
-      'be',
-      'de',
-      'es',
-      'fr',
-      'it',
-      'ja',
-      'ko',
-      'nl',
-      'pt',
-      'tr',
-      'uk',
-    ]);
-
-    // Если текущий язык в URL совпадает с запрашиваемым, ничего не делаем
-    if (currentUrlLanguage === language) {
-      console.log(
-        'URL already has the correct language prefix, no update needed'
-      );
-      return;
-    }
-
     console.log(
       'Current localStorage userLanguage before URL update:',
       localStorage.getItem('userLanguage')
@@ -111,43 +62,19 @@ export function updateLanguageURL(language) {
     console.log('Updating URL for language:', language);
 
     try {
-      // Если выбран английский язык, перенаправляем на корневой URL
-      if (language === 'en') {
-        const baseUrl = import.meta.env.BASE_URL || '/';
-        console.log(`Updating URL to base URL for English: ${baseUrl}`);
-        window.history.pushState({}, '', baseUrl);
-        return;
-      }
-
       // Получаем текущий URL
-      const currentUrl = new URL(window.location.href);
-      const path = currentUrl.pathname;
+      const url = new URL(window.location.href);
 
-      // Не меняем URL для favicon и других ресурсов
-      if (path.includes('.') && !path.endsWith('index.html')) {
-        console.log('Skipping URL update for resource file');
-        return;
-      }
-
-      // Базовый URL сайта
-      const baseUrl = import.meta.env.BASE_URL || '/';
-
-      // Обеспечиваем, что baseUrl всегда имеет правильный формат
-      const normBaseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
-
-      // Создаем новый URL с языковым префиксом
-      let newPath = `${normBaseUrl}${language}/`;
-
-      console.log('New path with language:', newPath);
-
-      // Проверяем, отличается ли новый путь от текущего
-      if (newPath === path) {
-        console.log('No URL change needed, paths are identical');
-        return;
+      // Если выбран английский язык (по умолчанию), удаляем параметр lang
+      if (language === 'en') {
+        url.searchParams.delete('lang');
+      } else {
+        // Иначе устанавливаем параметр lang
+        url.searchParams.set('lang', language);
       }
 
       // Обновляем URL без перезагрузки страницы
-      window.history.pushState({}, '', newPath);
+      window.history.pushState({}, '', url.toString());
       console.log('URL updated successfully');
     } catch (error) {
       console.error('Error updating URL with language:', error);

@@ -605,7 +605,7 @@ export function setupLanguageSelector() {
 
         // Проверяем, что элемент все еще в DOM перед обновлением URL
         if (document.contains(selector) && !signal.aborted) {
-          // Обновляем URL с языковым префиксом
+          // Обновляем URL с языковым query-параметром
           updateLanguageURL(newLanguage);
 
           // Дополнительно обновляем контент
