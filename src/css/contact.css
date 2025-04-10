@@ -302,6 +302,40 @@
     }
 }
 
+/* Поддержка RTL языков */
+html[dir="rtl"] .contact .button__icon,
+.rtl .contact .button__icon {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+html[dir="rtl"] .contact .form__icon,
+.rtl .contact .form__icon {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+html[dir="rtl"] .contact .form__error-icon,
+.rtl .contact .form__error-icon {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+html[dir="rtl"] .contact__label,
+.rtl .contact__label {
+    letter-spacing: -2px;
+}
+
+html[dir="rtl"] .contact__content,
+.rtl .contact__content {
+    direction: rtl;
+}
+
+html[dir="rtl"] .info__card::before,
+.rtl .info__card::before {
+    transform: scaleX(-1);
+}
+
 /* Стили для малых экранов (меньше 320px) */
 @media screen and (max-width: 320px) {
     .contact__title {
@@ -423,6 +457,12 @@
     .info__text {
         font-size: 16px;
     }
+
+    html[dir="rtl"] .contact__info,
+    .rtl .contact__info {
+        direction: rtl;
+    }
+
 }
 
 /* Десктоп от 1280px */
@@ -501,4 +541,15 @@
         background: rgba(255, 255, 255, 0.03);
         color: #fff;
     }
+}
+
+/* Дополнительные адаптации для арабского языка */
+html[lang="ar"] .contact__title,
+html[lang="ar"] .contact__label,
+html[lang="ar"] .form__input,
+html[lang="ar"] .form__textarea,
+html[lang="ar"] .info__title,
+html[lang="ar"] .info__text,
+html[lang="ar"] .form__label {
+    font-family: 'Noto Sans Arabic', 'Arial', sans-serif;
 }

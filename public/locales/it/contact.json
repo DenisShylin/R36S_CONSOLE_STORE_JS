@@ -1,17 +1,31 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": "Inizia una conversazione",
+  "title": "Contatta il team di supporto R36S",
+  "description": "Siamo sempre pronti ad aiutarti nella scelta di una console e a rispondere a qualsiasi domanda sulla console portatile retro gaming R36S con schermo IPS da 3,5 pollici",
+  "form": {
+    "name": "Il tuo nome",
+    "namePlaceholder": "John Smith",
+    "email": "Email",
+    "emailPlaceholder": "esempio@email.com",
+    "phone": "Telefono",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "message": "Messaggio",
+    "messagePlaceholder": "Scrivi il tuo messaggio sulla console R36S...",
+    "submit": "Invia messaggio",
+    "sending": "Invio in corso...",
+    "success": "Messaggio inviato con successo! Ti contatteremo a breve.",
+    "error": {
+      "allFields": "Per favore compila tutti i campi",
+      "validEmail": "Per favore inserisci un'email valida",
+      "validPhone": "Per favore inserisci un numero di telefono valido.",
+      "generic": "Si è verificato un errore durante l'invio del messaggio. Per favore riprova più tardi."
+    }
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "info": {
+    "phoneTitle": "Telefono",
+    "workHours": "Lun-Ven: 9:00 - 18:00",
+    "emailTitle": "Email",
+    "addressTitle": "Indirizzo",
+    "worldwide": "Lavoriamo in tutto il mondo"
   }
 }

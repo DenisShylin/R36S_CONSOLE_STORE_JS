@@ -1,7 +1,7 @@
-// Contact.js - Скрипт для секции Contact
-
+// js/contact.js
 // Импортируем иконки (предполагаем, что у вас есть отдельный файл для иконок)
 import { renderIcon } from './iconscontact.js';
+import i18next from 'i18next';
 
 // Инициализация секции Contact
 export function initContact() {
@@ -33,8 +33,9 @@ export function initContact() {
     message: '',
   };
 
-  // Функция отображения ошибки
-  function showError(message) {
+  // Функция отображения ошибки с поддержкой i18n
+  function showError(messageKey, fallbackMessage) {
+    const message = i18next.t(messageKey, { defaultValue: fallbackMessage });
     errorContainer.querySelector('span').textContent = message;
     errorContainer.style.display = 'flex';
   }
@@ -59,7 +60,7 @@ export function initContact() {
   phoneInput.addEventListener('input', handleInputChange);
   messageInput.addEventListener('input', handleInputChange);
 
-  // Обработчик отправки формы
+  // Обработчик отправки формы с поддержкой i18n
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -75,19 +76,31 @@ export function initContact() {
         !formData.phone ||
         !formData.message
       ) {
-        throw new Error('Please fill in all fields');
+        throw new Error(
+          i18next.t('contact.form.error.allFields', 'Please fill in all fields')
+        );
       }
 
       // Валидация email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
-        throw new Error('Please enter a valid email');
+        throw new Error(
+          i18next.t(
+            'contact.form.error.validEmail',
+            'Please enter a valid email'
+          )
+        );
       }
 
       // Валидация телефона
       const phoneRegex = /^\+?[0-9]{10,14}$/;
       if (!phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
-        throw new Error('Please enter a valid phone number.');
+        throw new Error(
+          i18next.t(
+            'contact.form.error.validPhone',
+            'Please enter a valid phone number.'
+          )
+        );
       }
 
       // Имитация отправки на сервер
@@ -104,9 +117,15 @@ export function initContact() {
         formData[key] = '';
       });
 
-      alert('Message sent successfully! We will contact you shortly.');
+      alert(
+        i18next.t(
+          'contact.form.success',
+          'Message sent successfully! We will contact you shortly.'
+        )
+      );
     } catch (error) {
       showError(
+        'contact.form.error.generic',
         error.message ||
           'There was an error sending your message. Please try again later.'
       );
@@ -117,7 +136,7 @@ export function initContact() {
     }
   }
 
-  // Функция обновления состояния формы
+  // Функция обновления состояния формы с поддержкой i18n
   function updateFormState(isSubmitting) {
     const inputs = [nameInput, emailInput, phoneInput, messageInput];
 
@@ -126,19 +145,27 @@ export function initContact() {
     });
 
     submitButton.disabled = isSubmitting;
-    submitButton.innerHTML = isSubmitting
-      ? `<span class="button__icon">${renderIcon(
-          'loader',
-          20
-        )}</span> Sending...`
-      : `<span class="button__icon">${renderIcon(
-          'send',
-          20
-        )}</span> Send message`;
+
+    if (isSubmitting) {
+      submitButton.innerHTML = `<span class="button__icon">${renderIcon(
+        'loader',
+        20
+      )}</span> ${i18next.t('contact.form.sending', 'Sending...')}`;
+    } else {
+      submitButton.innerHTML = `<span class="button__icon">${renderIcon(
+        'send',
+        20
+      )}</span> ${i18next.t('contact.form.submit', 'Send message')}`;
+    }
   }
 
   // Добавляем обработчик отправки формы
   contactForm.addEventListener('submit', handleSubmit);
+
+  // Обработчик события изменения языка
+  window.addEventListener('languageChanged', function (event) {
+    updateFormState(submitButton.disabled);
+  });
 
   // Возвращаем функцию для очистки обработчиков событий
   return function cleanup() {
@@ -147,6 +174,7 @@ export function initContact() {
     phoneInput.removeEventListener('input', handleInputChange);
     messageInput.removeEventListener('input', handleInputChange);
     contactForm.removeEventListener('submit', handleSubmit);
+    window.removeEventListener('languageChanged', updateFormState);
   };
 }
 

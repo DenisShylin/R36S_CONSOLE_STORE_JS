@@ -1,4 +1,4 @@
-<!-- Contact.html - SEO-оптимизированный HTML для секции Contact -->
+<!-- contact.html -->
 <section
   class="contact"
   id="contact"
@@ -18,11 +18,13 @@
   <div class="contact__noise"></div>
   <div class="contact__container">
     <div class="contact__header">
-      <span class="contact__label">Start a Conversation</span>
-      <h2 class="contact__title" id="contact-heading">
+      <span class="contact__label" data-i18n="contact.label"
+        >Start a Conversation</span
+      >
+      <h2 class="contact__title" id="contact-heading" data-i18n="contact.title">
         Contact R36S Support Team
       </h2>
-      <p class="contact__description">
+      <p class="contact__description" data-i18n="contact.description">
         We are always ready to help you with choosing a console and answer any
         questions about the R36S handheld retro gaming console with 3.5-inch IPS
         screen
@@ -41,13 +43,14 @@
               data-size="16"
               aria-hidden="true"
             ></span>
-            Your name
+            <span data-i18n="contact.form.name">Your name</span>
           </label>
           <input
             type="text"
             id="name"
             name="name"
             class="form__input"
+            data-i18n="[placeholder]contact.form.namePlaceholder"
             placeholder="John Smith"
             required
             aria-required="true"
@@ -63,13 +66,14 @@
               data-size="16"
               aria-hidden="true"
             ></span>
-            Email
+            <span data-i18n="contact.form.email">Email</span>
           </label>
           <input
             type="email"
             id="email"
             name="email"
             class="form__input"
+            data-i18n="[placeholder]contact.form.emailPlaceholder"
             placeholder="example@email.com"
             required
             aria-required="true"
@@ -85,13 +89,14 @@
               data-size="16"
               aria-hidden="true"
             ></span>
-            Telephone
+            <span data-i18n="contact.form.phone">Telephone</span>
           </label>
           <input
             type="tel"
             id="phone"
             name="phone"
             class="form__input"
+            data-i18n="[placeholder]contact.form.phonePlaceholder"
             placeholder="+7 (___) ___-__-__"
             required
             aria-required="true"
@@ -107,12 +112,13 @@
               data-size="16"
               aria-hidden="true"
             ></span>
-            Message
+            <span data-i18n="contact.form.message">Message</span>
           </label>
           <textarea
             id="message"
             name="message"
             class="form__textarea"
+            data-i18n="[placeholder]contact.form.messagePlaceholder"
             placeholder="Write your message about R36S console..."
             required
             aria-required="true"
@@ -123,6 +129,7 @@
         <button
           type="submit"
           class="form__button"
+          data-i18n="contact.form.submit"
           aria-label="Send contact message to R36S support"
         >
           <span
@@ -151,7 +158,9 @@
             data-size="40"
             aria-hidden="true"
           ></div>
-          <h3 class="info__title">Telephone</h3>
+          <h3 class="info__title" data-i18n="contact.info.phoneTitle">
+            Telephone
+          </h3>
           <p class="info__text">
             <span itemprop="telephone">+7 (800) 555-35-35</span>
           </p>
@@ -160,6 +169,7 @@
             itemprop="hoursAvailable"
             itemscope
             itemtype="http://schema.org/OpeningHoursSpecification"
+            data-i18n="contact.info.workHours"
           >
             <meta
               itemprop="dayOfWeek"
@@ -185,7 +195,7 @@
             data-size="40"
             aria-hidden="true"
           ></div>
-          <h3 class="info__title">Email</h3>
+          <h3 class="info__title" data-i18n="contact.info.emailTitle">Email</h3>
           <p class="info__text">
             <span itemprop="email">support@R36S.com</span>
           </p>
@@ -206,12 +216,14 @@
             data-size="40"
             aria-hidden="true"
           ></div>
-          <h3 class="info__title">Address</h3>
+          <h3 class="info__title" data-i18n="contact.info.addressTitle">
+            Address
+          </h3>
           <p class="info__text">
             <span itemprop="addressRegion">Zhejiang</span>,
             <span itemprop="addressCountry">China</span>
           </p>
-          <p class="info__text">
+          <p class="info__text" data-i18n="contact.info.worldwide">
             We work <span itemprop="areaServed">all over the world</span>
           </p>
         </div>

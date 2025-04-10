@@ -48,7 +48,7 @@ const translationSections = [
   'about',
   'articles',
   'categories',
-  // 'contact',
+  'contact',
   'features',
   // 'footer',
   'header',
