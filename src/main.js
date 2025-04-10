@@ -27,6 +27,12 @@ import { initFooter } from './js/footer.js';
 
 console.log('Main.js инициализирован');
 
+// Получаем initialLanguage из window, если он был установлен в HTML
+let initialLanguage = window.initialLanguage || null;
+if (initialLanguage) {
+  console.log('Found initial language from HTML:', initialLanguage);
+}
+
 // Хранение функций очистки для компонентов
 let cleanupFunctions = [];
 
@@ -82,9 +88,10 @@ function globalCleanup() {
 // Инициализация i18n системы перед загрузкой DOM
 async function initializeI18n() {
   try {
-    // Получаем язык из URL с новым методом (query-параметр)
-    const urlLanguage = getLanguageFromURL(supportedLanguages);
-    console.log('Language from URL:', urlLanguage);
+    // Получаем язык из URL (из пути)
+    const urlLanguage =
+      getLanguageFromURL(supportedLanguages) || initialLanguage;
+    console.log('Language from URL or initial:', urlLanguage);
 
     // Установка атрибутов lang и dir перед инициализацией i18n
     // для предотвращения мигания контента

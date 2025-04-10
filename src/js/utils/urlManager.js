@@ -1,5 +1,5 @@
 /**
- * Получает код языка из URL (из query-параметра lang)
+ * Получает код языка из URL (из пути)
  * @param {string[]} supportedLanguages - Список поддерживаемых языков
  * @returns {string|null} - Код языка или null, если не найден
  */
@@ -13,17 +13,40 @@ export function getLanguageFromURL(supportedLanguages) {
       return null;
     }
 
-    // Получаем текущий URL
-    const url = new URL(window.location.href);
+    // Получаем текущий путь
+    const path = window.location.pathname;
+    console.log('Current path for language detection:', path);
 
-    // Получаем параметр lang из URL
-    const langParam = url.searchParams.get('lang');
-    console.log('Language param from URL:', langParam);
+    // Получаем базовый URL
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    console.log('Base URL for language detection:', baseUrl);
 
-    // Проверяем, является ли параметр поддерживаемым языковым кодом
-    if (langParam && supportedLanguages.includes(langParam.toLowerCase())) {
-      console.log(`Found language in URL query params: ${langParam}`);
-      return langParam.toLowerCase();
+    // Обработка пустого пути
+    if (!path || path === '/') {
+      console.log('Empty path, no language prefix');
+      return null;
+    }
+
+    // Удаляем базовый URL из пути, если он присутствует
+    let pathWithoutBase = path;
+    if (baseUrl !== '/' && path.startsWith(baseUrl)) {
+      pathWithoutBase = path.substring(baseUrl.length) || '/';
+    }
+    console.log('Path without base for language detection:', pathWithoutBase);
+
+    // Разбиваем путь на части
+    const pathParts = pathWithoutBase
+      .split('/')
+      .filter(part => part.trim() !== '');
+    console.log('Path parts for language detection:', pathParts);
+
+    // Проверяем, является ли первая часть пути языковым кодом
+    if (pathParts.length > 0) {
+      const possibleLang = pathParts[0].toLowerCase();
+      if (supportedLanguages.includes(possibleLang)) {
+        console.log(`Found language in URL: ${possibleLang}`);
+        return possibleLang;
+      }
     }
 
     return null;
@@ -34,7 +57,7 @@ export function getLanguageFromURL(supportedLanguages) {
 }
 
 /**
- * Обновляет URL с учетом текущего языка (добавляет query-параметр lang)
+ * Обновляет URL с учетом текущего языка
  * @param {string} language - Код языка
  */
 export function updateLanguageURL(language) {
@@ -62,20 +85,17 @@ export function updateLanguageURL(language) {
     console.log('Updating URL for language:', language);
 
     try {
-      // Получаем текущий URL
-      const url = new URL(window.location.href);
+      // Базовый URL сайта
+      const baseUrl = import.meta.env.BASE_URL || '/';
 
-      // Если выбран английский язык (по умолчанию), удаляем параметр lang
+      // Если выбран английский язык, перенаправляем на корневой URL
       if (language === 'en') {
-        url.searchParams.delete('lang');
-      } else {
-        // Иначе устанавливаем параметр lang
-        url.searchParams.set('lang', language);
+        window.location.href = baseUrl;
+        return;
       }
 
-      // Обновляем URL без перезагрузки страницы
-      window.history.pushState({}, '', url.toString());
-      console.log('URL updated successfully');
+      // Для других языков перенаправляем на языковую директорию
+      window.location.href = `${baseUrl}${language}/`;
     } catch (error) {
       console.error('Error updating URL with language:', error);
     }

@@ -545,22 +545,10 @@ export function setupLanguageSelector() {
     selector.value = i18next.language;
 
     // Обработчик изменения языка
-    // Добавляем AbortController для возможности отмены запроса
-    let currentAbortController = null;
-
     selector.addEventListener('change', async function (event) {
       event.preventDefault(); // Предотвращаем действие по умолчанию
 
       try {
-        // Отменяем предыдущую операцию, если она еще не завершена
-        if (currentAbortController) {
-          currentAbortController.abort();
-        }
-
-        // Создаем новый AbortController
-        currentAbortController = new AbortController();
-        const signal = currentAbortController.signal;
-
         const newLanguage = event.target.value;
         console.log(`Language selector changed to: ${newLanguage}`);
 
@@ -570,58 +558,20 @@ export function setupLanguageSelector() {
           return;
         }
 
-        // Загружаем переводы если их еще нет
-        if (!i18next.hasResourceBundle(newLanguage, 'translation')) {
-          try {
-            // Оборачиваем асинхронную операцию в try-catch
-            const translations = await loadAllTranslations(newLanguage);
-
-            // Проверяем signal на случай отмены и селектор на наличие в DOM
-            if (signal.aborted || !document.contains(selector)) {
-              console.log(
-                'Operation aborted or language selector no longer in DOM after loading translations'
-              );
-              return;
-            }
-
-            i18next.addResourceBundle(
-              newLanguage,
-              'translation',
-              translations,
-              true,
-              true
-            );
-          } catch (loadError) {
-            console.error('Error loading translations:', loadError);
-            // Продолжаем выполнение, чтобы хотя бы обновить языковые настройки
-          }
-        }
-
-        // Сохраняем выбор в localStorage
+        // Сохраняем выбор в localStorage перед перенаправлением
         localStorage.setItem('userLanguage', newLanguage);
 
-        // Меняем язык
-        await i18next.changeLanguage(newLanguage);
+        // Обновляем URL с перенаправлением на языковую версию
+        updateLanguageURL(newLanguage);
 
-        // Проверяем, что элемент все еще в DOM перед обновлением URL
-        if (document.contains(selector) && !signal.aborted) {
-          // Обновляем URL с языковым query-параметром
-          updateLanguageURL(newLanguage);
-
-          // Дополнительно обновляем контент
-          if (typeof window.updateContent === 'function') {
-            window.updateContent();
-          }
-        }
+        // Обратите внимание: После updateLanguageURL произойдет перенаправление,
+        // поэтому следующий код не будет выполнен в большинстве случаев
       } catch (error) {
         console.error('Error changing language:', error);
         // В случае ошибки возвращаем старый язык, если селектор еще существует
         if (document.contains(selector)) {
           selector.value = i18next.language;
         }
-      } finally {
-        // Сбрасываем AbortController
-        currentAbortController = null;
       }
     });
   } catch (error) {
