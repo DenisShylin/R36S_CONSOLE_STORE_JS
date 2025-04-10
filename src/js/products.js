@@ -208,25 +208,25 @@ export function initProducts() {
       content: {
         downloads: [
           {
-            file: 'Firmware v1.0.4 2024.04.13',
+            file: 'Firmware v1.0.4 2024',
             link: 'https://drive.google.com/file/d/10z7j7IZ7WX3y10ZJBW_a2-agcIe1Dx9m/edit',
             date: '2024.04.13',
             version: 'v1.0.4',
           },
           {
-            file: 'ArkOS_K36_v2.0_03112025.img.xz',
+            file: 'ArkOS_K36_v2.2025',
             link: 'https://drive.google.com/file/d/1F93Q1jXYaTCftOlzAt0BaM43rmVexXsn/view',
             date: '2023.12.22',
             version: 'v1.0.3',
           },
           {
-            file: 'ArkOS_R35S-R36S_v2.0_02092025_P3.img.xz',
+            file: 'ArkOS_R35S-R36S_v2',
             link: 'https://drive.google.com/file/d/18VL7uLNdyFKDH4_V8YM5zhHSjLiJdkUc/view',
             date: '2023.11.16',
             version: 'v1.0.2',
           },
           {
-            file: 'ArkOS_R35S-R36S_v2.0_02092025_P4.img.xz',
+            file: 'ArkOS_R35S-R36S_v2_P4',
             link: 'https://drive.google.com/file/d/1MT1AGGch6Ou4RAfxDvVCxUI4aXX6Qa5v/view',
             date: '2023.11.05',
             version: 'v1.0.0',
@@ -309,11 +309,11 @@ export function initProducts() {
 
       // Добавление поддержки i18n
       navItem.innerHTML = `
-        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-        <span data-i18n="${section.title}">${i18next.t(section.title)}</span>
-      `;
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          <span data-i18n="${section.title}">${i18next.t(section.title)}</span>
+        `;
 
       navItem.addEventListener('click', () => handleSectionClick(section.id));
       productsNavList.appendChild(navItem);
@@ -328,7 +328,7 @@ export function initProducts() {
       .filter(paragraph => paragraph.trim() !== '');
   }
 
-  // Формирование HTML для содержимого секции с поддержкой i18n
+  // В функции renderSectionContent для секции downloads
   function renderSectionContent(section) {
     if (section.id === 'downloads') {
       let html = '<div class="download-list">';
@@ -346,17 +346,15 @@ export function initProducts() {
               <div>
                 <div class="download-filename">${item.file}</div>
                 <div class="download-meta">
-                  <span data-i18n="products.downloads.update_label">Update</span>: ${
-                    item.date
-                  } • ${item.version}
+                  <span class="update-label" data-i18n="products.downloads.update_label">${i18next.t(
+                    'products.downloads.update_label'
+                  )}</span>: ${item.date} • ${item.version}
                 </div>
               </div>
             </div>
-            <a href="${
-              item.link
-            }" class="download-button" target="_blank" aria-label="${i18next.t(
-          'products.downloads.download_aria'
-        )}">
+            <a href="${item.link}" class="download-button" target="_blank" 
+              data-i18n-aria="products.downloads.download_aria"
+              aria-label="${i18next.t('products.downloads.download_aria')}">
               <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -384,15 +382,15 @@ export function initProducts() {
     // Добавление изображений если они есть
     if (section.content.images) {
       html += `
-        <div class="image-container">
-          <picture>
-            <source srcset="${section.content.images.webp}" type="image/webp">
-            <img src="${section.content.images.jpg}" alt="${i18next.t(
+          <div class="image-container">
+            <picture>
+              <source srcset="${section.content.images.webp}" type="image/webp">
+              <img src="${section.content.images.jpg}" alt="${i18next.t(
         section.title
       )}" class="section-image" loading="lazy">
-          </picture>
-        </div>
-      `;
+            </picture>
+          </div>
+        `;
     }
 
     // Добавление подразделов если они есть
@@ -401,13 +399,13 @@ export function initProducts() {
 
       section.content.subsections.forEach(subsection => {
         html += `
-          <div class="subsection">
-            <h3 class="subsection-title" data-i18n="${
-              subsection.title
-            }">${i18next.t(subsection.title)}</h3>
-            <div class="subsection-content">
-              <div class="text-content">
-        `;
+            <div class="subsection">
+              <h3 class="subsection-title" data-i18n="${
+                subsection.title
+              }">${i18next.t(subsection.title)}</h3>
+              <div class="subsection-content">
+                <div class="text-content">
+          `;
 
         // Добавление текста подраздела с переводом
         const subParagraphs = translateAndSplitToParagraphs(
@@ -422,17 +420,17 @@ export function initProducts() {
         // Добавление изображений подраздела
         if (subsection.content.images) {
           html += `
-            <div class="image-container">
-              <picture>
-                <source srcset="${
-                  subsection.content.images.webp
-                }" type="image/webp">
-                <img src="${subsection.content.images.jpg}" alt="${i18next.t(
+              <div class="image-container">
+                <picture>
+                  <source srcset="${
+                    subsection.content.images.webp
+                  }" type="image/webp">
+                  <img src="${subsection.content.images.jpg}" alt="${i18next.t(
             subsection.title
           )}" class="subsection-image" loading="lazy">
-              </picture>
-            </div>
-          `;
+                </picture>
+              </div>
+            `;
         }
 
         html += '</div></div>';
@@ -457,20 +455,32 @@ export function initProducts() {
       }`;
 
       sectionElement.innerHTML = `
-        <h2 class="section-title" data-i18n="${section.title}">${i18next.t(
+          <h2 class="section-title" data-i18n="${section.title}">${i18next.t(
         section.title
       )}</h2>
-        ${renderSectionContent(section)}
-      `;
+          ${renderSectionContent(section)}
+        `;
 
       productsSections.appendChild(sectionElement);
     });
   }
 
-  // Обновление контента при изменении языка
   function updateContent() {
     renderNavigation();
     renderSections();
+
+    // Обновление элементов секции загрузок после рендеринга
+    document.querySelectorAll('.update-label').forEach(el => {
+      if (el.hasAttribute('data-i18n')) {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = i18next.t(key);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria');
+      el.setAttribute('aria-label', i18next.t(key));
+    });
   }
 
   // Инициализация компонента

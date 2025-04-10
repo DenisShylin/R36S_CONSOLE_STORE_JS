@@ -449,6 +449,7 @@
     margin-bottom: 3px;
     font-size: 14px;
     white-space: nowrap;
+
     /* Предотвращает перенос текста */
     overflow: hidden;
     /* Скрывает выходящий за пределы текст */
@@ -683,6 +684,8 @@ body {
     direction: ltr;
     display: inline-block;
 }
+
+
 
 /* Стили для адаптивной верстки от 375px */
 @media screen and (min-width: 375px) {
