@@ -44,17 +44,15 @@ export const languageNames = {
 
 // Список секций с переводами
 const translationSections = [
-  // 'common',
   'about',
   'articles',
   'categories',
   'contact',
   'features',
-  // 'footer',
+  'footer',
   'header',
   'hero',
   'mobilemenu',
-  // 'button',
   // 'modal',
   'products',
   'reviews',

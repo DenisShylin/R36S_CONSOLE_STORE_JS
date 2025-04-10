@@ -1,17 +1,92 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "merk": "R36S",
+  "beschrijving": "Ontdek de wereld van retro gaming met een draagbare console R36S. Duizenden klassieke spellen in je zak! Ervaar nostalgie met dit betaalbare retro draagbare gameapparaat.",
+  "meta": {
+    "naam": "R36S Retro Draagbare Spelconsole",
+    "categorie": "Elektronica > Videospellen > Draagbare Spelconsoles"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "aliexpress": {
+    "titel": "Koop R36S console op AliExpress",
+    "alt": "R36S Draagbare Spelconsole - Retro Gamingapparaat met 15000+ Spellen - Koop op AliExpress"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "secties": {
+    "producten": "Producten",
+    "ondersteuning": "Ondersteuning",
+    "bedrijf": "Bedrijf"
+  },
+  "links": {
+    "beoordelingen": "Beoordelingen",
+    "contacten": "Contacten",
+    "partnerschap": "Partnerschap"
+  },
+  "aria": {
+    "beoordelingen": "Lees R36S Retro Console Beoordelingen",
+    "contacten": "Neem contact op met R36S Ondersteuningsteam",
+    "partnerschap": "Leer over partnerschapsmogelijkheden met R36S gameconsoles"
+  },
+  "copyright": "© 2025 R36S. Alle rechten voorbehouden.",
+  "seo": {
+    "h2": "R36S Retro Draagbare Console - De Ultieme Draagbare Gaming Ervaring",
+    "h3": "Betaalbare Retro Spelconsole met 15000+ Klassieke Spellen",
+    "h4": "Beste Draagbare Gamingapparaat voor Retro Game Liefhebbers",
+    "beschrijving": "R36S biedt de beste draagbare retro gaming ervaring met zijn 3,5-inch IPS-display, duizenden voorgeladen spellen en lange batterijduur. Perfect voor nostalgische gamers die willen genieten van klassieke titels onderweg."
+  },
+  "modal": {
+    "sluiten": "Sluit R36S partnerschapsinformatie modal",
+    "titel": "Partnerschap met R36S",
+    "koptekst": "BEDRIJFSINFORMATIE",
+    "bedrijf": {
+      "opgericht": {
+        "sterk1": "R36S merk werd opgericht",
+        "tekst1": " op 28 februari ",
+        "sterk2": "2007",
+        "tekst2": " in de provincie Zhejiang, China."
+      },
+      "werknemers": {
+        "sterk": "Het bedrijf heeft",
+        "tekst": " 11-50 mensen in dienst."
+      },
+      "producten": {
+        "sterk": "Hoofdproducten:",
+        "tekst": " draagbare consoles, TV-spelconsoles, spelcontrollers."
+      },
+      "omzet": {
+        "sterk": "De jaarlijkse omzet van het bedrijf:",
+        "tekst": " 50-100 miljoen Amerikaanse dollars."
+      },
+      "markten": {
+        "sterk": "R36S markten:",
+        "tekst": " West-Europa 11% Oost-Azië 11% Midden-Oosten 11%"
+      }
+    },
+    "distributeur": {
+      "titel": "R36S Groothandel - Word een Officiële Distributeur",
+      "beschrijving": "Groothandelsprijzen, registratie van vertegenwoordigingskantoor en distributie:",
+      "link": "www.R36S.ali.com"
+    },
+    "intro": {
+      "titel": "Introductie tot R36S Retro Draagbare Spelconsole",
+      "beschrijving": "Het R36S distributeursnetwerk breidt zich actief wereldwijd uit en brengt nostalgische gamingervaringen naar liefhebbers overal. In eerste instantie vestigde het R36S hoofdkantoor zijn aanwezigheid in Azië, maar nu beweegt het merk zich zelfverzekerd naar internationale markten. Bovendien verwelkomt het bedrijf nieuwe partnerschappen op verschillende continenten, waardoor de R36S Retro Draagbare Spelconsole steeds toegankelijker wordt voor mondiale consumenten. Verder heeft de toewijding van het merk aan kwaliteit en betaalbaarheid het gepositioneerd als een sterke concurrent in de retro gaming markt."
+    },
+    "globaal": {
+      "titel": "Wereldwijde Distributiekansen voor Retro Spelconsoles",
+      "beschrijving": "Als exclusieve distributeur voor R36S kunt u toegang krijgen tot opkomende markten in Noord-Amerika, Europa en Australië. Ondertussen blijft het R36S dealernetwerk groeien in Zuid-Amerika en Afrika. Vervolgens versterkt de aanwezigheid van het merk in belangrijke markten zoals het Verenigd Koninkrijk, Duitsland, Frankrijk en Spanje. Daarnaast is R36S succesvol doorgedrongen tot markten in Canada, Mexico en Brazilië. Daarom kunnen potentiële partners verschillende gebieden verkennen met aanzienlijk groeipotentieel."
+    },
+    "voordelen": {
+      "titel": "Partnerschapsvoordelen en Ondersteuning voor Retailers van Draagbare Consoles",
+      "beschrijving": "Samenwerking met R36S biedt uitgebreide ondersteuning voor nieuwe distributeurs en dealers. Ten eerste verbindt het R36S contactnummer partners rechtstreeks met toegewijde ondersteuningsteams. Vervolgens ontvangen partners uitgebreide training en marketingmaterialen. Bijgevolg maakt dit een soepele markttoetreding en operatie mogelijk. Bovendien biedt het bedrijf concurrerende prijsstructuren en flexibele minimale bestelhoeveelheden. Hierdoor kunnen partners de voorraad effectief beheren en de winstgevendheid maximaliseren."
+    },
+    "ecommerce": {
+      "titel": "E-commerce en Marktplaatsintegratie voor Retro Gamingproducten",
+      "beschrijving": "Het R36S distributeursnetwerk gedijt op grote e-commerceplatforms wereldwijd. Momenteel verkopen partners succesvol via Amazon, eBay en regionale marktplaatsen. Evenzo exploiteren veel dealers toegewijde online winkels met R36S-producten. Desalniettemin handhaaft het merk strikte kwaliteitscontrole en prijsbeleid. Zo kunnen partners gezonde winstmarges behouden terwijl de klanttevredenheid wordt gewaarborgd."
+    },
+    "regionaal": {
+      "titel": "Regionale Marktstrategieën voor Draagbare Gamingapparaten",
+      "beschrijving": "Een exclusieve distributeur kan op maat gemaakte strategieën ontwikkelen voor specifieke regio's. Ondertussen biedt het R36S hoofdkantoor marktinzichten en trendanalyse. Met name blinkt het merk uit in het aanpassen aan lokale gamingvoorkeuren en retailomgevingen. Inderdaad zijn er succesvolle partnerschappen ontstaan in diverse markten, van Singapore tot Zweden. Daarna kunnen partners hun territorium uitbreiden op basis van prestaties en marktvraag."
+    },
+    "toekomst": {
+      "titel": "Toekomstige Groei en Ontwikkeling van R36S Spelconsoles",
+      "beschrijving": "Samenwerking met R36S opent deuren naar langetermijngroei van het bedrijf. Momenteel ontwikkelt het merk nieuwe productlijnen en gamingfuncties. Daarnaast profiteren R36S-dealers van regelmatige productupdates en innovaties. Verder faciliteert het R36S contactnummer doorlopende communicatie en ondersteuning. Ten slotte treden partners toe tot een wereldwijd netwerk van succesvolle gamingretailers en distributeurs. Toch handhaaft het merk zijn toewijding aan kwaliteit en klanttevredenheid op alle markten."
+    }
   }
 }

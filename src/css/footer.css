@@ -221,6 +221,28 @@ body {
   }
 }
 
+/* Стили для RTL-поддержки в футере */
+.footer.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.footer.rtl .footer__content {
+  text-align: right;
+}
+
+.footer.rtl .footer__social {
+  justify-content: flex-end;
+}
+
+.footer.rtl .footer__link:hover {
+  transform: translateX(-5px);
+}
+
+.footer.rtl .footer__column {
+  align-items: flex-end;
+}
+
 /* Стили для мобильной адаптивной верстки (375-767px) */
 @media screen and (min-width: 375px) {
   .footer__container {
@@ -246,6 +268,23 @@ body {
 
   .footer__bottom {
     font-size: 14px;
+  }
+}
+
+/* Дополнительные стили для анимаций и трансформаций в RTL */
+@media (max-width: 768px) {
+
+  .footer.rtl .footer__content,
+  .partnership-modal-content.rtl {
+    text-align: center;
+  }
+
+  .footer.rtl .footer__column {
+    align-items: center;
+  }
+
+  .footer.rtl .footer__social {
+    justify-content: center;
   }
 }
 

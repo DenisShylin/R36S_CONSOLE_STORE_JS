@@ -120,6 +120,7 @@
     text-align: center;
     background: linear-gradient(135deg, #fff 0%, #94A3B8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -186,6 +187,26 @@
 
 .partnership-link:hover {
     color: #3b82f6;
+}
+
+/* Стили для модального окна в RTL-версии */
+.partnership-modal-content.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.partnership-modal-content.rtl .partnership-modal-close {
+    left: 16px;
+    right: auto;
+}
+
+.partnership-modal-content.rtl .partnership-section-title,
+.partnership-modal-content.rtl .partnership-section-title-2 {
+    text-align: right;
+}
+
+.partnership-modal-content.rtl .partnership-button:hover {
+    transform: translateX(-5px);
 }
 
 @keyframes fadeIn {

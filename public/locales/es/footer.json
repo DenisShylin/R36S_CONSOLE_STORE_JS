@@ -1,17 +1,92 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "brand": "R36S",
+  "description": "Descubre el mundo de los juegos retro con una consola portátil R36S. ¡Miles de juegos clásicos en tu bolsillo! Experimenta la nostalgia con este dispositivo de juegos retro portátil y asequible.",
+  "meta": {
+    "name": "Consola de Juegos Portátil Retro R36S",
+    "category": "Electrónica > Videojuegos > Consolas de Juegos Portátiles"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "aliexpress": {
+    "title": "Comprar consola R36S en AliExpress",
+    "alt": "Consola de Juegos Portátil R36S - Dispositivo de Juegos Retro con más de 15000 Juegos - Comprar en AliExpress"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "sections": {
+    "products": "Productos",
+    "support": "Soporte",
+    "company": "Empresa"
+  },
+  "links": {
+    "reviews": "Reseñas",
+    "contacts": "Contactos",
+    "partnership": "Asociación"
+  },
+  "aria": {
+    "reviews": "Leer Reseñas de la Consola Retro R36S",
+    "contacts": "Contactar con el Equipo de Soporte de R36S",
+    "partnership": "Conocer sobre oportunidades de asociación con consolas de juegos R36S"
+  },
+  "copyright": "© 2025 R36S. Todos los derechos reservados.",
+  "seo": {
+    "h2": "Consola Portátil Retro R36S - La Experiencia de Juego Portátil Definitiva",
+    "h3": "Consola de Juegos Retro Asequible con más de 15000 Juegos Clásicos",
+    "h4": "El Mejor Dispositivo de Juego Portátil para Entusiastas de Juegos Retro",
+    "description": "R36S ofrece la mejor experiencia de juegos retro portátil con su pantalla IPS de 3.5 pulgadas, miles de juegos precargados y larga duración de batería. Perfecta para jugadores nostálgicos que quieren disfrutar de títulos clásicos en movimiento."
+  },
+  "modal": {
+    "close": "Cerrar el modal de información de asociación de R36S",
+    "title": "Asociación con R36S",
+    "headline": "INFORMACIÓN DE LA EMPRESA",
+    "company": {
+      "founded": {
+        "strong1": "La marca R36S fue fundada",
+        "text1": " el 28 de febrero de ",
+        "strong2": "2007",
+        "text2": " en la Provincia de Zhejiang, China."
+      },
+      "employees": {
+        "strong": "La empresa emplea",
+        "text": " entre 11-50 personas."
+      },
+      "products": {
+        "strong": "Productos principales:",
+        "text": " consolas portátiles, consolas de juegos para TV, controladores de juegos."
+      },
+      "revenue": {
+        "strong": "Ingresos anuales de la empresa:",
+        "text": " 50-100 millones de dólares estadounidenses."
+      },
+      "markets": {
+        "strong": "Mercados de R36S:",
+        "text": " Europa Occidental 11% Asia Oriental 11% Oriente Medio 11%"
+      }
+    },
+    "distributor": {
+      "title": "Comercio Mayorista de R36S - Conviértase en Distribuidor Oficial",
+      "description": "Precios mayoristas, registro de oficina representativa y distribución:",
+      "link": "www.R36S.ali.com"
+    },
+    "intro": {
+      "title": "Introducción a la Consola de Juegos Portátil Retro R36S",
+      "description": "La red de distribuidores de R36S se expande activamente a nivel mundial, llevando experiencias de juegos nostálgicos a entusiastas en todas partes. Inicialmente, la sede de R36S estableció su presencia en Asia, pero ahora la marca se mueve con confianza hacia mercados internacionales. Además, la empresa da la bienvenida a nuevas asociaciones en diferentes continentes, haciendo que la Consola de Juegos Portátil Retro R36S sea cada vez más accesible para los consumidores globales. Además, el compromiso de la marca con la calidad y asequibilidad la ha posicionado como un fuerte competidor en el mercado de juegos retro."
+    },
+    "global": {
+      "title": "Oportunidades de Distribución Global para Consolas de Juegos Retro",
+      "description": "Como distribuidor exclusivo de R36S, puede aprovechar mercados emergentes en América del Norte, Europa y Australia. Mientras tanto, la red de comerciantes de R36S continúa creciendo en América del Sur y África. Posteriormente, la presencia de la marca se fortalece en mercados clave como Reino Unido, Alemania, Francia y España. Adicionalmente, R36S ha penetrado con éxito en mercados de Canadá, México y Brasil. Por lo tanto, los socios potenciales pueden explorar varios territorios con un potencial de crecimiento significativo."
+    },
+    "benefits": {
+      "title": "Beneficios de Asociación y Soporte para Minoristas de Consolas Portátiles",
+      "description": "La colaboración con R36S ofrece un soporte integral para nuevos distribuidores y comerciantes. Primero, el número de contacto de R36S conecta a los socios directamente con equipos de soporte dedicados. Luego, los socios reciben capacitación extensiva y materiales de marketing. En consecuencia, esto permite una entrada y operación fluida en el mercado. Además, la empresa proporciona estructuras de precios competitivas y cantidades mínimas de pedido flexibles. Por lo tanto, los socios pueden gestionar eficazmente el inventario y maximizar la rentabilidad."
+    },
+    "ecommerce": {
+      "title": "Integración de Comercio Electrónico y Mercados para Productos de Juegos Retro",
+      "description": "La red de distribuidores de R36S prospera en las principales plataformas de comercio electrónico a nivel mundial. Actualmente, los socios venden con éxito a través de Amazon, eBay y mercados regionales. De manera similar, muchos comerciantes operan tiendas en línea dedicadas que presentan productos de R36S. Sin embargo, la marca mantiene un estricto control de calidad y políticas de precios. Así, los socios pueden mantener márgenes de beneficio saludables mientras garantizan la satisfacción del cliente."
+    },
+    "regional": {
+      "title": "Estrategias de Mercado Regional para Dispositivos de Juegos Portátiles",
+      "description": "Un distribuidor exclusivo puede desarrollar estrategias adaptadas para regiones específicas. Mientras tanto, la sede de R36S proporciona información de mercado y análisis de tendencias. Particularmente, la marca se destaca en adaptarse a las preferencias de juego locales y entornos minoristas. De hecho, han surgido asociaciones exitosas en diversos mercados desde Singapur hasta Suecia. Posteriormente, los socios pueden expandir su territorio basándose en el rendimiento y la demanda del mercado."
+    },
+    "future": {
+      "title": "Crecimiento Futuro y Desarrollo de Consolas de Juegos R36S",
+      "description": "La cooperación con R36S abre puertas al crecimiento empresarial a largo plazo. Actualmente, la marca desarrolla nuevas líneas de productos y características de juegos. Además, los comerciantes de R36S se benefician de actualizaciones e innovaciones regulares de productos. Además, el número de contacto de R36S facilita la comunicación continua y el soporte. Finalmente, los socios se unen a una red global de minoristas y distribuidores de juegos exitosos. Sin embargo, la marca mantiene su compromiso con la calidad y la satisfacción del cliente en todos los mercados."
+    }
   }
 }

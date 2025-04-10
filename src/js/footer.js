@@ -1,5 +1,10 @@
-// Footer.js
+// Импортируем функции для обработки смены языка
+import { supportedLanguages } from './i18n/i18n.js';
 
+/**
+ * Инициализация функциональности футера
+ * @returns {Function|undefined} Функция очистки (если необходимо)
+ */
 export function initFooter() {
   console.log('Инициализация Footer');
 
@@ -39,8 +44,66 @@ export function initFooter() {
 
   // Инициализируем обработчики для модального окна
   initPartnershipModal();
+
+  // Регистрируем обработчик события смены языка
+  window.addEventListener('languageChanged', handleLanguageChange);
+
+  // Возвращаем функцию очистки
+  return function cleanup() {
+    // Удаляем обработчик события при выгрузке компонента
+    window.removeEventListener('languageChanged', handleLanguageChange);
+
+    // Если есть ссылки на DOM-элементы или слушатели, очищаем их здесь
+    if (partnershipButton) {
+      partnershipButton.removeEventListener('click', openModal);
+    }
+  };
 }
 
+/**
+ * Обработчик события смены языка
+ * @param {CustomEvent} event - Событие смены языка
+ */
+function handleLanguageChange(event) {
+  // Если есть детали события и язык в них
+  if (event.detail && event.detail.language) {
+    const newLanguage = event.detail.language;
+    console.log(`Footer: Язык изменен на ${newLanguage}`);
+
+    // Проверяем, является ли язык RTL
+    const rtlLanguages = ['ar'];
+    const isRTL = rtlLanguages.includes(newLanguage);
+
+    // Получаем footer
+    const footer = document.querySelector('.footer');
+    if (footer) {
+      // Обновляем направление текста для футера
+      if (isRTL) {
+        footer.classList.add('rtl');
+        footer.style.direction = 'rtl';
+      } else {
+        footer.classList.remove('rtl');
+        footer.style.direction = 'ltr';
+      }
+    }
+
+    // Также можем обновить модальное окно
+    const modal = document.querySelector('.partnership-modal-content');
+    if (modal) {
+      if (isRTL) {
+        modal.classList.add('rtl');
+        modal.style.direction = 'rtl';
+      } else {
+        modal.classList.remove('rtl');
+        modal.style.direction = 'ltr';
+      }
+    }
+  }
+}
+
+/**
+ * Инициализация модального окна партнерства
+ */
 function initPartnershipModal() {
   // Находим модальное окно и кнопку закрытия
   const modalOverlay = document.querySelector('.partnership-modal-overlay');
@@ -71,20 +134,46 @@ function initPartnershipModal() {
       closeModal();
     }
   });
+}
 
-  function closeModal() {
+/**
+ * Функция открытия модального окна
+ */
+function openModal() {
+  const modalOverlay = document.querySelector('.partnership-modal-overlay');
+  if (modalOverlay) {
+    // Добавляем класс active для отображения модального окна
+    modalOverlay.classList.add('active');
+
+    // Находим контент модального окна и делаем его активным
     const modalContent = modalOverlay.querySelector(
       '.partnership-modal-content'
     );
-
-    // Убираем классы active
-    modalOverlay.classList.remove('active');
-
     if (modalContent) {
-      modalContent.classList.remove('active');
+      modalContent.classList.add('active');
     }
 
-    // Возвращаем прокрутку body
-    document.body.style.overflow = '';
+    // Запрещаем прокрутку body
+    document.body.style.overflow = 'hidden';
   }
+}
+
+/**
+ * Функция закрытия модального окна
+ */
+function closeModal() {
+  const modalOverlay = document.querySelector('.partnership-modal-overlay');
+  if (!modalOverlay) return;
+
+  const modalContent = modalOverlay.querySelector('.partnership-modal-content');
+
+  // Убираем классы active
+  modalOverlay.classList.remove('active');
+
+  if (modalContent) {
+    modalContent.classList.remove('active');
+  }
+
+  // Возвращаем прокрутку body
+  document.body.style.overflow = '';
 }
