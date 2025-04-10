@@ -1,17 +1,31 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": "대화 시작하기",
+  "title": "R36S 지원팀에 문의하기",
+  "description": "저희는 항상 콘솔 선택을 도와드리고 3.5인치 IPS 화면이 탑재된 R36S 휴대용 레트로 게임 콘솔에 대한 모든 질문에 답변해 드릴 준비가 되어 있습니다",
+  "form": {
+    "name": "이름",
+    "namePlaceholder": "홍길동",
+    "email": "이메일",
+    "emailPlaceholder": "example@email.com",
+    "phone": "전화번호",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "message": "메시지",
+    "messagePlaceholder": "R36S 콘솔에 대한 메시지를 작성해주세요...",
+    "submit": "메시지 보내기",
+    "sending": "전송 중...",
+    "success": "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
+    "error": {
+      "allFields": "모든 필드를 입력해주세요",
+      "validEmail": "유효한 이메일을 입력해주세요",
+      "validPhone": "유효한 전화번호를 입력해주세요.",
+      "generic": "메시지 전송 중 오류가 발생했습니다. 나중에 다시 시도해주세요."
+    }
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "info": {
+    "phoneTitle": "전화번호",
+    "workHours": "월-금: 9:00 - 18:00",
+    "emailTitle": "이메일",
+    "addressTitle": "주소",
+    "worldwide": "전 세계에서 활동하고 있습니다"
   }
 }

@@ -1,17 +1,31 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "label": "Bir konuşma başlat",
+  "title": "R36S Destek Ekibi ile İletişime Geçin",
+  "description": "Her zaman bir konsol seçmenize yardımcı olmaya ve 3,5 inç IPS ekranlı R36S el tipi retro oyun konsolu hakkında her türlü sorunuzu yanıtlamaya hazırız",
+  "form": {
+    "name": "Adınız",
+    "namePlaceholder": "John Smith",
+    "email": "E-posta",
+    "emailPlaceholder": "ornek@email.com",
+    "phone": "Telefon",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "message": "Mesaj",
+    "messagePlaceholder": "R36S konsolu hakkında mesajınızı yazın...",
+    "submit": "Mesaj gönder",
+    "sending": "Gönderiliyor...",
+    "success": "Mesaj başarıyla gönderildi! Kısa süre içinde sizinle iletişime geçeceğiz.",
+    "error": {
+      "allFields": "Lütfen tüm alanları doldurun",
+      "validEmail": "Lütfen geçerli bir e-posta adresi girin",
+      "validPhone": "Lütfen geçerli bir telefon numarası girin.",
+      "generic": "Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+    }
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
-  },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "info": {
+    "phoneTitle": "Telefon",
+    "workHours": "Pzt-Cuma: 9:00 - 18:00",
+    "emailTitle": "E-posta",
+    "addressTitle": "Adres",
+    "worldwide": "Dünya çapında çalışıyoruz"
   }
 }
