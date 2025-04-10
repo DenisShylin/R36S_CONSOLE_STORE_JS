@@ -1,17 +1,92 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "brand": "R36S",
+  "description": "Discover the world of retro gaming with a portable console R36S. Thousands of classic games in your pocket! Experience nostalgia with this affordable retro handheld gaming device.",
+  "meta": {
+    "name": "R36S Retro Handheld Game Console",
+    "category": "Electronics > Video Games > Handheld Game Consoles"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "aliexpress": {
+    "title": "Buy R36S console on AliExpress",
+    "alt": "R36S Handheld Game Console - Retro Gaming Device with 15000+ Games - Buy on AliExpress"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "sections": {
+    "products": "Products",
+    "support": "Support",
+    "company": "Company"
+  },
+  "links": {
+    "reviews": "Reviews",
+    "contacts": "Contacts",
+    "partnership": "Partnership"
+  },
+  "aria": {
+    "reviews": "Read R36S Retro Console Reviews",
+    "contacts": "Contact R36S Support Team",
+    "partnership": "Learn about partnership opportunities with R36S gaming consoles"
+  },
+  "copyright": "© 2025 R36S. All rights reserved.",
+  "seo": {
+    "h2": "R36S Retro Handheld Console - The Ultimate Portable Gaming Experience",
+    "h3": "Affordable Retro Gaming Console with 15000+ Classic Games",
+    "h4": "Best Portable Gaming Device for Retro Game Enthusiasts",
+    "description": "R36S offers the best portable retro gaming experience with its 3.5-inch IPS display, thousands of preloaded games, and long battery life. Perfect for nostalgic gamers who want to enjoy classic titles on the go."
+  },
+  "modal": {
+    "close": "Close R36S partnership information modal",
+    "title": "Partnership with R36S",
+    "headline": "COMPANY INFORMATION",
+    "company": {
+      "founded": {
+        "strong1": "R36S brand was founded",
+        "text1": " on February 28, ",
+        "strong2": "2007",
+        "text2": " in Zhejiang Province, China."
+      },
+      "employees": {
+        "strong": "The company employs",
+        "text": " 11-50 people."
+      },
+      "products": {
+        "strong": "Main products:",
+        "text": " handheld consoles, TV game consoles, game controllers."
+      },
+      "revenue": {
+        "strong": "The company`s annual revenue:",
+        "text": " 50-100 million US dollars."
+      },
+      "markets": {
+        "strong": "R36S markets:",
+        "text": " Western Europe 11% East Asia 11% Middle East 11%"
+      }
+    },
+    "distributor": {
+      "title": "R36S Wholesale Trade - Become an Official Distributor",
+      "description": "Wholesale prices, representative office registration and distribution:",
+      "link": "www.R36S.ali.com"
+    },
+    "intro": {
+      "title": "Introduction to R36S Retro Handheld Game Console",
+      "description": "The R36S distributor network actively expands worldwide, bringing nostalgic gaming experiences to enthusiasts everywhere. Initially, the R36S headquarters established its presence in Asia, but now the brand confidently moves into international markets. Moreover, the company welcomes new partnerships across different continents, making the R36S Retro Handheld Game Console increasingly accessible to global consumers. Furthermore, the brand`s commitment to quality and affordability has positioned it as a strong competitor in the retro gaming market."
+    },
+    "global": {
+      "title": "Global Distribution Opportunities for Retro Gaming Consoles",
+      "description": "As an exclusive distributor for R36S, you can tap into emerging markets across North America, Europe, and Australia. Meanwhile, the R36S dealer network continues to grow in South America and Africa. Subsequently, the brand`s presence strengthens in key markets like the United Kingdom, Germany, France, and Spain. Additionally, R36S has successfully penetrated markets in Canada, Mexico, and Brazil. Therefore, potential partners can explore various territories with significant growth potential."
+    },
+    "benefits": {
+      "title": "Partnership Benefits and Support for Handheld Console Retailers",
+      "description": "Collaboration with R36S offers comprehensive support for new distributors and dealers. First, the R36S contact number connects partners directly with dedicated support teams. Then, partners receive extensive training and marketing materials. Consequently, this enables smooth market entry and operation. Besides, the company provides competitive pricing structures and flexible minimum order quantities. Hence, partners can effectively manage inventory and maximize profitability."
+    },
+    "ecommerce": {
+      "title": "E-commerce and Marketplace Integration for Retro Gaming Products",
+      "description": "The R36S distributor network thrives on major e-commerce platforms worldwide. Currently, partners successfully sell through Amazon, eBay, and regional marketplaces. Similarly, many dealers operate dedicated online stores featuring R36S products. Nevertheless, the brand maintains strict quality control and pricing policies. Thus, partners can maintain healthy profit margins while ensuring customer satisfaction."
+    },
+    "regional": {
+      "title": "Regional Market Strategies for Portable Gaming Devices",
+      "description": "An exclusive distributor can develop tailored strategies for specific regions. Meanwhile, the R36S headquarters provides market insights and trend analysis. Particularly, the brand excels in adapting to local gaming preferences and retail environments. Indeed, successful partnerships have emerged in diverse markets from Singapore to Sweden. Afterward, partners can expand their territory based on performance and market demand."
+    },
+    "future": {
+      "title": "Future Growth and Development of R36S Gaming Consoles",
+      "description": "Cooperation with R36S opens doors to long-term business growth. Presently, the brand develops new product lines and gaming features. In addition, R36S dealers benefit from regular product updates and innovations. Furthermore, the R36S contact number facilitates ongoing communication and support. Finally, partners join a global network of successful gaming retailers and distributors. Yet, the brand maintains its commitment to quality and customer satisfaction across all markets."
+    }
   }
 }

@@ -1,17 +1,92 @@
 {
-  "title": "Заголовок раздела",
-  "description": "Описание раздела. Здесь может быть любой текст, который будет использоваться до создания реальных переводов.",
-  "content": {
-    "item1": "Элемент содержимого 1",
-    "item2": "Элемент содержимого 2",
-    "item3": "Элемент содержимого 3"
+  "brand": "R36S",
+  "description": "Taşınabilir konsol R36S ile retro oyun dünyasını keşfedin. Cebinizde binlerce klasik oyun! Bu uygun fiyatlı retro el tipi oyun cihazı ile nostaljiyi deneyimleyin.",
+  "meta": {
+    "name": "R36S Retro El Tipi Oyun Konsolu",
+    "category": "Elektronik > Video Oyunları > El Tipi Oyun Konsolları"
   },
-  "buttons": {
-    "button1": "Кнопка 1",
-    "button2": "Кнопка 2"
+  "aliexpress": {
+    "title": "R36S konsolunu AliExpress'te satın alın",
+    "alt": "R36S El Tipi Oyun Konsolu - 15000+ Oyunlu Retro Oyun Cihazı - AliExpress'te Satın Alın"
   },
-  "placeholders": {
-    "placeholder1": "Заполнитель 1",
-    "placeholder2": "Заполнитель 2"
+  "sections": {
+    "products": "Ürünler",
+    "support": "Destek",
+    "company": "Şirket"
+  },
+  "links": {
+    "reviews": "İncelemeler",
+    "contacts": "İletişim",
+    "partnership": "Ortaklık"
+  },
+  "aria": {
+    "reviews": "R36S Retro Konsol İncelemelerini Okuyun",
+    "contacts": "R36S Destek Ekibiyle İletişime Geçin",
+    "partnership": "R36S oyun konsollarıyla ortaklık fırsatları hakkında bilgi edinin"
+  },
+  "copyright": "© 2025 R36S. Tüm hakları saklıdır.",
+  "seo": {
+    "h2": "R36S Retro El Tipi Konsol - En İyi Taşınabilir Oyun Deneyimi",
+    "h3": "15000+ Klasik Oyunlu Uygun Fiyatlı Retro Oyun Konsolu",
+    "h4": "Retro Oyun Meraklıları İçin En İyi Taşınabilir Oyun Cihazı",
+    "description": "R36S, 3.5 inç IPS ekranı, önceden yüklenmiş binlerce oyunu ve uzun pil ömrü ile en iyi taşınabilir retro oyun deneyimini sunar. Klasik oyunları hareket halindeyken oynamak isteyen nostaljik oyuncular için mükemmel."
+  },
+  "modal": {
+    "close": "R36S ortaklık bilgileri modalını kapat",
+    "title": "R36S ile Ortaklık",
+    "headline": "ŞİRKET BİLGİLERİ",
+    "company": {
+      "founded": {
+        "strong1": "R36S markası",
+        "text1": " 28 Şubat ",
+        "strong2": "2007",
+        "text2": " tarihinde Çin'in Zhejiang Eyaleti'nde kurulmuştur."
+      },
+      "employees": {
+        "strong": "Şirket",
+        "text": " 11-50 kişi çalıştırmaktadır."
+      },
+      "products": {
+        "strong": "Ana ürünler:",
+        "text": " el tipi konsollar, TV oyun konsolları, oyun kumandaları."
+      },
+      "revenue": {
+        "strong": "Şirketin yıllık geliri:",
+        "text": " 50-100 milyon ABD doları."
+      },
+      "markets": {
+        "strong": "R36S pazarları:",
+        "text": " Batı Avrupa %11 Doğu Asya %11 Orta Doğu %11"
+      }
+    },
+    "distributor": {
+      "title": "R36S Toptan Ticaret - Resmi Distribütör Olun",
+      "description": "Toptan fiyatlar, temsilcilik ofisi kaydı ve dağıtım:",
+      "link": "www.R36S.ali.com"
+    },
+    "intro": {
+      "title": "R36S Retro El Tipi Oyun Konsoluna Giriş",
+      "description": "R36S distribütör ağı, nostaljik oyun deneyimlerini her yerdeki meraklılara getirerek dünya çapında aktif olarak genişliyor. Başlangıçta, R36S genel merkezi Asya'da varlığını kurdu, ancak şimdi marka güvenle uluslararası pazarlara taşınıyor. Ayrıca, şirket farklı kıtalarda yeni ortaklıklara açık, böylece R36S Retro El Tipi Oyun Konsolu küresel tüketiciler için giderek daha erişilebilir hale geliyor. Dahası, markanın kalite ve uygun fiyat taahhüdü, onu retro oyun pazarında güçlü bir rakip olarak konumlandırdı."
+    },
+    "global": {
+      "title": "Retro Oyun Konsolları için Küresel Dağıtım Fırsatları",
+      "description": "R36S için özel distribütör olarak, Kuzey Amerika, Avrupa ve Avustralya'daki gelişen pazarlara erişebilirsiniz. Bu arada, R36S bayi ağı Güney Amerika ve Afrika'da büyümeye devam ediyor. Ardından, markanın Birleşik Krallık, Almanya, Fransa ve İspanya gibi kilit pazarlardaki varlığı güçleniyor. Ek olarak, R36S Kanada, Meksika ve Brezilya pazarlarına başarıyla girmiştir. Bu nedenle, potansiyel ortaklar önemli büyüme potansiyeline sahip çeşitli bölgeleri keşfedebilirler."
+    },
+    "benefits": {
+      "title": "El Tipi Konsol Perakendecileri için Ortaklık Faydaları ve Destek",
+      "description": "R36S ile işbirliği, yeni distribütörler ve bayiler için kapsamlı destek sunuyor. İlk olarak, R36S iletişim numarası, ortakları doğrudan özel destek ekipleriyle bağlar. Ardından, ortaklar kapsamlı eğitim ve pazarlama materyalleri alırlar. Sonuç olarak, bu, piyasaya sorunsuz giriş ve operasyon sağlar. Ayrıca, şirket rekabetçi fiyat yapıları ve esnek minimum sipariş miktarları sunar. Bu nedenle, ortaklar envanteri etkili bir şekilde yönetebilir ve kârlılığı en üst düzeye çıkarabilir."
+    },
+    "ecommerce": {
+      "title": "Retro Oyun Ürünleri için E-ticaret ve Pazar Yeri Entegrasyonu",
+      "description": "R36S distribütör ağı, dünya çapındaki büyük e-ticaret platformlarında gelişiyor. Şu anda, ortaklar Amazon, eBay ve bölgesel pazar yerleri aracılığıyla başarıyla satış yapıyor. Benzer şekilde, birçok bayi R36S ürünlerini sergileyen özel çevrimiçi mağazalar işletiyor. Yine de, marka sıkı kalite kontrolü ve fiyatlandırma politikalarını sürdürüyor. Böylece, ortaklar müşteri memnuniyetini sağlarken sağlıklı kâr marjlarını koruyabilirler."
+    },
+    "regional": {
+      "title": "Taşınabilir Oyun Cihazları için Bölgesel Pazar Stratejileri",
+      "description": "Özel bir distribütör, belirli bölgeler için özel stratejiler geliştirebilir. Bu arada, R36S genel merkezi pazar öngörüleri ve trend analizi sağlar. Özellikle, marka yerel oyun tercihlerine ve perakende ortamlarına uyum sağlamada mükemmeldir. Gerçekten de, Singapur'dan İsveç'e kadar çeşitli pazarlarda başarılı ortaklıklar ortaya çıkmıştır. Daha sonra, ortaklar performans ve pazar talebine göre bölgelerini genişletebilirler."
+    },
+    "future": {
+      "title": "R36S Oyun Konsollarının Gelecekteki Büyüme ve Gelişimi",
+      "description": "R36S ile işbirliği, uzun vadeli iş büyümesi için kapılar açar. Şu anda, marka yeni ürün hatları ve oyun özellikleri geliştiriyor. Ayrıca, R36S bayileri düzenli ürün güncellemeleri ve yeniliklerden yararlanır. Dahası, R36S iletişim numarası, devam eden iletişim ve desteği kolaylaştırır. Son olarak, ortaklar başarılı oyun perakendecileri ve distribütörlerinden oluşan küresel bir ağa katılırlar. Yine de, marka tüm pazarlarda kalite ve müşteri memnuniyetine olan bağlılığını sürdürüyor."
+    }
   }
 }
