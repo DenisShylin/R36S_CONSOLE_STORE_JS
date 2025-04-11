@@ -1,4 +1,4 @@
-// Categories.js - Версия с поддержкой i18n
+// Categories.js - Версия с поддержкой i18n и без автовоспроизведения
 import i18next from 'i18next';
 
 export function initCategories() {
@@ -120,6 +120,16 @@ export function initCategories() {
         isPlaying = false;
         updatePlayButtonIcon();
       } else {
+        // Проверяем, есть ли у видео источник
+        if (
+          !videoElement.getAttribute('src') &&
+          videoElement.querySelector('source')
+        ) {
+          // Если видео еще не инициализировано, инициализируем его
+          const source = videoElement.querySelector('source');
+          videoElement.setAttribute('src', source.getAttribute('src'));
+        }
+
         // Используем Promise для обработки ошибок воспроизведения
         const playPromise = videoElement.play();
 
@@ -187,12 +197,24 @@ export function initCategories() {
     // Подписываемся на событие смены языка
     window.addEventListener(LANGUAGE_CHANGE_EVENT, handleLanguageChange);
 
-    // Инициализация видео
+    // Инициализация видео с ленивой загрузкой
     if (videoElement) {
       // Базовые настройки видео
       videoElement.muted = true;
       videoElement.loop = true;
       videoElement.playsInline = true;
+
+      // Отключаем предварительную загрузку видео
+      videoElement.preload = 'none';
+
+      // Временно удаляем src для предотвращения автозагрузки
+      const sourceTags = videoElement.querySelectorAll('source');
+      let videoSrc = '';
+      if (sourceTags.length > 0) {
+        videoSrc = sourceTags[0].getAttribute('src');
+        // Не устанавливаем src пока пользователь не нажмет кнопку воспроизведения
+        videoElement.removeAttribute('src');
+      }
 
       // Стили видимости
       videoElement.style.display = 'block';
@@ -247,23 +269,40 @@ export function initCategories() {
         createVideoFallback();
       });
 
-      // Автоматическое воспроизведение с задержкой
-      setTimeout(() => {
-        if (videoElement && !videoError) {
-          const playPromise = videoElement.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                console.log('Автовоспроизведение видео успешно');
-                isPlaying = true;
-                updatePlayButtonIcon();
-              })
-              .catch(err => {
-                console.warn('Не удалось автовоспроизвести видео:', err);
-              });
+      // Реализуем ленивую загрузку через Intersection Observer
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              // Если элемент видим в зоне просмотра, подготавливаем видео
+              if (entry.isIntersecting) {
+                // Подготавливаем видео, но не воспроизводим его
+                if (
+                  !videoLoaded &&
+                  !videoElement.getAttribute('src') &&
+                  videoSrc
+                ) {
+                  // Устанавливаем preload="metadata" для загрузки только метаданных
+                  videoElement.preload = 'metadata';
+                  // videoElement.setAttribute('src', videoSrc);
+                  // Не устанавливаем src здесь, только когда пользователь нажмет play
+                }
+
+                // Отключаем наблюдатель после подготовки
+                videoObserver.unobserve(videoElement);
+              }
+            });
+          },
+          {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1,
           }
-        }
-      }, 1000);
+        );
+
+        // Начинаем наблюдение за видео элементом
+        videoObserver.observe(videoElement);
+      }
     }
 
     // Назначаем обработчики событий для элементов управления
