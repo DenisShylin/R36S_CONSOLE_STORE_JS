@@ -1,7 +1,9 @@
 import i18next from 'i18next';
 import { detectUserLanguage } from './languageDetector';
 import { updateLanguageURL } from '../utils/urlManager';
-import { clearPriceCache } from '../utils/priceFormatter';
+// Поскольку блок с ценами остается, но без активного форматирования,
+// мы можем сохранить функцию clearPriceCache, но не использовать её
+// import { clearPriceCache } from '../utils/priceFormatter';
 
 // Кэш для переводов
 const translationsCache = {};
@@ -53,7 +55,6 @@ const translationSections = [
   'header',
   'hero',
   'mobilemenu',
-  // 'modal',
   'products',
   'reviews',
 ];
@@ -450,9 +451,12 @@ export async function setupI18n(options = {}) {
         console.log('Language changed to:', language);
         localStorage.setItem('userLanguage', language);
         updateLanguageURL(language);
-        if (typeof clearPriceCache === 'function') {
-          clearPriceCache();
-        }
+
+        // Убираем очистку кэша цен, поскольку мы не используем функцию форматирования
+        // if (typeof clearPriceCache === 'function') {
+        //   clearPriceCache();
+        // }
+
         await updateAllContent();
       } catch (error) {
         console.error('Error in language change handler:', error);

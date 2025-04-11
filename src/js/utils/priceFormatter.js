@@ -1,53 +1,28 @@
-import i18next from 'i18next';
+/**
+ * Этот файл сохранен, но упрощен.
+ * Поскольку блок с ценами остался в HTML, но без необходимости форматирования,
+ * мы оставляем базовую структуру, но упрощаем функции.
+ */
 
-// Кэш для форматированных цен
+// Пустой кэш для совместимости со старым кодом
 const priceFormatCache = {};
 
 /**
- * Получает локализованную цену для указанного типа цены и текущего языка
- * @param {string} priceType - Тип цены ('current' или 'original')
- * @returns {string} - Отформатированная цена в локализованном формате
+ * Пустая функция для совместимости со старым кодом.
+ * Теперь функция просто возвращает переданные значения без обработки.
+ * @param {string} priceType - Тип цены
+ * @returns {string} - Значение по умолчанию
  */
 export const getLocalizedPrice = priceType => {
-  try {
-    const currentLang = i18next.language;
-    // Проверяем кэш
-    const cacheKey = `${currentLang}_${priceType}`;
-    if (priceFormatCache[cacheKey]) {
-      return priceFormatCache[cacheKey];
-    }
-
-    // Пытаемся получить локализованную цену из переводов
-    let formattedPrice = i18next.t(`hero.pricing.${priceType}`, {
-      defaultValue: null,
-    });
-
-    if (!formattedPrice) {
-      // Если нет перевода, используем дефолтные значения
-      if (priceType === 'current') {
-        formattedPrice = '$35.48 US';
-      } else if (priceType === 'original') {
-        formattedPrice = 'US $108.06';
-      } else if (priceType === 'discount') {
-        formattedPrice = '-68%';
-      }
-    }
-
-    // Сохраняем в кэш
-    priceFormatCache[cacheKey] = formattedPrice;
-    return formattedPrice;
-  } catch (error) {
-    console.error('Error in getLocalizedPrice:', error);
-    return '';
-  }
+  // Функция больше не выполняет активного форматирования
+  // Просто возвращаем пустую строку для совместимости
+  return '';
 };
 
 /**
- * Очищает кэш форматированных цен
- * Нужно вызывать при изменении языка или данных о ценах
+ * Очищает кэш форматированных цен.
+ * Пустая функция для обратной совместимости.
  */
 export const clearPriceCache = () => {
-  for (const key in priceFormatCache) {
-    delete priceFormatCache[key];
-  }
+  // Пустая функция для обратной совместимости
 };

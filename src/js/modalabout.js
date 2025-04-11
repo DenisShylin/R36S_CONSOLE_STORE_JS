@@ -1,6 +1,7 @@
 // modalabout.js с поддержкой i18n
 import i18next from 'i18next';
-import { getLocalizedPrice } from './utils/priceFormatter.js';
+// Удаляем импорт getLocalizedPrice
+// import { getLocalizedPrice } from './utils/priceFormatter.js';
 
 // Фабричная функция для создания модального окна
 export function createModalAbout(parentElement) {
@@ -21,15 +22,32 @@ export function createModalAbout(parentElement) {
     }
   };
 
-  // Получение локализованной цены
-  const getLocalizedPriceWithFallback = type => {
+  // Создаем функцию, которая возвращает статический текст с поддержкой переводов
+  const getStaticDiscountText = type => {
     try {
-      return getLocalizedPrice(type);
+      const currentLang = i18next.language;
+
+      // Проверяем наличие перевода в i18next
+      if (type === 'current') {
+        // Пытаемся найти перевод для текущего языка
+        const translation = i18next.t('hero.pricing.current', {
+          defaultValue: null,
+        });
+        // Если перевод найден, используем его
+        if (translation && translation !== 'hero.pricing.current') {
+          return translation;
+        }
+        // Иначе используем статические значения с проверкой языка
+        return currentLang === 'ru' ? 'Скидка' : 'Discount';
+      }
+
+      return '';
     } catch (error) {
-      console.warn(`Error getting localized price for ${type}:`, error);
-      // Значения по умолчанию
-      if (type === 'current') return '$35.48 US';
-      if (type === 'original') return 'US $108.06';
+      console.warn('Error getting static discount text:', error);
+
+      // Запасные значения в случае ошибки
+      if (type === 'current') return 'Discount';
+      if (type === 'original') return 'Discount -29%';
       if (type === 'discount') return '-68%';
       return '';
     }
@@ -341,9 +359,9 @@ export function createModalAbout(parentElement) {
         <span class="modal-about-button-text">${buyNowText} ${discountText}</span>
         <span class="modal-about-button-shine"></span>`;
 
-    // Локализованные цены
-    const currentPrice = getLocalizedPriceWithFallback('current');
-    const originalPrice = getLocalizedPriceWithFallback('original');
+    // Заменяем локализованные цены на статический текст о скидках
+    const currentPrice = getStaticDiscountText('current');
+    const originalPrice = getStaticDiscountText('original');
 
     // КЛЮЧЕВАЯ МОДИФИКАЦИЯ: Изменяем структуру заголовка для RTL версии
     const headerContent = rtlDirection
@@ -397,8 +415,8 @@ export function createModalAbout(parentElement) {
               <div class="modal-about-content-container">
                 <div class="modal-about-stats" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                   <div class="modal-about-price-wrapper">
-                    <span class="modal-about-original-price">${originalPrice}</span>
-                    <span class="modal-about-current-price" itemprop="price" content="35.48">
+                    <span class="modal-about-original-price" data-i18n="hero.pricing.original">${originalPrice}</span>
+                    <span class="modal-about-current-price" data-i18n="hero.pricing.current" itemprop="price" content="35.48">
                       ${currentPrice}
                       <meta itemprop="priceCurrency" content="USD" />
                     </span>
