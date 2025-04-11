@@ -27,6 +27,24 @@ export function createModalAbout(parentElement) {
     try {
       const currentLang = i18next.language;
 
+      // Словарь с переводами слова "Скидка" для разных языков
+      const discountTranslations = {
+        en: 'Discount',
+        ru: 'Скидка',
+        ar: 'خصم',
+        be: 'Зніжка',
+        de: 'Rabatt',
+        es: 'Descuento',
+        fr: 'Réduction',
+        it: 'Sconto',
+        ja: '割引',
+        ko: '할인',
+        nl: 'Korting',
+        pt: 'Desconto',
+        tr: 'İndirim',
+        uk: 'Знижка',
+      };
+
       // Проверяем наличие перевода в i18next
       if (type === 'current') {
         // Пытаемся найти перевод для текущего языка
@@ -37,8 +55,9 @@ export function createModalAbout(parentElement) {
         if (translation && translation !== 'hero.pricing.current') {
           return translation;
         }
-        // Иначе используем статические значения с проверкой языка
-        return currentLang === 'ru' ? 'Скидка' : 'Discount';
+
+        // Если перевод не найден в i18next, используем наш словарь переводов
+        return discountTranslations[currentLang] || discountTranslations.en; // Возвращаем английский вариант, если язык не найден
       }
 
       return '';
