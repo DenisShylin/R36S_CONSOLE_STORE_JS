@@ -37,29 +37,116 @@ export default { initAbout };
 
 // ОПТИМИЗАЦИЯ 1: Предзагрузка изображений для улучшения производительности
 function preloadImages() {
-  console.log('Начинаем предзагрузку изображений...');
-  // Создаем массив изображений для предзагрузки
-  const imagesToPreload = [
-    displayControls, // Изображение первой карточки
-    videoGif,
-    untitled1,
-    untitled2,
-  ];
+  // Не выполняем предзагрузку сразу, а откладываем её
+  console.log('Планирование отложенной предзагрузки изображений...');
 
-  // Запускаем предзагрузку изображений
-  imagesToPreload.forEach(src => {
-    const img = new Image();
-    img.src = src;
+  // Используем requestIdleCallback для запуска предзагрузки, когда страница не занята
+  // С fallback на setTimeout для старых браузеров
+  const schedulePreload =
+    window.requestIdleCallback ||
+    function (cb) {
+      return setTimeout(cb, 1000); // Отложить на 1 секунду для старых браузеров
+    };
+
+  // Запланировать предзагрузку после загрузки основной страницы
+  schedulePreload(() => {
+    // Проверяем, видна ли секция about в области просмотра
+    const aboutSection = document.querySelector('.about');
+    if (!aboutSection) {
+      console.log('Секция about не найдена, отменяем предзагрузку');
+      return;
+    }
+
+    // Проверяем, нужно ли загружать изображения прямо сейчас
+    const shouldPreloadNow = isElementInViewport(aboutSection);
+
+    if (!shouldPreloadNow) {
+      console.log('Секция about не в поле зрения, откладываем предзагрузку');
+
+      // Создаем IntersectionObserver для отслеживания видимости секции
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          entries => {
+            const [entry] = entries;
+            if (entry.isIntersecting) {
+              console.log('Секция about видима, начинаем предзагрузку');
+              actuallyPreloadImages();
+              observer.disconnect(); // Отключаем наблюдатель после начала загрузки
+            }
+          },
+          { threshold: 0.1 }
+        ); // Начинаем загрузку, когда 10% секции видно
+
+        observer.observe(aboutSection);
+      } else {
+        // Fallback для браузеров без поддержки IntersectionObserver
+        // Отложить загрузку на 3 секунды после загрузки страницы
+        setTimeout(actuallyPreloadImages, 3000);
+      }
+    } else {
+      console.log('Секция about видима, начинаем предзагрузку сейчас');
+      actuallyPreloadImages();
+    }
   });
 
-  // Предзагрузка видео для первой карточки
-  if ('HTMLVideoElement' in window) {
-    const videoPreload = document.createElement('video');
-    videoPreload.preload = 'metadata';
-    videoPreload.src = videoBattery;
+  // Вспомогательная функция для проверки видимости элемента
+  function isElementInViewport(el) {
+    if (!el || !el.getBoundingClientRect) return false;
+
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom >= 0
+    );
   }
 
-  console.log('Предзагрузка изображений завершена');
+  // Функция, которая действительно выполняет предзагрузку
+  function actuallyPreloadImages() {
+    console.log('Начинаем предзагрузку критических изображений...');
+
+    // Создаем массив только критических изображений для предзагрузки
+    // Предзагружаем только первые два изображения, остальные загрузятся при необходимости
+    const imagesToPreload = [
+      displayControls, // Изображение первой карточки (самое важное)
+    ];
+
+    // Создаем очередь для постепенной загрузки
+    const imageQueue = [videoGif, untitled1];
+
+    // Запускаем предзагрузку критических изображений
+    imagesToPreload.forEach(src => {
+      const img = new Image();
+      img.importance = 'high'; // Указываем высокий приоритет для критических изображений
+      img.src = src;
+    });
+
+    // Предзагрузка видео НЕ выполняется - оно будет загружено только при открытии модального окна
+    // Удаляем код предзагрузки видео полностью
+
+    // Устанавливаем таймер для загрузки остальных изображений с низким приоритетом
+    setTimeout(() => {
+      console.log('Загрузка некритических изображений...');
+
+      // Загружаем остальные изображения с низким приоритетом
+      let index = 0;
+      const loadNextImage = () => {
+        if (index < imageQueue.length) {
+          const img = new Image();
+          img.importance = 'low'; // Указываем низкий приоритет
+          img.onload = () => {
+            // После загрузки одного изображения переходим к следующему
+            setTimeout(loadNextImage, 200); // Делаем небольшую паузу между загрузками
+          };
+          img.onerror = loadNextImage; // В случае ошибки также переходим к следующему
+          img.src = imageQueue[index++];
+        }
+      };
+
+      // Начинаем загрузку изображений по одному
+      loadNextImage();
+    }, 1000); // Задержка в 1 секунду перед началом загрузки некритических изображений
+  }
 }
 
 // Функция инициализации секции About
