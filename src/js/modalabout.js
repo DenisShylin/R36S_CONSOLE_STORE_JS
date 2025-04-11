@@ -1,4 +1,4 @@
-// modalabout.js с поддержкой i18n и оптимизированной загрузкой видео
+// modalabout.js с поддержкой i18n
 import i18next from 'i18next';
 // Удаляем импорт getLocalizedPrice
 // import { getLocalizedPrice } from './utils/priceFormatter.js';
@@ -10,7 +10,6 @@ export function createModalAbout(parentElement) {
   let isOpen = false;
   let currentImageIndex = 0;
   let colorImagesInterval = null;
-  let videoElements = []; // Массив для хранения ссылок на видеоэлементы
 
   // Функция для получения локализованного текста
   const getLocalizedText = (key, defaultText) => {
@@ -152,7 +151,6 @@ export function createModalAbout(parentElement) {
       }
     }
   }
-
   // Рендер медиа-контента (изображение, видео или карусель)
   function renderMedia() {
     if (!feature) return '';
@@ -184,53 +182,21 @@ export function createModalAbout(parentElement) {
       const fileUrl = feature.videoUrl.toString().toLowerCase();
       const isMp4 = fileUrl.endsWith('.mp4');
 
-      // Название для видео из заголовка фичи
-      const videoTitle = feature.title || 'Видео';
-
-      // Обработка MP4 (отображаем как видео без элементов управления и без автовоспроизведения)
+      // Обработка MP4 (отображаем как видео без элементов управления)
       if (isMp4) {
         return `
         <div class="gif-container">
-          <div class="video-placeholder" data-title="${videoTitle}">
-            <svg class="video-placeholder-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-              <polygon points="7 2 17 12 7 22 7 2"></polygon>
-            </svg>
-            <div class="video-placeholder-text">${videoTitle}</div>
-          </div>
           <video
-            class="modal-about-image video-lazy"
+            class="modal-about-image"
+            autoplay
             muted
             loop
             playsInline
-            preload="none"
             width="400" 
             height="400"
-            data-src="${feature.videoUrl}"
-            style="display: none;"
           >
-            <source data-src="${feature.videoUrl}" type="video/mp4" />
-            <p>${getLocalizedText(
-              'about.modal.videoNotSupported',
-              'Your browser does not support the video tag.'
-            )}</p>
+            <source src="${feature.videoUrl}" type="video/mp4" />
           </video>
-          <div class="video-play-button">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="48" 
-              height="48" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              stroke-width="2" 
-              stroke-linecap="round" 
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <polygon points="10 8 16 12 10 16 10 8"></polygon>
-            </svg>
-          </div>
         </div>
         `;
       }
@@ -260,53 +226,21 @@ export function createModalAbout(parentElement) {
       const fileUrl = feature.imageUrl.toString().toLowerCase();
       const isMp4 = fileUrl.endsWith('.mp4');
 
-      // Название для видео из заголовка фичи
-      const videoTitle = feature.title || 'Видео';
-
-      // Обработка MP4 в imageUrl (отображаем как видео без элементов управления и без автовоспроизведения)
+      // Обработка MP4 в imageUrl (отображаем как видео без элементов управления)
       if (isMp4) {
         return `
         <div class="gif-container">
-          <div class="video-placeholder" data-title="${videoTitle}">
-            <svg class="video-placeholder-icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-              <polygon points="7 2 17 12 7 22 7 2"></polygon>
-            </svg>
-            <div class="video-placeholder-text">${videoTitle}</div>
-          </div>
           <video
-            class="modal-about-image video-lazy"
+            class="modal-about-image"
+            autoplay
             muted
             loop
             playsInline
-            preload="none"
             width="400" 
             height="400"
-            data-src="${feature.imageUrl}"
-            style="display: none;"
           >
-            <source data-src="${feature.imageUrl}" type="video/mp4" />
-            <p>${getLocalizedText(
-              'about.modal.videoNotSupported',
-              'Your browser does not support the video tag.'
-            )}</p>
+            <source src="${feature.imageUrl}" type="video/mp4" />
           </video>
-          <div class="video-play-button">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="48" 
-              height="48" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              stroke-width="2" 
-              stroke-linecap="round" 
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <polygon points="10 8 16 12 10 16 10 8"></polygon>
-            </svg>
-          </div>
         </div>
         `;
       }
@@ -330,7 +264,7 @@ export function createModalAbout(parentElement) {
 
     // Запасной вариант если ни imageUrl, ни videoUrl не указаны
     return `
-      <div class="modal-about-image" style="background-color: #0F172A; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);">
+      <div class="modal-about-image" style="background-color: #333; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
         ${
           feature.imageAlt ||
           getLocalizedText('about.modal.imageAlt.default', 'Feature Image')
@@ -369,74 +303,6 @@ export function createModalAbout(parentElement) {
         }
       }, 1000);
     }
-  }
-
-  // Функция для настройки ленивой загрузки и воспроизведения видео
-  function setupLazyVideos() {
-    // Очищаем предыдущие ссылки на видео
-    videoElements = [];
-
-    // Получаем все видео с классом video-lazy
-    const videos = modalElement.querySelectorAll('.video-lazy');
-    if (!videos || videos.length === 0) return;
-
-    // Сохраняем ссылки на видео
-    videos.forEach(video => {
-      videoElements.push(video);
-
-      // Находим соответствующую кнопку воспроизведения и плейсхолдер
-      const container = video.parentElement;
-      if (!container) return;
-
-      const playButton = container.querySelector('.video-play-button');
-      const placeholder = container.querySelector('.video-placeholder');
-
-      if (!playButton || !placeholder) return;
-
-      // Добавляем обработчик клика для кнопки воспроизведения и плейсхолдера
-      const startVideoPlayback = e => {
-        e.stopPropagation();
-
-        // Загружаем и воспроизводим видео при клике
-        const actualSrc = video.getAttribute('data-src');
-        if (actualSrc) {
-          // Скрываем плейсхолдер
-          placeholder.style.display = 'none';
-
-          // Показываем видео
-          video.style.display = 'block';
-
-          // Устанавливаем фактический src для видео
-          video.setAttribute('src', actualSrc);
-
-          // Устанавливаем атрибут src для тега source
-          const sourceElement = video.querySelector('source');
-          if (sourceElement) {
-            sourceElement.setAttribute('src', actualSrc);
-          }
-
-          // Загружаем видео и воспроизводим
-          video.load();
-          video
-            .play()
-            .then(() => {
-              // После успешного старта воспроизведения скрываем кнопку
-              playButton.style.display = 'none';
-            })
-            .catch(error => {
-              console.error('Ошибка воспроизведения видео:', error);
-
-              // В случае ошибки возвращаем плейсхолдер
-              placeholder.style.display = 'flex';
-              video.style.display = 'none';
-            });
-        }
-      };
-
-      // Добавляем обработчики клика для кнопки и плейсхолдера
-      playButton.addEventListener('click', startVideoPlayback);
-      placeholder.addEventListener('click', startVideoPlayback);
-    });
   }
 
   // Обновление содержимого модального окна с добавлением структурированных данных
@@ -601,95 +467,6 @@ export function createModalAbout(parentElement) {
     // Применяем дополнительные стили для RTL режима
     updateModalRTLStyles();
 
-    // Добавляем CSS для кнопки воспроизведения видео
-    const styleElement = document.getElementById('modal-video-styles');
-    if (!styleElement) {
-      const style = document.createElement('style');
-      style.id = 'modal-video-styles';
-      style.textContent = `
-        .gif-container {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 12px;
-          overflow: hidden;
-        }
-        
-        .video-placeholder {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-          color: #60A5FA;
-          z-index: 1;
-          cursor: pointer;
-        }
-        
-        .video-placeholder-icon {
-          margin-bottom: 16px;
-          opacity: 0.8;
-          color: #60A5FA;
-          filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.3));
-        }
-        
-        .video-placeholder-text {
-          font-size: 16px;
-          font-weight: 500;
-          text-align: center;
-          max-width: 80%;
-          color: #fff;
-        }
-        
-        .video-play-button {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 64px;
-          height: 64px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: rgba(15, 23, 42, 0.7);
-          backdrop-filter: blur(4px);
-          border-radius: 50%;
-          cursor: pointer;
-          z-index: 2;
-          transition: all 0.3s ease;
-          border: 2px solid rgba(96, 165, 250, 0.4);
-          box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
-        }
-        
-        .video-play-button:hover {
-          background-color: rgba(15, 23, 42, 0.8);
-          transform: translate(-50%, -50%) scale(1.1);
-          border-color: rgba(96, 165, 250, 0.6);
-        }
-        
-        .video-play-button svg {
-          color: white;
-          filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.5));
-        }
-        
-        .modal-about-image {
-          border-radius: 12px;
-          object-fit: cover;
-          max-width: 100%;
-          height: auto;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
     // Настройка кнопки закрытия
     const closeButton = modalElement.querySelector('.modal-about-close');
     if (closeButton) {
@@ -701,9 +478,6 @@ export function createModalAbout(parentElement) {
     if (modalContent) {
       modalContent.addEventListener('click', e => e.stopPropagation());
     }
-
-    // Настройка ленивой загрузки видео
-    setupLazyVideos();
   }
 
   // Открытие модального окна с поддержкой истории браузера
@@ -760,9 +534,6 @@ export function createModalAbout(parentElement) {
     isOpen = false;
     modalElement.style.display = 'none';
 
-    // Останавливаем все воспроизводящиеся видео
-    stopAllVideos();
-
     // Удаление обработчиков событий
     window.removeEventListener('keydown', handleEscPress);
     window.removeEventListener('popstate', handlePopState);
@@ -778,58 +549,6 @@ export function createModalAbout(parentElement) {
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.delete('feature');
     window.history.pushState({}, '', currentUrl);
-  }
-
-  // Функция для остановки всех видео при закрытии модального окна
-  function stopAllVideos() {
-    if (!videoElements || videoElements.length === 0) return;
-
-    videoElements.forEach(video => {
-      try {
-        // Сбрасываем атрибуты видео, заставляя его выгрузиться
-        if (video) {
-          // Пауза видео
-          if (!video.paused) {
-            video.pause();
-          }
-
-          // Сброс источника видео для освобождения памяти
-          video.removeAttribute('src');
-
-          // Сброс источников для тегов source
-          const sources = video.querySelectorAll('source');
-          if (sources && sources.length > 0) {
-            sources.forEach(source => {
-              source.removeAttribute('src');
-            });
-          }
-
-          // Принудительная выгрузка ресурсов
-          video.load();
-
-          // Скрываем видео и показываем плейсхолдер
-          video.style.display = 'none';
-          const container = video.parentElement;
-          if (container) {
-            const placeholder = container.querySelector('.video-placeholder');
-            const playButton = container.querySelector('.video-play-button');
-
-            if (placeholder) {
-              placeholder.style.display = 'flex';
-            }
-
-            if (playButton) {
-              playButton.style.display = 'flex';
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Ошибка при остановке видео:', error);
-      }
-    });
-
-    // Очищаем массив видео
-    videoElements = [];
   }
 
   // Уничтожение и очистка модального окна
