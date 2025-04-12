@@ -98,7 +98,8 @@ function createLanguageVersions() {
   };
 }
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+  const isProd = mode === 'production';
   const htmlFiles = globSync('./src/*.html').map(file =>
     path.relative('./src', file)
   );
@@ -111,7 +112,23 @@ export default defineConfig(({ command }) => {
     // Явно указываем папку public как источник статических файлов
     publicDir: '../public',
     build: {
-      sourcemap: true,
+      sourcemap: !isProd, // Отключаем sourcemap в продакшене
+      minify: isProd ? 'terser' : false, // Включаем минификацию только для продакшена
+      terserOptions: isProd
+        ? {
+            compress: {
+              drop_console: true, // Удаление console.log в продакшене
+              drop_debugger: true, // Удаление debugger statements
+              pure_funcs: ['console.log', 'console.info', 'console.debug'], // Удаление указанных функций
+              sequences: true,
+              dead_code: true,
+            },
+            mangle: true, // Сокращение имен переменных
+            format: {
+              comments: false, // Удаление всех комментариев
+            },
+          }
+        : {},
       rollupOptions: {
         input: Object.fromEntries(
           htmlFiles.map(file => [
@@ -129,18 +146,24 @@ export default defineConfig(({ command }) => {
             if (chunkInfo.name === 'commonHelpers') {
               return 'commonHelpers.js';
             }
-            return '[name].js';
+            return isProd ? '[name]-[hash].js' : '[name].js'; // Хеширование имен файлов в продакшене
           },
           assetFileNames: assetInfo => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
-            return 'assets/[name]-[hash][extname]';
+            return isProd
+              ? 'assets/[name]-[hash][extname]'
+              : 'assets/[name][extname]';
           },
+          chunkFileNames: isProd
+            ? 'chunks/[name]-[hash].js'
+            : 'chunks/[name].js',
         },
       },
       outDir: '../dist',
       emptyOutDir: true,
+      cssMinify: isProd, // Минификация CSS только в продакшене
     },
     css: {
       postcss: {
@@ -150,6 +173,8 @@ export default defineConfig(({ command }) => {
           }),
         ],
       },
+      // Минификация CSS для продакшена
+      devSourcemap: !isProd,
     },
     plugins: [
       injectHTML(),
