@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { globSync } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
+import htmlMinifier from 'vite-plugin-html-minifier'; // Добавляем импорт
 import path from 'path';
 import sortMediaQueries from 'postcss-sort-media-queries';
 import fs from 'fs-extra'; // Будем использовать fs-extra для работы с файлами
@@ -179,8 +180,22 @@ export default defineConfig(({ command, mode }) => {
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
-      createLanguageVersions(), // Наш новый плагин
-    ],
+      createLanguageVersions(), // Наш плагин для языковых версий
+      // Добавляем плагин минификации HTML только для продакшена
+      isProd &&
+        htmlMinifier({
+          minify: {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            useShortDoctype: true,
+            minifyCSS: true,
+            minifyJS: true,
+          },
+        }),
+    ].filter(Boolean), // Убираем false из массива плагинов
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
