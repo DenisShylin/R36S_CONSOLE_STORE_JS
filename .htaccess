@@ -1,101 +1,31 @@
-# Включаем базовые модули Apache
-Options +FollowSymLinks
+# Базовые настройки
+Options -Indexes +FollowSymLinks
 AddDefaultCharset UTF-8
 
-# Включаем mod_rewrite для перенаправлений
+# Включаем движок перезаписи
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  
-  # Важно: базовый путь должен соответствовать структуре вашего хостинга
   RewriteBase /
   
-  # Правило #1: Если файл существует физически в запрашиваемом пути, отдаем его напрямую
+  # Проверка существования файлов
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
   
-  # Правило #2: Если запрос к статическому файлу, и он существует в r36s.pro
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} \.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|ttf|woff|woff2)$
-  RewriteCond %{DOCUMENT_ROOT}/r36s.pro%{REQUEST_URI} -f
-  RewriteRule ^(.*)$ /r36s.pro/$1 [L]
+  # Переадресация с /R36S_CONSOLE_STORE_JS/ на /r36s.pro/
+  RewriteRule ^R36S_CONSOLE_STORE_JS/(.*)$ /r36s.pro/$1 [L]
   
-  # Правило #3: Для языковых URL без конечного слеша добавляем слеш
-  RewriteRule ^r36s.pro/(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)$ /r36s.pro/$1/ [R=301,L]
-  
-  # Правило #4: Если запрос к языковой версии
+  # Если запрос идет к языковой версии
+  RewriteCond %{REQUEST_URI} ^/r36s.pro/(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^r36s.pro/(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/(.*)$ /r36s.pro/$1/index.html [L]
   
-  # Правило #5: Все остальные запросы к r36s.pro перенаправляем на index.html
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^r36s.pro/(.*)$ /r36s.pro/index.html [L]
-  
-  # Правило #6: Перенаправление корневых запросов на r36s.pro
-  RewriteCond %{REQUEST_URI} !^/r36s.pro/
-  RewriteCond %{REQUEST_URI} !^/r36s.pro$
-  RewriteRule ^(.*)$ /r36s.pro/$1 [L]
+  # Для корневого пути r36s.pro без дополнительных сегментов
+  RewriteRule ^r36s.pro/?$ /r36s.pro/index.html [L]
 </IfModule>
 
-# Правильные MIME-типы
+# Настройки MIME типов
 <IfModule mod_mime.c>
-  # JavaScript
   AddType application/javascript .js
-  AddType application/json .json
-  
-  # CSS
   AddType text/css .css
-  
-  # Шрифты
-  AddType font/ttf .ttf
-  AddType font/otf .otf
-  AddType font/woff .woff
-  AddType font/woff2 .woff2
-  
-  # Изображения
   AddType image/svg+xml .svg
-  AddType image/jpeg .jpg .jpeg
-  AddType image/png .png
-  AddType image/gif .gif
-  AddType image/webp .webp
-  
-  # Видео
-  AddType video/mp4 .mp4
-  AddType video/webm .webm
 </IfModule>
-
-# Разрешение доступа к статическим ресурсам
-<FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
-  <IfModule mod_authz_core.c>
-    Require all granted
-  </IfModule>
-  <IfModule !mod_authz_core.c>
-    Order allow,deny
-    Allow from all
-  </IfModule>
-</FilesMatch>
-
-# Настройка заголовков
-<IfModule mod_headers.c>
-  # Разрешаем кросс-доменные запросы
-  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
-    Header set Access-Control-Allow-Origin "*"
-  </FilesMatch>
-  
-  # Отключаем кэширование для HTML
-  <FilesMatch "\.(html|htm)$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires "0"
-  </FilesMatch>
-  
-  # Включаем кэширование для статических ресурсов
-  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
-    Header set Cache-Control "public, max-age=31536000"
-  </FilesMatch>
-</IfModule>
-
-# Обработка ошибок
-ErrorDocument 404 /r36s.pro/404.html
-ErrorDocument 500 /r36s.pro/404.html
