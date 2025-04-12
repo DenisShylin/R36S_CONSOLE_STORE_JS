@@ -1,30 +1,30 @@
 /**
   |============================
   | include css partials with
-  | default @import url()
+  | default @import
   |============================
 */
 /* Common styles */
-@import url('./reset.css');
-@import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
-@import url('./scroll-to-top.css');
-/* @import url('./components/languageSelector.css'); */
-/* @import url('./corner_buttons.css'); */
-/* @import url('./media-placeholders.css'); */
+@import './reset.css';
+@import './base.css';
+@import './container.css';
+@import './animations.css';
+@import './scroll-to-top.css';
+/* @import './components/languageSelector.css'; */
+/* @import './corner_buttons.css'; */
+/* @import './media-placeholders.css'; */
 
 /* Sections style */
-@import url('./header.css');
-@import url('./mobilemenu.css');
-@import url('./hero.css');
-@import url('./about.css');
-@import url('./features.css');
-@import url('./modalabout.css');
-@import url('./categories.css');
-@import url('./articles.css');
-@import url('./reviews.css');
-@import url('./products.css');
-@import url('./contact.css');
-@import url('./footer.css');
-@import url('./partnershipmodal.css');
+@import './header.css';
+@import './mobilemenu.css';
+@import './hero.css';
+@import './about.css';
+@import './features.css';
+@import './modalabout.css';
+@import './categories.css';
+@import './articles.css';
+@import './reviews.css';
+@import './products.css';
+@import './contact.css';
+@import './footer.css';
+@import './partnershipmodal.css';

@@ -7,6 +7,27 @@ import path from 'path';
 import sortMediaQueries from 'postcss-sort-media-queries';
 import fs from 'fs-extra';
 
+// Определяем CSS-плагин прямо в файле
+function cssPlugin() {
+  return {
+    name: 'css-processor',
+    buildStart() {
+      console.log('CSS-плагин: начало обработки CSS файлов');
+    },
+    transform(code, id) {
+      if (id.endsWith('.css')) {
+        console.log(`CSS-плагин: обработка файла ${id}`);
+        return {
+          code,
+          map: null,
+        };
+      }
+    },
+    closeBundle() {
+      console.log('CSS-плагин: завершение обработки CSS файлов');
+    },
+  };
+}
 // Список поддерживаемых языков
 const supportedLanguages = [
   'en',
@@ -170,6 +191,19 @@ function createLanguageVersions() {
   };
 }
 
+// Плагин для отладки процесса сборки
+function debugBuildPlugin() {
+  return {
+    name: 'debug-build',
+    generateBundle(options, bundle) {
+      console.log('Файлы, сгенерированные в процессе сборки:');
+      Object.keys(bundle).forEach(fileName => {
+        console.log(` - ${fileName} (${bundle[fileName].type})`);
+      });
+    },
+  };
+}
+
 export default defineConfig(({ command, mode }) => {
   const isProd = mode === 'production';
   const htmlFiles = globSync('./src/*.html').map(file =>
@@ -201,6 +235,10 @@ export default defineConfig(({ command, mode }) => {
             },
           }
         : {},
+      // Используем cssCodeSplit вместо устаревшего css.extract
+      cssCodeSplit: true,
+      // Обеспечиваем, что все ресурсы (включая CSS) попадают в сборку
+      assetsInlineLimit: 0,
       rollupOptions: {
         input: Object.fromEntries(
           htmlFiles.map(file => [
@@ -217,10 +255,16 @@ export default defineConfig(({ command, mode }) => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
+            // Гарантируем, что CSS-файлы будут обрабатываться корректно
+            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+              return 'assets/styles-[hash][extname]';
+            }
             // Для всех остальных файлов используем хэш
             return 'assets/[name]-[hash][extname]';
           },
           chunkFileNames: 'assets/chunks/[name]-[hash].js',
+          // Добавляем плагин для отладки сборки
+          plugins: [debugBuildPlugin()],
         },
       },
       outDir: '../dist',
@@ -228,6 +272,9 @@ export default defineConfig(({ command, mode }) => {
       cssMinify: isProd,
     },
     css: {
+      // Минификация CSS
+      minify: isProd,
+      // Настройки postcss
       postcss: {
         plugins: [
           sortMediaQueries({
@@ -241,6 +288,8 @@ export default defineConfig(({ command, mode }) => {
       injectHTML(),
       FullReload(['./src/**/**.html']),
       createLanguageVersions(),
+      // Добавляем CSS плагин
+      cssPlugin(),
       isProd &&
         htmlMinifier({
           minify: {

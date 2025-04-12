@@ -1,5 +1,6 @@
 // main.js - Точка входа в приложение
 // Импорт всех стилей
+import './css/styles.css?inline=false';
 import './css/styles.css';
 import { initScrollToTop } from './js/scroll-to-top.js'; // Импортируем модуль кнопки скролла вверх
 // Импорт i18n системы
