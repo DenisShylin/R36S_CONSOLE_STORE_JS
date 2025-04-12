@@ -4,6 +4,11 @@
   # Базовый путь соответствует вашей директории на хостинге
   RewriteBase /r36s.pro/
   
+  # Перенаправление с /R36S_CONSOLE_STORE_JS/ на /r36s.pro/
+  # Если в URL есть путь /R36S_CONSOLE_STORE_JS/, заменяем его на /r36s.pro/
+  RewriteCond %{REQUEST_URI} ^/R36S_CONSOLE_STORE_JS/(.*)$
+  RewriteRule ^R36S_CONSOLE_STORE_JS/(.*)$ /r36s.pro/$1 [L,R=301]
+  
   # Если запрашиваемый файл или директория существует, отдаем его напрямую
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
@@ -62,6 +67,13 @@
   Satisfy Any
 </FilesMatch>
 
+# Разрешаем кросс-доменные запросы для медиа и скриптов
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|gif|png|jpe?g|svg|svgz|ico|webp)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
 # Кэширование ресурсов
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -87,6 +99,11 @@
   ExpiresByType font/otf "access plus 1 month"
   ExpiresByType font/woff "access plus 1 month"
   ExpiresByType font/woff2 "access plus 1 month"
+  
+  # HTML и XML файлы - не кэшировать
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/xhtml+xml "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 0 seconds"
 </IfModule>
 
 # Включение GZIP-сжатия
@@ -106,16 +123,15 @@
   AddOutputFilterByType DEFLATE font/woff2
 </IfModule>
 
-# Заголовки доступа и кросс-домен
+# Настройка заголовков кэширования для разных типов файлов
 <IfModule mod_headers.c>
-  # Разрешаем кросс-доменные запросы - нужно для некоторых ресурсов
-  <FilesMatch "\.(js|css|ttf|woff|woff2|json|jpg|jpeg|png|gif|webp|svg)$">
-    Header set Access-Control-Allow-Origin "*"
+  # Статические ресурсы - кэшировать долго
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|js|css|ttf|woff|woff2)$">
     Header set Cache-Control "public, max-age=31536000"
   </FilesMatch>
   
-  # Для HTML файлов не кэшируем, чтобы всегда получать свежую версию
-  <FilesMatch "\.(html)$">
+  # HTML файлы - не кэшировать
+  <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"
@@ -127,12 +143,6 @@
   Order allow,deny
   Deny from all
 </FilesMatch>
-
-# Разрешаем доступ к .htaccess для отладки
-<Files .htaccess>
-  Order allow,deny
-  Allow from all
-</Files>
 
 # Обработка ошибок для разных HTTP кодов
 ErrorDocument 404 /r36s.pro/404.html

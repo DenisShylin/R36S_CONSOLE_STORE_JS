@@ -41,8 +41,14 @@ function createLanguageVersions() {
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
 
       // Преобразуем относительные пути в абсолютные от корня сайта для всех ресурсов
-      // Используем /r36s.pro/ как базовый путь
+      // Используем /r36s.pro/ как базовый путь вместо /R36S_CONSOLE_STORE_JS/
       let processedContent = indexContent.replace(
+        /(src|href)=("|')(\/R36S_CONSOLE_STORE_JS\/[^"']+)("|')/g,
+        '$1=$2/r36s.pro/$3$4'
+      );
+
+      // Также обрабатываем случаи, где путь не начинается с /
+      processedContent = processedContent.replace(
         /(src|href)=("|')((?!http|\/\/|\/)[^"']+)("|')/g,
         '$1=$2/r36s.pro/$3$4'
       );
@@ -55,6 +61,13 @@ function createLanguageVersions() {
         fs.ensureDirSync(langDir);
 
         let langContent = processedContent;
+
+        // Исправляем атрибут lang в HTML
+        langContent = langContent.replace(
+          /<html lang="[^"]*">/,
+          `<html lang="${lang}">`
+        );
+
         // Добавляем мета-тег с языком и скрипт для переключения на этот язык
         langContent = langContent.replace(
           '</head>',
@@ -67,6 +80,12 @@ function createLanguageVersions() {
 
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
       }
+
+      // Исправляем атрибут lang для основного (английского) языка тоже
+      processedContent = processedContent.replace(
+        /<html lang="[^"]*">/,
+        '<html lang="en">'
+      );
 
       // Записываем обратно основной index.html с абсолютными путями
       fs.writeFileSync(indexPath, processedContent);
@@ -105,7 +124,7 @@ function createLanguageVersions() {
       fs.writeFileSync(path.join(distDir, '404.html'), notFoundContent);
 
       console.log(
-        'Created language versions and 404.html with absolute paths for /r36s.pro/'
+        'Created language versions and 404.html with paths for /r36s.pro/'
       );
     },
   };
