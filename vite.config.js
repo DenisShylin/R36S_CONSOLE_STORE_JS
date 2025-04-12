@@ -2,32 +2,10 @@ import { defineConfig } from 'vite';
 import { globSync } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
-import htmlMinifier from 'vite-plugin-html-minifier';
 import path from 'path';
 import sortMediaQueries from 'postcss-sort-media-queries';
-import fs from 'fs-extra';
+import fs from 'fs-extra'; // Будем использовать fs-extra для работы с файлами
 
-// Определяем CSS-плагин прямо в файле
-function cssPlugin() {
-  return {
-    name: 'css-processor',
-    buildStart() {
-      console.log('CSS-плагин: начало обработки CSS файлов');
-    },
-    transform(code, id) {
-      if (id.endsWith('.css')) {
-        console.log(`CSS-плагин: обработка файла ${id}`);
-        return {
-          code,
-          map: null,
-        };
-      }
-    },
-    closeBundle() {
-      console.log('CSS-плагин: завершение обработки CSS файлов');
-    },
-  };
-}
 // Список поддерживаемых языков
 const supportedLanguages = [
   'en',
@@ -61,50 +39,6 @@ function createLanguageVersions() {
 
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
 
-      // Определяем, какие пути искать и заменять
-      const absoluteBasePath = '/r36s.pro/';
-
-      // Функция для замены путей в HTML-файле
-      function processHtmlPaths(html) {
-        let result = html;
-
-        // 1. Заменяем относительные пути на абсолютные
-        result = result.replace(
-          /(src|href)=("|')((?!http|\/\/|\/)[^"']+)("|')/g,
-          `$1=$2${absoluteBasePath}$3$4`
-        );
-
-        // 2. Заменяем пути, начинающиеся с /assets/ на /r36s.pro/assets/
-        result = result.replace(
-          /(src|href)=("|')(\/assets\/[^"']+)("|')/g,
-          `$1=$2${absoluteBasePath}assets/$3$4`
-        );
-
-        // 3. Заменяем любые другие абсолютные пути
-        result = result.replace(
-          /(src|href)=("|')(\/[^"']+)("|')/g,
-          (match, attr, quote, path, endQuote) => {
-            // Не заменяем, если путь уже начинается с /r36s.pro/
-            if (path.startsWith('/r36s.pro/')) {
-              return match;
-            }
-            return `${attr}=${quote}${absoluteBasePath}${path.substring(
-              1
-            )}${endQuote}`;
-          }
-        );
-
-        // 4. Исправляем дублированные слеши в URL
-        result = result.replace(/([^:])\/\/+/g, '$1/');
-
-        return result;
-      }
-
-      // Обрабатываем основной index.html
-      let processedContent = processHtmlPaths(indexContent);
-
-      console.log('Processing paths in HTML files...');
-
       // Создаем директории для каждого языка и копируем в них index.html
       for (const lang of supportedLanguages) {
         if (lang === 'en') continue; // Для английского оставляем корневой index.html
@@ -112,14 +46,7 @@ function createLanguageVersions() {
         const langDir = path.join(distDir, lang);
         fs.ensureDirSync(langDir);
 
-        let langContent = processedContent;
-
-        // Исправляем атрибут lang в HTML
-        langContent = langContent.replace(
-          /<html lang="[^"]*">/,
-          `<html lang="${lang}">`
-        );
-
+        let langContent = indexContent;
         // Добавляем мета-тег с языком и скрипт для переключения на этот язык
         langContent = langContent.replace(
           '</head>',
@@ -131,17 +58,7 @@ function createLanguageVersions() {
         );
 
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
-        console.log(`Created language version for: ${lang}`);
       }
-
-      // Исправляем атрибут lang для основного (английского) языка тоже
-      processedContent = processedContent.replace(
-        /<html lang="[^"]*">/,
-        '<html lang="en">'
-      );
-
-      // Записываем обратно основной index.html с абсолютными путями
-      fs.writeFileSync(indexPath, processedContent);
 
       // Создаем файл 404.html для обработки неизвестных URL
       const notFoundContent = `
@@ -153,19 +70,18 @@ function createLanguageVersions() {
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "${absoluteBasePath}";
+    const baseUrl = '${path.relative(process.cwd(), distDir)}';
     
     // Проверяем, может ли первый сегмент пути быть языком
-    const pathWithoutBase = path.replace(basePath, '');
-    const segments = pathWithoutBase.split('/').filter(Boolean);
+    const segments = path.split('/').filter(Boolean);
     const supportedLanguages = ${JSON.stringify(supportedLanguages)};
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
       // Это языковой путь, но файл не найден
-      window.location.href = basePath + segments[0] + '/';
+      window.location.href = '/' + segments[0] + '/';
     } else {
       // Неизвестный путь - редирект на главную
-      window.location.href = basePath;
+      window.location.href = '/';
     }
   </script>
 </head>
@@ -177,68 +93,25 @@ function createLanguageVersions() {
 
       fs.writeFileSync(path.join(distDir, '404.html'), notFoundContent);
 
-      console.log('Created 404.html with redirect logic');
-
-      // Проверяем, есть ли основные файлы CSS/JS
-      const cssFiles = globSync(path.join(distDir, 'assets', '*.css'));
-      const jsFiles = globSync(path.join(distDir, 'assets', '*.js'));
-
-      console.log(
-        `Found ${cssFiles.length} CSS files and ${jsFiles.length} JS files`
-      );
-      console.log('Language versions and redirects created successfully!');
+      console.log('Created language versions and 404.html');
     },
   };
 }
 
-// Плагин для отладки процесса сборки
-function debugBuildPlugin() {
-  return {
-    name: 'debug-build',
-    generateBundle(options, bundle) {
-      console.log('Файлы, сгенерированные в процессе сборки:');
-      Object.keys(bundle).forEach(fileName => {
-        console.log(` - ${fileName} (${bundle[fileName].type})`);
-      });
-    },
-  };
-}
-
-export default defineConfig(({ command, mode }) => {
-  const isProd = mode === 'production';
+export default defineConfig(({ command }) => {
   const htmlFiles = globSync('./src/*.html').map(file =>
     path.relative('./src', file)
   );
 
   return {
-    base: isProd ? '/r36s.pro/' : '/', // Базовый путь
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
     root: 'src',
+    // Явно указываем папку public как источник статических файлов
     publicDir: '../public',
     build: {
-      sourcemap: !isProd,
-      minify: isProd ? 'terser' : false,
-      terserOptions: isProd
-        ? {
-            compress: {
-              drop_console: true,
-              drop_debugger: true,
-              pure_funcs: ['console.log', 'console.info', 'console.debug'],
-              sequences: true,
-              dead_code: true,
-            },
-            mangle: true,
-            format: {
-              comments: false,
-            },
-          }
-        : {},
-      // Используем cssCodeSplit вместо устаревшего css.extract
-      cssCodeSplit: true,
-      // Обеспечиваем, что все ресурсы (включая CSS) попадают в сборку
-      assetsInlineLimit: 0,
+      sourcemap: true,
       rollupOptions: {
         input: Object.fromEntries(
           htmlFiles.map(file => [
@@ -247,34 +120,29 @@ export default defineConfig(({ command, mode }) => {
           ])
         ),
         output: {
-          format: 'iife', // Используем формат IIFE
-          inlineDynamicImports: true,
-          entryFileNames: 'assets/[name]-[hash].js',
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
+          entryFileNames: chunkInfo => {
+            if (chunkInfo.name === 'commonHelpers') {
+              return 'commonHelpers.js';
+            }
+            return '[name].js';
+          },
           assetFileNames: assetInfo => {
-            // Для HTML-файлов сохраняем оригинальное имя
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
-            // Гарантируем, что CSS-файлы будут обрабатываться корректно
-            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-              return 'assets/styles-[hash][extname]';
-            }
-            // Для всех остальных файлов используем хэш
             return 'assets/[name]-[hash][extname]';
           },
-          chunkFileNames: 'assets/chunks/[name]-[hash].js',
-          // Добавляем плагин для отладки сборки
-          plugins: [debugBuildPlugin()],
         },
       },
       outDir: '../dist',
       emptyOutDir: true,
-      cssMinify: isProd,
     },
     css: {
-      // Минификация CSS
-      minify: isProd,
-      // Настройки postcss
       postcss: {
         plugins: [
           sortMediaQueries({
@@ -282,28 +150,12 @@ export default defineConfig(({ command, mode }) => {
           }),
         ],
       },
-      devSourcemap: !isProd,
     },
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
-      createLanguageVersions(),
-      // Добавляем CSS плагин
-      cssPlugin(),
-      isProd &&
-        htmlMinifier({
-          minify: {
-            collapseWhitespace: true,
-            removeComments: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            useShortDoctype: true,
-            minifyCSS: true,
-            minifyJS: true,
-          },
-        }),
-    ].filter(Boolean),
+      createLanguageVersions(), // Наш новый плагин
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
