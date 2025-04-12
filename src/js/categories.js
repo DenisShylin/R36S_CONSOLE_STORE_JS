@@ -207,6 +207,13 @@ export function initCategories() {
       // Отключаем предварительную загрузку видео
       videoElement.preload = 'none';
 
+      // Добавляем постер (первый кадр) для отображения до загрузки видео
+      if (!videoElement.hasAttribute('poster')) {
+        // Используем либо существующий путь к постеру, либо генерируем из пути к видео
+        const posterPath = '/img/video-placeholder.jpg';
+        videoElement.setAttribute('poster', posterPath);
+      }
+
       // Временно удаляем src для предотвращения автозагрузки
       const sourceTags = videoElement.querySelectorAll('source');
       let videoSrc = '';
