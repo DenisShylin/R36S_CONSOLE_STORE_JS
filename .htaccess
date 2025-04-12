@@ -1,41 +1,48 @@
-# Включаем mod_rewrite для URL перенаправлений
+# Включаем базовые модули Apache
+Options +FollowSymLinks
+AddDefaultCharset UTF-8
+
+# Включаем mod_rewrite для перенаправлений
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  # Базовый путь соответствует вашей директории на хостинге
-  RewriteBase /r36s.pro/
   
-  # Перенаправление с /R36S_CONSOLE_STORE_JS/ на /r36s.pro/
-  # Если в URL есть путь /R36S_CONSOLE_STORE_JS/, заменяем его на /r36s.pro/
-  RewriteCond %{REQUEST_URI} ^/R36S_CONSOLE_STORE_JS/(.*)$
-  RewriteRule ^R36S_CONSOLE_STORE_JS/(.*)$ /r36s.pro/$1 [L,R=301]
+  # Важно: базовый путь должен соответствовать структуре вашего хостинга
+  RewriteBase /
   
-  # Если запрашиваемый файл или директория существует, отдаем его напрямую
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
+  # Правило #1: Если файл существует физически в запрашиваемом пути, отдаем его напрямую
+  RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
   
-  # Разрешаем прямой доступ к статическим файлам
-  RewriteRule ^(.+)\.(js|css|png|jpg|jpeg|gif|webp|svg|mp4|webm|ttf|woff|woff2)$ - [L]
+  # Правило #2: Если запрос к статическому файлу, и он существует в r36s.pro
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} \.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|ttf|woff|woff2)$
+  RewriteCond %{DOCUMENT_ROOT}/r36s.pro%{REQUEST_URI} -f
+  RewriteRule ^(.*)$ /r36s.pro/$1 [L]
   
-  # Для языковых URL без конечного слеша добавляем слеш
-  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)$ $1/ [R=301,L]
+  # Правило #3: Для языковых URL без конечного слеша добавляем слеш
+  RewriteRule ^r36s.pro/(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)$ /r36s.pro/$1/ [R=301,L]
   
-  # Если URL начинается с языкового кода, отдаем соответствующий index.html
-  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/$ $1/index.html [L]
-  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/(.*)$ $1/index.html [L]
+  # Правило #4: Если запрос к языковой версии
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^r36s.pro/(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/(.*)$ /r36s.pro/$1/index.html [L]
   
-  # Для всех остальных URL отдаем корневой index.html
-  RewriteRule ^(.*)$ index.html [L]
+  # Правило #5: Все остальные запросы к r36s.pro перенаправляем на index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^r36s.pro/(.*)$ /r36s.pro/index.html [L]
+  
+  # Правило #6: Перенаправление корневых запросов на r36s.pro
+  RewriteCond %{REQUEST_URI} !^/r36s.pro/
+  RewriteCond %{REQUEST_URI} !^/r36s.pro$
+  RewriteRule ^(.*)$ /r36s.pro/$1 [L]
 </IfModule>
 
-# Добавление правильных MIME-типов
+# Правильные MIME-типы
 <IfModule mod_mime.c>
   # JavaScript
   AddType application/javascript .js
   AddType application/json .json
-  
-  # Добавление MIME типа для JavaScript модулей
-  AddType application/javascript .mjs
   
   # CSS
   AddType text/css .css
@@ -46,10 +53,8 @@
   AddType font/woff .woff
   AddType font/woff2 .woff2
   
-  # SVG
-  AddType image/svg+xml .svg
-  
   # Изображения
+  AddType image/svg+xml .svg
   AddType image/jpeg .jpg .jpeg
   AddType image/png .png
   AddType image/gif .gif
@@ -60,90 +65,37 @@
   AddType video/webm .webm
 </IfModule>
 
-# Разрешение доступа к медиа-файлам
-<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|js|css|ttf|woff|woff2)$">
-  Order allow,deny
-  Allow from all
-  Satisfy Any
+# Разрешение доступа к статическим ресурсам
+<FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Allow from all
+  </IfModule>
 </FilesMatch>
 
-# Разрешаем кросс-доменные запросы для медиа и скриптов
+# Настройка заголовков
 <IfModule mod_headers.c>
-  <FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js|gif|png|jpe?g|svg|svgz|ico|webp)$">
+  # Разрешаем кросс-доменные запросы
+  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
     Header set Access-Control-Allow-Origin "*"
   </FilesMatch>
-</IfModule>
-
-# Кэширование ресурсов
-<IfModule mod_expires.c>
-  ExpiresActive On
   
-  # Изображения - 1 месяц
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType image/gif "access plus 1 month"
-  ExpiresByType image/webp "access plus 1 month"
-  ExpiresByType image/svg+xml "access plus 1 month"
-  
-  # Видео - 1 неделя
-  ExpiresByType video/mp4 "access plus 1 week"
-  ExpiresByType video/webm "access plus 1 week"
-  
-  # JavaScript и CSS - 1 неделя
-  ExpiresByType text/css "access plus 1 week"
-  ExpiresByType application/javascript "access plus 1 week"
-  ExpiresByType application/json "access plus 1 week"
-  
-  # Шрифты - 1 месяц
-  ExpiresByType font/ttf "access plus 1 month"
-  ExpiresByType font/otf "access plus 1 month"
-  ExpiresByType font/woff "access plus 1 month"
-  ExpiresByType font/woff2 "access plus 1 month"
-  
-  # HTML и XML файлы - не кэшировать
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType application/xhtml+xml "access plus 0 seconds"
-  ExpiresByType application/xml "access plus 0 seconds"
-</IfModule>
-
-# Включение GZIP-сжатия
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE text/css
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE application/json
-  AddOutputFilterByType DEFLATE application/x-javascript
-  AddOutputFilterByType DEFLATE text/plain
-  AddOutputFilterByType DEFLATE text/xml
-  AddOutputFilterByType DEFLATE application/xml
-  AddOutputFilterByType DEFLATE image/svg+xml
-  AddOutputFilterByType DEFLATE font/ttf
-  AddOutputFilterByType DEFLATE font/otf
-  AddOutputFilterByType DEFLATE font/woff
-  AddOutputFilterByType DEFLATE font/woff2
-</IfModule>
-
-# Настройка заголовков кэширования для разных типов файлов
-<IfModule mod_headers.c>
-  # Статические ресурсы - кэшировать долго
-  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|js|css|ttf|woff|woff2)$">
-    Header set Cache-Control "public, max-age=31536000"
-  </FilesMatch>
-  
-  # HTML файлы - не кэшировать
+  # Отключаем кэширование для HTML
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "0"
   </FilesMatch>
+  
+  # Включаем кэширование для статических ресурсов
+  <FilesMatch "\.(js|css|jpg|jpeg|png|gif|webp|svg|mp4|webm|woff|woff2|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
 </IfModule>
 
-# Запрет доступа к системным файлам
-<FilesMatch "^\.|package(-lock)?\.json$|^composer\.json$">
-  Order allow,deny
-  Deny from all
-</FilesMatch>
-
-# Обработка ошибок для разных HTTP кодов
+# Обработка ошибок
 ErrorDocument 404 /r36s.pro/404.html
 ErrorDocument 500 /r36s.pro/404.html

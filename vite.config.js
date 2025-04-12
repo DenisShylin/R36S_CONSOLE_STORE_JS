@@ -40,18 +40,49 @@ function createLanguageVersions() {
 
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
 
-      // Преобразуем относительные пути в абсолютные от корня сайта для всех ресурсов
-      // Используем /r36s.pro/ как базовый путь вместо /R36S_CONSOLE_STORE_JS/
-      let processedContent = indexContent.replace(
-        /(src|href)=("|')(\/R36S_CONSOLE_STORE_JS\/[^"']+)("|')/g,
-        '$1=$2/r36s.pro/$3$4'
-      );
+      // Определяем, какие пути искать и заменять
+      const absoluteBasePath = '/r36s.pro/';
 
-      // Также обрабатываем случаи, где путь не начинается с /
-      processedContent = processedContent.replace(
-        /(src|href)=("|')((?!http|\/\/|\/)[^"']+)("|')/g,
-        '$1=$2/r36s.pro/$3$4'
-      );
+      // Функция для замены путей в HTML-файле
+      function processHtmlPaths(html) {
+        let result = html;
+
+        // 1. Заменяем относительные пути на абсолютные
+        result = result.replace(
+          /(src|href)=("|')((?!http|\/\/|\/)[^"']+)("|')/g,
+          `$1=$2${absoluteBasePath}$3$4`
+        );
+
+        // 2. Заменяем пути, начинающиеся с /assets/ на /r36s.pro/assets/
+        result = result.replace(
+          /(src|href)=("|')(\/assets\/[^"']+)("|')/g,
+          `$1=$2${absoluteBasePath}assets/$3$4`
+        );
+
+        // 3. Заменяем любые другие абсолютные пути
+        result = result.replace(
+          /(src|href)=("|')(\/[^"']+)("|')/g,
+          (match, attr, quote, path, endQuote) => {
+            // Не заменяем, если путь уже начинается с /r36s.pro/
+            if (path.startsWith('/r36s.pro/')) {
+              return match;
+            }
+            return `${attr}=${quote}${absoluteBasePath}${path.substring(
+              1
+            )}${endQuote}`;
+          }
+        );
+
+        // 4. Исправляем дублированные слеши в URL
+        result = result.replace(/([^:])\/\/+/g, '$1/');
+
+        return result;
+      }
+
+      // Обрабатываем основной index.html
+      let processedContent = processHtmlPaths(indexContent);
+
+      console.log('Processing paths in HTML files...');
 
       // Создаем директории для каждого языка и копируем в них index.html
       for (const lang of supportedLanguages) {
@@ -79,6 +110,7 @@ function createLanguageVersions() {
         );
 
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
+        console.log(`Created language version for: ${lang}`);
       }
 
       // Исправляем атрибут lang для основного (английского) языка тоже
@@ -100,10 +132,11 @@ function createLanguageVersions() {
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "/r36s.pro/";
+    const basePath = "${absoluteBasePath}";
     
     // Проверяем, может ли первый сегмент пути быть языком
-    const segments = path.replace(basePath, '').split('/').filter(Boolean);
+    const pathWithoutBase = path.replace(basePath, '');
+    const segments = pathWithoutBase.split('/').filter(Boolean);
     const supportedLanguages = ${JSON.stringify(supportedLanguages)};
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
@@ -123,9 +156,16 @@ function createLanguageVersions() {
 
       fs.writeFileSync(path.join(distDir, '404.html'), notFoundContent);
 
+      console.log('Created 404.html with redirect logic');
+
+      // Проверяем, есть ли основные файлы CSS/JS
+      const cssFiles = globSync(path.join(distDir, 'assets', '*.css'));
+      const jsFiles = globSync(path.join(distDir, 'assets', '*.js'));
+
       console.log(
-        'Created language versions and 404.html with paths for /r36s.pro/'
+        `Found ${cssFiles.length} CSS files and ${jsFiles.length} JS files`
       );
+      console.log('Language versions and redirects created successfully!');
     },
   };
 }
@@ -137,7 +177,7 @@ export default defineConfig(({ command, mode }) => {
   );
 
   return {
-    base: isProd ? '/r36s.pro/' : '/', // Указываем базовый путь как /r36s.pro/ для продакшена
+    base: isProd ? '/r36s.pro/' : '/', // Базовый путь
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
@@ -169,26 +209,18 @@ export default defineConfig(({ command, mode }) => {
           ])
         ),
         output: {
-          format: 'iife', // Используем формат IIFE вместо ES модулей
-          // Полностью убираем manualChunks
-          inlineDynamicImports: true, // Явно включаем inlineDynamicImports
-          entryFileNames: chunkInfo => {
-            if (chunkInfo.name === 'commonHelpers') {
-              return 'commonHelpers.js';
-            }
-            return isProd ? 'assets/[name]-[hash].js' : 'assets/[name].js';
-          },
+          format: 'iife', // Используем формат IIFE
+          inlineDynamicImports: true,
+          entryFileNames: 'assets/[name]-[hash].js',
           assetFileNames: assetInfo => {
+            // Для HTML-файлов сохраняем оригинальное имя
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
-            return isProd
-              ? 'assets/[name]-[hash][extname]'
-              : 'assets/[name][extname]';
+            // Для всех остальных файлов используем хэш
+            return 'assets/[name]-[hash][extname]';
           },
-          chunkFileNames: isProd
-            ? 'assets/chunks/[name]-[hash].js'
-            : 'assets/chunks/[name].js',
+          chunkFileNames: 'assets/chunks/[name]-[hash].js',
         },
       },
       outDir: '../dist',
