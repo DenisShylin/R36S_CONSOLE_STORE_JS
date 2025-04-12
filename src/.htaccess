@@ -19,6 +19,28 @@
   RewriteRule ^(.*)$ index.html [L]
 </IfModule>
 
+# Добавление правильных MIME-типов
+<IfModule mod_mime.c>
+  # JavaScript
+  AddType application/javascript .js
+  AddType application/json .json
+  
+  # Добавление MIME типа для JavaScript модулей
+  AddType application/javascript .mjs
+  
+  # CSS
+  AddType text/css .css
+  
+  # Шрифты
+  AddType font/ttf .ttf
+  AddType font/otf .otf
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+  
+  # SVG
+  AddType image/svg+xml .svg
+</IfModule>
+
 # Кэширование ресурсов
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -37,6 +59,7 @@
   # Кэширование CSS и JavaScript на 1 неделю
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType application/json "access plus 1 week"
 </IfModule>
 
 # Включение GZIP-сжатия
@@ -44,11 +67,16 @@
   AddOutputFilterByType DEFLATE text/html
   AddOutputFilterByType DEFLATE text/css
   AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
   AddOutputFilterByType DEFLATE application/x-javascript
   AddOutputFilterByType DEFLATE text/plain
   AddOutputFilterByType DEFLATE text/xml
   AddOutputFilterByType DEFLATE application/xml
   AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/woff
+  AddOutputFilterByType DEFLATE font/woff2
 </IfModule>
 
 # Запрет доступа к системным файлам

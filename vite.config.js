@@ -146,16 +146,14 @@ export default defineConfig(({ command, mode }) => {
           ])
         ),
         output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return 'vendor';
-            }
-          },
+          format: 'iife', // Используем формат IIFE вместо ES модулей
+          // Полностью убираем manualChunks
+          inlineDynamicImports: true, // Явно включаем inlineDynamicImports
           entryFileNames: chunkInfo => {
             if (chunkInfo.name === 'commonHelpers') {
               return 'commonHelpers.js';
             }
-            return isProd ? 'assets/[name]-[hash].js' : 'assets/[name].js'; // Изменил путь для JS
+            return isProd ? 'assets/[name]-[hash].js' : 'assets/[name].js';
           },
           assetFileNames: assetInfo => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
@@ -167,7 +165,7 @@ export default defineConfig(({ command, mode }) => {
           },
           chunkFileNames: isProd
             ? 'assets/chunks/[name]-[hash].js'
-            : 'assets/chunks/[name].js', // Изменил путь для chunks
+            : 'assets/chunks/[name].js',
         },
       },
       outDir: '../dist',
