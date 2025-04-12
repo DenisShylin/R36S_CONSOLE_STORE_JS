@@ -1,0 +1,65 @@
+# Включаем mod_rewrite
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Если запрашиваемый файл существует, отдаем его напрямую
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  
+  # Для языковых URL без конечного слеша добавляем слеш
+  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)$ $1/ [R=301,L]
+  
+  # Если URL начинается с языкового кода, отдаем соответствующий index.html
+  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/$ $1/index.html [L]
+  RewriteRule ^(en|ru|ar|be|de|es|fr|it|ja|ko|nl|pt|tr|uk)/(.*)$ $1/index.html [L]
+  
+  # Для всех остальных URL отдаем корневой index.html
+  RewriteRule ^(.*)$ index.html [L]
+</IfModule>
+
+# Кэширование ресурсов
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Кэширование изображений на 1 месяц
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  
+  # Кэширование видео на 1 неделю
+  ExpiresByType video/mp4 "access plus 1 week"
+  ExpiresByType video/webm "access plus 1 week"
+  
+  # Кэширование CSS и JavaScript на 1 неделю
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# Включение GZIP-сжатия
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Запрет доступа к системным файлам
+<FilesMatch "^\.|package(-lock)?\.json$|^composer\.json$|^\.htaccess$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Принудительное использование HTTPS (раскомментируйте если нужно)
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
