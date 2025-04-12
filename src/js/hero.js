@@ -71,34 +71,63 @@ export function initHero() {
   }
 
   /**
-   * Настраивает изображение секции Hero.
-   * Устанавливает обработчики событий для основного изображения.
+   * Оптимизированная настройка изображения секции Hero.
+   * Используется предварительная загрузка изображения для ускорения отображения
    * @private
    */
   function setupHeroImage() {
     if (!heroImage || !heroSection) return;
 
     try {
-      // Обработчики событий
-      heroImage.onload = () => {
-        if (document.body.contains(heroSection)) {
-          heroSection.classList.add('hero--loaded');
-        }
-      };
-      heroImage.onerror = () => {
-        console.error('Не удалось загрузить изображение:', heroImage.src);
-        // В любом случае показываем секцию
-        if (document.body.contains(heroSection)) {
-          heroSection.classList.add('hero--loaded');
-        }
-      };
+      // Добавляем резервный слот для изображения
+      if (document.body.contains(heroSection)) {
+        heroSection.classList.add('hero--loading');
+      }
 
-      // Если изображение уже загружено (из кэша)
-      if (heroImage.complete && document.body.contains(heroSection)) {
-        heroSection.classList.add('hero--loaded');
+      // Обработка загрузки изображения
+      if (heroImage.complete) {
+        // Изображение уже загружено (из кэша)
+        if (document.body.contains(heroSection)) {
+          heroSection.classList.remove('hero--loading');
+          heroSection.classList.add('hero--loaded');
+        }
+      } else {
+        // Определяем обработчики событий
+        heroImage.onload = () => {
+          if (document.body.contains(heroSection)) {
+            heroSection.classList.remove('hero--loading');
+            heroSection.classList.add('hero--loaded');
+          }
+        };
+
+        heroImage.onerror = () => {
+          console.error('Не удалось загрузить изображение:', heroImage.src);
+          // В любом случае показываем секцию
+          if (document.body.contains(heroSection)) {
+            heroSection.classList.remove('hero--loading');
+            heroSection.classList.add('hero--loaded');
+          }
+        };
+
+        // Устанавливаем атрибуты для оптимизации загрузки
+        heroImage.decoding = 'async';
+        heroImage.loading = 'eager'; // Гарантирует немедленную загрузку для LCP
+
+        // Добавляем низкокачественный placeholder если необходимо
+        // const imgWrapper = heroImage.parentElement;
+        // if (imgWrapper && !imgWrapper.querySelector('.hero__placeholder')) {
+        //   const placeholder = document.createElement('div');
+        //   placeholder.className = 'hero__placeholder';
+        //   imgWrapper.insertBefore(placeholder, heroImage);
+        // }
       }
     } catch (error) {
       console.error('Ошибка при настройке изображения в Hero секции:', error);
+      // В случае ошибки все равно показываем секцию
+      if (document.body.contains(heroSection)) {
+        heroSection.classList.remove('hero--loading');
+        heroSection.classList.add('hero--loaded');
+      }
     }
   }
 
@@ -142,22 +171,40 @@ export function initHero() {
         contentObserver = null;
       }
 
-      contentObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && entry.target?.isConnected) {
-              entry.target.classList.add('animate-in');
-              // Отключаем наблюдение после анимации
-              contentObserver?.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
+      // Оптимизированная версия: сразу анимируем контент для LCP
+      if (
+        heroContent.isConnected &&
+        !heroContent.classList.contains('animate-in')
+      ) {
+        // Добавляем минимальную задержку для более плавного рендеринга
+        setTimeout(() => {
+          heroContent.classList.add('animate-in');
+        }, 50);
+      }
 
-      // Наблюдаем за элементом контента
-      if (heroContent.isConnected) {
-        contentObserver.observe(heroContent);
+      // Только для нижней части страницы используем IntersectionObserver
+      const nonCriticalElements =
+        document.querySelectorAll('.animate-on-scroll');
+      if (nonCriticalElements.length > 0 && 'IntersectionObserver' in window) {
+        contentObserver = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && entry.target?.isConnected) {
+                entry.target.classList.add('animate-in');
+                // Отключаем наблюдение после анимации
+                contentObserver?.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        // Наблюдаем за некритичными элементами
+        nonCriticalElements.forEach(element => {
+          if (element.isConnected) {
+            contentObserver.observe(element);
+          }
+        });
       }
     } catch (error) {
       console.error('Ошибка при настройке анимации контента:', error);
@@ -190,7 +237,7 @@ export function initHero() {
    */
   function setupLanguageChangeListener() {
     try {
-      // Обработчик изменения языка
+      // Обработчик изменения языка с дебаунсингом
       languageChangeHandler = event => {
         try {
           // Проверяем, что секция все еще в DOM
@@ -205,17 +252,21 @@ export function initHero() {
             'Hero секция получила событие изменения языка:',
             event.detail
           );
-          updatePrices();
 
-          // Если язык является RTL, добавляем соответствующий класс
-          const rtlLanguages = ['ar'];
-          const currentLang = event?.detail?.language || 'en';
+          // Используем requestAnimationFrame для оптимизации производительности
+          requestAnimationFrame(() => {
+            updatePrices();
 
-          if (rtlLanguages.includes(currentLang)) {
-            heroSection.classList.add('rtl');
-          } else {
-            heroSection.classList.remove('rtl');
-          }
+            // Если язык является RTL, добавляем соответствующий класс
+            const rtlLanguages = ['ar'];
+            const currentLang = event?.detail?.language || 'en';
+
+            if (rtlLanguages.includes(currentLang)) {
+              heroSection.classList.add('rtl');
+            } else {
+              heroSection.classList.remove('rtl');
+            }
+          });
         } catch (error) {
           console.error('Error in hero language change handler:', error);
         }
@@ -317,23 +368,36 @@ export function initHero() {
     }
   }
 
-  // Обработчик resize с дебаунсингом
+  // Оптимизированный обработчик resize с дебаунсингом
   function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(adjustForViewport, 200);
+    if (resizeTimeout) {
+      clearTimeout(resizeTimeout);
+    }
+    resizeTimeout = setTimeout(() => {
+      requestAnimationFrame(adjustForViewport);
+    }, 200);
   }
 
-  // Инициализация компонента
+  // Инициализация компонента с приоритетами
   try {
+    // Первый этап: загрузка изображений и назначение обработчиков
     setupHeroImage();
-    adjustForViewport();
-    setupContentAnimation();
     setupButtonHandlers();
-    setupLanguageChangeListener();
-    updatePrices(); // Обновляем цены при первой загрузке
 
-    // Слушаем событие изменения размера окна
-    window.addEventListener('resize', handleResize);
+    // Второй этап: адаптация контента под размер экрана
+    adjustForViewport();
+
+    // Третий этап: анимации и прочее
+    requestAnimationFrame(() => {
+      setupContentAnimation();
+      updatePrices(); // Обновляем цены при первой загрузке
+    });
+
+    // Четвертый этап: настройка слушателей событий
+    setTimeout(() => {
+      setupLanguageChangeListener();
+      window.addEventListener('resize', handleResize);
+    }, 100);
   } catch (error) {
     console.error('Ошибка при инициализации Hero секции:', error);
   }
