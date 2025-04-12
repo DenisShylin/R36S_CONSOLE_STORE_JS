@@ -472,10 +472,7 @@
         text-align: right;
     }
 
-    /* Кнопки в RTL режиме */
-    .rtl .hero__buttons {
-        flex-direction: row-reverse;
-    }
+
 
     /* Адаптивная мобильная версия (375-767px) */
     @media screen and (min-width: 375px) {
@@ -693,10 +690,7 @@
             /* Меняем угол на противоположный при наведении */
         }
 
-        /* Выравнивание элементов цены в RTL режиме */
-        .rtl .hero__pricing {
-            flex-direction: row-reverse;
-        }
+
 
         .rtl .hero__price-wrapper {
             flex-direction: row-reverse;
