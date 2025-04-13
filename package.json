@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/R36S_CONSOLE_STORE_JS/",
+    "build": "vite build --base=/",
     "preview": "vite preview"
   },
   "devDependencies": {

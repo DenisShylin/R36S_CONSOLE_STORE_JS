@@ -40,7 +40,7 @@ function createLanguageVersions() {
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
 
       // Определяем, какие пути искать и заменять
-      const absoluteBasePath = '/r36s.pro/';
+      const absoluteBasePath = '/'; // Используем корневой путь
 
       // Функция для замены путей в HTML-файле
       function processHtmlPaths(html) {
@@ -52,27 +52,10 @@ function createLanguageVersions() {
           `$1=$2${absoluteBasePath}$3$4`
         );
 
-        // 2. Заменяем пути, начинающиеся с /assets/ на /r36s.pro/assets/
-        result = result.replace(
-          /(src|href)=("|')(\/assets\/[^"']+)("|')/g,
-          `$1=$2${absoluteBasePath}assets/$3$4`
-        );
+        // 2. Заменяем пути, начинающиеся с /assets/assets/ на /assets/
+        result = result.replace(/\/assets\/assets\//g, '/assets/');
 
-        // 3. Заменяем любые другие абсолютные пути
-        result = result.replace(
-          /(src|href)=("|')(\/[^"']+)("|')/g,
-          (match, attr, quote, path, endQuote) => {
-            // Не заменяем, если путь уже начинается с /r36s.pro/
-            if (path.startsWith('/r36s.pro/')) {
-              return match;
-            }
-            return `${attr}=${quote}${absoluteBasePath}${path.substring(
-              1
-            )}${endQuote}`;
-          }
-        );
-
-        // 4. Исправляем дублированные слеши в URL
+        // 3. Исправляем дублированные слеши в URL
         result = result.replace(/([^:])\/\/+/g, '$1/');
 
         return result;
@@ -131,11 +114,10 @@ function createLanguageVersions() {
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "${absoluteBasePath}";
+    const basePath = "/";
     
     // Проверяем, может ли первый сегмент пути быть языком
-    const pathWithoutBase = path.replace(basePath, '');
-    const segments = pathWithoutBase.split('/').filter(Boolean);
+    const segments = path.split('/').filter(Boolean);
     const supportedLanguages = ${JSON.stringify(supportedLanguages)};
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
@@ -206,7 +188,7 @@ export default defineConfig(({ command }) => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
-            return 'assets/[name]-[hash][extname]';
+            return 'assets/[name]-[hash][extname]'; // Исправлено дублирование assets
           },
         },
       },
