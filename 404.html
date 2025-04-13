@@ -10,7 +10,8 @@
     const basePath = "/r36s.pro/";
     
     // Проверяем, может ли первый сегмент пути быть языком
-    const segments = path.split('/').filter(Boolean);
+    const pathWithoutBase = path.replace(basePath, '');
+    const segments = pathWithoutBase.split('/').filter(Boolean);
     const supportedLanguages = ["en","ru","ar","be","de","es","fr","it","ja","ko","nl","pt","tr","uk"];
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
