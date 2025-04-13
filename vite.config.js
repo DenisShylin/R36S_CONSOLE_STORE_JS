@@ -78,18 +78,18 @@ function lowercaseAssetsPlugin() {
   };
 }
 
-// Плагин для исправления путей в HTML-файлах (только нижний регистр)
+// Плагин для исправления путей в HTML-файлах
 function fixHtmlPathsPlugin() {
   return {
     name: 'fix-html-paths-plugin',
     transformIndexHtml(html) {
-      // Преобразуем все имена файлов в нижний регистр
+      // Преобразуем все имена файлов в нижний регистр, НЕ добавляя базовый путь
       let result = html.replace(
         /(href|src)=["']([^"']+)["']/gi,
         (match, attr, url) => {
           // Игнорируем внешние ссылки
           if (
-            url.startsWith('http') ||
+            (url.startsWith('http') && !url.includes('r36s.pro')) ||
             url.startsWith('data:') ||
             url.startsWith('//')
           ) {
@@ -106,6 +106,12 @@ function fixHtmlPathsPlugin() {
             [path, hash] = url.split('#');
           }
 
+          // Удаляем r36s.pro из пути, если он есть
+          path = path.replace(
+            /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+            ''
+          );
+
           // Преобразуем сегменты пути в нижний регистр
           const segments = path.split('/');
           let modified = false;
@@ -117,17 +123,19 @@ function fixHtmlPathsPlugin() {
             }
           }
 
-          if (modified) {
-            let newUrl = segments.join('/');
+          // Собираем путь обратно
+          let newUrl = segments.join('/');
 
-            // Восстанавливаем хэш и параметры запроса
-            if (hash) newUrl += '#' + hash;
-            if (query) newUrl += '?' + query;
-
-            return `${attr}="${newUrl}"`;
+          // Если путь должен начинаться с /, но его нет
+          if (url.startsWith('/') && !newUrl.startsWith('/') && newUrl) {
+            newUrl = '/' + newUrl;
           }
 
-          return match;
+          // Восстанавливаем хэш и параметры запроса
+          if (hash) newUrl += '#' + hash;
+          if (query) newUrl += '?' + query;
+
+          return `${attr}="${newUrl}"`;
         }
       );
 
@@ -136,13 +144,14 @@ function fixHtmlPathsPlugin() {
   };
 }
 
-// Плагин для постобработки файлов и создания языковых версий
+// Плагин для постобработки файлов после сборки
 function postProcessPlugin() {
   return {
     name: 'post-process-plugin',
     closeBundle: async () => {
-      // Путь к директории сборки
-      const distDir = path.resolve(process.cwd(), 'dist');
+      // Путь к директории сборки - используем путь относительно корня проекта
+      const outDir = 'dist';
+      const distDir = path.resolve(process.cwd(), outDir);
 
       console.log(`Post-processing files in: ${distDir}`);
 
@@ -151,17 +160,42 @@ function postProcessPlugin() {
         return;
       }
 
-      // Рекурсивная функция для переименования файлов в нижний регистр
+      // Обновляем содержимое .map файлов
+      const mapFiles = globSync(path.join(distDir, '**/*.map'));
+      console.log(`Found ${mapFiles.length} map files to process`);
+
+      for (const mapFile of mapFiles) {
+        try {
+          let content = fs.readFileSync(mapFile, 'utf-8');
+          let mapData = JSON.parse(content);
+
+          // Исправляем поле file если оно есть
+          if (mapData.file && mapData.file !== mapData.file.toLowerCase()) {
+            mapData.file = mapData.file.toLowerCase();
+
+            // Записываем обновленное содержимое
+            fs.writeFileSync(mapFile, JSON.stringify(mapData));
+            console.log(`Updated references in map file: ${mapFile}`);
+          }
+        } catch (error) {
+          console.error(`Error processing map file ${mapFile}:`, error);
+        }
+      }
+
+      // Рекурсивная функция для обработки всех файлов и папок
       function processDirectory(dir) {
         const items = fs.readdirSync(dir);
 
+        // Сначала изменяем имена файлов в текущей директории
         for (const item of items) {
           const fullPath = path.join(dir, item);
           const stats = fs.statSync(fullPath);
 
           if (stats.isDirectory()) {
+            // Рекурсивно обрабатываем поддиректории
             processDirectory(fullPath);
           } else if (stats.isFile()) {
+            // Преобразуем имя файла в нижний регистр
             const lowercase = item.toLowerCase();
             if (item !== lowercase) {
               const newPath = path.join(dir, lowercase);
@@ -179,11 +213,177 @@ function postProcessPlugin() {
         }
       }
 
-      // Переименовываем файлы в нижний регистр
-      console.log('Converting filenames to lowercase...');
+      // Начинаем с корневой директории сборки
+      console.log(`Processing directory structure in: ${distDir}`);
       processDirectory(distDir);
 
-      // Создаем языковые версии сайта
+      // Обновляем ссылки в HTML-файлах
+      const htmlFiles = globSync(path.join(distDir, '**/*.html'));
+      console.log(`Found ${htmlFiles.length} HTML files to process`);
+
+      for (const htmlFile of htmlFiles) {
+        let content = fs.readFileSync(htmlFile, 'utf-8');
+        let updated = false;
+
+        // Более агрессивный поиск ссылок
+        content = content.replace(
+          /(href|src|srcset)=["']([^"']+)["']/gi,
+          (match, attr, url) => {
+            // Если это внешняя ссылка или data URL, оставляем как есть
+            if (
+              (url.startsWith('http') && !url.includes('r36s.pro')) ||
+              url.startsWith('data:') ||
+              url.startsWith('//')
+            ) {
+              return match;
+            }
+
+            // Исходная ссылка для логирования
+            const originalUrl = url;
+
+            // Разделяем URL на путь и хэш/параметры запроса
+            let [path, query] = url.split('?');
+            let hash = '';
+
+            if (path.includes('#')) {
+              [path, hash] = path.split('#');
+            } else if (!query && url.includes('#')) {
+              [path, hash] = url.split('#');
+            }
+
+            // Удаляем r36s.pro из пути, если он есть
+            path = path.replace(
+              /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+              ''
+            );
+
+            // Разбиваем путь на сегменты
+            const segments = path.split('/');
+            let modified = false;
+
+            // Преобразуем все сегменты пути (не только последний)
+            for (let i = 0; i < segments.length; i++) {
+              if (segments[i] && segments[i] !== segments[i].toLowerCase()) {
+                segments[i] = segments[i].toLowerCase();
+                modified = true;
+              }
+            }
+
+            // Собираем путь обратно
+            let newUrl = segments.filter(segment => segment !== '').join('/');
+
+            // Если путь должен начинаться с /, но его нет
+            if (
+              originalUrl.startsWith('/') &&
+              !newUrl.startsWith('/') &&
+              newUrl
+            ) {
+              newUrl = '/' + newUrl;
+            }
+
+            // Восстанавливаем хэш и параметры запроса
+            if (hash) newUrl += '#' + hash;
+            if (query) newUrl += '?' + query;
+
+            if (newUrl !== originalUrl) {
+              updated = true;
+              console.log(
+                `URL update in ${htmlFile}: ${originalUrl} -> ${newUrl}`
+              );
+              return `${attr}="${newUrl}"`;
+            }
+
+            return match;
+          }
+        );
+
+        // Исправляем фоновые изображения в инлайн-стилях
+        content = content.replace(
+          /style=["']([^"']*)url\(['"]?([^'")]+)['"]?\)([^"']*)['"]/gi,
+          (match, beforeUrl, url, afterUrl) => {
+            if (url.includes('r36s.pro')) {
+              const newUrl = url.replace(
+                /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+                ''
+              );
+              updated = true;
+              return `style="${beforeUrl}url('${newUrl}')${afterUrl}"`;
+            }
+            return match;
+          }
+        );
+
+        if (updated) {
+          fs.writeFileSync(htmlFile, content);
+          console.log(`Updated references in ${htmlFile}`);
+        }
+      }
+
+      // Исправляем ссылки на ресурсы в JavaScript файлах
+      const jsFiles = globSync(path.join(distDir, '**/*.js'));
+      console.log(`Found ${jsFiles.length} JS files to process`);
+
+      for (const jsFile of jsFiles) {
+        let content = fs.readFileSync(jsFile, 'utf-8');
+        let updated = false;
+
+        // Исправляем ссылки r36s.pro в JS файлах
+        content = content.replace(
+          /["'](\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro)([^"']*)['"]/g,
+          (match, prefix, path) => {
+            updated = true;
+            return `"${path}"`;
+          }
+        );
+
+        // Исправляем все URL с r36s.pro внутри кавычек
+        content = content.replace(
+          /["'](https?:\/\/)?r36s\.pro\/([^"']*)['"]/g,
+          (match, protocol, path) => {
+            updated = true;
+            return `"/${path}"`;
+          }
+        );
+
+        if (updated) {
+          fs.writeFileSync(jsFile, content);
+          console.log(`Updated references in JS file: ${jsFile}`);
+        }
+      }
+
+      // Исправляем ссылки на ресурсы в CSS файлах
+      const cssFiles = globSync(path.join(distDir, '**/*.css'));
+      console.log(`Found ${cssFiles.length} CSS files to process`);
+
+      for (const cssFile of cssFiles) {
+        let content = fs.readFileSync(cssFile, 'utf-8');
+        let updated = false;
+
+        // Исправляем URL в CSS файлах
+        content = content.replace(
+          /url\(['"]?(\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro)([^'")]+)['"]?\)/g,
+          (match, prefix, path) => {
+            updated = true;
+            return `url('/${path}')`;
+          }
+        );
+
+        // Исправляем все URL с r36s.pro
+        content = content.replace(
+          /url\(['"]?(https?:\/\/)?r36s\.pro\/([^'")]+)['"]?\)/g,
+          (match, protocol, path) => {
+            updated = true;
+            return `url('/${path}')`;
+          }
+        );
+
+        if (updated) {
+          fs.writeFileSync(cssFile, content);
+          console.log(`Updated references in CSS file: ${cssFile}`);
+        }
+      }
+
+      // Создаем версии для разных языков
       const indexPath = path.join(distDir, 'index.html');
       if (!fs.existsSync(indexPath)) {
         console.error('Cannot find index.html in build output');
@@ -191,6 +391,7 @@ function postProcessPlugin() {
       }
 
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
+
       console.log('Creating language versions...');
 
       // Создаем директории для каждого языка и копируем в них index.html
@@ -222,7 +423,7 @@ function postProcessPlugin() {
         console.log(`Created language version for: ${lang}`);
       }
 
-      // Исправляем атрибут lang для основного (английского) языка
+      // Исправляем атрибут lang для основного (английского) языка тоже
       let processedContent = indexContent.replace(
         /<html lang="[^"]*">/,
         '<html lang="en">'
@@ -262,28 +463,29 @@ function postProcessPlugin() {
       `;
 
       fs.writeFileSync(path.join(distDir, '404.html'), notFoundContent);
+
       console.log('Created 404.html with redirect logic');
       console.log('Post-processing completed successfully!');
     },
   };
 }
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
   const htmlFiles = globSync('./src/*.html').map(file =>
     path.relative('./src', file)
   );
 
-  // Устанавливаем корневой путь
+  // Устанавливаем корневой путь вместо '/r36s.pro/'
   const base = '/';
 
   return {
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
-    // Базовый путь для всех ресурсов
+    // Устанавливаем путь базы
     base: base,
     root: 'src',
-    // Папка public
+    // Явно указываем папку public как источник статических файлов
     publicDir: '../public',
     build: {
       sourcemap: true,
@@ -308,14 +510,15 @@ export default defineConfig(({ command }) => {
             }
             return '[name].js';
           },
-          // Имена файлов ресурсов в нижнем регистре
+          // Модифицированный assetFileNames для принудительно нижнего регистра
           assetFileNames: assetInfo => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
               return '[name].[ext]';
             }
+            // Используем шаблон с принудительным нижним регистром
             return 'assets/[name]-[hash:8][extname]'.toLowerCase();
           },
-          // Имена чанков в нижнем регистре
+          // Добавленный chunkFileNames для принудительно нижнего регистра
           chunkFileNames: 'assets/[name]-[hash:8].js'.toLowerCase(),
         },
       },
@@ -332,11 +535,11 @@ export default defineConfig(({ command }) => {
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
-      // Плагин для преобразования имен файлов в нижний регистр
+      // Добавляем плагин для нижнего регистра имен файлов
       lowercaseAssetsPlugin(),
-      // Плагин для исправления путей в HTML
+      // Добавляем плагин для исправления путей в HTML (без базового пути)
       fixHtmlPathsPlugin(),
-      // Плагин для постобработки и создания языковых версий
+      // Добавляем плагин для постобработки
       postProcessPlugin(),
     ],
     resolve: {
