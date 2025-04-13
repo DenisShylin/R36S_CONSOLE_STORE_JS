@@ -79,7 +79,7 @@ function lowercaseAssetsPlugin() {
 }
 
 // Плагин для исправления путей в HTML-файлах
-function fixHtmlPathsPlugin(basePath) {
+function fixHtmlPathsPlugin() {
   return {
     name: 'fix-html-paths-plugin',
     transformIndexHtml(html) {
@@ -137,7 +137,7 @@ function fixHtmlPathsPlugin(basePath) {
 }
 
 // Улучшенная функция для переименования файлов в нижний регистр и обновления путей в HTML
-function renameFilesToLowercase(distDir, config) {
+function renameFilesToLowercase(distDir) {
   console.log('Converting filenames to lowercase and updating references...');
 
   // Обновляем содержимое .map файлов
@@ -252,20 +252,6 @@ function renameFilesToLowercase(distDir, config) {
       }
     );
 
-    // Также проверяем наличие абсолютных путей, если указан базовый путь
-    if (config && config.base && config.base !== '/') {
-      const basePath = config.base.replace(/^\/|\/$/g, '');
-
-      // Проверяем ссылки, которые должны начинаться с базового пути
-      content = content.replace(
-        /(href|src)=["']\/([^"'/][^"']+)["']/gi,
-        (match, attr, path) => {
-          updated = true;
-          return `${attr}="/${basePath}/${path}"`;
-        }
-      );
-    }
-
     if (updated) {
       fs.writeFileSync(htmlFile, content);
       console.log(`Updated references in ${htmlFile}`);
@@ -274,7 +260,7 @@ function renameFilesToLowercase(distDir, config) {
 }
 
 // Плагин для создания языковых версий
-function createLanguageVersions(config) {
+function createLanguageVersions() {
   return {
     name: 'create-language-versions',
     closeBundle: async () => {
@@ -287,28 +273,30 @@ function createLanguageVersions(config) {
       }
 
       // Сначала переименовываем файлы в нижний регистр
-      renameFilesToLowercase(distDir, config);
+      renameFilesToLowercase(distDir);
 
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
 
-      // Определяем, какие пути искать и заменять
-      const absoluteBasePath = '/r36s.pro/';
-
-      // Функция для замены путей в HTML-файле
+      // Функция для обработки путей в HTML
       function processHtmlPaths(html) {
         let result = html;
 
-        // 1. Заменяем относительные пути на абсолютные
-        result = result.replace(
-          /(src|href)=("|')((?!http|\/\/|\/)[^"']+)("|')/g,
-          `$1=$2${absoluteBasePath}$3$4`
-        );
-
-        // 2. Заменяем пути, начинающиеся с /assets/assets/ на /assets/
-        result = result.replace(/\/assets\/assets\//g, '/assets/');
-
-        // 3. Исправляем дублированные слеши в URL
+        // Исправляем дублированные слеши в URL
         result = result.replace(/([^:])\/\/+/g, '$1/');
+
+        // Убираем r36s.pro из путей, во всех возможных форматах
+        result = result.replace(/\/r36s\.pro\//g, '/');
+        result = result.replace(/\/r36s\.pro/g, '');
+        result = result.replace(/r36s\.pro\//g, '');
+        result = result.replace(/r36s\.pro/g, '');
+
+        // Исправляем пути к хэшам с r36s
+        result = result.replace(/href="[^"]*#features-r36s/g, match => {
+          return match.replace(
+            /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+            ''
+          );
+        });
 
         return result;
       }
@@ -343,6 +331,28 @@ function createLanguageVersions(config) {
           </head>`
         );
 
+        // Дополнительная обработка путей r36s
+        langContent = langContent.replace(
+          /href="[^"]*\/r36s\.pro[^"]*"/g,
+          match => {
+            return match.replace(
+              /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+              ''
+            );
+          }
+        );
+
+        // Обработка любых ссылок с r36s
+        langContent = langContent.replace(/href="[^"]*r36s[^"]*"/g, match => {
+          if (match.includes('/r36s.pro') || match.includes('r36s.pro')) {
+            return match.replace(
+              /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+              ''
+            );
+          }
+          return match;
+        });
+
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
         console.log(`Created language version for: ${lang}`);
       }
@@ -353,7 +363,32 @@ function createLanguageVersions(config) {
         '<html lang="en">'
       );
 
-      // Записываем обратно основной index.html с абсолютными путями
+      // Дополнительная обработка путей r36s в основном файле
+      processedContent = processedContent.replace(
+        /href="[^"]*\/r36s\.pro[^"]*"/g,
+        match => {
+          return match.replace(
+            /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+            ''
+          );
+        }
+      );
+
+      // Обработка любых ссылок с r36s в основном файле
+      processedContent = processedContent.replace(
+        /href="[^"]*r36s[^"]*"/g,
+        match => {
+          if (match.includes('/r36s.pro') || match.includes('r36s.pro')) {
+            return match.replace(
+              /\/r36s\.pro\/|r36s\.pro\/|\/r36s\.pro|r36s\.pro/,
+              ''
+            );
+          }
+          return match;
+        }
+      );
+
+      // Записываем обратно основной index.html
       fs.writeFileSync(indexPath, processedContent);
 
       // Создаем файл 404.html для обработки неизвестных URL
@@ -366,7 +401,6 @@ function createLanguageVersions(config) {
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "/r36s.pro/";
     
     // Проверяем, может ли первый сегмент пути быть языком
     const segments = path.split('/').filter(Boolean);
@@ -374,10 +408,10 @@ function createLanguageVersions(config) {
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
       // Это языковой путь, но файл не найден
-      window.location.href = basePath + segments[0] + '/';
+      window.location.href = '/' + segments[0] + '/';
     } else {
       // Неизвестный путь - редирект на главную
-      window.location.href = basePath;
+      window.location.href = '/';
     }
   </script>
 </head>
@@ -408,8 +442,8 @@ export default defineConfig(({ command }) => {
     path.relative('./src', file)
   );
 
-  // Определяем базовый путь
-  const base = '/r36s.pro/';
+  // Устанавливаем корневой путь вместо '/r36s.pro/'
+  const base = '/';
 
   return {
     define: {
@@ -470,10 +504,10 @@ export default defineConfig(({ command }) => {
       FullReload(['./src/**/**.html']),
       // Добавляем плагин для нижнего регистра имен файлов
       lowercaseAssetsPlugin(),
-      // Добавляем плагин для исправления путей в HTML
-      fixHtmlPathsPlugin(base),
+      // Добавляем плагин для исправления путей в HTML (без базового пути)
+      fixHtmlPathsPlugin(),
       // Затем идет плагин для создания языковых версий
-      createLanguageVersions({ base: base }),
+      createLanguageVersions(),
     ],
     resolve: {
       alias: {
