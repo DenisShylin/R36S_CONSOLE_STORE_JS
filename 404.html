@@ -7,11 +7,10 @@
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "/r36s.pro/";
+    const basePath = "/";
     
     // Проверяем, может ли первый сегмент пути быть языком
-    const pathWithoutBase = path.replace(basePath, '');
-    const segments = pathWithoutBase.split('/').filter(Boolean);
+    const segments = path.split('/').filter(Boolean);
     const supportedLanguages = ["en","ru","ar","be","de","es","fr","it","ja","ko","nl","pt","tr","uk"];
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
