@@ -7,7 +7,6 @@
   <script>
     // Извлекаем путь из URL
     const path = window.location.pathname;
-    const basePath = "/r36s.pro/";
     
     // Проверяем, может ли первый сегмент пути быть языком
     const segments = path.split('/').filter(Boolean);
@@ -15,10 +14,10 @@
     
     if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
       // Это языковой путь, но файл не найден
-      window.location.href = basePath + segments[0] + '/';
+      window.location.href = '/' + segments[0] + '/';
     } else {
       // Неизвестный путь - редирект на главную
-      window.location.href = basePath;
+      window.location.href = '/';
     }
   </script>
 </head>
