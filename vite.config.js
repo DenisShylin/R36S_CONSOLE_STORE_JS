@@ -83,14 +83,8 @@ function fixHtmlPathsPlugin(basePath) {
   return {
     name: 'fix-html-paths-plugin',
     transformIndexHtml(html) {
-      // Исправляем абсолютные пути, добавляя базовый путь
+      // Преобразуем все имена файлов в нижний регистр, НЕ добавляя базовый путь
       let result = html.replace(
-        /(href|src)=["']\/([^"'][^"']+)["']/g,
-        (match, attr, path) => `${attr}="${basePath}${path}"`
-      );
-
-      // Преобразуем все имена файлов в нижний регистр
-      result = result.replace(
         /(href|src)=["']([^"']+)["']/gi,
         (match, attr, url) => {
           // Игнорируем внешние ссылки
