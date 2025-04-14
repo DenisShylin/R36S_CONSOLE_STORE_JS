@@ -1,69 +1,68 @@
 /**
- * @fileoverview Hero section initialization module
- * @description Содержит функции для инициализации секции Hero, управления изображениями,
- * адаптивности и обработки событий кнопок.
+ * @fileoverview Hero section initialization module - оптимизированная версия
+ * @description Содержит функции для инициализации секции Hero с фокусом на производительности
  */
 
 import { getLocalizedPrice } from './utils/priceFormatter';
 
 /**
  * Инициализирует секцию Hero на странице.
- * Настраивает изображения, обработку событий загрузки, адаптивность и анимации.
- * @returns {Function} Функция очистки для удаления обработчиков событий и наблюдателей
+ * @returns {Function} Функция очистки для удаления обработчиков событий
  */
 export function initHero() {
-  // DOM-элементы
-  const heroSection = document.querySelector('.hero');
-  const heroImage = document.querySelector('.hero__console-img');
-  const heroContent = document.querySelector('.hero__content');
-  const desktopDescription = document.querySelector(
-    '.hero__description--desktop'
-  );
-  const mobileDescription = document.querySelector(
-    '.hero__description--mobile'
-  );
-  const heroPricing = document.querySelector('.hero__pricing');
-  const buyButton = document.getElementById('buy-button');
-  const moreDetailsButton = document.getElementById('more-details-button');
-  const currentPrice = document.querySelector('.hero__current-price');
-  const originalPrice = document.querySelector('.hero__original-price');
-  const discountBadge = document.querySelector('.hero__discount-badge');
+  // Кэшируем селекторы в одном месте для повышения производительности
+  const selectors = {
+    heroSection: document.querySelector('.hero'),
+    heroImage: document.querySelector('.hero__console-img'),
+    heroContent: document.querySelector('.hero__content'),
+    desktopDesc: document.querySelector('.hero__description--desktop'),
+    mobileDesc: document.querySelector('.hero__description--mobile'),
+    heroPricing: document.querySelector('.hero__pricing'),
+    buyButton: document.getElementById('buy-button'),
+    moreDetailsButton: document.getElementById('more-details-button'),
+    currentPrice: document.querySelector('.hero__current-price'),
+    originalPrice: document.querySelector('.hero__original-price'),
+    discountBadge: document.querySelector('.hero__discount-badge'),
+    placeholder: document.querySelector('.hero__placeholder'),
+  };
 
-  // Хранение ссылки на обсервер для корректного удаления
   let contentObserver = null;
   let resizeTimeout;
   let languageChangeHandler;
 
+  // Избегаем повторную обработку для удаленных из DOM элементов
+  const isValidContext = () => {
+    return (
+      selectors.heroSection && document.body.contains(selectors.heroSection)
+    );
+  };
+
   /**
-   * Обновляет цены на основе текущего языка
-   * @private
+   * Обновляет цены на основе текущего языка - оптимизированная версия
    */
   function updatePrices() {
+    if (!isValidContext()) return;
+
     try {
-      if (!document.body.contains(heroSection)) {
-        console.warn('Hero section removed from DOM, skipping price update');
-        return;
-      }
+      const { currentPrice, originalPrice, discountBadge } = selectors;
 
-      if (currentPrice) {
-        const formattedCurrentPrice = getLocalizedPrice('current');
-        if (formattedCurrentPrice) {
-          currentPrice.innerHTML = formattedCurrentPrice;
-        }
-      }
+      // Используем одну проверку вместо трех отдельных
+      const priceData = {
+        current: currentPrice ? getLocalizedPrice('current') : null,
+        original: originalPrice ? getLocalizedPrice('original') : null,
+        discount: discountBadge ? getLocalizedPrice('discount') : null,
+      };
 
-      if (originalPrice) {
-        const formattedOriginalPrice = getLocalizedPrice('original');
-        if (formattedOriginalPrice) {
-          originalPrice.textContent = formattedOriginalPrice;
-        }
-      }
-
-      if (discountBadge) {
-        const formattedDiscount = getLocalizedPrice('discount');
-        if (formattedDiscount) {
-          discountBadge.textContent = formattedDiscount;
-        }
+      // Применяем все изменения в одной операции requestAnimationFrame
+      if (Object.values(priceData).some(Boolean)) {
+        requestAnimationFrame(() => {
+          if (priceData.current && currentPrice)
+            currentPrice.innerHTML = priceData.current;
+          if (priceData.original && originalPrice)
+            originalPrice.textContent = priceData.original;
+          if (priceData.discount && discountBadge)
+            discountBadge.textContent = priceData.discount;
+        });
       }
     } catch (error) {
       console.error('Ошибка при обновлении цен:', error);
@@ -72,59 +71,41 @@ export function initHero() {
 
   /**
    * Оптимизированная настройка изображения секции Hero.
-   * Используется предварительная загрузка изображения для ускорения отображения
-   * @private
    */
   function setupHeroImage() {
+    const { heroImage, heroSection, placeholder } = selectors;
     if (!heroImage || !heroSection) return;
 
     try {
-      // Добавляем резервный слот для изображения
-      if (document.body.contains(heroSection)) {
-        heroSection.classList.add('hero--loading');
-      }
+      // Упрощаем управление классами для улучшения производительности
+      const updateImageState = isLoaded => {
+        if (!isValidContext()) return;
 
-      // Обработка загрузки изображения
-      if (heroImage.complete) {
-        // Изображение уже загружено (из кэша)
-        if (document.body.contains(heroSection)) {
-          heroSection.classList.remove('hero--loading');
-          heroSection.classList.add('hero--loaded');
-        }
-      } else {
-        // Определяем обработчики событий
-        heroImage.onload = () => {
-          if (document.body.contains(heroSection)) {
-            heroSection.classList.remove('hero--loading');
-            heroSection.classList.add('hero--loaded');
+        requestAnimationFrame(() => {
+          heroSection.classList.toggle('hero--loading', !isLoaded);
+          heroSection.classList.toggle('hero--loaded', isLoaded);
+
+          // Обработка placeholder если он существует
+          if (placeholder && isLoaded) {
+            placeholder.style.opacity = '0';
           }
-        };
+        });
+      };
 
+      // Устанавливаем начальное состояние
+      updateImageState(heroImage.complete);
+
+      // Обработка загрузки только если изображение еще не загружено
+      if (!heroImage.complete) {
+        heroImage.onload = () => updateImageState(true);
         heroImage.onerror = () => {
           console.error('Не удалось загрузить изображение:', heroImage.src);
-          // В любом случае показываем секцию
-          if (document.body.contains(heroSection)) {
-            heroSection.classList.remove('hero--loading');
-            heroSection.classList.add('hero--loaded');
-          }
+          updateImageState(true); // Все равно отображаем секцию
         };
-
-        // Устанавливаем атрибуты для оптимизации загрузки
-        heroImage.decoding = 'async';
-        heroImage.loading = 'eager'; // Гарантирует немедленную загрузку для LCP
-
-        // Добавляем низкокачественный placeholder если необходимо
-        // const imgWrapper = heroImage.parentElement;
-        // if (imgWrapper && !imgWrapper.querySelector('.hero__placeholder')) {
-        //   const placeholder = document.createElement('div');
-        //   placeholder.className = 'hero__placeholder';
-        //   imgWrapper.insertBefore(placeholder, heroImage);
-        // }
       }
     } catch (error) {
       console.error('Ошибка при настройке изображения в Hero секции:', error);
-      // В случае ошибки все равно показываем секцию
-      if (document.body.contains(heroSection)) {
+      if (isValidContext()) {
         heroSection.classList.remove('hero--loading');
         heroSection.classList.add('hero--loaded');
       }
@@ -132,272 +113,255 @@ export function initHero() {
   }
 
   /**
-   * Адаптирует контент для разных размеров экрана.
-   * Переключает между мобильной и десктопной версиями описания.
-   * @private
+   * Адаптирует контент для разных размеров экрана - оптимизированная версия.
    */
   function adjustForViewport() {
-    try {
-      if (
-        !desktopDescription ||
-        !mobileDescription ||
-        !document.body.contains(desktopDescription) ||
-        !document.body.contains(mobileDescription)
-      ) {
-        return;
-      }
+    if (!isValidContext()) return;
 
-      const isDesktop = window.innerWidth > 992;
+    const { desktopDesc, mobileDesc } = selectors;
+    if (!desktopDesc || !mobileDesc) return;
 
-      desktopDescription.style.display = isDesktop ? 'block' : 'none';
-      mobileDescription.style.display = isDesktop ? 'none' : 'block';
-    } catch (error) {
-      console.error('Ошибка при адаптации контента для разных экранов:', error);
+    const isDesktop = window.innerWidth > 992;
+
+    // Делаем одну операцию обновления DOM вместо двух отдельных
+    requestAnimationFrame(() => {
+      desktopDesc.style.display = isDesktop ? 'block' : 'none';
+      mobileDesc.style.display = isDesktop ? 'none' : 'block';
+    });
+  }
+
+  /**
+   * Настраивает анимацию появления контента - оптимизированная версия.
+   */
+  function setupContentAnimation() {
+    const { heroContent } = selectors;
+    if (!heroContent || !isValidContext()) return;
+
+    // Избегаем ненужных проверок для классов
+    if (!heroContent.classList.contains('animate-in')) {
+      // Используем прямую анимацию вместо таймаута для ускорения LCP
+      requestAnimationFrame(() => {
+        heroContent.classList.add('animate-in');
+      });
+    }
+
+    // Оптимизированная обработка анимации для других элементов
+    const nonCriticalElements = document.querySelectorAll('.animate-on-scroll');
+    if (nonCriticalElements.length > 0 && 'IntersectionObserver' in window) {
+      // Инициализируем observer только если есть элементы для наблюдения
+      if (contentObserver) contentObserver.disconnect();
+
+      contentObserver = new IntersectionObserver(
+        entries => {
+          // Обрабатываем всю пачку элементов в одном цикле
+          const elementsToAnimate = entries
+            .filter(entry => entry.isIntersecting && entry.target?.isConnected)
+            .map(entry => {
+              contentObserver.unobserve(entry.target);
+              return entry.target;
+            });
+
+          // Анимируем все элементы в одном requestAnimationFrame
+          if (elementsToAnimate.length) {
+            requestAnimationFrame(() => {
+              elementsToAnimate.forEach(el => el.classList.add('animate-in'));
+            });
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      // Наблюдаем только за подключенными элементами
+      nonCriticalElements.forEach(element => {
+        if (element.isConnected) {
+          contentObserver.observe(element);
+        }
+      });
     }
   }
 
   /**
-   * Настраивает анимацию появления контента при прокрутке.
-   * Использует IntersectionObserver для определения видимости элемента.
-   * @private
+   * Настраивает обработчики событий для кнопок секции - оптимизированная версия.
    */
-  function setupContentAnimation() {
-    if (!heroContent) return;
+  function setupButtonHandlers() {
+    const { buyButton, moreDetailsButton } = selectors;
 
-    try {
-      // Удаляем предыдущий observer если он существует
-      if (contentObserver) {
-        contentObserver.disconnect();
-        contentObserver = null;
-      }
+    // Делегируем обработку событий родительскому элементу для уменьшения количества обработчиков
+    const heroButtonsWrapper = document.querySelector('.hero__buttons');
+    if (heroButtonsWrapper) {
+      heroButtonsWrapper.addEventListener('click', e => {
+        if (e.target.closest('#buy-button')) {
+          e.preventDefault();
+          window.open(
+            'https://www.aliexpress.com/item/1005007171465465.html',
+            '_blank',
+            'noopener,noreferrer'
+          );
+        } else if (e.target.closest('#more-details-button')) {
+          e.preventDefault();
+          const featuresSection = document.getElementById('features');
 
-      // Оптимизированная версия: сразу анимируем контент для LCP
-      if (
-        heroContent.isConnected &&
-        !heroContent.classList.contains('animate-in')
-      ) {
-        // Добавляем минимальную задержку для более плавного рендеринга
-        setTimeout(() => {
-          heroContent.classList.add('animate-in');
-        }, 50);
-      }
+          if (featuresSection) {
+            const elementPosition = featuresSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY;
 
-      // Только для нижней части страницы используем IntersectionObserver
-      const nonCriticalElements =
-        document.querySelectorAll('.animate-on-scroll');
-      if (nonCriticalElements.length > 0 && 'IntersectionObserver' in window) {
-        contentObserver = new IntersectionObserver(
-          entries => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting && entry.target?.isConnected) {
-                entry.target.classList.add('animate-in');
-                // Отключаем наблюдение после анимации
-                contentObserver?.unobserve(entry.target);
-              }
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
             });
-          },
-          { threshold: 0.1 }
-        );
 
-        // Наблюдаем за некритичными элементами
-        nonCriticalElements.forEach(element => {
-          if (element.isConnected) {
-            contentObserver.observe(element);
+            // Обновляем URL без перезагрузки страницы
+            window.history.replaceState(
+              null,
+              '',
+              `${window.location.pathname}#features`
+            );
+          } else {
+            window.location.hash = 'features';
+          }
+        }
+      });
+    } else {
+      // Резервный вариант, если делегирование невозможно
+      if (buyButton) {
+        buyButton.addEventListener('click', e => {
+          e.preventDefault();
+          window.open(
+            'https://www.aliexpress.com/item/1005007171465465.html',
+            '_blank',
+            'noopener,noreferrer'
+          );
+        });
+      }
+
+      if (moreDetailsButton) {
+        moreDetailsButton.addEventListener('click', e => {
+          e.preventDefault();
+          const featuresSection = document.getElementById('features');
+
+          if (featuresSection) {
+            const elementPosition = featuresSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+
+            window.history.replaceState(
+              null,
+              '',
+              `${window.location.pathname}#features`
+            );
+          } else {
+            window.location.hash = 'features';
           }
         });
       }
-    } catch (error) {
-      console.error('Ошибка при настройке анимации контента:', error);
     }
   }
 
   /**
-   * Настраивает обработчики событий для кнопок секции.
-   * @private
-   */
-  function setupButtonHandlers() {
-    try {
-      // Обработчик для кнопки покупки
-      if (buyButton) {
-        buyButton.addEventListener('click', handleBuyButtonClick);
-      }
-
-      // Обработчик для кнопки "More details"
-      if (moreDetailsButton) {
-        moreDetailsButton.addEventListener('click', handleMoreDetailsClick);
-      }
-    } catch (error) {
-      console.error('Ошибка при настройке обработчиков кнопок:', error);
-    }
-  }
-
-  /**
-   * Настраивает обработчики событий для смены языка
-   * @private
+   * Настраивает обработчики событий для смены языка - оптимизированная версия
    */
   function setupLanguageChangeListener() {
-    try {
-      // Обработчик изменения языка с дебаунсингом
-      languageChangeHandler = event => {
-        try {
-          // Проверяем, что секция все еще в DOM
-          if (!document.body.contains(heroSection)) {
-            console.warn(
-              'Hero section removed from DOM, skipping language change handling'
-            );
-            return;
-          }
+    if (!isValidContext()) return;
 
-          console.log(
-            'Hero секция получила событие изменения языка:',
-            event.detail
-          );
+    languageChangeHandler = event => {
+      if (!isValidContext()) return;
 
-          // Используем requestAnimationFrame для оптимизации производительности
-          requestAnimationFrame(() => {
-            updatePrices();
+      updatePrices();
 
-            // Если язык является RTL, добавляем соответствующий класс
-            const rtlLanguages = ['ar'];
-            const currentLang = event?.detail?.language || 'en';
+      // Оптимизация обработки RTL языков
+      const rtlLanguages = ['ar'];
+      const currentLang = event?.detail?.language || 'en';
+      const isRTL = rtlLanguages.includes(currentLang);
 
-            if (rtlLanguages.includes(currentLang)) {
-              heroSection.classList.add('rtl');
-            } else {
-              heroSection.classList.remove('rtl');
-            }
-          });
-        } catch (error) {
-          console.error('Error in hero language change handler:', error);
-        }
-      };
-
-      // Слушаем событие смены языка
-      window.addEventListener('languageChanged', languageChangeHandler);
-    } catch (error) {
-      console.error('Ошибка при настройке слушателя смены языка:', error);
-    }
-  }
-
-  /**
-   * Обработчик клика по кнопке Buy
-   * @private
-   */
-  function handleBuyButtonClick() {
-    try {
-      window.open(
-        'https://www.aliexpress.com/item/1005007171465465.html',
-        '_blank',
-        'noopener,noreferrer'
-      );
-    } catch (error) {
-      console.error('Ошибка при обработке клика по кнопке Buy:', error);
-    }
-  }
-
-  /**
-   * Обрабатывает клик по кнопке "More details".
-   * Выполняет плавную прокрутку к секции features.
-   * @param {Event} e - Событие клика
-   * @private
-   */
-  function handleMoreDetailsClick(e) {
-    try {
-      e.preventDefault();
-      const featuresSection = document.getElementById('features');
-
-      if (!featuresSection) {
-        window.location.hash = 'features';
-        return;
-      }
-
-      // Получаем позицию секции без учета высоты хедера
-      const elementPosition = featuresSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY;
-
-      // Плавная прокрутка к секции features
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
+      requestAnimationFrame(() => {
+        selectors.heroSection.classList.toggle('rtl', isRTL);
       });
+    };
 
-      // Обновляем URL без перезагрузки страницы
-      window.history.replaceState(
-        null,
-        '',
-        `${window.location.pathname}#features`
-      );
-    } catch (error) {
-      console.error(
-        'Ошибка при обработке клика по кнопке More Details:',
-        error
-      );
-    }
+    // Слушаем событие смены языка
+    window.addEventListener('languageChanged', languageChangeHandler);
   }
 
-  /**
-   * Функция очистки слушателей и наблюдателей
-   * @private
-   */
-  function cleanup() {
-    try {
-      // Отключаем IntersectionObserver
-      if (contentObserver) {
-        contentObserver.disconnect();
-      }
-
-      // Очищаем таймаут resize
-      clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', handleResize);
-
-      // Удаляем обработчик смены языка
-      if (languageChangeHandler) {
-        window.removeEventListener('languageChanged', languageChangeHandler);
-      }
-
-      // Удаляем обработчики кнопок
-      if (buyButton) {
-        buyButton.removeEventListener('click', handleBuyButtonClick);
-      }
-
-      if (moreDetailsButton) {
-        moreDetailsButton.removeEventListener('click', handleMoreDetailsClick);
-      }
-    } catch (error) {
-      console.error('Ошибка при очистке ресурсов Hero секции:', error);
-    }
-  }
-
-  // Оптимизированный обработчик resize с дебаунсингом
+  // Оптимизированный обработчик resize с дебаунсингом и throttling
   function handleResize() {
     if (resizeTimeout) {
       clearTimeout(resizeTimeout);
     }
+
+    // Увеличиваем задержку для уменьшения количества вызовов функции
     resizeTimeout = setTimeout(() => {
-      requestAnimationFrame(adjustForViewport);
-    }, 200);
+      adjustForViewport();
+    }, 250);
   }
 
-  // Инициализация компонента с приоритетами
+  /**
+   * Функция очистки слушателей и наблюдателей - оптимизированная версия
+   */
+  function cleanup() {
+    // Оптимизированная очистка ресурсов
+    if (contentObserver) {
+      contentObserver.disconnect();
+      contentObserver = null;
+    }
+
+    clearTimeout(resizeTimeout);
+    window.removeEventListener('resize', handleResize);
+
+    if (languageChangeHandler) {
+      window.removeEventListener('languageChanged', languageChangeHandler);
+    }
+
+    // Очищаем обработчики с учетом делегирования событий
+    const heroButtonsWrapper = document.querySelector('.hero__buttons');
+    if (heroButtonsWrapper) {
+      heroButtonsWrapper.removeEventListener('click', null);
+    } else {
+      // Резервный вариант
+      const { buyButton, moreDetailsButton } = selectors;
+      if (buyButton) buyButton.removeEventListener('click', null);
+      if (moreDetailsButton)
+        moreDetailsButton.removeEventListener('click', null);
+    }
+  }
+
+  // Инициализация компонента с приоритетами - оптимизированная версия
   try {
-    // Первый этап: загрузка изображений и назначение обработчиков
+    // Запускаем критические операции сразу
     setupHeroImage();
-    setupButtonHandlers();
 
-    // Второй этап: адаптация контента под размер экрана
-    adjustForViewport();
-
-    // Третий этап: анимации и прочее
+    // Используем единый requestAnimationFrame для группировки неприоритетных операций
     requestAnimationFrame(() => {
+      // Высокоприоритетные операции обновления DOM
       setupContentAnimation();
-      updatePrices(); // Обновляем цены при первой загрузке
+      adjustForViewport();
+      updatePrices();
+
+      // Операции с низким приоритетом в следующем цикле
+      requestIdleCallback
+        ? requestIdleCallback(() => {
+            setupButtonHandlers();
+            setupLanguageChangeListener();
+          })
+        : setTimeout(() => {
+            setupButtonHandlers();
+            setupLanguageChangeListener();
+          }, 50);
     });
 
-    // Четвертый этап: настройка слушателей событий
-    setTimeout(() => {
-      setupLanguageChangeListener();
-      window.addEventListener('resize', handleResize);
-    }, 100);
+    // Отложенная настройка обработчика resize
+    if (window.requestIdleCallback) {
+      requestIdleCallback(() => {
+        window.addEventListener('resize', handleResize);
+      });
+    } else {
+      setTimeout(() => {
+        window.addEventListener('resize', handleResize);
+      }, 100);
+    }
   } catch (error) {
     console.error('Ошибка при инициализации Hero секции:', error);
   }
