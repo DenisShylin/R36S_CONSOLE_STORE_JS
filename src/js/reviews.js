@@ -1,9 +1,9 @@
-// Reviews.js - Модифицированный скрипт для секции отзывов с поддержкой i18n
+// Reviews.js - Модифицированный скрипт для секции отзывов с поддержкой i18n и изображений 2х
 
 // Импортируем i18next для доступа к переводам
 import i18next from 'i18next';
 
-// Импортируем изображения отзывов
+// Импортируем изображения отзывов (1x)
 import review1Webp from '/img/reviews/imm1_1x.webp';
 import review1Jpg from '/img/reviews/imm1_1x.jpg';
 import review2Webp from '/img/reviews/imm2_1x.webp';
@@ -12,6 +12,16 @@ import review3Webp from '/img/reviews/imm3_1x.webp';
 import review3Jpg from '/img/reviews/imm3_1x.jpg';
 import review4Webp from '/img/reviews/imm4_1x.webp';
 import review4Jpg from '/img/reviews/imm4_1x.jpg';
+
+// Добавляем импорт изображений высокого разрешения (2x)
+import review1Webp2x from '/img/reviews/imm1_2x.webp';
+import review1Jpg2x from '/img/reviews/imm1_2x.jpg';
+import review2Webp2x from '/img/reviews/imm2_2x.webp';
+import review2Jpg2x from '/img/reviews/imm2_2x.jpg';
+import review3Webp2x from '/img/reviews/imm3_2x.webp';
+import review3Jpg2x from '/img/reviews/imm3_2x.jpg';
+import review4Webp2x from '/img/reviews/imm4_2x.webp';
+import review4Jpg2x from '/img/reviews/imm4_2x.jpg';
 
 // Функция инициализации секции отзывов
 export function initReviews() {
@@ -26,18 +36,26 @@ export function initReviews() {
     review1: {
       webp: review1Webp,
       jpg: review1Jpg,
+      webp2x: review1Webp2x, // добавляем 2x версии
+      jpg2x: review1Jpg2x,
     },
     review2: {
       webp: review2Webp,
       jpg: review2Jpg,
+      webp2x: review2Webp2x, // добавляем 2x версии
+      jpg2x: review2Jpg2x,
     },
     review3: {
       webp: review3Webp,
       jpg: review3Jpg,
+      webp2x: review3Webp2x, // добавляем 2x версии
+      jpg2x: review3Jpg2x,
     },
     review4: {
       webp: review4Webp,
       jpg: review4Jpg,
+      webp2x: review4Webp2x, // добавляем 2x версии
+      jpg2x: review4Jpg2x,
     },
   };
 
@@ -57,6 +75,8 @@ export function initReviews() {
       images: {
         webp: reviewImages.review1.webp,
         jpeg: reviewImages.review1.jpg,
+        webp2x: reviewImages.review1.webp2x,
+        jpeg2x: reviewImages.review1.jpg2x,
       },
       helpful: 12,
       verified: true,
@@ -75,6 +95,8 @@ export function initReviews() {
       images: {
         webp: reviewImages.review4.webp,
         jpeg: reviewImages.review4.jpg,
+        webp2x: reviewImages.review4.webp2x,
+        jpeg2x: reviewImages.review4.jpg2x,
       },
       helpful: 8,
       verified: true,
@@ -93,6 +115,8 @@ export function initReviews() {
       images: {
         webp: reviewImages.review3.webp,
         jpeg: reviewImages.review3.jpg,
+        webp2x: reviewImages.review3.webp2x,
+        jpeg2x: reviewImages.review3.jpg2x,
       },
       helpful: 15,
       verified: true,
@@ -111,6 +135,8 @@ export function initReviews() {
       images: {
         webp: reviewImages.review2.webp,
         jpeg: reviewImages.review2.jpg,
+        webp2x: reviewImages.review2.webp2x,
+        jpeg2x: reviewImages.review2.jpg2x,
       },
       helpful: 10,
       verified: true,
@@ -210,18 +236,31 @@ export function initReviews() {
     const reviewText = getTranslation(review.textKey, review.text);
     card.querySelector('.review-card__text').textContent = reviewText;
 
-    // Изображения
+    // Изображения с поддержкой 2x версий
     const picture = card.querySelector('picture');
 
     // Добавляем отладочную информацию
     console.log('Setting image paths for review #' + review.id + ':', {
       webp: review.images.webp,
+      webp2x: review.images.webp2x,
       jpeg: review.images.jpeg,
+      jpeg2x: review.images.jpeg2x,
     });
 
-    picture.querySelector('source').setAttribute('srcset', review.images.webp);
+    // Устанавливаем srcset для webp с поддержкой 1x и 2x разрешений
+    const webpSource = picture.querySelector('source');
+    webpSource.setAttribute(
+      'srcset',
+      `${review.images.webp} 1x, ${review.images.webp2x} 2x`
+    );
+
+    // Устанавливаем src и srcset для jpeg изображения
     const img = picture.querySelector('img');
     img.setAttribute('src', review.images.jpeg);
+    img.setAttribute(
+      'srcset',
+      `${review.images.jpeg} 1x, ${review.images.jpeg2x} 2x`
+    );
     img.setAttribute('alt', `Review ${review.id}`);
 
     // Информация об авторе с поддержкой i18n
