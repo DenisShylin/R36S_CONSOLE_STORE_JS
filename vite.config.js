@@ -136,6 +136,98 @@ function fixHtmlPathsPlugin() {
   };
 }
 
+// Плагин для создания robots.txt если его нет
+function createRobotsPlugin() {
+  return {
+    name: 'create-robots-plugin',
+    closeBundle: async () => {
+      const distDir = path.resolve(process.cwd(), 'dist');
+      const robotsPath = path.join(distDir, 'robots.txt');
+
+      // Если robots.txt не существует после сборки, создадим его
+      if (!fs.existsSync(robotsPath)) {
+        console.log('Creating default robots.txt file...');
+        const robotsContent = `User-agent: *
+Allow: /
+Sitemap: https://r36s.pro/sitemap.xml
+
+# Allow all bots to access all content
+User-agent: *
+Disallow: 
+
+# Specify language-specific patterns
+User-agent: *
+Allow: /en/
+Allow: /ru/
+Allow: /ar/
+Allow: /be/
+Allow: /de/
+Allow: /es/
+Allow: /fr/
+Allow: /it/
+Allow: /ja/
+Allow: /ko/
+Allow: /nl/
+Allow: /pt/
+Allow: /tr/
+Allow: /uk/
+`;
+        fs.writeFileSync(robotsPath, robotsContent);
+        console.log('Default robots.txt created');
+      }
+
+      // Проверяем, существует ли sitemap.xml
+      const sitemapPath = path.join(distDir, 'sitemap.xml');
+      if (!fs.existsSync(sitemapPath)) {
+        console.log('Creating default sitemap.xml file...');
+        const today = new Date().toISOString().split('T')[0]; // Форматируем дату как YYYY-MM-DD
+
+        let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Главная страница (английская версия - основная) -->
+  <url>
+    <loc>https://r36s.pro/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+`;
+
+        // Добавляем альтернативные языковые версии
+        for (const lang of supportedLanguages) {
+          sitemapContent += `    <xhtml:link rel="alternate" hreflang="${lang}" href="https://r36s.pro/${
+            lang === 'en' ? '' : lang + '/'
+          }"/>\n`;
+        }
+
+        sitemapContent += `    <xhtml:link rel="alternate" hreflang="x-default" href="https://r36s.pro/"/>\n  </url>\n`;
+
+        // Добавляем URL для каждого языка
+        for (const lang of supportedLanguages) {
+          if (lang === 'en') continue; // Английский уже добавлен выше
+
+          sitemapContent += `\n  <!-- ${lang} версия -->\n  <url>\n    <loc>https://r36s.pro/${lang}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n`;
+
+          // Добавляем альтернативные языковые версии для каждого URL
+          for (const altLang of supportedLanguages) {
+            sitemapContent += `    <xhtml:link rel="alternate" hreflang="${altLang}" href="https://r36s.pro/${
+              altLang === 'en' ? '' : altLang + '/'
+            }"/>\n`;
+          }
+
+          sitemapContent += `    <xhtml:link rel="alternate" hreflang="x-default" href="https://r36s.pro/"/>\n  </url>\n`;
+        }
+
+        sitemapContent += `</urlset>`;
+
+        fs.writeFileSync(sitemapPath, sitemapContent);
+        console.log('Default sitemap.xml created');
+      }
+    },
+  };
+}
+
 // Плагин для постобработки файлов и создания языковых версий
 function postProcessPlugin() {
   return {
@@ -193,6 +285,35 @@ function postProcessPlugin() {
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
       console.log('Creating language versions...');
 
+      // Обновляем мета-теги для канонических ссылок
+      let processedContent = indexContent;
+
+      // Добавляем канонический URL, если его нет
+      if (!processedContent.includes('<link rel="canonical"')) {
+        processedContent = processedContent.replace(
+          '</head>',
+          `  <link rel="canonical" href="https://r36s.pro/" />\n</head>`
+        );
+      }
+
+      // Добавляем языковые альтернативы, если их нет
+      let alternateLinks = '';
+      if (!processedContent.includes('<link rel="alternate" hreflang=')) {
+        for (const lang of supportedLanguages) {
+          const href = lang === 'en' ? '/' : `/${lang}/`;
+          alternateLinks += `  <link rel="alternate" hreflang="${lang}" href="https://r36s.pro${href}" />\n`;
+        }
+        alternateLinks += `  <link rel="alternate" hreflang="x-default" href="https://r36s.pro/" />\n`;
+
+        processedContent = processedContent.replace(
+          '</head>',
+          `${alternateLinks}</head>`
+        );
+      }
+
+      // Записываем обновленный index.html
+      fs.writeFileSync(indexPath, processedContent);
+
       // Создаем директории для каждого языка и копируем в них index.html
       for (const lang of supportedLanguages) {
         if (lang === 'en') continue; // Для английского оставляем корневой index.html
@@ -200,7 +321,7 @@ function postProcessPlugin() {
         const langDir = path.join(distDir, lang);
         fs.ensureDirSync(langDir);
 
-        let langContent = indexContent;
+        let langContent = processedContent;
 
         // Исправляем атрибут lang в HTML
         langContent = langContent.replace(
@@ -208,28 +329,25 @@ function postProcessPlugin() {
           `<html lang="${lang}">`
         );
 
+        // Обновляем канонический URL для языковой версии
+        langContent = langContent.replace(
+          /<link rel="canonical" href="[^"]*" \/>/,
+          `<link rel="canonical" href="https://r36s.pro/${lang}/" />`
+        );
+
         // Добавляем мета-тег с языком и скрипт для переключения на этот язык
         langContent = langContent.replace(
           '</head>',
-          `<meta name="language" content="${lang}">
-          <script>
-            window.initialLanguage = "${lang}";
-          </script>
-          </head>`
+          `  <meta name="language" content="${lang}">
+  <script>
+    window.initialLanguage = "${lang}";
+  </script>
+  </head>`
         );
 
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
         console.log(`Created language version for: ${lang}`);
       }
-
-      // Исправляем атрибут lang для основного (английского) языка
-      let processedContent = indexContent.replace(
-        /<html lang="[^"]*">/,
-        '<html lang="en">'
-      );
-
-      // Записываем обратно основной index.html
-      fs.writeFileSync(indexPath, processedContent);
 
       // Создаем файл 404.html для обработки неизвестных URL
       const notFoundContent = `
@@ -275,6 +393,25 @@ export default defineConfig(({ command }) => {
 
   // Устанавливаем корневой путь
   const base = '/';
+
+  // Копируем robots.txt и sitemap.xml при сборке
+  if (command === 'build') {
+    // Проверяем наличие robots.txt и sitemap.xml в корне
+    const robotsPath = path.resolve(__dirname, 'public', 'robots.txt');
+    const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml');
+
+    if (!fs.existsSync(robotsPath)) {
+      console.warn(
+        'Warning: robots.txt not found in public directory! A default one will be created after build.'
+      );
+    }
+
+    if (!fs.existsSync(sitemapPath)) {
+      console.warn(
+        'Warning: sitemap.xml not found in public directory! A default one will be created after build.'
+      );
+    }
+  }
 
   return {
     define: {
@@ -336,6 +473,8 @@ export default defineConfig(({ command }) => {
       lowercaseAssetsPlugin(),
       // Плагин для исправления путей в HTML
       fixHtmlPathsPlugin(),
+      // Плагин для создания robots.txt и sitemap.xml если их нет
+      createRobotsPlugin(),
       // Плагин для постобработки и создания языковых версий
       postProcessPlugin(),
     ],

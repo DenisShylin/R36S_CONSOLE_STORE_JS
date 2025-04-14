@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Page Not Found - R36S Game Console</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/icons/browser.svg" />
+
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #0f172a;
+        color: #f1f5f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 800px;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #38bdf8;
+      }
+
+      p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .button {
+        display: inline-block;
+        background: linear-gradient(45deg, #3b82f6, #38bdf8);
+        color: white;
+        text-decoration: none;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .button:hover {
+        background: linear-gradient(45deg, #2563eb, #0ea5e9);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .logo {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        color: #38bdf8;
+      }
+
+      .countdown {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        color: #94a3b8;
+      }
+    </style>
+
+    <script>
+      // Извлекаем путь из URL
+      window.onload = function () {
+        const path = window.location.pathname;
+
+        // Проверяем, может ли первый сегмент пути быть языком
+        const segments = path.split('/').filter(Boolean);
+        const supportedLanguages = [
+          'en',
+          'ru',
+          'ar',
+          'be',
+          'de',
+          'es',
+          'fr',
+          'it',
+          'ja',
+          'ko',
+          'nl',
+          'pt',
+          'tr',
+          'uk',
+        ];
+
+        let countdownSeconds = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        if (segments.length > 0 && supportedLanguages.includes(segments[0])) {
+          // Это языковой путь, но файл не найден
+          document.getElementById('redirectMessage').innerText =
+            'Redirecting to language home page...';
+
+          const interval = setInterval(function () {
+            countdownSeconds--;
+            countdownElement.innerText = countdownSeconds;
+
+            if (countdownSeconds <= 0) {
+              clearInterval(interval);
+              window.location.href = '/' + segments[0] + '/';
+            }
+          }, 1000);
+        } else {
+          // Неизвестный путь - редирект на главную
+          document.getElementById('redirectMessage').innerText =
+            'Redirecting to home page...';
+
+          const interval = setInterval(function () {
+            countdownSeconds--;
+            countdownElement.innerText = countdownSeconds;
+
+            if (countdownSeconds <= 0) {
+              clearInterval(interval);
+              window.location.href = '/';
+            }
+          }, 1000);
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">R36S</div>
+      <h1>Page Not Found</h1>
+      <p>
+        Sorry, the page you are looking for does not exist or has been moved.
+      </p>
+      <p id="redirectMessage">Redirecting...</p>
+      <p class="countdown">in <span id="countdown">5</span> seconds</p>
+      <a href="/" class="button">Go to Home Page</a>
+    </div>
+  </body>
+</html>
