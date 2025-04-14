@@ -347,11 +347,19 @@
             />
           </div>
 
-          <!-- Оптимизированное изображение с WebP и fallback - исправленные пути -->
+          <!-- Оптимизированное изображение с WebP и responsive srcset -->
           <picture>
+            <!-- Мобильная версия -->
             <source
+              media="(max-width: 640px)"
+              srcset="/img/hero/herou1_mobile.webp"
               type="image/webp"
+            />
+            <!-- Десктопная версия -->
+            <source
+              media="(min-width: 641px)"
               srcset="/img/hero/herou1_1x_.webp 1x, /img/hero/herou1_2x_.webp 2x"
+              type="image/webp"
             />
             <img
               src="/img/hero/herou1_1x_.webp"
