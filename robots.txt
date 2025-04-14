@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Sitemap: https://r36s.pro/sitemap.xml
+
+# Allow all bots to access all content
+User-agent: *
+Disallow: 
+
+# Specify language-specific patterns
+User-agent: *
+Allow: /en/
+Allow: /ru/
+Allow: /ar/
+Allow: /be/
+Allow: /de/
+Allow: /es/
+Allow: /fr/
+Allow: /it/
+Allow: /ja/
+Allow: /ko/
+Allow: /nl/
+Allow: /pt/
+Allow: /tr/
+Allow: /uk/
