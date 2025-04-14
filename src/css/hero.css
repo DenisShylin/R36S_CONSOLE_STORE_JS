@@ -619,7 +619,7 @@
         }
 
         .hero__title-line:not(:first-child) {
-            font-size: 62px;
+            font-size: 48px;
         }
 
         .hero__title-line:first-child {

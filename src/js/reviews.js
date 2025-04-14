@@ -3,32 +3,41 @@
 // Импортируем i18next для доступа к переводам
 import i18next from 'i18next';
 
+// Импортируем изображения отзывов
+import review1Webp from '/img/reviews/imm1_1x.webp';
+import review1Jpg from '/img/reviews/imm1_1x.jpg';
+import review2Webp from '/img/reviews/imm2_1x.webp';
+import review2Jpg from '/img/reviews/imm2_1x.jpg';
+import review3Webp from '/img/reviews/imm3_1x.webp';
+import review3Jpg from '/img/reviews/imm3_1x.jpg';
+import review4Webp from '/img/reviews/imm4_1x.webp';
+import review4Jpg from '/img/reviews/imm4_1x.jpg';
+
 // Функция инициализации секции отзывов
 export function initReviews() {
-  // Получаем базовый путь для корректных URL изображений
-  const isDevelopment = import.meta.env?.MODE === 'development';
-  const basename = isDevelopment ? '/' : '/R36S_STORE_JS/';
+  // Получаем базовый путь для корректных URL
+  const basename = import.meta.env?.BASE_URL || '/';
 
   // Константа для определения мобильного устройства
   const MOBILE_BREAKPOINT = 1200;
 
-  // Путь к изображениям отзывов (оставляем оригинальные пути)
+  // Пути к изображениям отзывов (используем импортированные изображения)
   const reviewImages = {
     review1: {
-      webp: `${basename}img/reviews/imm_1_1x.webp`,
-      jpg: `${basename}img/reviews/imm_1_1x.jpg`,
+      webp: review1Webp,
+      jpg: review1Jpg,
     },
     review2: {
-      webp: `${basename}img/reviews/imm_2_1x.webp`,
-      jpg: `${basename}img/reviews/imm_2_1x.jpg`,
+      webp: review2Webp,
+      jpg: review2Jpg,
     },
     review3: {
-      webp: `${basename}img/reviews/imm_3_1x.webp`,
-      jpg: `${basename}img/reviews/imm_3_1x.jpg`,
+      webp: review3Webp,
+      jpg: review3Jpg,
     },
     review4: {
-      webp: `${basename}img/reviews/imm_4_1x.webp`,
-      jpg: `${basename}img/reviews/imm_4_1x.jpg`,
+      webp: review4Webp,
+      jpg: review4Jpg,
     },
   };
 
@@ -203,6 +212,13 @@ export function initReviews() {
 
     // Изображения
     const picture = card.querySelector('picture');
+
+    // Добавляем отладочную информацию
+    console.log('Setting image paths for review #' + review.id + ':', {
+      webp: review.images.webp,
+      jpeg: review.images.jpeg,
+    });
+
     picture.querySelector('source').setAttribute('srcset', review.images.webp);
     const img = picture.querySelector('img');
     img.setAttribute('src', review.images.jpeg);

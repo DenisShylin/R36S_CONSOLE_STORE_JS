@@ -5,10 +5,10 @@ import { createModalAbout } from './modalabout.js';
 // Прямые импорты медиафайлов с адаптированными путями
 import displayControls from '/video/about/video_1_.webp';
 import videoGif from '/video/about/video_2_.webp';
-import untitled1 from '/img/about/Untitled_1_1x.jpg';
-import untitled2 from '/img/about/Untitled_2_1x.jpg';
-import untitled3 from '/img/about/Untitled_3_1x.jpg';
-import untitled4 from '/img/about/Untitled_4_1x.jpg';
+import untitled1 from '/img/about/img1_1x.jpg';
+import untitled2 from '/img/about/img2_1x.jpg';
+import untitled3 from '/img/about/img3_1x.jpg';
+import untitled4 from '/img/about/img4_1x.jpg';
 
 import videoBattery from '/video/about/video_3_batrey_.mp4';
 import videoModa6 from '/video/about/video_6_.mp4';

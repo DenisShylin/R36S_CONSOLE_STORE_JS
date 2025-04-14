@@ -1,62 +1,90 @@
 // Инициализатор секции Products
 import i18next from 'i18next';
 
+// Импортируем изображения продуктов
+import img0_0_webp from '/img/products/i_0_0x.webp';
+import img0_0_jpg from '/img/products/i_0_0x.jpg';
+import img1_webp from '/img/products/i_1_1x.webp';
+import img1_jpg from '/img/products/i_1_1x.jpg';
+import img2_webp from '/img/products/i_2_1x.webp';
+import img2_jpg from '/img/products/i_2_1x.jpg';
+import img3_webp from '/img/products/i_3_1x.webp';
+import img3_jpg from '/img/products/i_3_1x.jpg';
+import img4_webp from '/img/products/i_4_1x.webp';
+import img4_jpg from '/img/products/i_4_1x.jpg';
+import img5_webp from '/img/products/i_5_1x.webp';
+import img5_jpg from '/img/products/i_5_1x.jpg';
+import img6_webp from '/img/products/i_6_1x.webp';
+import img6_jpg from '/img/products/i_6_1x.jpg';
+import img7_webp from '/img/products/i_7_1x.webp';
+import img7_jpg from '/img/products/i_7_1x.jpg';
+import img8_webp from '/img/products/i_8_1x.webp';
+import img8_jpg from '/img/products/i_8_1x.jpg';
+import img9_webp from '/img/products/i_9_1x.webp';
+import img9_jpg from '/img/products/i_9_1x.jpg';
+import img10_webp from '/img/products/i_10_1x.webp';
+import img10_jpg from '/img/products/i_10_1x.jpg';
+
 export function initProducts() {
   console.log('Products секция инициализирована');
 
-  // Определяем базовый путь с учетом режима разработки/продакшн
-  const isDevelopment = import.meta.env
-    ? import.meta.env.MODE === 'development'
-    : true;
-  const basename = isDevelopment ? '/' : '/R36S_STORE_JS/';
+  // Получаем базовый путь из переменных окружения Vite
+  const basename = import.meta.env?.BASE_URL || '/';
 
-  // Данные из constants/productData.js с исправленными путями
+  // Данные изображений с использованием импортированных файлов
   const productImages = {
     i0_0: {
-      jpg: `${basename}img/products/i_0_0x.jpg`,
-      webp: `${basename}img/products/i_0_0x.webp`,
+      jpg: img0_0_jpg,
+      webp: img0_0_webp,
     },
     i1: {
-      jpg: `${basename}img/products/i_1_1x.jpg`,
-      webp: `${basename}img/products/i_1_1x.webp`,
+      jpg: img1_jpg,
+      webp: img1_webp,
     },
     i2: {
-      jpg: `${basename}img/products/i_2_1x.jpg`,
-      webp: `${basename}img/products/i_2_1x.webp`,
+      jpg: img2_jpg,
+      webp: img2_webp,
     },
     i3: {
-      jpg: `${basename}img/products/i_3_1x.jpg`,
-      webp: `${basename}img/products/i_3_1x.webp`,
+      jpg: img3_jpg,
+      webp: img3_webp,
     },
     i4: {
-      jpg: `${basename}img/products/i_4_1x.jpg`,
-      webp: `${basename}img/products/i_4_1x.webp`,
+      jpg: img4_jpg,
+      webp: img4_webp,
     },
     i5: {
-      jpg: `${basename}img/products/i_5_1x.jpg`,
-      webp: `${basename}img/products/i_5_1x.webp`,
+      jpg: img5_jpg,
+      webp: img5_webp,
     },
     i6: {
-      jpg: `${basename}img/products/i_6_1x.jpg`,
-      webp: `${basename}img/products/i_6_1x.webp`,
+      jpg: img6_jpg,
+      webp: img6_webp,
     },
     i7: {
-      jpg: `${basename}img/products/i_7_1x.jpg`,
-      webp: `${basename}img/products/i_7_1x.webp`,
+      jpg: img7_jpg,
+      webp: img7_webp,
     },
     i8: {
-      jpg: `${basename}img/products/i_8_1x.jpg`,
-      webp: `${basename}img/products/i_8_1x.webp`,
+      jpg: img8_jpg,
+      webp: img8_webp,
     },
     i9: {
-      jpg: `${basename}img/products/i_9_1x.jpg`,
-      webp: `${basename}img/products/i_9_1x.webp`,
+      jpg: img9_jpg,
+      webp: img9_webp,
     },
     i10: {
-      jpg: `${basename}img/products/i_10_1x.jpg`,
-      webp: `${basename}img/products/i_10_1x.webp`,
+      jpg: img10_jpg,
+      webp: img10_webp,
     },
   };
+
+  // Отладочный вывод для проверки путей к изображениям
+  console.log('Загруженные изображения:', {
+    img0_0_webp,
+    img0_0_jpg,
+    // и т.д. для проверки
+  });
 
   // Структура данных секций
   // Теперь используем ключи i18n вместо жестко заданных текстов
