@@ -1,4 +1,5 @@
-<section class="hero" itemscope itemtype="http://schema.org/Product">
+<!-- Оптимизированная секция Hero с фокусом на производительность -->
+<section class="hero" itemscope itemtype="http://schema.org/Product" id="hero">
   <div class="hero__background">
     <div class="hero__overlay"></div>
   </div>
@@ -8,18 +9,40 @@
       <div class="hero__image">
         <div class="hero__image-wrapper">
           <div class="hero__image-glow"></div>
-          <img
-            src="/img/hero/herou1_1x_.webp"
-            srcset="/img/hero/herou1_1x_.webp 1x, /img/hero/herou1_2x_.webp 2x"
-            alt="R36S Handheld Game Console - Retro Gaming Device with 15000+ Games"
-            data-i18n="[alt]hero.meta.altText"
-            class="hero__console-img"
-            width="600"
-            height="400"
-            loading="eager"
-            decoding="async"
-            itemprop="image"
-          />
+
+          <!-- Плейсхолдер для быстрой начальной отрисовки - используем встроенное изображение -->
+          <div class="hero__placeholder" aria-hidden="true">
+            <!-- Встроенный плейсхолдер, очень маленький размер -->
+            <img
+              src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/wAALCAAUABQBAREA/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAHBAAAgICAwAAAAAAAAAAAAAAAAECAxESITFR/9oACAEBAAA/ANLgLB1vCQq7d2OMPPtMsaK0QVFe7Mci1Nef/9k="
+              alt=""
+              width="30"
+              height="20"
+            />
+          </div>
+
+          <!-- Оптимизированное изображение с WebP и fallback - исправленные пути -->
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                /img/hero/herou1_1x_.webp 1x,
+                /img/hero/herou1_2x_.webp 2x
+              "
+            />
+            <img
+              src="/img/hero/herou1_1x_.webp"
+              alt="R36S Handheld Game Console - Retro Gaming Device with 15000+ Games"
+              data-i18n="[alt]hero.meta.altText"
+              class="hero__console-img"
+              width="600"
+              height="400"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+              itemprop="image"
+            />
+          </picture>
         </div>
       </div>
 
@@ -28,9 +51,6 @@
           <span class="hero__title-line" data-i18n="hero.title.firstLine"
             >R36S</span
           >
-          <!-- <span class="hero__title-line" data-i18n="hero.title.secondLine"
-            >HANDHELD</span
-          > -->
           <span class="hero__title-line" data-i18n="hero.title.thirdLine"
             >GAME CONSOLE</span
           >
@@ -38,6 +58,7 @@
       </div>
 
       <div class="hero__content">
+        <!-- Уменьшено количество meta-тегов для снижения размера документа -->
         <meta
           itemprop="brand"
           content="R36S"
@@ -48,26 +69,6 @@
           content="Handheld Game Console"
           data-i18n="[content]hero.meta.category"
         />
-        <meta
-          itemprop="sku"
-          content="R36S-RETRO-CONSOLE"
-          data-i18n="[content]hero.meta.sku"
-        />
-        <meta
-          itemprop="mpn"
-          content="R36S-2024"
-          data-i18n="[content]hero.meta.mpn"
-        />
-        <meta
-          itemprop="productID"
-          content="R36S-2024"
-          data-i18n="[content]hero.meta.productID"
-        />
-        <meta
-          itemprop="releaseDate"
-          content="2024-01-01"
-          data-i18n="[content]hero.meta.releaseDate"
-        />
 
         <p
           class="hero__description hero__description--desktop"
@@ -76,8 +77,7 @@
         >
           R36S Handheld Game Console opens the door to the exciting world of
           retro gaming, offering an impressive collection of over 15,000
-          legendary games from different eras and platforms. Dive into a
-          universe of gaming nostalgia with the R36S Retro Handheld Console!
+          legendary games from different eras and platforms.
         </p>
         <p
           class="hero__description hero__description--mobile"
@@ -95,17 +95,11 @@
           itemtype="http://schema.org/Offer"
         >
           <meta itemprop="priceCurrency" content="USD" />
-          <meta
-            itemprop="itemCondition"
-            content="http://schema.org/NewCondition"
-          />
           <meta itemprop="availability" content="http://schema.org/InStock" />
-          <meta
+          <link
             itemprop="url"
-            content="https://www.aliexpress.com/item/1005007171465465.html"
+            href="https://www.aliexpress.com/item/1005007171465465.html"
           />
-          <meta itemprop="priceValidUntil" content="2025-12-31" />
-          <link itemprop="url" href="https://www.yourdomain.com/r36s-console" />
 
           <div class="hero__price-wrapper">
             <span class="hero__original-price" data-i18n="hero.pricing.original"
@@ -123,12 +117,11 @@
             id="buy-button"
             aria-label="Buy R36S Handheld Game Console with discount"
             data-i18n="[aria-label]hero.meta.buyButtonLabel"
+            data-href="https://www.aliexpress.com/item/1005007171465465.html"
           >
-            <span class="hero__button-pulse"></span>
             <span class="hero__button-text" data-i18n="hero.buttons.buy"
               >Shop With Discount</span
             >
-            <span class="hero__button-shine"></span>
           </button>
           <button
             id="more-details-button"
@@ -143,7 +136,7 @@
     </div>
   </div>
 
-  <!-- Add aggregate rating schema -->
+  <!-- Упрощенный рейтинг для Schema.org -->
   <div
     itemprop="aggregateRating"
     itemscope
@@ -153,17 +146,37 @@
     <meta itemprop="ratingValue" content="4.8" />
     <meta itemprop="reviewCount" content="120" />
   </div>
-
-  <!-- Hidden SEO information (but no breadcrumbs) -->
-  <div class="visually-hidden">
-    <h2 data-i18n="hero.seo.heading1">
-      Buy R36S Handheld Game Console - Portable Retro Gaming Device
-    </h2>
-    <h3 data-i18n="hero.seo.heading2">
-      R36S Portable Gaming System with 15000+ Classic Games
-    </h3>
-    <h4 data-i18n="hero.seo.heading3">
-      Best Retro Handheld Console R36S with High Performance
-    </h4>
-  </div>
 </section>
+
+<!-- Скрипт для анимации появления контента -->
+<script>
+  // Инициализация анимации появления Hero элементов
+  document.addEventListener('DOMContentLoaded', function () {
+    const heroContent = document.querySelector('.hero__content');
+    if (heroContent) {
+      requestAnimationFrame(() => {
+        heroContent.classList.add('animate-in');
+      });
+    }
+
+    // Обработка завершения загрузки изображения
+    const heroImage = document.querySelector('.hero__console-img');
+    const placeholder = document.querySelector('.hero__placeholder');
+
+    if (heroImage) {
+      if (heroImage.complete) {
+        // Изображение уже загружено (из кеша)
+        if (placeholder) {
+          placeholder.style.opacity = '0';
+        }
+      } else {
+        // Добавляем обработчик для загрузки изображения
+        heroImage.onload = function () {
+          if (placeholder) {
+            placeholder.style.opacity = '0';
+          }
+        };
+      }
+    }
+  });
+</script>

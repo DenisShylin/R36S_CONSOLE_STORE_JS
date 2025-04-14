@@ -2,16 +2,189 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/icons/browser.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      R36S Handheld Game Console - Retro Gaming Device with 15000+ Games
-    </title>
-
-    <!-- Канонический URL для основной страницы -->
+    <title>R36S Handheld Game Console - Retro Gaming</title>
+    <link rel="icon" type="image/svg+xml" href="/icons/browser.svg" />
     <link rel="canonical" href="https://r36s.pro/" />
 
-    <!-- Метаданные для SEO -->
+    <!-- Инлайн критический CSS для быстрой первоначальной отрисовки -->
+    <style>
+      /* Критический CSS для основных элементов первого экрана */
+      .hero {
+        position: relative;
+        background-color: #0f172a;
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        padding-top: 90px;
+        padding-bottom: 50px;
+        min-width: 320px;
+      }
+
+      .hero__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.9) 0%,
+          rgba(15, 23, 42, 1) 100%
+        );
+      }
+
+      .hero__container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 60px 16px;
+        position: relative;
+        min-width: 288px;
+      }
+
+      .hero__content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 5px;
+        text-align: center;
+      }
+
+      .hero__title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.1;
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero__title h1 {
+        margin: 0;
+        padding: 0;
+      }
+
+      .hero__title-line {
+        display: block;
+        position: relative;
+        padding: 4px 0;
+      }
+
+      .hero__title-line:first-child {
+        color: #3b44f2;
+        font-size: 30px;
+      }
+
+      .hero__title-line:not(:first-child) {
+        font-weight: 600;
+        font-size: 24px;
+      }
+
+      .hero__image {
+        grid-column: 1;
+        grid-row: 2;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero__image-wrapper {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .hero__console-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 20px;
+        max-width: 100%;
+      }
+
+      .hero__placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #1e293b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        border-radius: 20px;
+      }
+
+      .hero__content {
+        grid-column: 1;
+        grid-row: 3;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .hero__content.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        background-color: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(8px);
+      }
+
+      @media screen and (min-width: 768px) {
+        .hero__content-wrapper {
+          margin-top: 20px;
+        }
+
+        .hero__title {
+          font-size: 42px;
+        }
+
+        .hero__title-line:first-child {
+          font-size: 50px;
+        }
+
+        .hero__title-line:not(:first-child) {
+          font-size: 42px;
+        }
+      }
+
+      @media screen and (min-width: 1280px) {
+        .hero__content-wrapper {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px 40px;
+          text-align: left;
+        }
+
+        .hero__title {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
+        .hero__image {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+        }
+
+        .hero__content {
+          grid-column: 2;
+          grid-row: 2;
+        }
+      }
+    </style>
+
+    <!-- Метаданные для SEO (оптимизированные) -->
     <meta
       name="description"
       content="R36S Handheld Game Console с 15,000+ ретро-играми, 3.5-дюймовым IPS экраном и батареей на 7-8 часов. Купите портативную консоль со скидкой."
@@ -21,7 +194,31 @@
       content="R36S, handheld console, retro gaming, portable console, retro games, ретро консоль"
     />
 
-    <!-- Метатеги для социальных сетей -->
+    <!-- Предзагрузка критических ресурсов для LCP - исправленный путь -->
+    <link
+      rel="preload"
+      href="/img/hero/herou1_1x_.webp"
+      as="image"
+      type="image/webp"
+      fetchpriority="high"
+    />
+
+    <!-- Удалена предзагрузка проблемного шрифта -->
+
+    <!-- Preconnect для внешних доменов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Оптимизированная загрузка шрифтов - исправлена -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Orbitron:wght@700;800&display=swap"
+    />
+
+    <!-- Отложенная загрузка основного CSS -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Метатеги для социальных сетей (оптимизированные) -->
     <meta
       property="og:title"
       content="R36S Handheld Game Console - Retro Gaming Device"
@@ -54,45 +251,7 @@
     <link rel="alternate" hreflang="uk" href="https://r36s.pro/uk/" />
     <link rel="alternate" hreflang="x-default" href="https://r36s.pro/" />
 
-    <!-- Preload critical assets -->
-    <!-- <link
-      rel="preload"
-      href="/img/hero/herou1_1x_.webp"
-      as="image"
-      type="image/webp"
-    />
-    <link
-      rel="preload"
-      href="/img/hero/herou1_2x_.webp"
-      as="image"
-      type="image/webp"
-      imagesrcset="/img/hero/herou1_2x_.webp 2x"
-    /> -->
-    <link rel="prefetch" href="/video/about/video_1_.gif" />
-    <link rel="prefetch" href="/video/about/video_2_.gif" />
-    <link rel="prefetch" href="/video/about/video_3_batrey_.mp4" />
-    <link rel="prefetch" href="/video/about/video_4_.mp4" />
-    <link rel="prefetch" href="/video/about/video_6_.mp4" />
-    <link rel="prefetch" href="/img/about/img1_1x.jpg" />
-    <link rel="prefetch" href="/img/about/img2_1x.jpg" />
-    <link rel="prefetch" href="/img/about/img3_1x.jpg" />
-    <link rel="prefetch" href="/img/about/img4_1x.jpg" />
-
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Font loading -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Структурированные данные для SEO (Schema.org) -->
+    <!-- Структурированные данные для SEO (оптимизированные) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -100,10 +259,7 @@
         "name": "R36S Handheld Game Console",
         "image": "https://r36s.pro/img/hero/herou1_2x_.webp",
         "description": "R36S Handheld Game Console with 3.5-inch IPS screen and 15,000+ retro games. 7-8 hours battery life.",
-        "brand": {
-          "@type": "Brand",
-          "name": "R36S"
-        },
+        "brand": { "@type": "Brand", "name": "R36S" },
         "offers": {
           "@type": "Offer",
           "priceCurrency": "USD",
@@ -119,12 +275,13 @@
     </script>
   </head>
   <body>
-    <main>
-      <!-- Loads the specified .html file -->
-    </main>
+    <!-- Header - приоритетная загрузка -->
     <load src="./partials/header.html" />
-    <load src="./partials/mobilemenu.html" />
+
+    <!-- Hero секция - приоритетная загрузка (LCP элемент) -->
     <load src="./partials/hero.html" />
+
+    <!-- Остальные секции загружаются обычным способом -->
     <load src="./partials/features.html" />
     <load src="./partials/about.html" />
     <load src="./partials/categories.html" />
@@ -133,7 +290,9 @@
     <load src="./partials/products.html" />
     <load src="./partials/contact.html" />
     <load src="./partials/footer.html" />
+    <load src="./partials/mobilemenu.html" />
 
-    <script type="module" src="./main.js"></script>
+    <!-- Основной JavaScript с атрибутом defer для неблокирующей загрузки -->
+    <script type="module" src="./main.js" defer></script>
   </body>
 </html>
