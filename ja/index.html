@@ -2257,7 +2257,7 @@
     </div>
 
     <div class="reviews__grid" id="reviewsGrid">
-      <!-- Шаблон карточки отзыва - исправлен для совместимости -->
+      <!-- Шаблон карточки отзыва - исправлен для поддержки 2x изображений -->
       <template id="reviewCardTemplate">
         <div class="review-card" data-id="">
           <div class="review-card__content">
@@ -2273,7 +2273,13 @@
             <div class="review-card__image-wrapper">
               <picture>
                 <source srcset="" type="image/webp" />
-                <img src="" alt="" class="review-card__image" loading="lazy" />
+                <img
+                  src=""
+                  srcset=""
+                  alt=""
+                  class="review-card__image"
+                  loading="lazy"
+                />
               </picture>
               <div class="review-card__arrow-wrapper" style="display: none">
                 <svg
@@ -2986,9 +2992,9 @@
   <div class="footer__container">
     <div class="footer__content">
       <div class="footer__brand" itemscope itemtype="http://schema.org/Product">
-        <a class="footer__logo" itemprop="brand" data-i18n="footer.brand">
+        <span class="footer__logo" itemprop="brand" data-i18n="footer.brand">
           R36S
-        </a>
+        </span>
         <p
           class="footer__description"
           itemprop="description"
