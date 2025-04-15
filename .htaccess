@@ -1,3 +1,8 @@
+# переадресацыя с www 
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.r36s\.pro$ [NC]
+RewriteRule ^(.*)$ https://r36s.pro/$1 [R=301,L]
+
 # Базовые MIME-типы
 AddType text/css .css
 AddType application/javascript .js
@@ -25,3 +30,4 @@ AddType application/json .map
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
 </IfModule>
+

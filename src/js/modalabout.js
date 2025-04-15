@@ -324,7 +324,7 @@ export function createModalAbout(parentElement) {
           '@type': 'Offer',
           price: '35.48',
           priceCurrency: 'USD',
-          url: 'https://www.aliexpress.com/item/1005007171465465.html',
+          url: 'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
         },
         category: 'Video Game Console',
         feature: feature.title,
@@ -440,11 +440,11 @@ export function createModalAbout(parentElement) {
                       <meta itemprop="priceCurrency" content="USD" />
                     </span>
                     <meta itemprop="availability" content="https://schema.org/InStock" />
-                    <meta itemprop="url" content="https://www.aliexpress.com/item/1005007171465465.html" />
+                    <meta itemprop="url" content="https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html" />
                   </div>
 
                   <a
-                    href="https://www.aliexpress.com/item/1005007171465465.html"
+                    href="https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html"
                     class="modal-about-button modal-about-button--primary"
                     target="_blank"
                     rel="noopener noreferrer"

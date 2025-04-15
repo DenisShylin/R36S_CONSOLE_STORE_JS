@@ -193,7 +193,7 @@ export function initHero() {
         if (e.target.closest('#buy-button')) {
           e.preventDefault();
           window.open(
-            'https://www.aliexpress.com/item/1005007171465465.html',
+            'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
             '_blank',
             'noopener,noreferrer'
           );
@@ -227,7 +227,7 @@ export function initHero() {
         buyButton.addEventListener('click', e => {
           e.preventDefault();
           window.open(
-            'https://www.aliexpress.com/item/1005007171465465.html',
+            'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
             '_blank',
             'noopener,noreferrer'
           );

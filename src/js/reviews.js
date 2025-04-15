@@ -309,7 +309,7 @@ export function initReviews() {
   // Обработчик клика по карточке отзыва
   function handleReviewClick() {
     window.open(
-      'https://www.aliexpress.com/item/1005007226123844.html#feedback',
+      'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
       '_blank',
       'noopener,noreferrer'
     );
