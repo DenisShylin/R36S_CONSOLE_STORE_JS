@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "وحدة ألعاب محمولة R36S",
+    "description": "وحدة ألعاب R36S المحمولة الممتازة للألعاب الرجعية • تجربة ألعاب محمولة • أداء متقدم بنظام ArkOS • ألعاب كلاسيكية بتنفيذ جديد",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "الإلكترونيات > وحدات ألعاب الفيديو > وحدات الألعاب المحمولة",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/ar/",
+      "seller": {
+        "name": "متجر R36S الرسمي"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "نظام التشغيل",
+        "value": "ArkOS"
+      },
+      {
+        "name": "الشاشة",
+        "value": "IPS مقاس 3.5 بوصة"
+      },
+      {
+        "name": "عمر البطارية",
+        "value": "7-8 ساعات"
+      }
+    ]
+  }
+}

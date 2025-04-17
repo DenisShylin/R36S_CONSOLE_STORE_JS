@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "Портативная игровая консоль R36S",
+    "description": "R36S Премиальная портативная ретро-игровая консоль • Портативный игровой опыт • Продвинутая производительность ArkOS • Классические игры в новом исполнении",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "Электроника > Видеоигровые консоли > Портативные игровые консоли",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/ru/",
+      "seller": {
+        "name": "Официальный магазин R36S"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "Операционная система",
+        "value": "ArkOS"
+      },
+      {
+        "name": "Дисплей",
+        "value": "3,5-дюймовый IPS"
+      },
+      {
+        "name": "Время работы от батареи",
+        "value": "7-8 часов"
+      }
+    ]
+  }
+}

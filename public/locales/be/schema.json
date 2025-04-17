@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "Партатыўная гульнявая прыстаўка R36S",
+    "description": "R36S Прэміяльная партатыўная рэтра-гульнявая прыстаўка • Партатыўны гульнявы вопыт • Прасунутая прадукцыйнасць ArkOS • Класічныя гульні ў новым выкананні",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "Электроніка > Відэагульнявыя прыстаўкі > Партатыўныя гульнявыя прыстаўкі",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/be/",
+      "seller": {
+        "name": "Афіцыйны магазін R36S"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "Аперацыйная сістэма",
+        "value": "ArkOS"
+      },
+      {
+        "name": "Дысплей",
+        "value": "3,5-цалевы IPS"
+      },
+      {
+        "name": "Час працы ад батарэі",
+        "value": "7-8 гадзін"
+      }
+    ]
+  }
+}

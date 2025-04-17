@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "cheerio": "^1.0.0",
     "fs-extra": "^11.3.0",
     "glob": "^11.0.0",
     "postcss": "^8.4.41",

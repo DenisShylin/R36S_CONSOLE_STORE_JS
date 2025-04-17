@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "Tragbare Spielkonsole R36S",
+    "description": "R36S Premium Tragbare Retro-Spielkonsole • Tragbares Spielerlebnis • Fortschrittliche ArkOS-Leistung • Klassische Spiele in neuer Ausführung",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "Elektronik > Videospielkonsolen > Tragbare Spielkonsolen",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/de/",
+      "seller": {
+        "name": "Offizieller R36S Shop"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "Betriebssystem",
+        "value": "ArkOS"
+      },
+      {
+        "name": "Display",
+        "value": "3,5-Zoll IPS"
+      },
+      {
+        "name": "Akkulaufzeit",
+        "value": "7-8 Stunden"
+      }
+    ]
+  }
+}

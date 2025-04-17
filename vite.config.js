@@ -5,6 +5,7 @@ import FullReload from 'vite-plugin-full-reload';
 import path from 'path';
 import sortMediaQueries from 'postcss-sort-media-queries';
 import fs from 'fs-extra';
+import * as cheerio from 'cheerio'; // Убедитесь, что пакет cheerio установлен
 
 // Список поддерживаемых языков
 const supportedLanguages = [
@@ -243,6 +244,224 @@ function postProcessPlugin() {
         return;
       }
 
+      // Функция для загрузки JSON-файлов с переводами
+      async function loadTranslations(language) {
+        const translationsPath = path.resolve(
+          process.cwd(),
+          'public',
+          'locales',
+          language
+        );
+        const result = {};
+
+        try {
+          // Проверяем существование директории переводов
+          if (!fs.existsSync(translationsPath)) {
+            console.warn(
+              `Translations directory for language "${language}" not found at: ${translationsPath}`
+            );
+            return result;
+          }
+
+          // Получаем список JSON-файлов в директории
+          const files = fs
+            .readdirSync(translationsPath)
+            .filter(file => file.endsWith('.json'));
+
+          // Загружаем каждый файл и объединяем переводы
+          for (const file of files) {
+            const filePath = path.join(translationsPath, file);
+            const section = path.basename(file, '.json');
+            const content = await fs.readJSON(filePath);
+            result[section] = content;
+          }
+
+          console.log(
+            `Loaded translations for "${language}": ${
+              Object.keys(result).length
+            } sections`
+          );
+        } catch (error) {
+          console.error(`Error loading translations for "${language}":`, error);
+        }
+
+        return result;
+      }
+
+      // Функция для получения значения по вложенному ключу
+      function getNestedValue(obj, key) {
+        if (!key || !obj) return null;
+
+        const parts = key.split('.');
+        let value = obj;
+
+        for (const part of parts) {
+          if (
+            value === null ||
+            value === undefined ||
+            typeof value !== 'object'
+          ) {
+            return null;
+          }
+          value = value[part];
+        }
+
+        return value;
+      }
+
+      // Функция для обновления HTML-контента с переводами
+      function updateHtmlContent(html, translations, langCode) {
+        try {
+          const $ = cheerio.load(html);
+
+          // Обрабатываем элементы с атрибутом data-translate
+          $('[data-translate]').each((i, el) => {
+            const $el = $(el);
+            const key = $el.attr('data-translate');
+
+            // Проверяем, является ли значение атрибута ссылкой на другой атрибут
+            if (key.startsWith('[')) {
+              const matches = key.match(/^\[(.*)\](.*)$/);
+              if (matches) {
+                const [, attr, translationKey] = matches;
+                const value = getNestedValue(translations, translationKey);
+
+                if (value && typeof value === 'string') {
+                  $el.attr(attr, value);
+                }
+              }
+            } else {
+              // Обычный текстовый перевод
+              const value = getNestedValue(translations, key);
+
+              if (value && typeof value === 'string') {
+                $el.text(value);
+              }
+            }
+          });
+
+          // Обрабатываем элементы с атрибутом data-i18n (для совместимости с вашей системой)
+          $('[data-i18n]').each((i, el) => {
+            const $el = $(el);
+            const attrValue = $el.attr('data-i18n');
+
+            // Проверяем, является ли значение атрибута ссылкой на другой атрибут
+            if (attrValue.startsWith('[')) {
+              const matches = attrValue.match(/^\[(.*)\](.*)$/);
+              if (matches) {
+                const [, attr, translationKey] = matches;
+                const value = getNestedValue(translations, translationKey);
+
+                if (value && typeof value === 'string') {
+                  $el.attr(attr, value);
+                }
+              }
+            } else {
+              // Обычный текстовый перевод
+              const value = getNestedValue(translations, attrValue);
+
+              if (value && typeof value === 'string') {
+                $el.text(value);
+              }
+            }
+          });
+
+          // Обновляем title если есть соответствующий перевод
+          if (translations.meta && translations.meta.title) {
+            $('title').text(translations.meta.title);
+          }
+
+          // Обновляем meta description если есть соответствующий перевод
+          if (translations.meta && translations.meta.description) {
+            $('meta[name="description"]').attr(
+              'content',
+              translations.meta.description
+            );
+          }
+
+          // Добавляем meta для языка
+          if (!$('meta[name="language"]').length) {
+            $('head').append(`<meta name="language" content="${langCode}">`);
+          } else {
+            $('meta[name="language"]').attr('content', langCode);
+          }
+
+          // Обработка JSON-LD в script тегах
+          $('script[type="application/ld+json"][data-translate]').each(
+            (i, el) => {
+              const $el = $(el);
+              const key = $el.attr('data-translate');
+              const translationData = getNestedValue(translations, key);
+
+              if (translationData && typeof translationData === 'object') {
+                try {
+                  // Парсим текущий JSON
+                  const jsonData = JSON.parse($el.html());
+
+                  // Рекурсивная функция для обновления значений
+                  function updateJsonValues(original, translations) {
+                    if (
+                      !original ||
+                      !translations ||
+                      typeof original !== 'object' ||
+                      typeof translations !== 'object'
+                    ) {
+                      return original;
+                    }
+
+                    // Создаем копию оригинала
+                    const result = Array.isArray(original)
+                      ? [...original]
+                      : { ...original };
+
+                    // Обновляем значения
+                    for (const key in translations) {
+                      if (key in result) {
+                        if (
+                          typeof translations[key] === 'object' &&
+                          translations[key] !== null
+                        ) {
+                          result[key] = updateJsonValues(
+                            result[key],
+                            translations[key]
+                          );
+                        } else {
+                          result[key] = translations[key];
+                        }
+                      }
+                    }
+
+                    return result;
+                  }
+
+                  // Обновляем JSON с переводами
+                  const updatedJson = updateJsonValues(
+                    jsonData,
+                    translationData
+                  );
+
+                  // Обновляем содержимое скрипта
+                  $el.html(JSON.stringify(updatedJson, null, 2));
+                } catch (error) {
+                  console.error(
+                    `Error updating JSON-LD with key ${key}:`,
+                    error
+                  );
+                }
+              }
+            }
+          );
+
+          return $.html();
+        } catch (error) {
+          console.error(
+            'Error updating HTML content with translations:',
+            error
+          );
+          return html; // Возвращаем оригинальный HTML в случае ошибки
+        }
+      }
+
       // Рекурсивная функция для переименования файлов в нижний регистр
       function processDirectory(dir) {
         const items = fs.readdirSync(dir);
@@ -282,6 +501,7 @@ function postProcessPlugin() {
         return;
       }
 
+      // Загружаем оригинальный index.html
       const indexContent = fs.readFileSync(indexPath, 'utf-8');
       console.log('Creating language versions...');
 
@@ -311,42 +531,80 @@ function postProcessPlugin() {
         );
       }
 
-      // Записываем обновленный index.html
-      fs.writeFileSync(indexPath, processedContent);
+      // Загружаем переводы для английского языка (основной)
+      const enTranslations = await loadTranslations('en');
 
-      // Создаем директории для каждого языка и копируем в них index.html
-      for (const lang of supportedLanguages) {
-        if (lang === 'en') continue; // Для английского оставляем корневой index.html
+      // Обновляем английскую версию с переводами (если они есть)
+      if (Object.keys(enTranslations).length > 0) {
+        const updatedEnContent = updateHtmlContent(
+          processedContent,
+          enTranslations,
+          'en'
+        );
+        fs.writeFileSync(indexPath, updatedEnContent);
+        console.log('Updated main index.html with English translations');
+      } else {
+        // Если переводы не найдены, оставляем оригинальную версию
+        fs.writeFileSync(indexPath, processedContent);
+        console.log(
+          'Keeping original index.html (English translations not found)'
+        );
+      }
 
-        const langDir = path.join(distDir, lang);
+      // Создаем директории для каждого языка и копируем в них index.html с переводами
+      for (const langCode of supportedLanguages) {
+        if (langCode === 'en') continue; // Для английского оставляем корневой index.html
+
+        const langDir = path.join(distDir, langCode);
         fs.ensureDirSync(langDir);
 
+        // Загружаем переводы для текущего языка
+        const translations = await loadTranslations(langCode);
+
+        // Если переводы не загружены, используем английские или оставляем оригинальное содержимое
+        const translationsToUse =
+          Object.keys(translations).length > 0
+            ? translations
+            : Object.keys(enTranslations).length > 0
+            ? enTranslations
+            : {};
+
+        // Начинаем с базового контента
         let langContent = processedContent;
+
+        // Обновляем HTML-контент с переводами, если они есть
+        if (Object.keys(translationsToUse).length > 0) {
+          langContent = updateHtmlContent(
+            processedContent,
+            translationsToUse,
+            langCode
+          );
+        }
 
         // Исправляем атрибут lang в HTML
         langContent = langContent.replace(
           /<html lang="[^"]*">/,
-          `<html lang="${lang}">`
+          `<html lang="${langCode}">`
         );
 
         // Обновляем канонический URL для языковой версии
         langContent = langContent.replace(
           /<link rel="canonical" href="[^"]*" \/>/,
-          `<link rel="canonical" href="https://r36s.pro/${lang}/" />`
+          `<link rel="canonical" href="https://r36s.pro/${langCode}/" />`
         );
 
         // Добавляем мета-тег с языком и скрипт для переключения на этот язык
         langContent = langContent.replace(
           '</head>',
-          `  <meta name="language" content="${lang}">
+          `  <meta name="language" content="${langCode}">
   <script>
-    window.initialLanguage = "${lang}";
+    window.initialLanguage = "${langCode}";
   </script>
   </head>`
         );
 
         fs.writeFileSync(path.join(langDir, 'index.html'), langContent);
-        console.log(`Created language version for: ${lang}`);
+        console.log(`Created language version for: ${langCode}`);
       }
 
       // Создаем файл 404.html для обработки неизвестных URL
@@ -409,6 +667,14 @@ export default defineConfig(({ command }) => {
     if (!fs.existsSync(sitemapPath)) {
       console.warn(
         'Warning: sitemap.xml not found in public directory! A default one will be created after build.'
+      );
+    }
+
+    // Проверяем наличие директории с переводами
+    const localesPath = path.resolve(__dirname, 'public', 'locales');
+    if (!fs.existsSync(localesPath)) {
+      console.warn(
+        'Warning: locales directory not found in public directory! Static translations will not work properly.'
       );
     }
   }
@@ -475,7 +741,7 @@ export default defineConfig(({ command }) => {
       fixHtmlPathsPlugin(),
       // Плагин для создания robots.txt и sitemap.xml если их нет
       createRobotsPlugin(),
-      // Плагин для постобработки и создания языковых версий
+      // Плагин для постобработки и создания языковых версий с переводами
       postProcessPlugin(),
     ],
     resolve: {
