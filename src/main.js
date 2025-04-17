@@ -8,7 +8,11 @@ import {
   setupLanguageSelector,
   supportedLanguages,
 } from './js/i18n/i18n.js';
-import { getLanguageFromURL } from './js/utils/urlManager.js';
+import {
+  getLanguageFromURL,
+  updateLanguageURL,
+  storeLanguageList,
+} from './js/utils/urlManager.js';
 
 // Импорт компонентов js
 import { initHeader } from './js/header.js';
@@ -27,11 +31,8 @@ import { initFooter } from './js/footer.js';
 
 console.log('Main.js инициализирован');
 
-// Получаем initialLanguage из window, если он был установлен в HTML
-let initialLanguage = window.initialLanguage || null;
-if (initialLanguage) {
-  console.log('Found initial language from HTML:', initialLanguage);
-}
+// Сохраняем список поддерживаемых языков для использования в других функциях
+storeLanguageList(supportedLanguages);
 
 // Хранение функций очистки для компонентов
 let cleanupFunctions = [];
@@ -85,18 +86,66 @@ function globalCleanup() {
   }
 }
 
+// НОВЫЙ КОД: Функция для обновления канонического URL в зависимости от языка
+function updateCanonicalLink(language) {
+  try {
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) return;
+
+    const domain = 'https://r36s.pro';
+    let canonicalUrl = domain + '/';
+
+    // Если язык не английский, добавляем языковой префикс
+    if (language && language !== 'en') {
+      canonicalUrl = `${domain}/${language}/`;
+    }
+
+    // Обновляем атрибут href канонической ссылки
+    canonicalLink.setAttribute('href', canonicalUrl);
+    console.log(`Обновлен канонический URL: ${canonicalUrl}`);
+  } catch (error) {
+    console.error('Ошибка при обновлении канонического URL:', error);
+  }
+}
+
+// НОВЫЙ КОД: Инициализация SEO-оптимизаций
+async function initializeSEO() {
+  try {
+    // Получаем язык из URL (из пути) - это может вызвать редирект
+    const urlLanguage = getLanguageFromURL(supportedLanguages);
+
+    // Если мы все еще здесь (не произошел редирект), обновляем канонический URL
+    updateCanonicalLink(urlLanguage);
+
+    console.log('SEO-оптимизации инициализированы с языком:', urlLanguage);
+    return urlLanguage;
+  } catch (error) {
+    console.error('Ошибка при инициализации SEO:', error);
+    return 'en'; // Возвращаем английский по умолчанию в случае ошибки
+  }
+}
+
 // Инициализация i18n системы перед загрузкой DOM
 async function initializeI18n() {
   try {
-    // Получаем язык из URL (из пути)
-    const urlLanguage =
-      getLanguageFromURL(supportedLanguages) || initialLanguage;
-    console.log('Language from URL or initial:', urlLanguage);
+    // НОВЫЙ КОД: Сначала инициализируем SEO и получаем язык из URL
+    // Этот вызов может вызвать редирект, если нужно
+    const urlLanguage = await initializeSEO();
+    console.log('Language from URL (after SEO init):', urlLanguage);
+
+    // Получаем initialLanguage из window, если он был установлен в HTML
+    let initialLanguage = window.initialLanguage || null;
+    if (initialLanguage) {
+      console.log('Found initial language from HTML:', initialLanguage);
+    }
+
+    // Теперь используем либо язык из URL, либо initialLanguage
+    const forcedLanguage = urlLanguage || initialLanguage;
 
     // Установка атрибутов lang и dir перед инициализацией i18n
     // для предотвращения мигания контента
     const savedLanguage =
-      localStorage.getItem('userLanguage') || urlLanguage || 'en';
+      localStorage.getItem('userLanguage') || forcedLanguage || 'en';
     const rtlLanguages = ['ar'];
     document.documentElement.setAttribute('lang', savedLanguage);
     document.documentElement.dir = rtlLanguages.includes(savedLanguage)
@@ -104,7 +153,7 @@ async function initializeI18n() {
       : 'ltr';
 
     // Инициализируем i18n с тайм-аутом для защиты от зависания
-    const i18nInitPromise = setupI18n({ forcedLanguage: urlLanguage });
+    const i18nInitPromise = setupI18n({ forcedLanguage: forcedLanguage });
 
     // Создаем таймаут для защиты от бесконечного ожидания
     const timeoutPromise = new Promise((_, reject) => {
@@ -152,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Добавляем класс для индикации загрузки
     document.documentElement.classList.add('loading-i18n');
 
-    // Сначала инициализируем i18n
+    // Сначала инициализируем i18n (который теперь включает SEO-оптимизации)
     const i18nSuccess = await initializeI18n();
 
     // Убираем класс загрузки
@@ -278,6 +327,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Удаляем класс загрузки с документа
     document.documentElement.classList.remove('loading');
     document.documentElement.classList.add('loaded');
+
+    // НОВЫЙ КОД: Обработчик изменения истории (для навигации назад/вперед)
+    window.addEventListener('popstate', async function (event) {
+      try {
+        // Получаем язык из нового URL после навигации
+        const newUrlLanguage = getLanguageFromURL(supportedLanguages);
+        console.log(
+          'Изменение истории браузера, новый язык URL:',
+          newUrlLanguage
+        );
+
+        // Если язык изменился, обновляем i18n и канонические ссылки
+        const currentLanguage = localStorage.getItem('userLanguage');
+        if (newUrlLanguage !== currentLanguage) {
+          localStorage.setItem('userLanguage', newUrlLanguage);
+          // Обновляем канонический URL
+          updateCanonicalLink(newUrlLanguage);
+          // Обновляем переводы
+          await setupI18n({ forcedLanguage: newUrlLanguage });
+          // Обновляем селектор языка
+          const languageSelector = document.getElementById('language-selector');
+          if (languageSelector) {
+            languageSelector.value = newUrlLanguage;
+          }
+        }
+      } catch (error) {
+        console.error('Ошибка при обработке изменения истории:', error);
+      }
+    });
 
     // Регистрируем обработчик для очистки при закрытии/перезагрузке
     window.addEventListener('beforeunload', globalCleanup);
