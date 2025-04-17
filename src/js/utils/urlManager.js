@@ -87,6 +87,22 @@ export function getLanguageFromURL(supportedLanguages) {
     // Проверяем, является ли первая часть пути языковым кодом
     if (pathParts.length > 0) {
       const possibleLang = pathParts[0].toLowerCase();
+
+      // ИСПРАВЛЕНИЕ: Специальная обработка для английского языка
+      if (possibleLang === 'en') {
+        console.log('Обнаружен /en/ в URL, перенаправляем на корневой URL');
+        // Перенаправляем на корневой URL, если мы обнаружили /en/ в URL
+        if (
+          typeof window !== 'undefined' &&
+          window.location &&
+          !window.isRedirecting
+        ) {
+          window.isRedirecting = true;
+          window.location.href = '/';
+          return 'en';
+        }
+      }
+
       if (supportedLanguages.includes(possibleLang)) {
         console.log(`Found language in URL: ${possibleLang}`);
         return possibleLang;
@@ -108,6 +124,25 @@ export function getLanguageFromURL(supportedLanguages) {
  */
 export function updateLanguageURL(language) {
   try {
+    // Специальная обработка для английского языка
+    if (language === 'en') {
+      console.log(
+        'updateLanguageURL: Обнаружен английский язык, перенаправляем на корневой URL'
+      );
+      // Для предотвращения зацикливания
+      if (window.isRedirecting) {
+        console.log(
+          'Redirect already in progress, aborting additional redirect'
+        );
+        return;
+      }
+
+      window.isRedirecting = true;
+      localStorage.setItem('userLanguage', 'en');
+      window.location.href = '/';
+      return; // Важно прервать выполнение здесь!
+    }
+
     if (!language) {
       console.warn('No language provided to updateLanguageURL');
       return;
@@ -161,13 +196,10 @@ export function updateLanguageURL(language) {
         return;
       }
 
-      // Если выбран английский язык, перенаправляем на корневой URL
-      if (language === 'en') {
-        window.location.href = baseUrl;
-        return;
-      }
-
       // Для других языков перенаправляем на языковую директорию
+      console.log(
+        `Non-English language (${language}) selected, redirecting to language directory`
+      );
       window.location.href = `${baseUrl}${language}/`;
     } catch (error) {
       window.isRedirecting = false;

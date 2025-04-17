@@ -8,6 +8,7 @@ AddType text/css .css
 AddType application/javascript .js
 AddType application/json .json
 AddType application/json .map
+AddType application/xml .xml
 
 # Простая конфигурация SPA с учетом многоязычности
 <IfModule mod_rewrite.c>
