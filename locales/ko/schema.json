@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "휴대용 게임 콘솔 R36S",
+    "description": "R36S 프리미엄 휴대용 레트로 게임 콘솔 • 휴대용 게임 경험 • 고급 ArkOS 성능 • 새로운 형식의 클래식 게임",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "전자제품 > 비디오 게임 콘솔 > 휴대용 게임 콘솔",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/ko/",
+      "seller": {
+        "name": "R36S 공식 스토어"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "운영 체제",
+        "value": "ArkOS"
+      },
+      {
+        "name": "디스플레이",
+        "value": "3.5인치 IPS"
+      },
+      {
+        "name": "배터리 수명",
+        "value": "7-8시간"
+      }
+    ]
+  }
+}

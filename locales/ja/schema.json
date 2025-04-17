@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "ポータブルゲーム機 R36S",
+    "description": "R36S プレミアムポータブルレトロゲーム機 • ポータブルゲーム体験 • 高度なArkOSパフォーマンス • 新しい形式のクラシックゲーム",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "電子機器 > ビデオゲーム機 > ポータブルゲーム機",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/ja/",
+      "seller": {
+        "name": "R36S公式ストア"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "オペレーティングシステム",
+        "value": "ArkOS"
+      },
+      {
+        "name": "ディスプレイ",
+        "value": "3.5インチIPS"
+      },
+      {
+        "name": "バッテリー寿命",
+        "value": "7-8時間"
+      }
+    ]
+  }
+}

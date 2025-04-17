@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "Console de Jeu Portable R36S",
+    "description": "R36S Console de Jeu Rétro Portable Premium • Expérience de jeu portable • Performance avancée ArkOS • Jeux classiques dans un nouveau format",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "Électronique > Consoles de Jeux Vidéo > Consoles de Jeux Portables",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/fr/",
+      "seller": {
+        "name": "Boutique Officielle R36S"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "Système d'Exploitation",
+        "value": "ArkOS"
+      },
+      {
+        "name": "Écran",
+        "value": "IPS de 3,5 pouces"
+      },
+      {
+        "name": "Autonomie de la Batterie",
+        "value": "7-8 heures"
+      }
+    ]
+  }
+}

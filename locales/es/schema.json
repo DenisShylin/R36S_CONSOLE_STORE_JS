@@ -1,0 +1,42 @@
+{
+  "product": {
+    "name": "Consola de Juegos Portátil R36S",
+    "description": "R36S Consola de Juegos Retro Portátil Premium • Experiencia de juego portátil • Rendimiento avanzado de ArkOS • Juegos clásicos en nuevo formato",
+    "brand": {
+      "name": "R36S"
+    },
+    "sku": "R36S-HGC-2024",
+    "mpn": "R36S-2024",
+    "category": "Electrónica > Consolas de Videojuegos > Consolas de Juegos Portátiles",
+    "offers": {
+      "priceCurrency": "USD",
+      "price": "35.99",
+      "priceValidUntil": "2025-12-31",
+      "availability": "https://schema.org/InStock",
+      "url": "https://r36s.pro/es/",
+      "seller": {
+        "name": "Tienda Oficial R36S"
+      }
+    },
+    "aggregateRating": {
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "worstRating": "1",
+      "reviewCount": "120"
+    },
+    "additionalProperty": [
+      {
+        "name": "Sistema Operativo",
+        "value": "ArkOS"
+      },
+      {
+        "name": "Pantalla",
+        "value": "IPS de 3,5 pulgadas"
+      },
+      {
+        "name": "Duración de la Batería",
+        "value": "7-8 horas"
+      }
+    ]
+  }
+}
