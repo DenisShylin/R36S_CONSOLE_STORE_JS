@@ -25,34 +25,21 @@ export function getLanguageFromURL(supportedLanguages) {
     if (!path || path === '/') {
       console.log('Empty path, no language prefix');
 
-      // НОВЫЙ КОД: Проверка сохраненного языка и редирект если нужно
-      // Этот код выполняется только если мы находимся на корневом URL без языкового префикса
+      // Проверяем сохраненное значение в localStorage - если пользователь явно выбрал английский,
+      // НЕ перенаправляем на основе языка браузера
       const savedLanguage = localStorage.getItem('userLanguage');
+      const isExplicitEnglishChoice =
+        localStorage.getItem('explicitEnglishChoice') === 'true';
 
-      // Если есть сохраненный язык и он не английский, перенаправляем на языковую версию
-      if (
-        savedLanguage &&
-        savedLanguage !== 'en' &&
-        supportedLanguages.includes(savedLanguage)
-      ) {
-        console.log(`Redirecting to saved language URL: ${savedLanguage}`);
-        // Проверяем, что мы не в процессе сборки/рендеринга
+      // Только если нет явного выбора английского языка, проверяем перенаправление
+      if (!isExplicitEnglishChoice) {
+        // Если есть сохраненный язык и он не английский, перенаправляем на языковую версию
         if (
-          typeof window !== 'undefined' &&
-          window.location &&
-          !window.isRedirecting
+          savedLanguage &&
+          savedLanguage !== 'en' &&
+          supportedLanguages.includes(savedLanguage)
         ) {
-          window.isRedirecting = true; // Предотвращаем зацикливание
-          window.location.href = `${baseUrl}${savedLanguage}/`;
-          return savedLanguage;
-        }
-      } else {
-        // Проверяем предпочтительный язык браузера, если нет сохраненного
-        const browserLang = detectBrowserLanguage(supportedLanguages);
-        if (browserLang && browserLang !== 'en') {
-          console.log(
-            `Redirecting to browser preferred language URL: ${browserLang}`
-          );
+          console.log(`Redirecting to saved language URL: ${savedLanguage}`);
           // Проверяем, что мы не в процессе сборки/рендеринга
           if (
             typeof window !== 'undefined' &&
@@ -60,11 +47,34 @@ export function getLanguageFromURL(supportedLanguages) {
             !window.isRedirecting
           ) {
             window.isRedirecting = true; // Предотвращаем зацикливание
-            localStorage.setItem('userLanguage', browserLang); // Сохраняем выбор
-            window.location.href = `${baseUrl}${browserLang}/`;
-            return browserLang;
+            window.location.href = `${baseUrl}${savedLanguage}/`;
+            return savedLanguage;
+          }
+        } else {
+          // Проверяем предпочтительный язык браузера, если нет сохраненного
+          // или не установлен явный выбор английского
+          const browserLang = detectBrowserLanguage(supportedLanguages);
+          if (browserLang && browserLang !== 'en') {
+            console.log(
+              `Redirecting to browser preferred language URL: ${browserLang}`
+            );
+            // Проверяем, что мы не в процессе сборки/рендеринга
+            if (
+              typeof window !== 'undefined' &&
+              window.location &&
+              !window.isRedirecting
+            ) {
+              window.isRedirecting = true; // Предотвращаем зацикливание
+              localStorage.setItem('userLanguage', browserLang); // Сохраняем выбор
+              window.location.href = `${baseUrl}${browserLang}/`;
+              return browserLang;
+            }
           }
         }
+      } else {
+        console.log(
+          'User explicitly chose English, skipping browser language redirect'
+        );
       }
 
       // Если нет редиректа или мы не можем его выполнить, возвращаем 'en'
@@ -88,7 +98,7 @@ export function getLanguageFromURL(supportedLanguages) {
     if (pathParts.length > 0) {
       const possibleLang = pathParts[0].toLowerCase();
 
-      // ИСПРАВЛЕНИЕ: Специальная обработка для английского языка
+      // Специальная обработка для английского языка
       if (possibleLang === 'en') {
         console.log('Обнаружен /en/ в URL, перенаправляем на корневой URL');
         // Перенаправляем на корневой URL, если мы обнаружили /en/ в URL
@@ -98,6 +108,8 @@ export function getLanguageFromURL(supportedLanguages) {
           !window.isRedirecting
         ) {
           window.isRedirecting = true;
+          // Устанавливаем явный выбор английского языка
+          localStorage.setItem('explicitEnglishChoice', 'true');
           window.location.href = '/';
           return 'en';
         }
@@ -109,7 +121,7 @@ export function getLanguageFromURL(supportedLanguages) {
       }
     }
 
-    // НОВЫЙ КОД: Если в URL нет языкового кода, перенаправляем на английскую версию
+    // Если в URL нет языкового кода, перенаправляем на английскую версию
     console.log('No language found in URL, defaulting to "en"');
     return 'en';
   } catch (error) {
@@ -138,8 +150,16 @@ export function updateLanguageURL(language) {
       }
 
       window.isRedirecting = true;
+      // Устанавливаем явный выбор английского языка и сохраняем выбор
+      localStorage.setItem('explicitEnglishChoice', 'true');
       localStorage.setItem('userLanguage', 'en');
       window.location.href = '/';
+
+      // Сбрасываем флаг перенаправления через небольшую задержку
+      setTimeout(() => {
+        window.isRedirecting = false;
+      }, 100);
+
       return; // Важно прервать выполнение здесь!
     }
 
@@ -167,6 +187,10 @@ export function updateLanguageURL(language) {
 
     // Сохраняем выбранный язык перед редиректом
     localStorage.setItem('userLanguage', language);
+    // Сбрасываем флаг явного выбора английского языка, если выбран другой язык
+    if (language !== 'en') {
+      localStorage.setItem('explicitEnglishChoice', 'false');
+    }
 
     try {
       // Предотвращаем зацикливание редиректов
@@ -201,6 +225,11 @@ export function updateLanguageURL(language) {
         `Non-English language (${language}) selected, redirecting to language directory`
       );
       window.location.href = `${baseUrl}${language}/`;
+
+      // Сбрасываем флаг перенаправления через небольшую задержку
+      setTimeout(() => {
+        window.isRedirecting = false;
+      }, 100);
     } catch (error) {
       window.isRedirecting = false;
       console.error('Error updating URL with language:', error);
@@ -216,6 +245,14 @@ export function updateLanguageURL(language) {
  * @returns {string|null} - Предпочтительный язык браузера или null
  */
 function detectBrowserLanguage(supportedLanguages) {
+  // Проверяем явный выбор английского языка
+  if (localStorage.getItem('explicitEnglishChoice') === 'true') {
+    console.log(
+      'User has explicitly chosen English, skipping browser language detection'
+    );
+    return 'en';
+  }
+
   // Получаем языковые предпочтения браузера
   let browserLanguages = [];
 
@@ -281,4 +318,11 @@ export function storeLanguageList(supportedLanguages) {
     return true;
   }
   return false;
+}
+
+// Сбрасываем флаг перенаправления при загрузке страницы
+if (typeof window !== 'undefined') {
+  window.addEventListener('load', () => {
+    window.isRedirecting = false;
+  });
 }

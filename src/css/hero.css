@@ -272,12 +272,14 @@
     font-family: 'Noto Sans', sans-serif;
 }
 
-/* Кнопки */
+/* Кнопки - УЛУЧШЕННАЯ версия */
 .hero__buttons {
     display: flex;
     flex-direction: column;
     position: relative;
     gap: 20px;
+    touch-action: manipulation;
+    /* Улучшение отзывчивости на мобильных устройствах */
 }
 
 .hero__button {
@@ -295,6 +297,26 @@
     font-family: 'Noto Sans', sans-serif;
     white-space: nowrap;
     min-width: max-content;
+    -webkit-tap-highlight-color: transparent;
+    /* Отключаем подсветку при касании на iOS */
+    -webkit-touch-callout: none;
+    /* Отключаем контекстное меню на iOS */
+    -webkit-user-select: none;
+    /* Отключаем выделение текста */
+    user-select: none;
+    /* Отключаем выделение текста */
+    -webkit-backface-visibility: hidden;
+    /* Фикс для проблем с прозрачностью на iOS */
+    backface-visibility: hidden;
+    /* Минимальная высота для лучшей области касания */
+    min-height: 44px;
+}
+
+/* Эффект при активном касании */
+.hero__button.touch-active {
+    transform: scale(0.98);
+    opacity: 0.9;
+    transition: transform 0.1s, opacity 0.1s;
 }
 
 .hero__button--primary {
@@ -321,7 +343,10 @@
     letter-spacing: 1px;
 }
 
-.hero__button--primary:hover {
+/* Модифицируем hover-эффекты для работы на мобильных устройствах */
+.hero__button--primary:hover,
+.hero__button--primary:focus,
+.hero__button--primary:active {
     transform: scale(1.05) translateY(-3px);
     box-shadow: 0 12px 32px rgba(255, 51, 102, 0.5),
         0 0 0 3px rgba(255, 255, 255, 0.2),
@@ -352,7 +377,9 @@
     pointer-events: none;
 }
 
-.hero__button--primary:hover::before {
+.hero__button--primary:hover::before,
+.hero__button--primary:focus::before,
+.hero__button--primary:active::before {
     opacity: 0.2;
 }
 
@@ -374,7 +401,10 @@
     overflow: hidden;
 }
 
-.hero__button--secondary:hover {
+/* Модифицируем hover-эффекты для работы на мобильных устройствах */
+.hero__button--secondary:hover,
+.hero__button--secondary:focus,
+.hero__button--secondary:active {
     border-color: #ff0000;
     background: rgba(255, 0, 0, 0.15);
     transform: translateY(-3px);
@@ -406,9 +436,31 @@
     pointer-events: none;
 }
 
-.hero__button--secondary:hover::after {
+.hero__button--secondary:hover::after,
+.hero__button--secondary:focus::after,
+.hero__button--secondary:active::after {
     animation: borderShine 2s infinite;
     opacity: 1;
+}
+
+/* Ripple-эффект для тактильной обратной связи на мобильных */
+.hero__button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.hero__button:active::before {
+    opacity: 1;
+    animation: ripple 0.4s ease-out;
 }
 
 .hero__button-text {
@@ -700,6 +752,51 @@
     }
 }
 
+/* Мобильные улучшения - НОВАЯ СЕКЦИЯ */
+/* Специальные стили для улучшения взаимодействия на мобильных устройствах */
+@media (max-width: 768px) {
+
+    /* Увеличиваем область касания */
+    .hero__button {
+        min-height: 48px;
+        /* Увеличенная высота для лучшей области касания */
+        padding: 14px 24px;
+        margin: 5px 0;
+        /* Дополнительный отступ между кнопками */
+    }
+
+    /* Устраняем проблемы со скроллом при касании на iOS */
+    html,
+    body {
+        touch-action: manipulation;
+        cursor: pointer;
+        /* Улучшает отзывчивость на некоторых устройствах */
+    }
+
+    /* Увеличиваем активную область */
+    .hero__buttons {
+        gap: 16px;
+    }
+
+    /* Улучшаем отзывчивость при касании */
+    .hero__button:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+        transition: transform 0.1s ease, opacity 0.1s ease;
+    }
+
+    /* Добавляем дополнительное визуальное выделение активных кнопок */
+    .hero__button--primary:active {
+        background-color: #d42a54;
+        transform: scale(0.98);
+    }
+
+    .hero__button--secondary:active {
+        border-color: #c71f1f;
+        transform: scale(0.98);
+    }
+}
+
 @keyframes rtlContentFadeIn {
     to {
         opacity: 1;
@@ -803,5 +900,18 @@
 
     100% {
         left: 150%;
+    }
+}
+
+/* Добавляем анимацию ripple для кнопок */
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0) translate(-50%, -50%);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(20, 20) translate(-50%, -50%);
+        opacity: 0;
     }
 }

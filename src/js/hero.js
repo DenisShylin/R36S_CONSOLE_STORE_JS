@@ -30,6 +30,11 @@ export function initHero() {
   let resizeTimeout;
   let languageChangeHandler;
 
+  // Сохраняем ссылки на функции-обработчики для последующего удаления
+  let buyButtonHandler;
+  let moreDetailsButtonHandler;
+  let buttonsWrapperHandler;
+
   // Избегаем повторную обработку для удаленных из DOM элементов
   const isValidContext = () => {
     return (
@@ -181,84 +186,114 @@ export function initHero() {
   }
 
   /**
-   * Настраивает обработчики событий для кнопок секции - оптимизированная версия.
+   * Настраивает обработчики событий для кнопок секции - ИСПРАВЛЕННАЯ версия.
    */
   function setupButtonHandlers() {
     const { buyButton, moreDetailsButton } = selectors;
-
-    // Делегируем обработку событий родительскому элементу для уменьшения количества обработчиков
     const heroButtonsWrapper = document.querySelector('.hero__buttons');
-    if (heroButtonsWrapper) {
-      heroButtonsWrapper.addEventListener('click', e => {
-        if (e.target.closest('#buy-button')) {
-          e.preventDefault();
-          window.open(
-            'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
-            '_blank',
-            'noopener,noreferrer'
-          );
-        } else if (e.target.closest('#more-details-button')) {
-          e.preventDefault();
-          const featuresSection = document.getElementById('features');
 
-          if (featuresSection) {
-            const elementPosition = featuresSection.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY;
+    // Функция для скролла к секции features
+    const scrollToFeatures = e => {
+      e.preventDefault();
+      const featuresSection = document.getElementById('features');
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
+      if (featuresSection) {
+        const elementPosition = featuresSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY;
 
-            // Обновляем URL без перезагрузки страницы
-            window.history.replaceState(
-              null,
-              '',
-              `${window.location.pathname}#features`
-            );
-          } else {
-            window.location.hash = 'features';
-          }
-        }
-      });
-    } else {
-      // Резервный вариант, если делегирование невозможно
-      if (buyButton) {
-        buyButton.addEventListener('click', e => {
-          e.preventDefault();
-          window.open(
-            'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html',
-            '_blank',
-            'noopener,noreferrer'
-          );
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
         });
+
+        // Обновляем URL без перезагрузки страницы
+        window.history.replaceState(
+          null,
+          '',
+          `${window.location.pathname}#features`
+        );
+      } else {
+        window.location.hash = 'features';
+      }
+    };
+
+    // Функция для открытия ссылки покупки
+    const openBuyLink = e => {
+      e.preventDefault();
+      // Получаем ссылку из data-атрибута кнопки, если она есть
+      const url =
+        buyButton?.getAttribute('data-href') ||
+        'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html';
+
+      // Используем window.location вместо window.open для более надежной работы на мобильных
+      window.location.href = url;
+    };
+
+    // Вариант 1: Используем делегирование событий на обертке кнопок
+    if (heroButtonsWrapper) {
+      // Определяем и сохраняем функцию-обработчик
+      buttonsWrapperHandler = e => {
+        // Останавливаем всплытие события, чтобы избежать двойных срабатываний
+        e.stopPropagation();
+
+        // Находим ближайшую кнопку к целевому элементу
+        const buyButtonClicked = e.target.closest('#buy-button');
+        const detailsButtonClicked = e.target.closest('#more-details-button');
+
+        if (buyButtonClicked) {
+          openBuyLink(e);
+        } else if (detailsButtonClicked) {
+          scrollToFeatures(e);
+        }
+      };
+
+      // Добавляем слушатели событий click И touchend для мобильных устройств
+      heroButtonsWrapper.addEventListener('click', buttonsWrapperHandler);
+      heroButtonsWrapper.addEventListener('touchend', buttonsWrapperHandler);
+    }
+    // Вариант 2: Добавляем прямые обработчики на кнопки (резервный вариант)
+    else {
+      if (buyButton) {
+        buyButtonHandler = e => {
+          openBuyLink(e);
+        };
+
+        // Добавляем обработчики как для мыши, так и для тач-устройств
+        buyButton.addEventListener('click', buyButtonHandler);
+        buyButton.addEventListener('touchend', buyButtonHandler);
       }
 
       if (moreDetailsButton) {
-        moreDetailsButton.addEventListener('click', e => {
-          e.preventDefault();
-          const featuresSection = document.getElementById('features');
+        moreDetailsButtonHandler = e => {
+          scrollToFeatures(e);
+        };
 
-          if (featuresSection) {
-            const elementPosition = featuresSection.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
-
-            window.history.replaceState(
-              null,
-              '',
-              `${window.location.pathname}#features`
-            );
-          } else {
-            window.location.hash = 'features';
-          }
-        });
+        moreDetailsButton.addEventListener('click', moreDetailsButtonHandler);
+        moreDetailsButton.addEventListener(
+          'touchend',
+          moreDetailsButtonHandler
+        );
       }
     }
+
+    // Дополнительно: добавляем обработчик touchstart для улучшения отзывчивости на мобильных
+    const buttons = document.querySelectorAll('.hero__button');
+    buttons.forEach(button => {
+      button.addEventListener('touchstart', function (e) {
+        // Добавляем класс для визуальной обратной связи
+        this.classList.add('touch-active');
+      });
+
+      button.addEventListener('touchend', function () {
+        // Удаляем класс после завершения касания
+        this.classList.remove('touch-active');
+      });
+
+      button.addEventListener('touchcancel', function () {
+        // Удаляем класс при отмене касания
+        this.classList.remove('touch-active');
+      });
+    });
   }
 
   /**
@@ -299,7 +334,7 @@ export function initHero() {
   }
 
   /**
-   * Функция очистки слушателей и наблюдателей - оптимизированная версия
+   * Функция очистки слушателей и наблюдателей - ИСПРАВЛЕННАЯ версия
    */
   function cleanup() {
     // Оптимизированная очистка ресурсов
@@ -315,17 +350,38 @@ export function initHero() {
       window.removeEventListener('languageChanged', languageChangeHandler);
     }
 
-    // Очищаем обработчики с учетом делегирования событий
+    // Очищаем обработчики событий для кнопок
     const heroButtonsWrapper = document.querySelector('.hero__buttons');
-    if (heroButtonsWrapper) {
-      heroButtonsWrapper.removeEventListener('click', null);
-    } else {
-      // Резервный вариант
-      const { buyButton, moreDetailsButton } = selectors;
-      if (buyButton) buyButton.removeEventListener('click', null);
-      if (moreDetailsButton)
-        moreDetailsButton.removeEventListener('click', null);
+
+    // Удаляем делегированные обработчики
+    if (heroButtonsWrapper && buttonsWrapperHandler) {
+      heroButtonsWrapper.removeEventListener('click', buttonsWrapperHandler);
+      heroButtonsWrapper.removeEventListener('touchend', buttonsWrapperHandler);
     }
+
+    // Удаляем прямые обработчики на кнопках
+    const { buyButton, moreDetailsButton } = selectors;
+
+    if (buyButton && buyButtonHandler) {
+      buyButton.removeEventListener('click', buyButtonHandler);
+      buyButton.removeEventListener('touchend', buyButtonHandler);
+    }
+
+    if (moreDetailsButton && moreDetailsButtonHandler) {
+      moreDetailsButton.removeEventListener('click', moreDetailsButtonHandler);
+      moreDetailsButton.removeEventListener(
+        'touchend',
+        moreDetailsButtonHandler
+      );
+    }
+
+    // Очищаем обработчики для обратной связи касания
+    const buttons = document.querySelectorAll('.hero__button');
+    buttons.forEach(button => {
+      button.removeEventListener('touchstart', null);
+      button.removeEventListener('touchend', null);
+      button.removeEventListener('touchcancel', null);
+    });
   }
 
   // Инициализация компонента с приоритетами - оптимизированная версия
@@ -340,14 +396,14 @@ export function initHero() {
       adjustForViewport();
       updatePrices();
 
-      // Операции с низким приоритетом в следующем цикле
+      // Операции с низким приоритетом в следующем цикле - приоритет для setupButtonHandlers
+      setupButtonHandlers(); // Немедленно настраиваем кнопки для корректной работы на мобильных
+
       requestIdleCallback
         ? requestIdleCallback(() => {
-            setupButtonHandlers();
             setupLanguageChangeListener();
           })
         : setTimeout(() => {
-            setupButtonHandlers();
             setupLanguageChangeListener();
           }, 50);
     });
