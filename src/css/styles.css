@@ -10,9 +10,10 @@
   @import './container.css';
   @import './animations.css';
   @import './scroll-to-top.css';
+  @import './media-placeholders.css';
   /* @import './components/languageSelector.css'; */
   /* @import './corner_buttons.css'; */
-  /* @import './media-placeholders.css'; */
+
 
   /* Sections style */
   @import './header.css';

@@ -1,16 +1,6 @@
-/**
- * @fileoverview Hero section initialization module - оптимизированная версия
- * @description Содержит функции для инициализации секции Hero с фокусом на производительности
- */
-
 import { getLocalizedPrice } from './utils/priceFormatter';
 
-/**
- * Инициализирует секцию Hero на странице.
- * @returns {Function} Функция очистки для удаления обработчиков событий
- */
 export function initHero() {
-  // Кэшируем селекторы в одном месте для повышения производительности
   const selectors = {
     heroSection: document.querySelector('.hero'),
     heroImage: document.querySelector('.hero__console-img'),
@@ -29,36 +19,28 @@ export function initHero() {
   let contentObserver = null;
   let resizeTimeout;
   let languageChangeHandler;
-
-  // Сохраняем ссылки на функции-обработчики для последующего удаления
   let buyButtonHandler;
   let moreDetailsButtonHandler;
   let buttonsWrapperHandler;
 
-  // Избегаем повторную обработку для удаленных из DOM элементов
   const isValidContext = () => {
     return (
       selectors.heroSection && document.body.contains(selectors.heroSection)
     );
   };
 
-  /**
-   * Обновляет цены на основе текущего языка - оптимизированная версия
-   */
   function updatePrices() {
     if (!isValidContext()) return;
 
     try {
       const { currentPrice, originalPrice, discountBadge } = selectors;
 
-      // Используем одну проверку вместо трех отдельных
       const priceData = {
         current: currentPrice ? getLocalizedPrice('current') : null,
         original: originalPrice ? getLocalizedPrice('original') : null,
         discount: discountBadge ? getLocalizedPrice('discount') : null,
       };
 
-      // Применяем все изменения в одной операции requestAnimationFrame
       if (Object.values(priceData).some(Boolean)) {
         requestAnimationFrame(() => {
           if (priceData.current && currentPrice)
@@ -74,15 +56,11 @@ export function initHero() {
     }
   }
 
-  /**
-   * Оптимизированная настройка изображения секции Hero.
-   */
   function setupHeroImage() {
     const { heroImage, heroSection, placeholder } = selectors;
     if (!heroImage || !heroSection) return;
 
     try {
-      // Упрощаем управление классами для улучшения производительности
       const updateImageState = isLoaded => {
         if (!isValidContext()) return;
 
@@ -90,26 +68,23 @@ export function initHero() {
           heroSection.classList.toggle('hero--loading', !isLoaded);
           heroSection.classList.toggle('hero--loaded', isLoaded);
 
-          // Обработка placeholder если он существует
           if (placeholder && isLoaded) {
             placeholder.style.opacity = '0';
           }
         });
       };
 
-      // Устанавливаем начальное состояние
       updateImageState(heroImage.complete);
 
-      // Обработка загрузки только если изображение еще не загружено
       if (!heroImage.complete) {
         heroImage.onload = () => updateImageState(true);
         heroImage.onerror = () => {
           console.error('Не удалось загрузить изображение:', heroImage.src);
-          updateImageState(true); // Все равно отображаем секцию
+          updateImageState(true);
         };
       }
     } catch (error) {
-      console.error('Ошибка при настройке изображения в Hero секции:', error);
+      console.error('Ошибка при настройке изображения:', error);
       if (isValidContext()) {
         heroSection.classList.remove('hero--loading');
         heroSection.classList.add('hero--loaded');
@@ -117,9 +92,6 @@ export function initHero() {
     }
   }
 
-  /**
-   * Адаптирует контент для разных размеров экрана - оптимизированная версия.
-   */
   function adjustForViewport() {
     if (!isValidContext()) return;
 
@@ -128,37 +100,28 @@ export function initHero() {
 
     const isDesktop = window.innerWidth > 992;
 
-    // Делаем одну операцию обновления DOM вместо двух отдельных
     requestAnimationFrame(() => {
       desktopDesc.style.display = isDesktop ? 'block' : 'none';
       mobileDesc.style.display = isDesktop ? 'none' : 'block';
     });
   }
 
-  /**
-   * Настраивает анимацию появления контента - оптимизированная версия.
-   */
   function setupContentAnimation() {
     const { heroContent } = selectors;
     if (!heroContent || !isValidContext()) return;
 
-    // Избегаем ненужных проверок для классов
     if (!heroContent.classList.contains('animate-in')) {
-      // Используем прямую анимацию вместо таймаута для ускорения LCP
       requestAnimationFrame(() => {
         heroContent.classList.add('animate-in');
       });
     }
 
-    // Оптимизированная обработка анимации для других элементов
     const nonCriticalElements = document.querySelectorAll('.animate-on-scroll');
     if (nonCriticalElements.length > 0 && 'IntersectionObserver' in window) {
-      // Инициализируем observer только если есть элементы для наблюдения
       if (contentObserver) contentObserver.disconnect();
 
       contentObserver = new IntersectionObserver(
         entries => {
-          // Обрабатываем всю пачку элементов в одном цикле
           const elementsToAnimate = entries
             .filter(entry => entry.isIntersecting && entry.target?.isConnected)
             .map(entry => {
@@ -166,7 +129,6 @@ export function initHero() {
               return entry.target;
             });
 
-          // Анимируем все элементы в одном requestAnimationFrame
           if (elementsToAnimate.length) {
             requestAnimationFrame(() => {
               elementsToAnimate.forEach(el => el.classList.add('animate-in'));
@@ -176,7 +138,6 @@ export function initHero() {
         { threshold: 0.1 }
       );
 
-      // Наблюдаем только за подключенными элементами
       nonCriticalElements.forEach(element => {
         if (element.isConnected) {
           contentObserver.observe(element);
@@ -185,14 +146,10 @@ export function initHero() {
     }
   }
 
-  /**
-   * Настраивает обработчики событий для кнопок секции - ИСПРАВЛЕННАЯ версия.
-   */
   function setupButtonHandlers() {
     const { buyButton, moreDetailsButton } = selectors;
     const heroButtonsWrapper = document.querySelector('.hero__buttons');
 
-    // Функция для скролла к секции features
     const scrollToFeatures = e => {
       e.preventDefault();
       const featuresSection = document.getElementById('features');
@@ -206,7 +163,6 @@ export function initHero() {
           behavior: 'smooth',
         });
 
-        // Обновляем URL без перезагрузки страницы
         window.history.replaceState(
           null,
           '',
@@ -217,26 +173,19 @@ export function initHero() {
       }
     };
 
-    // Функция для открытия ссылки покупки
     const openBuyLink = e => {
       e.preventDefault();
-      // Получаем ссылку из data-атрибута кнопки, если она есть
       const url =
         buyButton?.getAttribute('data-href') ||
         'https://rzekl.com/g/1e8d114494b6ff021d0c16525dc3e8/?ulp=https%3A%2F%2Fwww.aliexpress.com%2Fitem%2F1005007171465465.html';
 
-      // Используем window.location вместо window.open для более надежной работы на мобильных
       window.location.href = url;
     };
 
-    // Вариант 1: Используем делегирование событий на обертке кнопок
     if (heroButtonsWrapper) {
-      // Определяем и сохраняем функцию-обработчик
       buttonsWrapperHandler = e => {
-        // Останавливаем всплытие события, чтобы избежать двойных срабатываний
         e.stopPropagation();
 
-        // Находим ближайшую кнопку к целевому элементу
         const buyButtonClicked = e.target.closest('#buy-button');
         const detailsButtonClicked = e.target.closest('#more-details-button');
 
@@ -247,27 +196,17 @@ export function initHero() {
         }
       };
 
-      // Добавляем слушатели событий click И touchend для мобильных устройств
       heroButtonsWrapper.addEventListener('click', buttonsWrapperHandler);
       heroButtonsWrapper.addEventListener('touchend', buttonsWrapperHandler);
-    }
-    // Вариант 2: Добавляем прямые обработчики на кнопки (резервный вариант)
-    else {
+    } else {
       if (buyButton) {
-        buyButtonHandler = e => {
-          openBuyLink(e);
-        };
-
-        // Добавляем обработчики как для мыши, так и для тач-устройств
+        buyButtonHandler = e => openBuyLink(e);
         buyButton.addEventListener('click', buyButtonHandler);
         buyButton.addEventListener('touchend', buyButtonHandler);
       }
 
       if (moreDetailsButton) {
-        moreDetailsButtonHandler = e => {
-          scrollToFeatures(e);
-        };
-
+        moreDetailsButtonHandler = e => scrollToFeatures(e);
         moreDetailsButton.addEventListener('click', moreDetailsButtonHandler);
         moreDetailsButton.addEventListener(
           'touchend',
@@ -276,29 +215,22 @@ export function initHero() {
       }
     }
 
-    // Дополнительно: добавляем обработчик touchstart для улучшения отзывчивости на мобильных
     const buttons = document.querySelectorAll('.hero__button');
     buttons.forEach(button => {
-      button.addEventListener('touchstart', function (e) {
-        // Добавляем класс для визуальной обратной связи
+      button.addEventListener('touchstart', function () {
         this.classList.add('touch-active');
       });
 
       button.addEventListener('touchend', function () {
-        // Удаляем класс после завершения касания
         this.classList.remove('touch-active');
       });
 
       button.addEventListener('touchcancel', function () {
-        // Удаляем класс при отмене касания
         this.classList.remove('touch-active');
       });
     });
   }
 
-  /**
-   * Настраивает обработчики событий для смены языка - оптимизированная версия
-   */
   function setupLanguageChangeListener() {
     if (!isValidContext()) return;
 
@@ -307,7 +239,6 @@ export function initHero() {
 
       updatePrices();
 
-      // Оптимизация обработки RTL языков
       const rtlLanguages = ['ar'];
       const currentLang = event?.detail?.language || 'en';
       const isRTL = rtlLanguages.includes(currentLang);
@@ -317,27 +248,20 @@ export function initHero() {
       });
     };
 
-    // Слушаем событие смены языка
     window.addEventListener('languageChanged', languageChangeHandler);
   }
 
-  // Оптимизированный обработчик resize с дебаунсингом и throttling
   function handleResize() {
     if (resizeTimeout) {
       clearTimeout(resizeTimeout);
     }
 
-    // Увеличиваем задержку для уменьшения количества вызовов функции
     resizeTimeout = setTimeout(() => {
       adjustForViewport();
     }, 250);
   }
 
-  /**
-   * Функция очистки слушателей и наблюдателей - ИСПРАВЛЕННАЯ версия
-   */
   function cleanup() {
-    // Оптимизированная очистка ресурсов
     if (contentObserver) {
       contentObserver.disconnect();
       contentObserver = null;
@@ -350,16 +274,13 @@ export function initHero() {
       window.removeEventListener('languageChanged', languageChangeHandler);
     }
 
-    // Очищаем обработчики событий для кнопок
     const heroButtonsWrapper = document.querySelector('.hero__buttons');
 
-    // Удаляем делегированные обработчики
     if (heroButtonsWrapper && buttonsWrapperHandler) {
       heroButtonsWrapper.removeEventListener('click', buttonsWrapperHandler);
       heroButtonsWrapper.removeEventListener('touchend', buttonsWrapperHandler);
     }
 
-    // Удаляем прямые обработчики на кнопках
     const { buyButton, moreDetailsButton } = selectors;
 
     if (buyButton && buyButtonHandler) {
@@ -375,7 +296,6 @@ export function initHero() {
       );
     }
 
-    // Очищаем обработчики для обратной связи касания
     const buttons = document.querySelectorAll('.hero__button');
     buttons.forEach(button => {
       button.removeEventListener('touchstart', null);
@@ -384,20 +304,14 @@ export function initHero() {
     });
   }
 
-  // Инициализация компонента с приоритетами - оптимизированная версия
   try {
-    // Запускаем критические операции сразу
     setupHeroImage();
 
-    // Используем единый requestAnimationFrame для группировки неприоритетных операций
     requestAnimationFrame(() => {
-      // Высокоприоритетные операции обновления DOM
       setupContentAnimation();
       adjustForViewport();
       updatePrices();
-
-      // Операции с низким приоритетом в следующем цикле - приоритет для setupButtonHandlers
-      setupButtonHandlers(); // Немедленно настраиваем кнопки для корректной работы на мобильных
+      setupButtonHandlers();
 
       requestIdleCallback
         ? requestIdleCallback(() => {
@@ -408,7 +322,6 @@ export function initHero() {
           }, 50);
     });
 
-    // Отложенная настройка обработчика resize
     if (window.requestIdleCallback) {
       requestIdleCallback(() => {
         window.addEventListener('resize', handleResize);
@@ -422,6 +335,5 @@ export function initHero() {
     console.error('Ошибка при инициализации Hero секции:', error);
   }
 
-  // Возвращаем функцию очистки
   return cleanup;
 }
