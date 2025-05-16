@@ -1,14 +1,12 @@
+# Разрешаем всем поисковым роботам индексировать сайт
 User-agent: *
 Allow: /
+
+# Указываем путь к sitemap
 Sitemap: https://r36s.pro/sitemap.xml
 
-# Allow all bots to access all content
+# Языковые поддиректории, кроме /en/
 User-agent: *
-Disallow: 
-
-# Specify language-specific patterns
-User-agent: *
-Allow: /en/
 Allow: /ru/
 Allow: /ar/
 Allow: /be/
@@ -22,3 +20,8 @@ Allow: /nl/
 Allow: /pt/
 Allow: /tr/
 Allow: /uk/
+
+# Явно запрещаем индексацию несуществующей директории /en/
+# так как английская версия находится на корневом URL
+User-agent: *
+Disallow: /en/
