@@ -1,14 +1,9 @@
 import i18next from 'i18next';
 import { detectUserLanguage } from './languageDetector';
-import { updateLanguageURL } from '../utils/urlManager';
-// Поскольку блок с ценами остается, но без активного форматирования,
-// мы можем сохранить функцию clearPriceCache, но не использовать её
-// import { clearPriceCache } from '../utils/priceFormatter';
+import { updateLanguageURL, createCanonicalURL } from '../utils/urlManager';
 
-// Кэш для переводов
 const translationsCache = {};
 
-// Список всех поддерживаемых языков
 export const supportedLanguages = [
   'en',
   'ru',
@@ -26,7 +21,6 @@ export const supportedLanguages = [
   'uk',
 ];
 
-// Маппинг языковых кодов к их названиям
 export const languageNames = {
   en: 'English',
   ru: 'Русский',
@@ -44,7 +38,6 @@ export const languageNames = {
   uk: 'Українська',
 };
 
-// Список секций с переводами
 const translationSections = [
   'about',
   'articles',
@@ -57,30 +50,25 @@ const translationSections = [
   'mobilemenu',
   'products',
   'reviews',
+  'meta',
 ];
 
-// Создаем CustomEvent для обновления языка
 const LANGUAGE_CHANGE_EVENT = 'languageChanged';
 
-// Получение пути к файлам переводов
 const getTranslationPath = (language, section) => {
   const baseUrl = import.meta.env.BASE_URL || '/';
   return `${baseUrl}locales/${language}/${section}.json`;
 };
 
-// Загрузка переводов для конкретной секции с улучшенной обработкой ошибок
 const loadSectionTranslation = async (language, section) => {
-  // Создаем уникальный ключ для кэша
   const cacheKey = `${language}_${section}`;
 
-  // Проверяем кэш перед загрузкой
   if (translationsCache[cacheKey]) {
     return translationsCache[cacheKey];
   }
 
-  // Добавляем счетчик попыток для предотвращения бесконечных рекурсий
   let attemptCount = 0;
-  const maxAttempts = 2; // Максимальное количество попыток
+  const maxAttempts = 2;
 
   const attemptLoad = async (lang, sect, attempts) => {
     if (attempts >= maxAttempts) {
@@ -94,12 +82,10 @@ const loadSectionTranslation = async (language, section) => {
       const path = getTranslationPath(lang, sect);
       console.log(`Загрузка перевода: ${path}`);
 
-      // Добавляем таймаут для предотвращения зависания запроса
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 секунд таймаут
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       const response = await fetch(path, {
-        // Добавляем кеш-контроль для обхода кеширования
         cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache',
@@ -107,7 +93,6 @@ const loadSectionTranslation = async (language, section) => {
         signal: controller.signal,
       });
 
-      // Очищаем таймаут
       clearTimeout(timeoutId);
 
       if (!response.ok) {
@@ -115,35 +100,29 @@ const loadSectionTranslation = async (language, section) => {
           `Не удалось загрузить перевод ${lang}/${sect}: ${response.status}`
         );
 
-        // Если основной язык не загрузился, пробуем запасной вариант
         if (lang !== 'en') {
           console.log(`Пробуем загрузить запасной перевод (en) для ${sect}`);
           return attemptLoad('en', sect, attempts + 1);
         }
 
-        // Возвращаем пустой объект для обработки ошибки
         return {};
       }
 
       const data = await response.json();
 
-      // Проверяем валидность данных JSON
       if (!data || typeof data !== 'object') {
         throw new Error(`Invalid translation data format for ${lang}/${sect}`);
       }
 
-      // Сохраняем в кэш
       translationsCache[cacheKey] = data;
       return data;
     } catch (error) {
-      // Проверяем, является ли ошибка таймаутом
       if (error.name === 'AbortError') {
         console.error(`Таймаут загрузки ${lang}/${sect} переводов`);
       } else {
         console.error(`Ошибка загрузки ${lang}/${sect} переводов:`, error);
       }
 
-      // Если основной язык не загрузился, пробуем запасной вариант
       if (lang !== 'en') {
         console.log(
           `Пробуем загрузить запасной перевод (en) для ${sect} после ошибки`
@@ -155,25 +134,20 @@ const loadSectionTranslation = async (language, section) => {
     }
   };
 
-  // Начинаем попытки загрузки
   return attemptLoad(language, section, 0);
 };
 
-// Загрузка всех переводов для языка
 const loadAllTranslations = async language => {
   try {
-    // Счетчик успешных загрузок для логирования
     let successCount = 0;
     let failCount = 0;
 
-    // Используем Promise.allSettled для надежной загрузки всех секций
     const results = await Promise.allSettled(
       translationSections.map(section =>
         loadSectionTranslation(language, section)
       )
     );
 
-    // Объединяем все полученные переводы в один объект
     const translations = {};
 
     results.forEach((result, index) => {
@@ -181,9 +155,7 @@ const loadAllTranslations = async language => {
         const sectionData = result.value;
         const sectionName = translationSections[index];
 
-        // Проверяем, что получили валидные данные (не пустой объект)
         if (sectionData && Object.keys(sectionData).length > 0) {
-          // Добавляем как вложенный объект
           translations[sectionName] = sectionData;
           successCount++;
         } else {
@@ -212,13 +184,11 @@ const loadAllTranslations = async language => {
   }
 };
 
-// Функции обновления контента
 const updateTextElements = () => {
   try {
     const elements = document.querySelectorAll('[data-i18n]');
     console.log(`Обновление ${elements.length} текстовых элементов`);
 
-    // Если не нашли элементов с data-i18n, просто выходим
     if (elements.length === 0) {
       console.log('Не найдено элементов с атрибутом data-i18n');
       return;
@@ -234,19 +204,16 @@ const updateTextElements = () => {
           if (matches) {
             const [, attr, translationKey] = matches;
             const translation = i18next.t(translationKey);
-            // Проверяем наличие перевода и используем атрибут только если перевод найден
             if (translation && translation !== translationKey) {
               element.setAttribute(attr, translation);
             }
           }
         } else {
           const translation = i18next.t(key);
-          // Проверяем, что перевод не равен ключу (если ключ не найден, i18next вернет ключ)
           if (translation && translation !== key) {
             if (element.hasAttribute('content')) {
               element.setAttribute('content', translation);
             } else {
-              // Сохраняем оригинальный текст для английского языка
               if (!element.dataset.originalText && i18next.language !== 'en') {
                 element.dataset.originalText = element.textContent;
               }
@@ -256,13 +223,11 @@ const updateTextElements = () => {
             element.dataset.originalText &&
             i18next.language === 'en'
           ) {
-            // Восстанавливаем оригинальный текст для английского языка
             element.textContent = element.dataset.originalText;
           }
         }
       } catch (elementError) {
         console.warn('Ошибка при обновлении элемента:', elementError, element);
-        // Продолжаем обновление других элементов
       }
     });
   } catch (error) {
@@ -275,18 +240,15 @@ const updateRTLSupport = () => {
     const rtlLanguages = ['ar'];
     const direction = rtlLanguages.includes(i18next.language) ? 'rtl' : 'ltr';
 
-    // Устанавливаем направление текста на уровне документа
     document.documentElement.dir = direction;
     document.documentElement.setAttribute('lang', i18next.language);
 
-    // Добавляем/удаляем класс RTL для корневого элемента
     if (direction === 'rtl') {
       document.documentElement.classList.add('rtl');
     } else {
       document.documentElement.classList.remove('rtl');
     }
 
-    // Обновляем кастомные классы на основных контейнерах, если они существуют
     const mainContainers = [
       '.header',
       '.footer',
@@ -313,13 +275,196 @@ const updateRTLSupport = () => {
   }
 };
 
-// Основная функция обновления контента
+const updateMetadata = language => {
+  try {
+    const titleElement = document.querySelector('title');
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    const languageMeta = document.querySelector('meta[name="language"]');
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+
+    if (!titleElement || !descriptionMeta) {
+      console.warn('Метатеги title или description не найдены');
+      return;
+    }
+
+    // Сначала пробуем получить перевод через i18next
+    const translatedTitle = i18next.t('meta.title');
+    const translatedDescription = i18next.t('meta.description');
+
+    // Если перевод существует, используем его
+    if (translatedTitle && translatedTitle !== 'meta.title') {
+      titleElement.innerHTML = translatedTitle;
+    } else {
+      // Если нет перевода, используем запасные варианты
+      switch (language) {
+        case 'ru':
+          titleElement.innerHTML =
+            'R36S Портативная Игровая Консоль 🎮️ Ретро Гейминг';
+          break;
+        case 'ar':
+          titleElement.innerHTML = 'R36S جهاز ألعاب محمول 🎮️ ألعاب ريترو';
+          break;
+        case 'be':
+          titleElement.innerHTML =
+            'R36S Партатыўная Гульнявая Кансоль 🎮️ Рэтра Гейминг';
+          break;
+        case 'de':
+          titleElement.innerHTML =
+            'R36S Handheld-Spielekonsole 🎮️ Retro-Gaming';
+          break;
+        case 'es':
+          titleElement.innerHTML =
+            'R36S Consola de Juegos Portátil 🎮️ Retro Gaming';
+          break;
+        case 'fr':
+          titleElement.innerHTML =
+            'R36S Console de Jeu Portable 🎮️ Retro Gaming';
+          break;
+        case 'it':
+          titleElement.innerHTML =
+            'R36S Console di Gioco Portatile 🎮️ Retro Gaming';
+          break;
+        case 'ja':
+          titleElement.innerHTML = 'R36S ハンドヘルドゲーム機 🎮️ レトロゲーム';
+          break;
+        case 'ko':
+          titleElement.innerHTML = 'R36S 휴대용 게임 콘솔 🎮️ 레트로 게임';
+          break;
+        case 'nl':
+          titleElement.innerHTML =
+            'R36S Draagbare Spelcomputer 🎮️ Retro Gaming';
+          break;
+        case 'pt':
+          titleElement.innerHTML =
+            'R36S Console de Jogos Portátil 🎮️ Retro Gaming';
+          break;
+        case 'tr':
+          titleElement.innerHTML =
+            'R36S Taşınabilir Oyun Konsolu 🎮️ Retro Oyun';
+          break;
+        case 'uk':
+          titleElement.innerHTML =
+            'R36S Портативна Ігрова Консоль 🎮️ Ретро Геймінг';
+          break;
+        default:
+          titleElement.innerHTML =
+            'R36S Handheld Game Console 🎮️ Retro Gaming';
+          break;
+      }
+    }
+
+    // Аналогично для description
+    if (translatedDescription && translatedDescription !== 'meta.description') {
+      descriptionMeta.setAttribute('content', translatedDescription);
+    } else {
+      switch (language) {
+        case 'ru':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Премиальная Портативная Ретро Игровая Консоль • Портативный игровой опыт • Расширенная производительность ArkOS'
+          );
+          break;
+        case 'ar':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S حلول ألعاب ريترو محمولة متميزة • تجربة وحدة تحكم محمولة • أداء ArkOS متقدم • إعادة تصور الألعاب الكلاسيكية'
+          );
+          break;
+        case 'be':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Прэміум Партатыўныя Рэтра Гульнявыя Рашэнні • Партатыўны гульнявы досвед • Пашыраная прадукцыйнасць ArkOS'
+          );
+          break;
+        case 'de':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Premium Handheld Retro-Gaming-Lösungen • Portable Konsolenerfahrung • Erweiterte ArkOS-Leistung • Neu interpretierte Klassiker'
+          );
+          break;
+        case 'es':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Soluciones Premium de Juegos Retro Portátiles • Experiencia de Consola Portátil • Rendimiento Avanzado de ArkOS'
+          );
+          break;
+        case 'fr':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Solutions Premium de Retro Gaming Portable • Expérience de Console Portable • Performance ArkOS Avancée'
+          );
+          break;
+        case 'it':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Soluzioni Premium per Retro Gaming Portatile • Esperienza di Console Portatile • Prestazioni ArkOS Avanzate'
+          );
+          break;
+        case 'ja':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S プレミアムハンドヘルドレトロゲームソリューション • ポータブルコンソール体験 • 高度なArkOSパフォーマンス'
+          );
+          break;
+        case 'ko':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S 프리미엄 휴대용 레트로 게임 솔루션 • 휴대용 콘솔 경험 • 고급 ArkOS 성능 • 클래식 게임의 재해석'
+          );
+          break;
+        case 'nl':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Premium Draagbare Retro Gaming Oplossingen • Draagbare Console-ervaring • Geavanceerde ArkOS Prestaties'
+          );
+          break;
+        case 'pt':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Soluções Premium de Jogos Retro Portáteis • Experiência de Console Portátil • Desempenho Avançado ArkOS'
+          );
+          break;
+        case 'tr':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Premium Taşınabilir Retro Oyun Çözümleri • Taşınabilir Konsol Deneyimi • Gelişmiş ArkOS Performansı'
+          );
+          break;
+        case 'uk':
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Преміум Портативні Ретро Ігрові Рішення • Портативний ігровий досвід • Розширена продуктивність ArkOS'
+          );
+          break;
+        default:
+          descriptionMeta.setAttribute(
+            'content',
+            'R36S Premium Handheld Pro Retro Gaming Solutions • Portable Console Experience • Advanced ArkOS Performance • Classic Games Reimagined'
+          );
+          break;
+      }
+    }
+
+    // Устанавливаем язык метатега
+    if (languageMeta) {
+      languageMeta.setAttribute('content', language);
+    }
+
+    // Обновляем канонический URL
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', createCanonicalURL(language));
+    }
+
+    console.log('Метаданные обновлены для языка:', language);
+  } catch (error) {
+    console.error('Ошибка обновления метаданных:', error);
+  }
+};
+
 const updateAllContent = async () => {
   try {
-    // Создаем массив промисов для параллельного выполнения
     const updatePromises = [];
 
-    // Добавляем задачи обновления в очередь
     updatePromises.push(
       (async () => {
         try {
@@ -340,10 +485,18 @@ const updateAllContent = async () => {
       })()
     );
 
-    // Ожидаем завершения всех задач
+    updatePromises.push(
+      (async () => {
+        try {
+          updateMetadata(i18next.language);
+        } catch (e) {
+          console.error('Failed to update metadata:', e);
+        }
+      })()
+    );
+
     await Promise.allSettled(updatePromises);
 
-    // Вызываем пользовательское событие для компонентов
     try {
       window.dispatchEvent(
         new CustomEvent('languageChanged', {
@@ -357,7 +510,7 @@ const updateAllContent = async () => {
     console.log('Content update completed for language:', i18next.language);
   } catch (error) {
     console.error('Error in updateAllContent:', error);
-    throw error; // Передаем ошибку выше для обработки
+    throw error;
   }
 };
 
@@ -370,15 +523,12 @@ export async function setupI18n(options = {}) {
     );
     console.log('Current BASE_URL:', import.meta.env.BASE_URL);
 
-    // Принимаем forcedLanguage из options
     const { forcedLanguage } = options;
 
-    // Определяем сохраненный язык в localStorage
     const savedLanguage = localStorage.getItem('userLanguage');
     const savedValid =
       savedLanguage && supportedLanguages.includes(savedLanguage);
 
-    // Определяем язык пользователя
     const userLanguage =
       forcedLanguage ||
       (savedValid ? savedLanguage : null) ||
@@ -386,7 +536,6 @@ export async function setupI18n(options = {}) {
 
     console.log('Selected user language:', userLanguage);
 
-    // Загружаем переводы с обработкой ошибок
     let translations = {};
     try {
       translations = await loadAllTranslations(userLanguage);
@@ -396,17 +545,14 @@ export async function setupI18n(options = {}) {
         `Ошибка загрузки переводов для ${userLanguage}:`,
         loadError
       );
-      // Продолжаем работу с пустыми переводами
     }
 
-    // Загружаем запасные переводы с обработкой ошибок
     let fallbackTranslations = null;
     if (userLanguage !== 'en') {
       try {
         fallbackTranslations = await loadAllTranslations('en');
       } catch (fallbackError) {
         console.error('Ошибка загрузки запасных переводов:', fallbackError);
-        // Продолжаем работу без запасных переводов
       }
     }
 
@@ -418,86 +564,76 @@ export async function setupI18n(options = {}) {
       resources.en = { translation: fallbackTranslations };
     }
 
-    // Инициализируем i18next с расширенным обнаружением ошибок и улучшенным fallback
     await i18next.init({
       lng: userLanguage,
       fallbackLng: 'en',
       resources,
       interpolation: { escapeValue: false },
-      debug: import.meta.env.DEV, // Включаем дебаг только в режиме разработки
+      debug: import.meta.env.DEV,
       load: 'languageOnly',
-      returnNull: false, // Не возвращать null, если перевод не найден
-      returnEmptyString: false, // Не возвращать пустую строку, если перевод не найден
-      saveMissing: false, // Не сохранять отсутствующие ключи (на продакшене должно быть false)
-      keySeparator: '.', // Использовать точку как разделитель вложенности в ключах
-      nsSeparator: ':', // Использовать двоеточие как разделитель пространств имен
+      returnNull: false,
+      returnEmptyString: false,
+      saveMissing: false,
+      keySeparator: '.',
+      nsSeparator: ':',
       missingKeyHandler: (lng, ns, key, fallbackValue) => {
         console.warn(
           `Отсутствует ключ перевода: ${key} для языка ${lng} в пространстве ${ns}. Используется HTML-текст.`
         );
       },
       parseMissingKeyHandler: key => {
-        // Возвращаем null вместо ключа, чтобы сохранить HTML-текст
         return null;
       },
     });
 
-    // Сохраняем выбранный язык
     localStorage.setItem('userLanguage', userLanguage);
 
-    // Создаем функцию обработки изменения языка, которая защищена от неожиданных ошибок
+    updateMetadata(userLanguage);
+
     const safeLanguageChangeHandler = async language => {
       try {
         console.log('Language changed to:', language);
         localStorage.setItem('userLanguage', language);
         updateLanguageURL(language);
 
-        // Убираем очистку кэша цен, поскольку мы не используем функцию форматирования
-        // if (typeof clearPriceCache === 'function') {
-        //   clearPriceCache();
-        // }
-
         await updateAllContent();
       } catch (error) {
         console.error('Error in language change handler:', error);
-        // Пытаемся выполнить хотя бы базовое обновление контента
         try {
           updateTextElements();
           updateRTLSupport();
+          updateMetadata(language);
         } catch (innerError) {
           console.error('Failed to update basic content:', innerError);
         }
       }
     };
 
-    // Привязываем обновление контента к смене языка с защитой от ошибок
     i18next.on('languageChanged', safeLanguageChangeHandler);
 
-    // Экспортируем функцию обновления в window с обработкой ошибок
     window.updateContent = async () => {
       try {
         await updateAllContent();
       } catch (error) {
         console.error('Error in window.updateContent:', error);
-        // Попытка восстановления
         try {
           updateTextElements();
           updateRTLSupport();
+          updateMetadata(i18next.language);
         } catch (innerError) {
           console.error('Failed to recover content update:', innerError);
         }
       }
     };
 
-    // Вызываем обновление контента сразу после инициализации
     try {
       await updateAllContent();
     } catch (contentError) {
       console.error('Error in initial content update:', contentError);
-      // Базовое обновление контента
       try {
         updateTextElements();
         updateRTLSupport();
+        updateMetadata(userLanguage);
       } catch (basicError) {
         console.error('Failed to perform basic content update:', basicError);
       }
@@ -506,9 +642,7 @@ export async function setupI18n(options = {}) {
     return i18next;
   } catch (error) {
     console.error('Fatal error in setupI18n:', error);
-    // Создаем мини-версию i18next для защиты от сбоев
     try {
-      // Если i18next не инициализирован, создадим базовую функциональность
       if (!i18next.isInitialized) {
         await i18next.init({
           lng: 'en',
@@ -531,7 +665,6 @@ export function setupLanguageSelector() {
   if (!selector) return;
 
   try {
-    // Создаем опции для селектора языков
     if (selector.childElementCount === 0) {
       const fragment = document.createDocumentFragment();
 
@@ -545,34 +678,25 @@ export function setupLanguageSelector() {
       selector.appendChild(fragment);
     }
 
-    // Устанавливаем текущий язык
     selector.value = i18next.language;
 
-    // Обработчик изменения языка
     selector.addEventListener('change', async function (event) {
-      event.preventDefault(); // Предотвращаем действие по умолчанию
+      event.preventDefault();
 
       try {
         const newLanguage = event.target.value;
         console.log(`Language selector changed to: ${newLanguage}`);
 
-        // Проверка, что селектор все еще в DOM
         if (!document.contains(selector)) {
           console.log('Language selector no longer in DOM, aborting');
           return;
         }
 
-        // Сохраняем выбор в localStorage перед перенаправлением
         localStorage.setItem('userLanguage', newLanguage);
 
-        // Обновляем URL с перенаправлением на языковую версию
         updateLanguageURL(newLanguage);
-
-        // Обратите внимание: После updateLanguageURL произойдет перенаправление,
-        // поэтому следующий код не будет выполнен в большинстве случаев
       } catch (error) {
         console.error('Error changing language:', error);
-        // В случае ошибки возвращаем старый язык, если селектор еще существует
         if (document.contains(selector)) {
           selector.value = i18next.language;
         }

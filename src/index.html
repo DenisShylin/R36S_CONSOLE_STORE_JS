@@ -7,22 +7,34 @@
       name="google-site-verification"
       content="br_CSuvHQBe7BfFEtGXlJcpzXe0ZnEhAcD3trf4wD6o"
     />
-    <!-- Добавляем атрибуты data-translate для SEO-значимых метатегов -->
+    <meta name="language" content="en" />
     <title data-translate="meta.title">
       R36S Handheld Game Console 🎮️ Retro Gaming
     </title>
     <meta
       name="description"
       data-translate="meta.description"
-      content="R36S Premium Handheld Pro Retro Gaming Solutions •  Portable Console Experience • Advanced ArkOS Performance • Classic Games Reimagined "
+      content="R36S Premium Handheld Pro Retro Gaming Solutions • Portable Console Experience • Advanced ArkOS Performance • Classic Games Reimagined"
     />
+    <meta
+      property="og:title"
+      data-translate="meta.og.title"
+      content="R36S Handheld Game Console 🎮️ Retro Gaming"
+    />
+    <meta
+      property="og:description"
+      data-translate="meta.og.description"
+      content="R36S Premium Handheld Pro Retro Gaming Solutions • Portable Console Experience • Advanced ArkOS Performance"
+    />
+    <meta
+      property="og:image"
+      content="https://r36s.pro/img/hero/herou1_2x_.webp"
+    />
+    <meta property="og:url" content="https://r36s.pro/" />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/icons/browser.svg" />
     <link rel="canonical" href="https://r36s.pro/" />
-
-    <!-- Код адмитат -->
     <meta name="verify-admitad" content="b6ff021d0c" />
-
-    <!-- Инлайн критический CSS для быстрой первоначальной отрисовки -->
     <style>
       .hero {
         position: relative;
@@ -36,7 +48,6 @@
         padding-bottom: 50px;
         min-width: 320px;
       }
-
       .hero__background {
         position: absolute;
         top: 0;
@@ -49,7 +60,6 @@
           rgba(15, 23, 42, 1) 100%
         );
       }
-
       .hero__container {
         width: 100%;
         margin: 0 auto;
@@ -57,14 +67,12 @@
         position: relative;
         min-width: 288px;
       }
-
       .hero__content-wrapper {
         display: grid;
         grid-template-columns: 1fr;
         gap: 5px;
         text-align: center;
       }
-
       .hero__title {
         font-family: 'Orbitron', sans-serif;
         font-size: 26px;
@@ -75,41 +83,34 @@
         max-width: 100%;
         margin: 0 auto;
       }
-
       .hero__title h1 {
         margin: 0;
         padding: 0;
       }
-
       .hero__title-line {
         display: block;
         position: relative;
         padding: 4px 0;
       }
-
       .hero__title-line:first-child {
         color: #3b44f2;
         font-size: 30px;
       }
-
       .hero__title-line:not(:first-child) {
         font-weight: 600;
         font-size: 24px;
       }
-
       .hero__image {
         grid-column: 1;
         grid-row: 2;
         max-width: 100%;
         margin: 0 auto;
       }
-
       .hero__image-wrapper {
         position: relative;
         max-width: 100%;
         overflow: hidden;
       }
-
       .hero__console-img {
         width: 100%;
         height: auto;
@@ -117,7 +118,6 @@
         border-radius: 20px;
         max-width: 100%;
       }
-
       .hero__placeholder {
         position: absolute;
         top: 0;
@@ -132,20 +132,17 @@
         transition: opacity 0.3s ease;
         border-radius: 20px;
       }
-
       .hero__content {
         grid-column: 1;
         grid-row: 3;
         opacity: 0;
         transform: translateY(30px);
       }
-
       .hero__content.animate-in {
         opacity: 1;
         transform: translateY(0);
         transition: opacity 0.5s ease, transform 0.5s ease;
       }
-
       .header {
         position: fixed;
         top: 0;
@@ -155,50 +152,40 @@
         background-color: rgba(15, 23, 42, 0.8);
         backdrop-filter: blur(8px);
       }
-
       @media screen and (min-width: 768px) {
         .hero__content-wrapper {
           margin-top: 20px;
         }
-
         .hero__title {
           font-size: 42px;
         }
-
         .hero__title-line:first-child {
           font-size: 50px;
         }
-
         .hero__title-line:not(:first-child) {
           font-size: 42px;
         }
       }
-
       @media screen and (min-width: 1280px) {
         .hero__content-wrapper {
           grid-template-columns: 1fr 1fr;
           gap: 20px 40px;
           text-align: left;
         }
-
         .hero__title {
           grid-column: 2;
           grid-row: 1;
         }
-
         .hero__image {
           grid-column: 1;
           grid-row: 1 / span 2;
         }
-
         .hero__content {
           grid-column: 2;
           grid-row: 2;
         }
       }
     </style>
-
-    <!-- Предзагрузка критических ресурсов для LCP - исправленный путь -->
     <link
       rel="preload"
       href="/img/hero/herou1_1x_.webp"
@@ -206,21 +193,18 @@
       type="image/webp"
       fetchpriority="high"
     />
-
-    <!-- Preconnect для внешних доменов -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Оптимизированная загрузка шрифтов - исправлена -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Orbitron:wght@400;700;800&display=swap"
     />
-
-    <!-- Отложенная загрузка основного CSS -->
-    <link rel="stylesheet" href="/css/styles.css" />
-
-    <!-- Альтернативные языковые версии -->
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+      media="print"
+      onload="this.media='all'"
+    />
     <link rel="alternate" hreflang="en" href="https://r36s.pro/" />
     <link rel="alternate" hreflang="ru" href="https://r36s.pro/ru/" />
     <link rel="alternate" hreflang="ar" href="https://r36s.pro/ar/" />
@@ -236,8 +220,6 @@
     <link rel="alternate" hreflang="tr" href="https://r36s.pro/tr/" />
     <link rel="alternate" hreflang="uk" href="https://r36s.pro/uk/" />
     <link rel="alternate" hreflang="x-default" href="https://r36s.pro/" />
-
-    <!-- Структурированные данные для SEO (оптимизированные) -->
     <script type="application/ld+json" data-translate="schema.product">
       {
         "@context": "https://schema.org",
@@ -289,13 +271,8 @@
     </script>
   </head>
   <body>
-    <!-- Header - приоритетная загрузка -->
     <load src="./partials/header.html" />
-
-    <!-- Hero секция - приоритетная загрузка (LCP элемент) -->
     <load src="./partials/hero.html" />
-
-    <!-- Остальные секции загружаются обычным способом -->
     <load src="./partials/features.html" />
     <load src="./partials/about.html" />
     <load src="./partials/categories.html" />
@@ -305,8 +282,6 @@
     <load src="./partials/contact.html" />
     <load src="./partials/footer.html" />
     <load src="./partials/mobilemenu.html" />
-
-    <!-- Основной JavaScript с атрибутом defer для неблокирующей загрузки -->
     <script type="module" src="./main.js" defer></script>
   </body>
 </html>

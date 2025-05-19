@@ -1,9 +1,13 @@
 # Enable rewrite engine
 RewriteEngine On
 
-# www to non-www redirect
-RewriteCond %{HTTP_HOST} ^www\.r36s\.pro$ [NC]
-RewriteRule ^(.*)$ https://r36s.pro/$1 [R=301,L]
+# Перенаправление с HTTP на HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Перенаправление с www на non-www (улучшенный вариант)
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # Proper MIME types for all files
 AddType text/css .css
