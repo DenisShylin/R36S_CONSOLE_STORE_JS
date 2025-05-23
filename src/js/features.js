@@ -65,7 +65,7 @@ function initFeatures() {
     } else {
       // Загружаем десктопное видео
       if (!desktopVideoLoaded && featuresVideo) {
-        featuresVideo.preload = 'auto';
+        featuresVideo.preload = 'metadata';
         const playPromise = featuresVideo.play();
 
         if (playPromise !== undefined) {
