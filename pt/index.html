@@ -359,7 +359,7 @@
   });
 </script>
 
-    <!-- Секция Features -->
+    <!-- Секция Features с исправленной разметкой для видео -->
 <section class="features" id="features" itemscope="" itemtype="http://schema.org/Product">
   <meta itemprop="name" content="R36S Handheld Game Console">
   <meta itemprop="sku" content="R36S-HGC-2024">
@@ -378,13 +378,29 @@
         <span data-i18n="features.title">Console de Jogos Portátil</span>
       </h2>
 
-      <!-- Видео для мобильной версии (перемещено сюда) -->
+      <!-- Видео для мобильной версии с правильной структурой VideoObject -->
       <div class="features__image-mobile">
         <div class="features__image-wrapper">
-          <video id="featuresVideoMobile" class="features__console-img" loop="" muted="" playsinline="" preload="none" src="/video/features/video_features_.mp4" poster="/img/features/products_8_2x.jpg" aria-label="R36S Handheld Game Console demo video" itemprop="video">
-            <track kind="captions" label="R36S Features" src="/video/features/captions.vtt">
-            <span data-i18n="features.video.fallback">Seu navegador não suporta reprodução de vídeo. Confira o console de jogos R36S em nosso site.</span>
-          </video>
+          <!-- Структура данных для видео -->
+          <div itemscope="" itemtype="https://schema.org/VideoObject">
+            <video id="featuresVideoMobile" class="features__console-img" loop="" muted="" playsinline="" preload="metadata" itemprop="contentUrl" src="/video/features/video_features_.mp4" poster="/img/features/products_8_2x.jpg" aria-label="R36S Handheld Game Console demo video">
+              <track kind="captions" label="R36S Features" src="/video/features/captions.vtt">
+              <span data-i18n="features.video.fallback">Seu navegador não suporta reprodução de vídeo. Confira o console de jogos R36S em nosso site.</span>
+            </video>
+
+            <!-- Обязательные метаданные для видео -->
+            <meta itemprop="name" content="R36S Handheld Game Console - Features Demo">
+            <meta itemprop="description" content="Demonstration of R36S handheld gaming console featuring over 15,000 retro games, 3.5-inch IPS screen, and premium gaming experience.">
+            <meta itemprop="uploadDate" content="2024-12-01T10:00:00+00:00">
+            <meta itemprop="duration" content="PT45S">
+            <meta itemprop="thumbnailUrl" content="/img/features/products_8_2x.jpg">
+
+            <!-- Информация о издателе -->
+            <div itemprop="publisher" itemscope="" itemtype="https://schema.org/Organization">
+              <meta itemprop="name" content="R36S Console Store">
+            </div>
+          </div>
+
           <button class="features__sound-toggle" id="soundToggleButtonMobile" aria-label="Ativar som para o vídeo de demonstração do R36S" data-i18n="[aria-label]features.sound.toggle.enable">
             <!-- SVG иконка Volume X (звук выключен) -->
             <svg id="volumeOffIconMobile" class="features__sound-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -428,13 +444,29 @@
       </div>
     </div>
 
-    <!-- Видео для десктопной версии (оставлено в исходном месте) -->
+    <!-- Видео для десктопной версии с правильной структурой VideoObject -->
     <div class="features__image-desktop">
       <div class="features__image-wrapper">
-        <video id="featuresVideo" class="features__console-img" loop="" muted="" playsinline="" preload="none" src="/video/features/video_features_.mp4" poster="/img/features/products_8_2x.jpg" aria-label="Vídeo de demonstração do console de jogos R36S" data-i18n="[aria-label]features.video.ariaLabel" itemprop="video">
-          <track kind="captions" label="R36S Features" src="/video/features/captions.vtt">
-          <span data-i18n="features.video.fallback">Seu navegador não suporta reprodução de vídeo. Confira o console de jogos R36S em nosso site.</span>
-        </video>
+        <!-- Структура данных для видео -->
+        <div itemscope="" itemtype="https://schema.org/VideoObject">
+          <video id="featuresVideo" class="features__console-img" loop="" muted="" playsinline="" preload="metadata" itemprop="contentUrl" src="/video/features/video_features_.mp4" poster="/img/features/products_8_2x.jpg" aria-label="Vídeo de demonstração do console de jogos R36S" data-i18n="[aria-label]features.video.ariaLabel">
+            <track kind="captions" label="R36S Features" src="/video/features/captions.vtt">
+            <span data-i18n="features.video.fallback">Seu navegador não suporta reprodução de vídeo. Confira o console de jogos R36S em nosso site.</span>
+          </video>
+
+          <!-- Обязательные метаданные для видео -->
+          <meta itemprop="name" content="R36S Handheld Game Console - Features Demo">
+          <meta itemprop="description" content="Demonstration of R36S handheld gaming console featuring over 15,000 retro games, 3.5-inch IPS screen, and premium gaming experience.">
+          <meta itemprop="uploadDate" content="2024-12-01T10:00:00+00:00">
+          <meta itemprop="duration" content="PT45S">
+          <meta itemprop="thumbnailUrl" content="/img/features/products_8_2x.jpg">
+
+          <!-- Информация о издателе -->
+          <div itemprop="publisher" itemscope="" itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="R36S Console Store">
+          </div>
+        </div>
+
         <button class="features__sound-toggle" id="soundToggleButton" aria-label="Ativar som para o vídeo de demonstração do R36S" data-i18n="[aria-label]features.sound.toggle.enable">
           <!-- SVG иконка Volume X (звук выключен) -->
           <svg id="volumeOffIcon" class="features__sound-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -455,6 +487,29 @@
     </div>
   </div>
 </section>
+
+<!-- Дополнительный JSON-LD для улучшенной индексации видео -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "R36S Handheld Game Console - Features Demo",
+    "description": "Demonstration of R36S handheld gaming console featuring over 15,000 retro games, 3.5-inch IPS screen, and premium gaming experience.",
+    "contentUrl": "/video/features/video_features_.mp4",
+    "embedUrl": "/video/features/video_features_.mp4",
+    "uploadDate": "2024-12-01T10:00:00+00:00",
+    "duration": "PT45S",
+    "thumbnailUrl": "/img/features/products_8_2x.jpg",
+    "publisher": {
+      "@type": "Organization",
+      "name": "R36S Console Store"
+    },
+    "potentialAction": {
+      "@type": "WatchAction",
+      "target": "/video/features/video_features_.mp4"
+    }
+  }
+</script>
 
     <section class="about" id="features-r36s" itemscope="" itemtype="http://schema.org/ItemList">
   <meta itemprop="itemListOrder" content="Unordered">

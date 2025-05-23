@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Английская версия -->
+  <url>
+    <loc>https://r36s.pro/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Handheld Game Console - Features Demo</video:title>
+      <video:description>Demonstration of R36S handheld gaming console featuring over 15,000 retro games, 3.5-inch IPS screen, and premium gaming experience. Watch the console in action with gameplay footage and interface overview.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Русская версия -->
+  <url>
+    <loc>https://r36s.pro/ru/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Портативная игровая консоль - Демо возможностей</video:title>
+      <video:description>Демонстрация портативной игровой консоли R36S с более чем 15,000 ретро игр, 3.5-дюймовый IPS экран и премиальный игровой опыт. Смотрите консоль в действии с геймплеем и обзором интерфейса.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Арабская версия -->
+  <url>
+    <loc>https://r36s.pro/ar/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>وحدة تحكم الألعاب المحمولة R36S - عرض الميزات</video:title>
+      <video:description>عرض توضيحي لوحدة تحكم الألعاب المحمولة R36S التي تحتوي على أكثر من 15,000 لعبة كلاسيكية، شاشة IPS مقاس 3.5 بوصة وتجربة ألعاب متميزة.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Белорусская версия -->
+  <url>
+    <loc>https://r36s.pro/be/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Партатыўная гульнявая кансоль - Дэма магчымасцей</video:title>
+      <video:description>Дэманстрацыя партатыўнай гульнявой кансолі R36S з больш чым 15,000 ретра гульняў, 3.5-цалёвы IPS экран і прэміяльны гульнявы досвед.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Немецкая версия -->
+  <url>
+    <loc>https://r36s.pro/de/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Handheld-Spielkonsole - Features Demo</video:title>
+      <video:description>Demonstration der R36S Handheld-Spielkonsole mit über 15.000 Retro-Spielen, 3,5-Zoll-IPS-Bildschirm und Premium-Spielerlebnis.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Испанская версия -->
+  <url>
+    <loc>https://r36s.pro/es/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>Consola de Juegos Portátil R36S - Demo de Características</video:title>
+      <video:description>Demostración de la consola de juegos portátil R36S con más de 15,000 juegos retro, pantalla IPS de 3.5 pulgadas y experiencia de juego premium.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Французская версия -->
+  <url>
+    <loc>https://r36s.pro/fr/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>Console de Jeu Portable R36S - Démo des Fonctionnalités</video:title>
+      <video:description>Démonstration de la console de jeu portable R36S avec plus de 15 000 jeux rétro, écran IPS de 3,5 pouces et expérience de jeu premium.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Итальянская версия -->
+  <url>
+    <loc>https://r36s.pro/it/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>Console di Gioco Portatile R36S - Demo delle Caratteristiche</video:title>
+      <video:description>Dimostrazione della console di gioco portatile R36S con oltre 15.000 giochi retro, schermo IPS da 3,5 pollici e esperienza di gioco premium.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Японская версия -->
+  <url>
+    <loc>https://r36s.pro/ja/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S ハンドヘルドゲームコンソール - 機能デモ</video:title>
+      <video:description>15,000以上のレトロゲーム、3.5インチIPSスクリーン、プレミアムゲーム体験を特徴とするR36Sハンドヘルドゲームコンソールのデモンストレーション。</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Корейская версия -->
+  <url>
+    <loc>https://r36s.pro/ko/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S 휴대용 게임 콘솔 - 기능 데모</video:title>
+      <video:description>15,000개 이상의 레트로 게임, 3.5인치 IPS 화면, 프리미엄 게임 경험을 특징으로 하는 R36S 휴대용 게임 콘솔의 시연.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Голландская версия -->
+  <url>
+    <loc>https://r36s.pro/nl/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Handheld Game Console - Functies Demo</video:title>
+      <video:description>Demonstratie van de R36S handheld game console met meer dan 15.000 retro games, 3,5-inch IPS scherm en premium gaming ervaring.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Португальская версия -->
+  <url>
+    <loc>https://r36s.pro/pt/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>Console de Jogos Portátil R36S - Demonstração de Recursos</video:title>
+      <video:description>Demonstração do console de jogos portátil R36S com mais de 15.000 jogos retrô, tela IPS de 3,5 polegadas e experiência de jogo premium.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Турецкая версия -->
+  <url>
+    <loc>https://r36s.pro/tr/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S El Tipi Oyun Konsolu - Özellik Demosu</video:title>
+      <video:description>15.000'den fazla retro oyun, 3,5 inç IPS ekran ve premium oyun deneyimi sunan R36S el tipi oyun konsolunun gösterimi.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Украинская версия -->
+  <url>
+    <loc>https://r36s.pro/uk/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://r36s.pro/img/features/products_8_2x.jpg</video:thumbnail_loc>
+      <video:title>R36S Портативна ігрова консоль - Демо можливостей</video:title>
+      <video:description>Демонстрація портативної ігрової консолі R36S з понад 15,000 ретро іграми, 3.5-дюймовий IPS екран та преміальний ігровий досвід.</video:description>
+      <video:content_loc>https://r36s.pro/video/features/video_features_.mp4</video:content_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2024-12-01T10:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:restriction relationship="allow">US CA GB AU DE FR IT ES NL PT TR RU UA BY AR JP KR</video:restriction>
+      <video:platform relationship="allow">web mobile</video:platform>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:uploader info="https://r36s.pro">R36S Console Store</video:uploader>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+</urlset>
